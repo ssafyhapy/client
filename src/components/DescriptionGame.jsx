@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function DescriptionGame() {
   return (
     <div className="shadow-[0_4px_10px_rgba(66,72,81,0.5) rounded-[15px] w-[330px] h-[370px] bg-[rgba(255,255,255,0.8)]">

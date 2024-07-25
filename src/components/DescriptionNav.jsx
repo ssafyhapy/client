@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function DescriptionNav() {
   return (
     <div className="w-[800px] h-[60px] bg-[rgba(255,255,255,0.7)] rounded-[15px] shadow-[0_4px_10px_rgba(66,72,81,0.5)] flex items-center justify-center space-x-4">
