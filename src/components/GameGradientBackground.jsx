@@ -1,5 +1,5 @@
 import React from "react";
-import VideochatButton from "./VideochatButton";
+import VideochatButton from "./btn/VideochatButton";
 
 const GameGradientBackground = () => {
   return (
