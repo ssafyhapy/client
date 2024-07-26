@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function DescriptionGame() {
+const DescriptionGame = ()=> {
   return (
     <div className="shadow-[0_4px_10px_rgba(66,72,81,0.5) rounded-[15px] w-[330px] h-[370px] bg-[rgba(255,255,255,0.8)]">
       <h1 className="text-[24px] text-[rgba(0,0,0,0.8)] text-center pt-[30px]">게임 이름</h1>
@@ -24,3 +24,5 @@ export default function DescriptionGame() {
     </div>
   );
 }
+
+export default DescriptionGame

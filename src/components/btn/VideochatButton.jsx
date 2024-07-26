@@ -1,6 +1,6 @@
 import React from "react";
 
-function VideochatButton() {
+const VideochatButton = () => {
   return (
     <div>
       {/* smileyfacebutton */}
@@ -10,7 +10,7 @@ function VideochatButton() {
           src="src/assets/smileyface.webp"
           alt="smileyface"
         />
-      {/* maskbutton */}
+        {/* maskbutton */}
       </button>
       <button className="relative z-10 w-[53px] h-[47px] shadow-[0_4px_10px_rgba(66,72,81,0.5)] rounded-2xl bg-[rgba(0,0,0,0.1)] flex items-center justify-center hover:bg-[rgba(0,0,0,0.5)]">
         <img
@@ -29,6 +29,6 @@ function VideochatButton() {
       </button>
     </div>
   );
-}
+};
 
 export default VideochatButton;
