@@ -1,6 +1,6 @@
 import React from "react";
 
-const MainGradientBackground = ({children}) => {
+const MainGradientBackground = ({ children }) => {
   return (
     <div className="relative w-full h-screen bg-custom-gradient-main overflow-hidden z-0">
       {/* Ellipses */}
@@ -45,9 +45,7 @@ const MainGradientBackground = ({children}) => {
         }}
       ></div>
       {/* children을 배치할 위치 */}
-      <div className="flex justify-center h-full items-center">
-        {children}
-      </div>
+      <div className="flex justify-center h-full items-center">{children}</div>
     </div>
   );
 };
