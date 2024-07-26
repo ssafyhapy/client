@@ -1,10 +1,8 @@
 import React from "react";
-import VideochatButton from "./VideochatButton";
 
-const MainGradientBackground = () => {
+const MainGradientBackground = ({children}) => {
   return (
     <div className="relative w-full h-screen bg-custom-gradient-main overflow-hidden z-0">
-      <VideochatButton />
       {/* Ellipses */}
       {/* 원1 - 왼쪽위 */}
       <div
@@ -14,9 +12,7 @@ const MainGradientBackground = () => {
         }}
       ></div>
       {/* 원2 - 보라 블러원 */}
-      <div
-        className="absolute rounded-full w-[700px] h-[700px] bg-[rgba(195,173,246,0.98)] blur-[40px] top-[-150px] left-[620px]"
-      ></div>
+      <div className="absolute rounded-full w-[700px] h-[700px] bg-[rgba(195,173,246,0.98)] blur-[40px] top-[-150px] left-[620px]"></div>
       {/* 원3 - 젤작은원 */}
       <div
         className="absolute rounded-full w-[80px] h-[80px] top-[78px] left-[450px]"
@@ -48,6 +44,10 @@ const MainGradientBackground = () => {
           opacity: 0.56,
         }}
       ></div>
+      {/* children을 배치할 위치 */}
+      <div className="flex justify-center h-full items-center">
+        {children}
+      </div>
     </div>
   );
 };
