@@ -74,18 +74,39 @@ pipeline {
             }
         }
         
+        stage('Prepare Frontend for GitLab') {
+            steps {
+                sh '''
+                    # Create frontend directory if it doesn't exist
+                    if [ ! -d frontend ]; then
+                      mkdir frontend
+                    fi
+
+                    # Copy necessary files to frontend directory
+                    cp -r Dockerfile Jenkinsfile README.md dist eslint.config.js index.html node_modules package-lock.json package.json postcss.config.js public src tailwind.config.js vite.config.js frontend/
+                '''
+            }
+        }
+
         stage('Push to GitLab Main') {
             steps {
                 withCredentials([usernamePassword(credentialsId: "${GITLAB_CREDENTIALS_ID}", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                    sh '''
-                        git config --global user.email "thswltjr11@gmail.com"
-                        git config --global user.name "sonjiseokk"
-                        git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@lab.ssafy.com/s11-webmobile1-sub2/S11P12C209.git
-                        git checkout main
-                        git add frontend/
-                        git commit -m "Automated commit"
-                        git push --force origin main
-                    '''
+                    dir('frontend') {
+                        sh '''
+                            # Initialize a new Git repository if it doesn't exist
+                            if [ ! -d .git ]; then
+                              git init
+                              git remote add origin https://${GIT_USERNAME}:${GIT_PASSWORD}@lab.ssafy.com/s11-webmobile1-sub2/S11P12C209.git
+                            fi
+
+                            git config --global user.email "thswltjr11@gmail.com"
+                            git config --global user.name "sonjiseokk"
+                            git checkout -b main || git checkout main
+                            git add .
+                            git commit -m "Automated commit"
+                            git push --force origin main
+                        '''
+                    }
                 }
             }
         }
