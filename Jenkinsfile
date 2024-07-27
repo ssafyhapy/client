@@ -73,13 +73,13 @@ pipeline {
                 ])
             }
         }
-
+        
         stage('Prepare Frontend for GitLab') {
             steps {
                 // Create frontend directory and copy necessary files
                 sh '''
                     mkdir -p frontend
-                    cp -r * frontend/
+                    cp -r Dockerfile Jenkinsfile README.md dist eslint.config.js index.html node_modules package-lock.json package.json postcss.config.js public src tailwind.config.js vite.config.js frontend/
                 '''
             }
         }
