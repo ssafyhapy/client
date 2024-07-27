@@ -6,6 +6,9 @@ pipeline {
         DOCKER_HUB_CREDENTIALS_ID = 'dockerhub2'
         NETWORK_NAME = 'my-network'
         GITLAB_CREDENTIALS_ID = 'gitlab' // GitLab 인증 정보 ID
+
+        GITHUB_BACKEND_REPO_URL = "https://github.com/ssafyhapy/freezetag-backend.git"
+        GITHUB_FRONTEND_REPO_URL = "https://github.com/ssafyhapy/freezetag-frontend.git"
     }
 
     stages {
@@ -74,42 +77,34 @@ pipeline {
             }
         }
         
-        stage('Prepare Frontend for GitLab') {
+        stage('Update GitLab Repository') {
             steps {
-                sh '''
-                    # Create frontend directory if it doesn't exist
-                    if [ ! -d frontend ]; then
-                      mkdir frontend
-                    fi
+                withCredentials([usernamePassword(credentialsId: "${GITLAB_CREDENTIALS_ID}", passwordVariable: 'GITLAB_PASSWORD', usernameVariable: 'GITLAB_USERNAME'),
+                                 usernamePassword(credentialsId: "${GITHUB_CREDENTIALS_ID}", passwordVariable: 'GITHUB_PASSWORD', usernameVariable: 'GITHUB_USERNAME')]) {
+                    sh '''
+                        git config --global user.email "thswltjr11@gmail.com"
+                        git config --global user.name "sonjiseokk"
 
-                    # Copy necessary files to frontend directory
-                    cp -r Dockerfile Jenkinsfile README.md dist eslint.config.js index.html node_modules package-lock.json package.json postcss.config.js public src tailwind.config.js vite.config.js frontend/
-                '''
-            }
-        }
+                        # Clone GitLab repository
+                        git clone https://${GITLAB_USERNAME}:${GITLAB_PASSWORD}@lab.ssafy.com/s11-webmobile1-sub2/S11P12C209.git
+                        cd S11P12C209
 
-        stage('Push to GitLab Main') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: "${GITLAB_CREDENTIALS_ID}", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                    dir('frontend') {
-                        sh '''
-                            # Initialize a new Git repository if it doesn't exist
-                            if [ ! -d .git ]; then
-                              git init
-                              git remote add origin https://${GIT_USERNAME}:${GIT_PASSWORD}@lab.ssafy.com/s11-webmobile1-sub2/S11P12C209.git
-                            fi
+                        # Add backend subtree (to ensure it remains updated)
+                        git subtree pull --prefix=backend https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@${GITHUB_BACKEND_REPO_URL} main
 
-                            git config --global user.email "thswltjr11@gmail.com"
-                            git config --global user.name "sonjiseokk"
-                            git checkout -b main || git checkout main
-                            git add .
-                            git commit -m "Automated commit"
-                            git push --force origin main
-                        '''
-                    }
+                        # Add frontend subtree
+                        git subtree pull --prefix=frontend https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@${GITHUB_FRONTEND_REPO_URL} main
+
+                        # Push changes to GitLab repository
+                        git add .
+                        git commit -m "Update subtrees"
+                        git push origin main
+                    '''
                 }
             }
         }
+
+
     }
 
     post {
