@@ -16,6 +16,9 @@ COPY . .
 # Build the React app
 RUN npm run build
 
+# Check the contents of the dist directory
+RUN ls -la /app/dist
+
 # Stage 2: Serve the React app with a simple Node.js server
 FROM node:16
 
@@ -26,10 +29,10 @@ WORKDIR /app
 RUN npm install -g serve
 
 # Copy the build output from the previous stage
-COPY --from=build /app/build /app/build
+COPY --from=build /app/dist /app/dist
 
 # Expose port 3000
 EXPOSE 3000
 
 # Start the server
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["serve", "-s", "dist", "-l", "3000"]
