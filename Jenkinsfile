@@ -74,21 +74,22 @@ pipeline {
             }
         }
 
-        // stage('Push to GitLab Main') {
-        //     steps {
-        //         withCredentials([usernamePassword(credentialsId: "${GITLAB_CREDENTIALS_ID}", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-        //             sh '''
-        //                 git config --global user.email "thswltjr11@gmail.com"
-        //                 git config --global user.name "sonjiseokk"
-        //                 git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@lab.ssafy.com/s11-webmobile1-sub2/S11P12C209.git
-        //                 git checkout main
-        //                 git add .
-        //                 git commit -m "Automated commit"
-        //                 git push --force origin main
-        //             '''
-        //         }
-        //     }
-        // }
+        stage('Push to GitLab Main') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: "${GITLAB_CREDENTIALS_ID}", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    sh '''
+                        cd frontend
+                        git config --global user.email "thswltjr11@gmail.com"
+                        git config --global user.name "sonjiseokk"
+                        git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@lab.ssafy.com/s11-webmobile1-sub2/S11P12C209.git
+                        git checkout main
+                        git add .
+                        git commit -m "Automated commit"
+                        git push --force origin main
+                    '''
+                }
+            }
+        }
     }
 
     post {
