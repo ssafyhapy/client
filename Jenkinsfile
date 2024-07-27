@@ -12,6 +12,10 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+                sh '''
+                    mkdir -p frontend
+                    find . -maxdepth 1 -mindepth 1 -not -name frontend -exec mv {} frontend/ \\;
+                '''
             }
         }
 
