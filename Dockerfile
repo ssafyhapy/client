@@ -1,5 +1,5 @@
 # Stage 1: Build the React app
-FROM node:14 AS build
+FROM node:16 AS build
 
 # Set the working directory
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Serve the React app with a simple Node.js server
-FROM node:14
+FROM node:16
 
 # Set the working directory
 WORKDIR /app
