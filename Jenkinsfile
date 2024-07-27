@@ -99,7 +99,7 @@ pipeline {
                         # Push changes to GitLab repository
                         git add .
                         git commit -m "Update subtrees"
-                        git push origin main
+                        git push --force origin main
                     '''
                 }
             }
