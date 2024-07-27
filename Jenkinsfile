@@ -74,31 +74,18 @@ pipeline {
             }
         }
         
-        stage('Prepare Frontend for GitLab') {
-            steps {
-                // Create frontend directory and copy necessary files
-                sh '''
-                    mkdir -p frontend
-                    cp -r Dockerfile Jenkinsfile README.md dist eslint.config.js index.html node_modules package-lock.json package.json postcss.config.js public src tailwind.config.js vite.config.js frontend/
-                '''
-            }
-        }
-
         stage('Push to GitLab Main') {
             steps {
-                dir('frontend') {
-                    withCredentials([usernamePassword(credentialsId: "${GITLAB_CREDENTIALS_ID}", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh '''
-                            git init
-                            git config --global user.email "thswltjr11@gmail.com"
-                            git config --global user.name "sonjiseokk"
-                            git remote add origin https://${GIT_USERNAME}:${GIT_PASSWORD}@lab.ssafy.com/s11-webmobile1-sub2/S11P12C209.git
-                            git checkout -b main
-                            git add .
-                            git commit -m "Automated commit"
-                            git push --force origin main
-                        '''
-                    }
+                withCredentials([usernamePassword(credentialsId: "${GITLAB_CREDENTIALS_ID}", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    sh '''
+                        git config --global user.email "thswltjr11@gmail.com"
+                        git config --global user.name "sonjiseokk"
+                        git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@lab.ssafy.com/s11-webmobile1-sub2/S11P12C209.git
+                        git checkout main
+                        git add frontend/
+                        git commit -m "Automated commit"
+                        git push --force origin main
+                    '''
                 }
             }
         }
