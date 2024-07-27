@@ -6,7 +6,7 @@ pipeline {
         DOCKER_HUB_CREDENTIALS_ID = 'dockerhub2'
         NETWORK_NAME = 'my-network'
         GITLAB_CREDENTIALS_ID = 'gitlab' // GitLab 인증 정보 ID
-        GITHUB_CREDENTIALS_ID = 'plz'
+        GITHUB_CREDENTIALS_ID = 'github-token'
         
         GITHUB_BACKEND_REPO_URL = "github.com/ssafyhapy/freezetag-backend.git"
         GITHUB_FRONTEND_REPO_URL = "github.com/ssafyhapy/freezetag-frontend.git"
