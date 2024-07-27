@@ -24,7 +24,6 @@ pipeline {
         stage('Build React App') {
             steps {
                 sh 'npm run build'
-                sh 'ls -la build/'
             }
         }
 
