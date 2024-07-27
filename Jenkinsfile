@@ -12,10 +12,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-                sh '''
-                    mkdir -p frontend
-                    find . -maxdepth 1 -mindepth 1 -not -name frontend -exec mv {} frontend/ \\;
-                '''
             }
         }
 
@@ -78,15 +74,26 @@ pipeline {
             }
         }
 
+        stage('Prepare Frontend for GitLab') {
+            steps {
+                // Create frontend directory and copy necessary files
+                sh '''
+                    mkdir -p frontend
+                    cp -r * frontend/
+                '''
+            }
+        }
+
         stage('Push to GitLab Main') {
             steps {
                 dir('frontend') {
                     withCredentials([usernamePassword(credentialsId: "${GITLAB_CREDENTIALS_ID}", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         sh '''
+                            git init
                             git config --global user.email "thswltjr11@gmail.com"
                             git config --global user.name "sonjiseokk"
-                            git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@lab.ssafy.com/s11-webmobile1-sub2/S11P12C209.git
-                            git checkout main
+                            git remote add origin https://${GIT_USERNAME}:${GIT_PASSWORD}@lab.ssafy.com/s11-webmobile1-sub2/S11P12C209.git
+                            git checkout -b main
                             git add .
                             git commit -m "Automated commit"
                             git push --force origin main
