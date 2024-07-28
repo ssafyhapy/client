@@ -6,6 +6,9 @@ import Play from "./pages/Play";
 import MyPage from "./pages/MyPage";
 import SingleVideoView from "./components/SingleVideoView";
 import GameTurns from "./components/GameTurns";
+import GameBackground from "./components/GameBackgound";
+import WaitingRoom from "./pages/WaitingRoom";
+import CamCheck from "./pages/CamCheck";
 
 function App() {
   return (
@@ -15,9 +18,8 @@ function App() {
       <Route path="/play" element={<Play />} />
       <Route path="/login" element={<Login />} />
       <Route path="/mypage" element={<MyPage />} />
+      <Route path="/camera_check" element={<CamCheck />} />
     </Routes>
-    <SingleVideoView data={{name:"김민영", mic:true, ready:true}}></SingleVideoView>
-    <GameTurns sectionNumber={3}></GameTurns>
     </>
   );
 }
