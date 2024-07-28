@@ -1,40 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const NavBar = () => {
   const location = useLocation();
   const path = location.pathname;
+
   if (path === "/") {
     return (
-      <nav>
-        <ul className="flex">
-          <li>
-            <Link to="/">홈 | </Link>
+      <nav className="flex flex-col items-center">
+        <ul className="flex gap-8 w-[90%]">
+          <li className="text-[#4D98F7]">
+            <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="/play">플레이 | </Link>
+          <li className="text-[#4D98F7]">
+            <Link to="/play">Play</Link>
           </li>
         </ul>
+        <div className="relative w-[90%] mb-5">
+          <div className="border-b-2 border-solid border-white w-full"></div>
+        </div>
       </nav>
     );
   } else {
     return (
-      <nav>
-        <ul className="flex">
-          <li>
-            <Link to="/">홈 | </Link>
-          </li>
-          <li>
-            <Link to="/play">플레이 | </Link>
-          </li>
-          <li>
-            <Link to="/login">로그인 | </Link>
-          </li>
-          <li>
-            <Link to="/mypage">마이페이지</Link>
-          </li>
-        </ul>
-      </nav>
+      <nav className="flex flex-col items-center">
+      <ul className="flex gap-8 w-[90%]">
+        <li className="text-[#4D98F7]">
+          <Link to="/">Home</Link>
+        </li>
+        <li className="text-[#4D98F7]">
+          <Link to="/play">Play</Link>
+        </li>
+        <li className="text-[#4D98F7]">
+          <Link to="/login">Login</Link>
+        </li>
+        <li className="text-[#4D98F7]">
+          <Link to="/mypage">Mypage</Link>
+        </li>
+      </ul>
+      <div className="relative w-[90%] mb-5">
+        <div className="border-b-2 border-solid border-white w-full"></div>
+      </div>
+    </nav>
     );
   }
 };
