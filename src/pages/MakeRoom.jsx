@@ -13,7 +13,7 @@ const MakeRoom = ({ closeMakeRoom }) => {
           <div className="mb-4">
             <label className="block text-gray-700">방 제목</label>
             <input
-              type="email"
+              type="text"
               className="w-full mt-2 p-2 border rounded"
               placeholder="방 제목을 입력해주세요"
             />
