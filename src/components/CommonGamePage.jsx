@@ -2,12 +2,14 @@ import React from "react";
 import GameBackground from "./GameBackgound";
 import Chatbox from "./Chatbox";
 import BasicBtn from "./btn/BasicBtn";
+import ExitBtn from "./btn/ExitBtn"
 
 const CommonGamePage = () => {
   const btnText = "기본";
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
       <div className="w-[75%] h-[90%] bg-[rgba(255,255,255,0.3)] m-auto rounded-[40px] flex flex-col relative p-10 overflow-hidden">
+        <ExitBtn></ExitBtn>
         <div className="flex-grow flex overflow-hidden">
           <div className="bg-[rgba(255,255,255,0.9)] flex-[4] h-full mr-5 rounded-[20px] overflow-hidden">
             <p className="m-5">camera background</p>

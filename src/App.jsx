@@ -12,7 +12,7 @@ import CamCheck from "./pages/CamCheck";
 import Photograph from "./pages/Photograph";
 import Report from "./pages/Report"
 import CommonGamePage from "./components/CommonGamePage";
-
+import SelfIntroduction from "./pages/SelfIntroduction"
 function App() {
   return (
     <>
@@ -22,6 +22,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/camera_check" element={<CamCheck />} />
+      <Route path="/self_introduction" element={<SelfIntroduction />} />
       <Route path="/photo" element={<Photograph />} />
       <Route path="/report" element={<Report />} />
       <Route path="/common" element={<CommonGamePage />} />
