@@ -8,20 +8,20 @@ const MyPage = () => {
     <>
       <MainGradientBackground>
         <MyPageFrame>
-          <div className="flex flex-col items-center gap-10">
+          <div className="flex flex-col items-center gap-5">
             <div className="w-[800px]">
               <NavBar />
             </div>
-            <div className="flex gap-10">
+            <div className="flex gap-5">
               <div className="w-[400px] h-[200px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)]"></div>
               <div className="w-[400px] h-[200px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)]"></div>
             </div>
-            <div className="flex gap-10">
+            <div className="flex gap-5">
               <div className="w-[400px] h-[200px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)]"></div>
               <div className="w-[400px] h-[200px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)]"></div>
             </div>
-            <div className="flex gap-10">
-              <div className="w-[840px] h-[200px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)]"></div>
+            <div className="flex">
+              <div className="w-[820px] h-[200px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)]"></div>
             </div>
           </div>
         </MyPageFrame>
