@@ -1,40 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Login from "../pages/Login";
 
 const NavBar = () => {
   const location = useLocation();
   const path = location.pathname;
+
+  const [loginOpen, setLoginOpen] = React.useState(false);
+  const openLogin = () => {
+    setLoginOpen(true);
+  };
+  const closeLogin = () => {
+    setLoginOpen(false);
+  };
+
   if (path === "/") {
     return (
-      <nav>
-        <ul className="flex">
-          <li>
-            <Link to="/">홈 | </Link>
+      <nav className="flex flex-col items-center">
+        <ul className="flex gap-8 w-[90%]">
+          <li className="text-[#4D98F7]">
+            <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="/play">플레이 | </Link>
+          <li className="text-[#4D98F7]">
+            <Link to="/play">Play</Link>
           </li>
         </ul>
+        <div className="relative w-[90%] mb-5">
+          <div className="border-b-2 border-solid border-white w-full"></div>
+        </div>
       </nav>
     );
   } else {
     return (
-      <nav>
-        <ul className="flex">
-          <li>
-            <Link to="/">홈 | </Link>
+      <>
+      <nav className="flex flex-col items-center">
+        <ul className="flex gap-8 w-[90%]">
+          <li className="text-[#4D98F7]">
+            <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="/play">플레이 | </Link>
+          <li className="text-[#4D98F7]">
+            <Link to="/play">Play</Link>
           </li>
-          <li>
-            <Link to="/login">로그인 | </Link>
+          <li className="text-[#4D98F7]" onClick={openLogin}>
+            {/* <Link to="/login">Login</Link> */}
+            {/* 페이지 변경 막기 위해서 버튼으로! */}
+            <button>Login</button>
           </li>
-          <li>
-            <Link to="/mypage">마이페이지</Link>
+          <li className="text-[#4D98F7]">
+            <Link to="/mypage">Mypage</Link>
           </li>
         </ul>
+        <div className="relative w-[90%] mb-5">
+          <div className="border-b-2 border-solid border-white w-full"></div>
+        </div>
       </nav>
+      {loginOpen && <Login closeLogin={closeLogin} />}
+      </>
     );
   }
 };

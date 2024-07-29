@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Play from "./pages/Play";
 import MyPage from "./pages/MyPage";
-import SingleVideoView from "./components/SingleVideoView";
+import SingleVideoView from "./components/CameraCheckVideoView";
 import GameTurns from "./components/GameTurns";
 import GameBackground from "./components/GameBackgound";
 import WaitingRoom from "./pages/WaitingRoom";

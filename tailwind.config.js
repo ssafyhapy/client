@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require("tailwindcss/plugin");
+
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -10,5 +12,18 @@ export default {
         "linear-gradient(135deg, #FFFFFF 1%, rgba(30,144,255,0.3) 40%, rgba(30,144,255,0.3) 100%)",
     },
   },
-  plugins: [require("tailwind-scrollbar")],
+  plugins: [
+    require("tailwind-scrollbar"),
+    plugin(function ({ addUtilities }) {
+      const newUtilities = {
+        ".scrollbar-hide": {
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+          "scrollbar-width": "none", // Firefox
+        },
+      };
+      addUtilities(newUtilities);
+    }),
+  ],
 };

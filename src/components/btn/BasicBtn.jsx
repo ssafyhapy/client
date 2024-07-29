@@ -8,5 +8,4 @@ const BasicBtn = ({ btnText }) => {
     </button>
   );
 };
-
 export default BasicBtn;
