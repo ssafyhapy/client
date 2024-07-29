@@ -9,6 +9,7 @@ import GameTurns from "./components/GameTurns";
 import GameBackground from "./components/GameBackgound";
 import WaitingRoom from "./pages/WaitingRoom";
 import CamCheck from "./pages/CamCheck";
+import Photograph from "./pages/Photograph";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/camera_check" element={<CamCheck />} />
+      <Route path="/photo" element={<Photograph />} />
     </Routes>
     </>
   );
