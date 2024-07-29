@@ -1,10 +1,8 @@
 import React from "react";
-import VideochatButton from "./btn/VideochatButton";
 
 const GameGradientBackground = () => {
   return (
     <div className="relative w-full h-screen bg-custom-gradient-game overflow-hidden z-0">
-        <VideochatButton />
     </div>
   );
 };
