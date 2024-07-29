@@ -5,7 +5,7 @@ import mic_on from "./../assets/mic_on.png";
 
 
 const SingleVideoView = ({data}) => {
-  // data에 들어가야 할 개인 정보 => 1. {name:,mic:,img:,}
+  // data에 들어가야 할 개인 정보 => 1. {name:,mic:,img:,ready:,}
   return (
     <div>
       <div>
