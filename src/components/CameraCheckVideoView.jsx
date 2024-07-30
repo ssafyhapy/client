@@ -3,35 +3,31 @@ import profileSample from "./../assets/profile_sample.png";
 import mute from "./../assets/mute.png";
 import mic_on from "./../assets/mic_on.png";
 
-
-const CameraCheckVideoView = ({data}) => {
-  // data에 들어가야 할 개인 정보 => 1. {name:,mic:,img:,ready:,}
+const CameraCheckVideoView = ({ data }) => {
   return (
-    <div>
-      <div>
-          <div className="relative w-[30rem] h-[100%]">
-            <img
-              src={profileSample}
-              alt="profile_sample"
-              className="w-full h-full rounded-[6px]"
-            />
-            <div className="absolute bottom-0 left-0 w-full text-white flex justify-between items-center">
-              <span className="flex">
-                <span className="flex items-center px-2 h-[24px]  bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                  {data.name}
-                </span>
-                <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                  <img src={mic_on} alt="" className={`w-[12px] h-[18px] ${data.mic?null:"hidden"}`} />
-                  <img src={mute} alt="" className={`w-[12px] h-[18px]] ${data.mic?"hidden":null}`}/>
-                </span>
-              </span>
-              <span className={`flex items-center px-2 h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5) ${data.ready?null:"hidden"}`}>
-                준비완료
-              </span>
-            </div>
-          </div>
+    <div className="relative w-full h-full flex justify-center items-center">
+      <div className="relative w-[80%] h-[80%]">
+        <img
+          src={profileSample}
+          alt="profile_sample"
+          className="w-full h-full object-cover rounded-[6px]"
+        />
+        <div className="w-full text-white flex p-2">
+          <span className="flex absolute bottom-0 left-0">
+            <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
+              {data.name}
+            </span>
+            <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
+              <img src={mic_on} alt="mic on" className={`w-[12px] h-[18px] ${data.mic ? null : "hidden"}`} />
+              <img src={mute} alt="mute" className={`w-[12px] h-[18px] ${data.mic ? "hidden" : null}`} />
+            </span>
+          </span>
+          <span className={`flex items-center px-2 h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute bottom-0 right-0 ${data.ready ? null : "hidden"}`}>
+            준비완료
+          </span>
         </div>
-      </div> 
+      </div>
+    </div>
   );
 };
 
