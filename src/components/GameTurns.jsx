@@ -15,13 +15,13 @@ const GameTurns = ({sectionNumber}) => {
           <div className="flex flex-col items-center justify-center h-full">
             <img src={checkedCircle} alt="" className={`${sectionNumber<2 ? "hidden" : null }`}/>
             <img src={circle} alt="" className={`${sectionNumber>=2 ? "hidden" : null }`}/>
-            <div>한 줄 자기소개</div>
+            <div>나를 맞춰봐</div>
           </div>
             <img src={arrow} alt="" />
           <div className="flex flex-col items-center justify-center h-full">
             <img src={checkedCircle} alt="" className={`${sectionNumber<3 ? "hidden" : null }`}/>
             <img src={circle} alt="" className={`${sectionNumber>=3 ? "hidden" : null }`}/>
-            <div>한 줄 자기소개</div>
+            <div>밸런스 게임</div>
           </div>
         </div>
     </>
