@@ -69,9 +69,7 @@ const Auth = () => {
 
   return (
     <div>
-      // 인가코드가 있을 경우 해당 코드를 렌더링
       {code && <div>{code}</div>}
-      // 로딩 중이 아니고 에러가 없을 경우 로그인 성공 메시지를 렌더링
       {!isLoading && !error && <div>Login successful, redirecting...</div>}
     </div>
   );
