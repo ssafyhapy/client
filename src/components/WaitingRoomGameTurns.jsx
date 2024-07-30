@@ -26,7 +26,7 @@ const WaitingRoomGameTurns = ({ sectionNumber }) => {
           <div className="text-[1.2rem]">한 줄 자기소개</div>
           {hoveredSection === "self-introduction" && (
             <div
-              className="absolute bottom-full w-[15vw] h-[35vh] mt-2 p-2 bg-white shadow-lg rounded flex flex-col justify-center items-center gap-3"
+              className="absolute bottom-full w-[15vw] h-[35vh] mt-2 p-2 bg-white shadow-lg rounded flex flex-col justify-center items-center gap-3 rounded-[15px]"
               style={{
                 background:
                   "linear-gradient(to right, rgba(221, 229, 249, 0.7), rgba(142, 210, 255, 0.7))",
@@ -35,7 +35,7 @@ const WaitingRoomGameTurns = ({ sectionNumber }) => {
               <div className="flex justify-center items-center text-[1.3rem] bg-[rgba(255,255,255,0.7)] text-[rgba(0,0,0,0.5)] w-full rounded-[15px]">
                 한 줄 자기소개
               </div>
-              <div className="flex flex-col gap-3 justify-center items-center text-[16px] p-2 bg-[rgba(255,255,255,0.7)] text-center text-[rgba(0,0,0,0.5)] w-full rounded-[15px] min-h-[50%]">
+              <div className="flex flex-col gap-3 justify-center items-center text-[16px] p-2 bg-[rgba(255,255,255,0.7)] text-center text-[rgba(0,0,0,0.5)] w-full rounded-[15px] min-h-[75%]">
                 <div>
                   <div className="text-[#96A5FE]">“나는 ________이다.”</div>
                   <div>
@@ -72,19 +72,22 @@ const WaitingRoomGameTurns = ({ sectionNumber }) => {
           <div className="text-[1.2rem]">나를 맞춰봐</div>
           {hoveredSection === "guess" && (
             <div
-              className="absolute bottom-full w-[15vw] h-[35vh] mt-2 p-2 bg-white shadow-lg rounded flex flex-col justify-center items-center gap-3"
+              className="absolute bottom-full w-[15vw] h-[35vh] mt-2 p-2 bg-white shadow-lg rounded flex flex-col justify-center items-center gap-3 rounded-[15px]"
               style={{
                 background:
                   "linear-gradient(to right, rgba(221, 229, 249, 0.7), rgba(142, 210, 255, 0.7))",
               }}
-            >
+            ><div>
+              
+            </div>
               <div className="flex justify-center items-center text-[1.3rem] bg-[rgba(255,255,255,0.7)] text-[rgba(0,0,0,0.5)] w-full rounded-[15px]">
                 나를 맞춰봐
               </div>
-              <div className="flex flex-col gap-3 justify-center items-center text-[16px] p-2 bg-[rgba(255,255,255,0.7)] text-center text-[rgba(0,0,0,0.5)] w-full rounded-[15px] min-h-[50%]">
+              <div className="flex flex-col gap-3 justify-center items-center text-[16px] p-2 bg-[rgba(255,255,255,0.7)] text-center text-[rgba(0,0,0,0.5)] w-full rounded-[15px] min-h-[75%]">
+
                 <div>
-                  스스로에 대해 <br />알려주고 싶은 정보<br /> (MBTI, 고향, 취미 등)를<br />
-                  진실과 거짓을 섞어<br /> 3가지의 OX 문제를 <br /> 내고 맞춰보며 서로에 대해 <br />
+                  스스로에 대해알려주고 싶은 정보(MBTI, 고향, 취미 등)를
+                  진실과 거짓을 섞어 3가지의 OX 문제를 내고 맞춰보며 서로에 대해 
                   알아가는 시간을 가져요
                 </div>
                 <div className="text-left w-full text-[12px]">
@@ -113,7 +116,7 @@ const WaitingRoomGameTurns = ({ sectionNumber }) => {
           <div className="text-[1.2rem]">밸런스 게임</div>
           {hoveredSection === "balance" && (
             <div
-              className="absolute bottom-full w-[15vw] h-[35vh] mt-2 p-2 bg-white shadow-lg rounded flex flex-col justify-center items-center gap-3"
+              className="absolute bottom-full w-[15vw] h-[35vh] mt-2 p-2 bg-white shadow-lg rounded flex flex-col justify-center items-center gap-3 rounded-[15px]"
               style={{
                 background:
                   "linear-gradient(to right, rgba(221, 229, 249, 0.7), rgba(142, 210, 255, 0.7))",
@@ -122,7 +125,7 @@ const WaitingRoomGameTurns = ({ sectionNumber }) => {
               <div className="flex justify-center items-center text-[1.3rem] bg-[rgba(255,255,255,0.7)] text-[rgba(0,0,0,0.5)] w-full rounded-[15px]">
                 밸런스 게임
               </div>
-              <div className="flex flex-col justify-center items-center gap-3 text-[16px] p-2 bg-[rgba(255,255,255,0.7)] text-center text-[rgba(0,0,0,0.5)] w-full rounded-[15px] min-h-[50%]">
+              <div className="flex flex-col justify-center items-center gap-3 text-[16px] p-2 bg-[rgba(255,255,255,0.7)] text-center text-[rgba(0,0,0,0.5)] w-full rounded-[15px] min-h-[75%]">
                 <div>
                   밸런스 게임 시작 전 방장에게서 입력받은 모임 주제를 기반으로
                   랜덤하게 밸런스 게임 선택지를 추천해드려요. 두 가지 선택지 중
