@@ -4,13 +4,13 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Play from "./pages/Play";
 import MyPage from "./pages/MyPage";
-import SingleVideoView from "./components/CameraCheckVideoView";
-import GameTurns from "./components/GameTurns";
-import GameBackground from "./components/GameBackgound";
 import WaitingRoom from "./pages/WaitingRoom";
 import CamCheck from "./pages/CamCheck";
 import Photograph from "./pages/Photograph";
 import Report from "./pages/Report"
+import BalanceGame from "./pages/BalanceGame";
+import BalanceAllPrepared from "./pages/BalanceAllPrepared";
+import BalanceGetReady from "./pages/BalanceGetReady";
 
 // 게임 공통 페이지 (기반)
 import CommonGamePage from "./components/CommonGamePage";
@@ -58,6 +58,12 @@ function App() {
 
       {/* 렙업 페이지랑 관련된 Route */}
       <Route path="/wrap_up" element={<WrapUp />} />
+
+      {/* 밸런스 게임과 관련된 Route */}
+      <Route path="/balance_game" element={<BalanceGame />} />
+      <Route path="/balance_getready" element={<BalanceGetReady />} />
+      <Route path="/balance_allprepared" element={<BalanceAllPrepared />} />
+
 
     </Routes>
     </>
