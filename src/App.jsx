@@ -9,8 +9,8 @@ import CamCheck from "./pages/CamCheck";
 import Photograph from "./pages/Photograph";
 import Report from "./pages/Report"
 import BalanceGame from "./pages/BalanceGame";
-import BalanceAllPrepared from "./pages/BalanceAllPrepared";
-import BalanceGetReady from "./pages/BalanceGetReady";
+import BalanceChangeChoices from "./pages/BalanceChangeChoices";
+import BalanceChoosing from "./pages/BalanceChoosing"
 
 // 게임 공통 페이지 (기반)
 import CommonGamePage from "./components/CommonGamePage";
@@ -61,8 +61,8 @@ function App() {
 
       {/* 밸런스 게임과 관련된 Route */}
       <Route path="/balance_game" element={<BalanceGame />} />
-      <Route path="/balance_getready" element={<BalanceGetReady />} />
-      <Route path="/balance_allprepared" element={<BalanceAllPrepared />} />
+      <Route path="/balance_choosing" element={<BalanceChoosing />} />
+      <Route path="/balance_change_choices" element={<BalanceChangeChoices />} />
 
 
     </Routes>
