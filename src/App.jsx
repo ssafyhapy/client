@@ -26,6 +26,7 @@ function App() {
       <Route path="/photo" element={<Photograph />} />
       <Route path="/report" element={<Report />} />
       <Route path="/common" element={<CommonGamePage />} />
+      <Route path="/waiting_room" element={<WaitingRoom />} />
     </Routes>
     </>
   );
