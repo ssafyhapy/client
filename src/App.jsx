@@ -25,6 +25,9 @@ import GuessMeGetReady from "./pages/GuessMeGetReady";
 import GuessMeAllPrepared from "./pages/GuessMeAllPrepared"
 import GuessMe from "./pages/GuessMe";
 
+// 렙업 페이지들
+import WrapUp from "./pages/WrapUp";
+
 function App() {
   return (
     <>
@@ -52,6 +55,9 @@ function App() {
       <Route path="/guessme" element={<GuessMe />} />
       <Route path="/guessme_getready" element={<GuessMeGetReady />} />
       <Route path="/guessme_allprepared" element={<GuessMeAllPrepared />} />
+
+      {/* 렙업 페이지랑 관련된 Route */}
+      <Route path="/wrap_up" element={<WrapUp />} />
 
     </Routes>
     </>

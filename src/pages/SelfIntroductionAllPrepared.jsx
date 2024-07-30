@@ -7,7 +7,7 @@ const SelfIntroductionAllPrepared = () => {
 
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
-      <div className="w-[75%] h-[90%] bg-[rgba(255,255,255,0.3)] m-auto rounded-[40px] flex flex-col relative p-10 overflow-hidden">
+      <div className="w-[1024px] h-[90%] bg-[rgba(255,255,255,0.3)] m-auto rounded-[40px] flex flex-col relative p-10 overflow-hidden">
         {/* Top Div */}
         <div className="h-[5%] flex justify-between items-center">
           <div className="w-[90%] flex justify-center absolute top-3">
