@@ -38,6 +38,9 @@ function App() {
       
       {/* 기념사진촬영 */}
       <Route path="/photo" element={<Photograph />} />
+        
+      {/* 대기실 */}
+      <Route path="/waiting_room" element={<WaitingRoom />} />
       
       {/* 한줄 자기소개 페이지랑 관련된 Route */}
       <Route path="/common" element={<CommonGamePage />} />
