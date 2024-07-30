@@ -64,7 +64,7 @@ pipeline {
                                     docker rm front || true
                                     docker ps --filter "publish=3000" --format "{{.ID}}" | xargs -r docker stop
                                     docker ps --filter "publish=3000" --format "{{.ID}}" | xargs -r docker rm
-                                    docker run -d --name front --network ${NETWORK_NAME} -p 3000:80 ${DOCKER_HUB_REPO}:latest
+                                    docker run -d --name front --network ${NETWORK_NAME} -p 3000:3000 ${DOCKER_HUB_REPO}:latest
                                 """,
                                 remoteDirectory: '/home/ubuntu', // 원격 디렉토리
                                 removePrefix: ''
