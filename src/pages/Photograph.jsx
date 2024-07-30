@@ -1,6 +1,7 @@
 import React from "react";
 import Photograph_intro from "../components/Photograph_intro";
 import Photograph_final from "../components/Phogoraph_final";
+import GameTurns from "../components/GameTurns";
 
 const Photograph = () => {
 
@@ -21,7 +22,8 @@ const Photograph = () => {
         </div>
         {/* 게임순서 div */}
         <div className="m-2 flex items-center justify-center">
-          게임순서
+          <GameTurns sectionNumber={1} />
+          {/* <GameTurns sectionNumber={3} /> */}
         </div>
         {/* 문구 들어갈 div */}
         <div className="text-center text-sm m-5 font-bold">
