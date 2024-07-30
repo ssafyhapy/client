@@ -28,6 +28,8 @@ import GuessMe from "./pages/GuessMe";
 // 렙업 페이지들
 import WrapUp from "./pages/WrapUp";
 
+import Temp from "./components/SelfIntroductionModal";
+
 function App() {
   return (
     <>
@@ -58,6 +60,8 @@ function App() {
 
       {/* 렙업 페이지랑 관련된 Route */}
       <Route path="/wrap_up" element={<WrapUp />} />
+
+      <Route path="/temp" element={<Temp />} />
 
     </Routes>
     </>
