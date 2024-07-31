@@ -48,7 +48,7 @@ const SelfIntroduction = () => {
           <img
             src="src/assets/thinking_character.png"
             alt="생각하는 캐릭터 그림"
-            className="absolute bottom-0 left-0 mb-3 ml-3"
+            className="absolute bottom-0 left-0 mb-3 ml-3 max-w-[100px] max-h-[100px]"
           />
         </div>
       </div>
