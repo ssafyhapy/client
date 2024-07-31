@@ -15,6 +15,7 @@ import TakePhotoModal from "./components/TakePhotoModal";
 
 // 게임 공통 페이지 (기반)
 import CommonGamePage from "./components/CommonGamePage";
+import Auth from "./pages/Auth";
 
 // 한 줄 자기소개 페이지들
 import SelfIntroduction from "./pages/SelfIntroduction"
@@ -44,11 +45,12 @@ function App() {
       <Route path="/play" element={<Play />} />
       <Route path="/login" element={<Login />} />
       <Route path="/mypage" element={<MyPage />} />
-      <Route path="/camera-check" element={<CamCheck />} />
       <Route path="/report" element={<Report />} />
+      <Route path="/auth/kakao/callback" element={<Auth />} />
         
       {/* 대기실 */}
       <Route path="/waiting-room" element={<WaitingRoom />} />
+      <Route path="/camera-check" element={<CamCheck />} />
       
       {/* 한줄 자기소개 페이지랑 관련된 Route */}
       <Route path="/common" element={<CommonGamePage />} />
@@ -75,7 +77,7 @@ function App() {
       <Route path="/photo-first" element={<PhotographFirst />} />
       <Route path="/photo-last" element={<PhotographLast />} />
       <Route path="/photomodal" element={<TakePhotoModal />} />
-
+        
     </Routes>
     </>
   );
