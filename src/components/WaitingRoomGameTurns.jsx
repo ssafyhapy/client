@@ -16,17 +16,17 @@ const WaitingRoomGameTurns = ({ sectionNumber }) => {
 
   return (
     <>
-      <div className="flex justify-around w-[100%] h-[50%]">
+      <div className="flex justify-around w-[60vw] h-[50%]">
         <div
           className="flex flex-col items-center justify-center h-full relative"
           onMouseEnter={() => handleMouseEnter("self-introduction")}
           onMouseLeave={handleMouseLeave}
         >
           <img src={checkedCircle} alt="" />
-          <div className="text-[1.2rem]">한 줄 자기소개</div>
+          <div className="text-[18px]">한 줄 자기소개</div>
           {hoveredSection === "self-introduction" && (
             <div
-              className="absolute bottom-full w-[15vw] h-[35vh] mt-2 p-2 bg-white shadow-lg rounded flex flex-col justify-center items-center gap-3 rounded-[15px]"
+              className="absolute bottom-full w-[25vw] h-[35vh] mt-2 p-2 bg-white shadow-lg rounded flex flex-col justify-center items-center gap-3 rounded-[15px]"
               style={{
                 background:
                   "linear-gradient(to right, rgba(221, 229, 249, 0.7), rgba(142, 210, 255, 0.7))",
@@ -69,10 +69,10 @@ const WaitingRoomGameTurns = ({ sectionNumber }) => {
             alt=""
             className={`${sectionNumber >= 2 ? "hidden" : ""}`}
           />
-          <div className="text-[1.2rem]">나를 맞춰봐</div>
+          <div className="text-[18px]">나를 맞춰봐</div>
           {hoveredSection === "guess" && (
             <div
-              className="absolute bottom-full w-[15vw] h-[35vh] mt-2 p-2 bg-white shadow-lg rounded flex flex-col justify-center items-center gap-3 rounded-[15px]"
+              className="absolute bottom-full w-[25vw] h-[35vh] mt-2 p-2 bg-white shadow-lg rounded flex flex-col justify-center items-center gap-3 rounded-[15px]"
               style={{
                 background:
                   "linear-gradient(to right, rgba(221, 229, 249, 0.7), rgba(142, 210, 255, 0.7))",
@@ -113,10 +113,10 @@ const WaitingRoomGameTurns = ({ sectionNumber }) => {
             alt=""
             className={`${sectionNumber >= 3 ? "hidden" : ""}`}
           />
-          <div className="text-[1.2rem]">밸런스 게임</div>
+          <div className="text-[18px]">밸런스 게임</div>
           {hoveredSection === "balance" && (
             <div
-              className="absolute bottom-full w-[15vw] h-[35vh] mt-2 p-2 bg-white shadow-lg rounded flex flex-col justify-center items-center gap-3 rounded-[15px]"
+              className="absolute bottom-full w-[25vw] h-[35vh] mt-2 p-2 bg-white shadow-lg rounded flex flex-col justify-center items-center gap-3 rounded-[15px]"
               style={{
                 background:
                   "linear-gradient(to right, rgba(221, 229, 249, 0.7), rgba(142, 210, 255, 0.7))",
