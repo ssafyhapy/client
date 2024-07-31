@@ -9,20 +9,17 @@ import refresh from "./../assets/refresh.png";
 
 const BalanceChangeChoices = () => {
   const { pickedChoice, setPickedChoice } = useBalanceStore();
-  console.log(pickedChoice)
+  const { discussedNum, setDiscussedNum } = useBalanceStore();
 
   const balanceChoicesHard = {
     first: "밸런스 게임 A",
     second: "밸런스 게임 B",
   };
 
-  const btnText = "다음 단계";
-  const timerImg = "src/assets/timer.png";
-
   // Balance 게임 선택지 업데이트 (주제 변경 버튼 클릭시)
   const [balanceChoices, setBalanceChoices] = useState({});
   const updateBalanceChoices = () => {
-    setPickedChoice(null)
+    setPickedChoice(null);
     // setBalanceChoices({first:, second:})
   };
 
@@ -30,7 +27,13 @@ const BalanceChangeChoices = () => {
 
   const handleConfirmChoices = () => {
     navigate("/balance_choosing");
-    setPickedChoice(null)
+    setDiscussedNum((prevNum) => prevNum + 1);
+    setPickedChoice(null);
+  };
+
+  const handleNextStep = () => {
+    setDiscussedNum(()=>0);
+    navigate("/wrap_up")
   };
 
   return (
@@ -87,7 +90,7 @@ const BalanceChangeChoices = () => {
               {balanceChoicesHard.second}
             </div>
           </div>
-          <div className="absolute top-3 left-10">
+          <div className={`absolute top-3 left-10 ${discussedNum>=5?"hidden":""}`}>
             <div>
               <button
                 onClick={updateBalanceChoices}
@@ -99,15 +102,25 @@ const BalanceChangeChoices = () => {
             </div>
           </div>
 
+          <div className={`text-[14px] text-[rgba(0,0,0,0.5)] absolute right-5 top-2 ${discussedNum===null?"hidden":""}`}>
+            현재 토론 완료 : {discussedNum}/5
+          </div>
           <div className="absolute bottom-3 right-5 flex flex-col items-center">
             <div className="flex flex-col justify-center items-center">
               <button
                 onClick={handleConfirmChoices}
-                className={`bg-[rgba(150,165,254,0.6)] text-white w-[76px] h-[30px] text-[16px] rounded-[30px] mb-3 shadow-[0_4px_10px_rgba(66,72,81,0.5)] ${pickedChoice!==null?"hidden":""}`}
+                className={`bg-[rgba(150,165,254,0.6)] text-white w-[76px] h-[30px] text-[16px] rounded-[30px] mb-3 shadow-[0_4px_10px_rgba(66,72,81,0.5)] ${
+                  pickedChoice !== null ? "hidden" : ""
+                } ${discussedNum>=5?"hidden":""}`}
               >
                 주제 확정
               </button>
-              <BasicBtn btnText={btnText} />
+              <button
+                onClick={handleNextStep}
+                className="w-[76px] h-[30px] rounded-[30px] text-[#458EF7] text-[16px] bg-custom-gradient-basicBtn shadow-[0_4px_10px_rgba(66,72,81,0.5)]"
+              >
+                다음 단계
+              </button>
             </div>
           </div>
         </div>

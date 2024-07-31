@@ -7,6 +7,8 @@ import GameTurns from "../components/GameTurns";
 
 const BalanceChoosing = () => {
   const { pickedChoice, setPickedChoice } = useBalanceStore();
+  const { discussedNum, setDiscussedNum } = useBalanceStore();
+
 
   const balanceChoicesHard = {
     first: "밸런스 게임 A",
@@ -64,6 +66,9 @@ const BalanceChoosing = () => {
 
         {/* Bottom Div */}
         <div className="flex-none mt-10 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem] relative">
+        <div className={`text-[14px] text-[rgba(0,0,0,0.5)] absolute right-5 top-2 ${discussedNum===null?"hidden":""}`}>
+            현재 토론 완료 : {discussedNum}/5
+          </div>
           <div className="flex-grow flex items-center justify-center relative gap-5">
             <button
               onClick={() => handlePickedChoice(1)}
