@@ -8,7 +8,7 @@ const BalanceGameModal = ({ btnText, onClose }) => {
       <div className="bg-[rgba(255,255,255,0.95)] w-[50%] h-[65%] flex rounded-2xl shadow-lg">
         <div className="bg-custom-modal m-10 p-8 justify-center items-center relative rounded-2xl w-full">
           <div className="p-3 flex items-center">
-            <div className="flex flex-col mr-2 w-full">
+            <div className="flex flex-col mr-2 w-full justify-center">
               <p className="font-bold text-[32px] text-[rgba(87,136,208)] text-center">
                 이 모임에서는 누구와
               </p>
@@ -21,7 +21,7 @@ const BalanceGameModal = ({ btnText, onClose }) => {
             </div>
           </div>
           <div className="p-2 mb-5 flex items-center">
-            <textarea className="w-[90%] text-xl border rounded p-1" />
+            <textarea className="w-[90%] text-xl border rounded p-1 resize-none" />
           </div>
           <p className="text-[rgba(0,0,0,0.45)] text-[14px]">
             *밸런스 게임을 위해 받는 질문으로
