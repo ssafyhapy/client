@@ -46,7 +46,7 @@ const GuessMeGetReady = () => {
       <div className="w-[1024px] h-[90%] bg-[rgba(255,255,255,0.3)] m-auto rounded-[40px] flex flex-col relative p-10 overflow-hidden">
         {/* Top Div */}
         <div className="h-[5%] flex justify-between items-center mb-2">
-          <div className="w-[90%] flex justify-center mb-5">
+          <div className="w-[90%] flex justify-center absolute top-3">
             <GameTurns sectionNumber={2} />
           </div>
           <div className="w-[10%] flex justify-center">
