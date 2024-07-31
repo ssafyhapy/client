@@ -10,6 +10,8 @@ export default {
       "custom-gradient-main": "linear-gradient(0deg, #DDCEFF 0%, #F8DFF0 100%)",
       "custom-gradient-basicBtn":
         "linear-gradient(135deg, #FFFFFF 1%, rgba(30,144,255,0.3) 40%, rgba(30,144,255,0.3) 100%)",
+      "custom-modal":
+      "linear-gradient(135deg, rgba(195,210,255,0.45) 0%, rgba(142,210,255,0.45) 100%)",
     },
   },
   plugins: [
