@@ -12,7 +12,7 @@ const Auth = () => {
   const [error, setError] = useState(null);
 
   // zustand store
-  const { setMemberName } = useAuthStore();
+  const { setMemberName, setAccessToken } = useAuthStore();
 
   // URLSearchParams를 사용하여 인가코드를 가져옴
   useEffect(() => {
@@ -52,9 +52,10 @@ const Auth = () => {
         const headerData = response.headers;
         console.log("accessToken", headerData["authorization"].replace(/^Bearer\s/, ''));
         const accessToken = headerData["authorization"].replace(/^Bearer\s/, '');
-
         // 토큰을 localStorage에 저장
         localStorage.setItem("accessToken", accessToken);
+        // zustand store에  accessToken 저장
+        setAccessToken(accessToken)
 
         // play로 리다이렉트
         navigate("/play");
