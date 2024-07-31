@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
+import useBalanceStore from "../store/useBalanceStore";
 import Chatbox from "../components/Chatbox";
 import ExitBtn from "../components/btn/ExitBtn";
 import GameTurns from "../components/GameTurns";
 
 const BalanceChoosing = () => {
+  const { pickedChoice, setPickedChoice } = useBalanceStore();
+
   const balanceChoicesHard = {
     first: "밸런스 게임 A",
     second: "밸런스 게임 B",
@@ -12,16 +15,9 @@ const BalanceChoosing = () => {
 
   const timerImg = "src/assets/timer.png";
 
-  const [balanceChoices, setBalanceChoices] = useState({});
-  const updateBalanceChoices = () => {
-    // setBalanceChoices({first:, second:})
-  };
-
-  const [pickedChoice, setPickedChoice] = useState();
+// 밸런스 게임 선택지 클릭 시 선택한 버튼에 따라 업데이트 (1, 2)
   const handlePickedChoice = (choice) => {
-    setPickedChoice(choice); // Update the picked choice state
-    console.log(choice);
-    console.log(pickedChoice);
+    setPickedChoice(choice); 
   };
 
   const [secondsLeft, setSecondsLeft] = useState(10);
@@ -34,7 +30,7 @@ const BalanceChoosing = () => {
           return prev - 1;
         } else {
           clearInterval(timer);
-          navigate("/balance_change_choices"); // Navigate to the new route
+          navigate("/balance_change_choices");
           return 0;
         }
       });
