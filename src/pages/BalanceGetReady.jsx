@@ -19,10 +19,6 @@ const BalanceGetReady = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleOpenModal = ()=>{
-    setShowModal(true)
-  }
-
   const handleCloseModal = ()=>{
     setShowModal(false)
   }
