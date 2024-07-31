@@ -31,6 +31,8 @@ import BalanceGameModal from "./components/BalanceGameModal";
 // 렙업 페이지들
 import WrapUp from "./pages/WrapUp";
 
+import Temp from "./components/SelfIntroductionModal";
+
 function App() {
   return (
     <>
