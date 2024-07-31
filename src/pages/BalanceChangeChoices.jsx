@@ -32,8 +32,8 @@ const BalanceChangeChoices = () => {
   };
 
   const handleNextStep = () => {
-    setDiscussedNum(()=>0);
-    navigate("/wrap_up")
+    setDiscussedNum(() => 0);
+    navigate("/wrap_up");
   };
 
   return (
@@ -51,10 +51,10 @@ const BalanceChangeChoices = () => {
 
         {/* Middle Div */}
         <div className="flex-grow flex overflow-hidden mt-5 h-[52vh]">
-          <div className="bg-[rgba(255,255,255,0.9)] flex-[7] h-[52vh] mr-5 rounded-[20px] flex justify-center items-center overflow-hidden">
+          <div className="bg-[rgba(255,255,255,0.9)] flex-[7] h-full mr-5 rounded-[20px] flex justify-center items-center overflow-hidden">
             <p className="m-5">camera background</p>
           </div>
-          <div className="flex-[3] ml-5 h-[52vh] rounded-[20px] flex flex-col justify-center items-center overflow-hidden">
+          <div className="flex-[3] ml-5 h-full rounded-[20px] flex flex-col justify-center items-center overflow-hidden">
             <Chatbox />
           </div>
         </div>
@@ -90,7 +90,11 @@ const BalanceChangeChoices = () => {
               {balanceChoicesHard.second}
             </div>
           </div>
-          <div className={`absolute top-3 left-10 ${discussedNum>=5?"hidden":""}`}>
+          <div
+            className={`absolute top-3 left-10 ${
+              discussedNum >= 5 ? "hidden" : ""
+            }`}
+          >
             <div>
               <button
                 onClick={updateBalanceChoices}
@@ -102,7 +106,11 @@ const BalanceChangeChoices = () => {
             </div>
           </div>
 
-          <div className={`text-[14px] text-[rgba(0,0,0,0.5)] absolute right-5 top-2 ${discussedNum===null?"hidden":""}`}>
+          <div
+            className={`text-[14px] text-[rgba(0,0,0,0.5)] absolute right-5 top-2 ${
+              discussedNum === null ? "hidden" : ""
+            }`}
+          >
             현재 토론 완료 : {discussedNum}/5
           </div>
           <div className="absolute bottom-3 right-5 flex flex-col items-center">
@@ -111,7 +119,7 @@ const BalanceChangeChoices = () => {
                 onClick={handleConfirmChoices}
                 className={`bg-[rgba(150,165,254,0.6)] text-white w-[76px] h-[30px] text-[16px] rounded-[30px] mb-3 shadow-[0_4px_10px_rgba(66,72,81,0.5)] ${
                   pickedChoice !== null ? "hidden" : ""
-                } ${discussedNum>=5?"hidden":""}`}
+                } ${discussedNum >= 5 ? "hidden" : ""}`}
               >
                 주제 확정
               </button>
