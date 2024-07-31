@@ -27,11 +27,6 @@ const SelfIntroductionAllPrepared = () => {
           </div>
         </div>
 
-        {/* Mid-Bottom Between Div */}
-        <div className="text-xs mt-3 flex justify-start">
-          <p className="text-[12px]" />
-        </div>
-
         {/* Bottom Div */}
         <div className="flex-none mt-10 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem]">
           <div className="flex-grow flex items-center justify-center">
