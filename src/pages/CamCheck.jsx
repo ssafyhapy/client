@@ -21,11 +21,11 @@ const CamCheck = () => {
 
   return (
     <GameBackground>
-      <div className="flex flex-col justify-center items-center p-[2rem] w-full relative">
-        <div className="w-[70%] relative">
-          <div className="bg-white flex flex-col justify-center items-center p-[2rem] rounded-[40px] shadow-[0_0_30px_rgba(66,72,81,0.2)] mb-[20px]">
+      <div className="flex flex-col justify-center items-center p-[2rem] w-full max-h-[90vh] relative">
+        <div className="w-[80%] relative ">
+          <div className="bg-white flex flex-col justify-center items-center p-[2rem] rounded-[40px] shadow-[0_0_30px_rgba(66,72,81,0.2)] mb-[20px] max-h-[60vh]">
             <div className="h-[28rem] flex justify-center items-center">
-              <CameraCheckVideoView data={{ name: "someone", mic: false, ready: false }} />
+              <CameraCheckVideoView data={{ name: "someone", mic: false, ready: true }} />
             </div>
             <div className="flex justify-between">
               <span className="mr-20">
