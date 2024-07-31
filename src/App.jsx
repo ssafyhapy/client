@@ -30,8 +30,7 @@ import BalanceGameModal from "./components/BalanceGameModal";
 
 // 렙업 페이지들
 import WrapUp from "./pages/WrapUp";
-
-import Temp from "./components/SelfIntroductionModal";
+import WrapUpModal from "./components/WrapUpModal";
 
 function App() {
   return (
@@ -63,6 +62,7 @@ function App() {
 
       {/* 렙업 페이지랑 관련된 Route */}
       <Route path="/wrap_up" element={<WrapUp />} />
+      <Route path="/wrapup_modal" element={<WrapUpModal />} />
 
       {/* 밸런스 게임과 관련된 Route */}
       <Route path="/balance_getready" element={<BalanceGetReady />} />
