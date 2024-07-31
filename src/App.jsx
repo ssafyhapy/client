@@ -6,8 +6,12 @@ import Play from "./pages/Play";
 import MyPage from "./pages/MyPage";
 import WaitingRoom from "./pages/WaitingRoom";
 import CamCheck from "./pages/CamCheck";
-import Photograph from "./pages/Photograph";
 import Report from "./pages/Report"
+
+// 기념사진 촬영 페이지
+import PhotographFirst from "./pages/PhotographFirst";
+import PhotographLast from "./pages/PhotographLast";
+import TakePhotoModal from "./components/TakePhotoModal";
 
 // 게임 공통 페이지 (기반)
 import CommonGamePage from "./components/CommonGamePage";
@@ -40,36 +44,37 @@ function App() {
       <Route path="/play" element={<Play />} />
       <Route path="/login" element={<Login />} />
       <Route path="/mypage" element={<MyPage />} />
-      <Route path="/camera_check" element={<CamCheck />} />
+      <Route path="/camera-check" element={<CamCheck />} />
       <Route path="/report" element={<Report />} />
-      
-      {/* 기념사진촬영 */}
-      <Route path="/photo" element={<Photograph />} />
         
       {/* 대기실 */}
-      <Route path="/waiting_room" element={<WaitingRoom />} />
+      <Route path="/waiting-room" element={<WaitingRoom />} />
       
       {/* 한줄 자기소개 페이지랑 관련된 Route */}
       <Route path="/common" element={<CommonGamePage />} />
-      <Route path="/selfintro_getready" element={<SelfIntroductionGetReady />} />
-      <Route path="/selfintro_allprepared" element={<SelfIntroductionAllPrepared />} />
-      <Route path="/self_introduction" element={<SelfIntroduction />} />
+      <Route path="/selfintro-getready" element={<SelfIntroductionGetReady />} />
+      <Route path="/selfintro-allprepared" element={<SelfIntroductionAllPrepared />} />
+      <Route path="/self-introduction" element={<SelfIntroduction />} />
 
       {/* 나를 맞춰봐 페이지랑 관련된 Route */}
       <Route path="/guessme" element={<GuessMe />} />
-      <Route path="/guessme_getready" element={<GuessMeGetReady />} />
-      <Route path="/guessme_allprepared" element={<GuessMeAllPrepared />} />
+      <Route path="/guessme-getready" element={<GuessMeGetReady />} />
+      <Route path="/guessme-allprepared" element={<GuessMeAllPrepared />} />
 
       {/* 렙업 페이지랑 관련된 Route */}
-      <Route path="/wrap_up" element={<WrapUp />} />
-      <Route path="/wrapup_modal" element={<WrapUpModal />} />
+      <Route path="/wrap-up" element={<WrapUp />} />
+      <Route path="/wrapup-modal" element={<WrapUpModal />} />
 
       {/* 밸런스 게임과 관련된 Route */}
-      <Route path="/balance_getready" element={<BalanceGetReady />} />
-      <Route path="/balance_choosing" element={<BalanceChoosing />} />
-      <Route path="/balance_change_choices" element={<BalanceChangeChoices />} />
-      <Route path="/balance_modal" element={<BalanceGameModal />} />
+      <Route path="/balance-getready" element={<BalanceGetReady />} />
+      <Route path="/balance-choosing" element={<BalanceChoosing />} />
+      <Route path="/balance-change-choices" element={<BalanceChangeChoices />} />
+      <Route path="/balance-modal" element={<BalanceGameModal />} />
 
+      {/* 기념사진촬영과 관련된 Route */}
+      <Route path="/photo-first" element={<PhotographFirst />} />
+      <Route path="/photo-last" element={<PhotographLast />} />
+      <Route path="/photomodal" element={<TakePhotoModal />} />
 
     </Routes>
     </>
