@@ -1,9 +1,20 @@
-import React from "react"
+import React from "react";
+import { useEffect, useState } from "react";
 import GameTurns from "../components/GameTurns";
 import ExitBtn from "../components/btn/ExitBtn";
 import Chatbox from "../components/Chatbox";
+import versus from "./../assets/versus.png"
 
-const BalanceGame = ()=>{
+const BalanceGetReady = () => {
+  const [dots, setDots] = useState("");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots((prevDots) => (prevDots.length < 6 ? prevDots + " ·" : ""));
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
       <div className="w-[1024px] h-[90%] bg-[rgba(255,255,255,0.3)] m-auto rounded-[40px] flex flex-col relative p-10 overflow-hidden">
@@ -27,20 +38,18 @@ const BalanceGame = ()=>{
           </div>
         </div>
 
-        {/* Bottom Div */}
         <div className="flex-none mt-10 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem]">
+          <img className="absolute" src={versus} alt="star 그림" />
           <div className="flex-grow flex items-center justify-center">
-            <img src="src/assets/star.png" alt="star 그림" />
-            <span className="text-transparent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <span className="text-[rgba(85,181,236)]">전원 준비 완료!!</span>
-            <span className="text-transparent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <img src="src/assets/star.png" alt="star 그림" />
+            <span className="text-[rgba(85,181,236)]">
+              밸런스 게임 문제를 준비 중{dots}
+            </span>
           </div>
           <div className="flex justify-end"></div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default BalanceGame
+export default BalanceGetReady;

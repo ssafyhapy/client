@@ -9,7 +9,6 @@ import CamCheck from "./pages/CamCheck";
 import Photograph from "./pages/Photograph";
 import Report from "./pages/Report"
 
-
 // 게임 공통 페이지 (기반)
 import CommonGamePage from "./components/CommonGamePage";
 
@@ -24,7 +23,7 @@ import GuessMeAllPrepared from "./pages/GuessMeAllPrepared"
 import GuessMe from "./pages/GuessMe";
 
 // 밸런스 페이지들
-import BalanceGame from "./pages/BalanceGame";
+import BalanceGetReady from "./pages/BalanceGetReady";
 import BalanceChangeChoices from "./pages/BalanceChangeChoices";
 import BalanceChoosing from "./pages/BalanceChoosing"
 import BalanceGameModal from "./components/BalanceGameModal";
@@ -64,7 +63,7 @@ function App() {
       <Route path="/wrap_up" element={<WrapUp />} />
 
       {/* 밸런스 게임과 관련된 Route */}
-      <Route path="/balance_game" element={<BalanceGame />} />
+      <Route path="/balance_getready" element={<BalanceGetReady />} />
       <Route path="/balance_choosing" element={<BalanceChoosing />} />
       <Route path="/balance_change_choices" element={<BalanceChangeChoices />} />
       <Route path="/balance_modal" element={<BalanceGameModal />} />
