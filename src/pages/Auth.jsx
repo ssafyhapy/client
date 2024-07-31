@@ -12,28 +12,24 @@ const Auth = () => {
   const [error, setError] = useState(null);
 
   // zustand store
-  const { setUser, setAccessToken } = useAuthStore();
+  const { setMemberName } = useAuthStore();
 
   // URLSearchParams를 사용하여 인가코드를 가져옴
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const codeParam = params.get("code");
+    console.log("codeParam", codeParam);
     setCode(codeParam);
   }, [location]);
 
   // 인가코드가 있을 경우 서버로 요청을 보내어 토큰을 받아옴
   useEffect(() => {
-    if (!code) {
-      // code가 없을 경우 로딩 상태를 false로 설정
-      setIsLoading(false);
-      return;
-    }
-
+    setIsLoading(true);
     // 서버로 인가코드를 보내어 토큰을 받아오는 함수
     const fetchCode = async () => {
       try {
         const response = await axios.post(
-          "http://i11c209.p.ssafy.io:8080/member/login",
+          "http://i11c209.p.ssafy.io:8080/oauth/login",
           {
             registrationId: "kakao",
             authorization: code,
@@ -43,15 +39,26 @@ const Auth = () => {
             headers: {
               "Content-Type": "application/json",
             },
+            // 쿠키를 포함하는 옵션
+            withCredentials: true,
           }
         );
-        
-        // 서버로부터 받은 데이터를 result에 저장
         const result = response.data;
-        setUser(result.user);
-        setAccessToken(result.accessToken);
+
+        // zustand store에 사용자 이름 저장
+        console.log("memberName", result.data.memberName);
+        setMemberName(result.data.memberName);
+        
+        const headerData = response.headers;
+        console.log("accessToken", headerData["authorization"].replace(/^Bearer\s/, ''));
+        const accessToken = headerData["authorization"].replace(/^Bearer\s/, '');
+
+        // 토큰을 localStorage에 저장
+        localStorage.setItem("accessToken", accessToken);
+
         // play로 리다이렉트
         navigate("/play");
+
       } catch (err) {
         setError(err);
       } finally {
@@ -60,17 +67,15 @@ const Auth = () => {
     };
 
     fetchCode();
-  }, [code, setUser, setAccessToken, navigate]);
-
-  // 로딩 중일 때 Spinner 컴포넌트를 렌더링
-  if (isLoading) return <Spinner />;
-  // 에러 발생 시 에러 메시지를 렌더링
-  if (error) return <div>Error: {error.message}</div>;
+  }, [code, setMemberName, navigate]);
 
   return (
     <div>
-      {code && <div>{code}</div>}
-      {!isLoading && !error && <div>Login successful, redirecting...</div>}
+      {/* 로딩 중일 때 Spinner 컴포넌트를 렌더링 */}
+      {isLoading && <Spinner />}
+
+      {/* 로딩이 끝나고 에러 발생 시 에러 메시지를 렌더링 */}
+      {!isLoading && error && <div>Error: {error.message}</div>}
     </div>
   );
 };
