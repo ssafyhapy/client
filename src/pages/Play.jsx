@@ -3,6 +3,9 @@ import NavBar from "../components/NavBar";
 import MainGradientBackground from "../components/MainGradientBackground";
 import MainHomeFrame from "../components/MainHomeFrame";
 import MakeRoom from "./MakeRoom";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+// import { useNavigate } from "react-router-dom";
 
 const Play = () => {
   // 방 만들기 모달 상태
@@ -14,6 +17,33 @@ const Play = () => {
   const closeMakeRoom = () => {
     setOpenMakeRoom(false);
   };
+
+  // const navigate = useNavigate();
+
+  // 접속코드 통해 입장
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  // 제출시 방 입장(조회) 요청
+  const onSubmit = async (data) => {
+    console.log(data);
+    try {
+      const response = await axios.post(
+        `http://i11c209.p.ssafy.io:8080/room/enter/roomCode=${data.roomCode}`
+      );
+      console.log(response);
+      // 방 입장 요청 완료시 카메라 체크 페이지로 이동
+      // navigate("/camera_check");
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  console.log(watch("roomCode"));
 
   return (
     <>
@@ -47,19 +77,33 @@ const Play = () => {
                   </p>
                   {/* 접속코드로 방 입장하기 */}
                   <div className="w-[90%] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] rounded-[30px] border-[10px] border-[rgba(255,255,255,0.2)] z-20 mt-5">
-                    <form className="flex flex-col justify-center items-center p-3 gap-5">
+                    <div className="flex flex-col justify-center items-center p-3 gap-5">
                       <input
                         type="text"
                         className="w-[90%] mt-2 p-2 border rounded"
                         placeholder="접속코드를 입력해주세요"
+                        // 접속코드 입력 폼, 유효성 검사
+                        {...register("roomCode", {
+                          required: "잘못된 접속코드입니다.",
+                          valueAsNumber: true,
+                          validate: (value) =>
+                            Number.isInteger(value) || "정수만 입력해주세요",
+                        })}
                       />
+                      {/* 접속코드 입력시 에러 메시지 */}
+                      {errors.roomCode && (
+                        <p className="text-red-500 text-sm">
+                          {errors.roomCode.message}
+                        </p>
+                      )}
+                      {/* 방 입장하기 버튼, 클릭시 axios 요청 */}
                       <button
-                        type="submit"
+                        onClick={handleSubmit(onSubmit)}
                         className="w-[90%] bg-blue-500 text-white py-2 px-4 rounded h-14 text-2xl"
                       >
                         입장하기
                       </button>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </form>
