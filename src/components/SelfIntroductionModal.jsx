@@ -5,7 +5,7 @@ const SelfIntroductionModal = ({ userName, readyPeople, btnText, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] z-50">
-      <div className="bg-[rgba(255,255,255,0.80)] w-[50%] h-[40%] flex rounded-2xl shadow-lg">
+      <div className="bg-[rgba(255,255,255,0.95)] w-[50%] h-[40%] flex rounded-2xl shadow-lg">
         <div className="bg-custom-modal m-10 p-8 justify-center items-center relative rounded-2xl w-full">
           <div className="p-3 flex items-center">
             <div className="flex flex-col mr-2">
