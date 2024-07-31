@@ -5,7 +5,7 @@ import ExitBtn from "../components/btn/ExitBtn";
 import Chatbox from "../components/Chatbox";
 import versus from "./../assets/versus.png"
 
-const BalanceGame = () => {
+const BalanceGetReady = () => {
   const [dots, setDots] = useState("");
 
   useEffect(() => {
@@ -52,4 +52,4 @@ const BalanceGame = () => {
   );
 };
 
-export default BalanceGame;
+export default BalanceGetReady;

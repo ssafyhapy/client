@@ -8,7 +8,7 @@ import WaitingRoom from "./pages/WaitingRoom";
 import CamCheck from "./pages/CamCheck";
 import Photograph from "./pages/Photograph";
 import Report from "./pages/Report"
-import BalanceGame from "./pages/BalanceGame";
+import BalanceGame from "./pages/BalanceGetReady";
 import BalanceChangeChoices from "./pages/BalanceChangeChoices";
 import BalanceChoosing from "./pages/BalanceChoosing"
 
@@ -60,7 +60,7 @@ function App() {
       <Route path="/wrap_up" element={<WrapUp />} />
 
       {/* 밸런스 게임과 관련된 Route */}
-      <Route path="/balance_game" element={<BalanceGame />} />
+      <Route path="/balance_getready" element={<BalanceGame />} />
       <Route path="/balance_choosing" element={<BalanceChoosing />} />
       <Route path="/balance_change_choices" element={<BalanceChangeChoices />} />
 
