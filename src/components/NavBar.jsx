@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Login from "../pages/Login";
+import Login from "../pages/Main/Login";
 
 const NavBar = () => {
   const location = useLocation();
