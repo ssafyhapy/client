@@ -33,7 +33,7 @@ const Play = () => {
     console.log(data);
     try {
       const response = await axios.post(
-        `http://i11c209.p.ssafy.io:8080/room/enter/roomCode=${data.roomCode}`
+        `http://i11c209.p.ssafy.io/api/room/enter/roomCode=${data.roomCode}`
       );
       console.log(response);
       // 방 입장 요청 완료시 카메라 체크 페이지로 이동

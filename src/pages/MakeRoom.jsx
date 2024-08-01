@@ -18,7 +18,7 @@ const MakeRoom = ({ closeMakeRoom }) => {
     console.log(data);
     try {
       const response = await axios.post(
-        "http://i11c209.p.ssafy.io:8080/room/create",{
+        "http://i11c209.p.ssafy.io/api/room/create",{
           roomName: data.roomName,
           roomPersonCount: data.roomPersonCount
         }
