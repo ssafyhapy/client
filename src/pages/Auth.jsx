@@ -87,3 +87,12 @@ const Auth = () => {
 };
 
 export default Auth;
+
+// 세션 스토리지의 accessToken을 확인하는 함수
+export const checkAccessToken=()=>{
+  const accessToken = sessionStorage.getItem("accessToken");
+  if (!accessToken) {
+    return false;
+  }
+  return true;
+}
