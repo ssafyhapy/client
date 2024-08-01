@@ -5,13 +5,14 @@ import Chatbox from "../components/Chatbox";
 import BasicBtn from "../components/btn/BasicBtn";
 import clipboard from "../assets/clipboard.webp";
 import check from "../assets/check.webp";
+import { useNavigate } from "react-router-dom";
 
 const WaitingRoom = () => {
   const [accessCode, setAccessCode] = useState();
   const [copyState, setCopyState] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const btnText = "다음";
+  const btnText = "시작";
 
   useEffect(() => {
     setAccessCode("axios로 백에서 받아올 것");
@@ -34,6 +35,11 @@ const WaitingRoom = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
+  const navigate = useNavigate()
+  const handleNextStep = ()=>{
+    navigate("/selfintro-getready")
+  }
 
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
@@ -68,7 +74,7 @@ const WaitingRoom = () => {
             <WaitingRoomGameTurns sectionNumber={3} />
           </div>
           <div className="absolute bottom-3 right-5">
-            <BasicBtn btnText={btnText} />
+            <BasicBtn btnText={btnText} onClick={handleNextStep}/>
           </div>
         </div>
       </div>
