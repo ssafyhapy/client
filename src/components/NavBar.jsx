@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Login from "../pages/Main/Login";
 import useAuthStore from "../store/useAuthStore";
+import { axiosInstance } from "../api/apiClient";
 
 const NavBar = () => {
   const location = useLocation();
@@ -15,7 +16,22 @@ const NavBar = () => {
     setLoginOpen(false);
   };
 
-  const {isLogin, logout} = useAuthStore();
+  const { isLogin, logout } = useAuthStore();
+
+  const handleLogout = async () => {
+    try {
+      // 로그아웃 AP 호출
+      await axiosInstance.post("/member/logout", null, { withCredentials: true });
+
+      // 세션 스토리지에서 액세스 토큰 삭제
+      sessionStorage.removeItem("accessToken");
+
+      // 로그아웃 상태 업데이트
+      logout();
+    } catch (error) {
+      console.error("로그아웃 실패", error);
+    }
+  };
 
   if (path === "/") {
     return (
@@ -52,7 +68,7 @@ const NavBar = () => {
                   <li className="text-[#4D98F7]">
                     <Link to="/mypage">Mypage</Link>
                   </li>
-                  <li className="text-[#4D98F7]">
+                  <li className="text-[#4D98F7]" onClick={handleLogout}>
                     <button>Logout</button>
                   </li>
                 </>
