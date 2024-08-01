@@ -10,18 +10,17 @@ const getJWTHeader = (accessToken) => {
 
 // config 객체에 baseURL 설정
 const config = { baseURL: baseUrl };
+
 // axios.create()로 기본 설정이 적용된 axios 인스턴스 생성
 export const axiosInstance = axios.create(config);
 
 // 인증 필요없는 요청
+// axiosInstance.get('/endpoint', { headers: {...{}}});
+// axiosInstance.post('/endpoint', { headers: {...{}}});
+
+// JWT 인증이 필요한 요청
 // axiosInstance.get('/endpoint');
 // axiosInstance.post('/endpoint');
-
-// jwt 인증이 필요한 요청
-// 세션스토리지에서 jwt토큰 가져오기
-// const accessToken = sessionStorage.getItem('accessToken');
-// axiosInstance.get('/endpoint', {headers:getJWTHeader(accessToken)})
-// axiosInstance.post('/endpoint', {headers:getJWTHeader(accessToken)})
 
 // refreshToken을 사용하여 새로운 accessToken을 요청하는 함수
 const refreshToken = async () => {
