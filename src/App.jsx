@@ -23,10 +23,11 @@ import GuessMeAllPrepared from "./pages/GuessMeAllPrepared";
 import GuessMe from "./pages/GuessMe";
 
 // 밸런스 페이지들
-import BalanceGetReady from "./pages/BalanceGetReady";
-import BalanceChangeChoices from "./pages/BalanceChangeChoices";
-import BalanceChoosing from "./pages/BalanceChoosing";
-import BalanceGameModal from "./components/BalanceGameModal";
+// import BalanceGetReady from "./components/Balance_game/BalanceGetReady";
+// import BalanceChangeChoices from "./components/Balance_game/BalanceChangeChoices";
+// import BalanceChoosing from "./components/Balance_game/BalanceChoosing";
+import Balance from "./pages/games/BalanceGame"
+// import BalanceGameModal from "./components/BalanceGameModal";
 
 // 기념사진 촬영 페이지
 import PhotographFirst from "./pages/PhotographFirst";
@@ -69,13 +70,11 @@ function App() {
         <Route path="/guessme-allprepared" element={<GuessMeAllPrepared />} />
 
         {/* 밸런스 게임과 관련된 Route */}
-        <Route path="/balance-getready" element={<BalanceGetReady />} />
+        <Route path="/balance" element={<Balance />} />
+        {/* <Route path="/balance-getready" element={<BalanceGetReady />} />
         <Route path="/balance-choosing" element={<BalanceChoosing />} />
-        <Route
-          path="/balance-change-choices"
-          element={<BalanceChangeChoices />}
-        />
-        <Route path="/balance-modal" element={<BalanceGameModal />} />
+        <Route path="/balance-change-choices" element={<BalanceChangeChoices />} /> */}
+        {/* <Route path="/balance-modal" element={<BalanceGameModal />} /> */}
 
         {/* 기념사진촬영과 관련된 Route */}
         <Route path="/photo-first" element={<PhotographFirst />} />
