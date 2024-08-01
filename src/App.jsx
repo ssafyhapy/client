@@ -1,41 +1,40 @@
 import React from "react";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
-import Home from "./pages/Home";
-import Play from "./pages/Play";
-import Login from "./pages/Login";
-import MyPage from "./pages/MyPage";
-import Auth from "./pages/Auth";
-import Report from "./pages/Report";
+import Home from "./pages/Main/Home";
+import Play from "./pages/Main/Play";
+import Login from "./pages/Main/Login";
+import MyPage from "./pages/Main/MyPage";
+import Auth from "./pages/Main/Auth";
+import Report from "./pages/Main/Report";
 
 // 게임 공통 페이지(기반)
-import WaitingRoom from "./pages/WaitingRoom";
-import CamCheck from "./pages/CamCheck";
+import WaitingRoom from "./pages/Games/WaitingRoom";
+import CamCheck from "./pages/Games/CamCheck";
 
 // 한 줄 자기소개 페이지들
-import SelfIntroduction from "./pages/SelfIntroduction";
-import SelfIntroductionGetReady from "./pages/SelfIntroductionGetReady";
-import SelfIntroductionAllPrepared from "./pages/SelfIntroductionAllPrepared";
+import SelfIntroduction from "./pages/Games/Self_introduction/SelfIntroduction";
+import SelfIntroductionGetReady from "./pages/Games/Self_introduction/SelfIntroductionGetReady";
+import SelfIntroductionAllPrepared from "./pages/Games/Self_introduction/SelfIntroductionAllPrepared";
 
 // 나를 맞춰봐 페이지들
-import GuessMeGetReady from "./pages/GuessMeGetReady";
-import GuessMeAllPrepared from "./pages/GuessMeAllPrepared";
-import GuessMe from "./pages/GuessMe";
+import GuessMeGetReady from "./pages/Games/Guess_me/GuessMeGetReady";
+import GuessMeAllPrepared from "./pages/Games/Guess_me/GuessMeAllPrepared";
+import GuessMe from "./pages/Games/Guess_me/GuessMe";
 
 // 밸런스 페이지들
-import BalanceGetReady from "./pages/BalanceGetReady";
-import BalanceChangeChoices from "./pages/BalanceChangeChoices";
-import BalanceChoosing from "./pages/BalanceChoosing";
-import BalanceGameModal from "./components/BalanceGameModal";
+import BalanceGetReady from "./pages/Games/Balance_game/BalanceGetReady";
+import BalanceChangeChoices from "./pages/Games/Balance_game/BalanceChangeChoices";
+import BalanceChoosing from "./pages/Games/Balance_game/BalanceChoosing";
 
 // 기념사진 촬영 페이지
-import PhotographFirst from "./pages/PhotographFirst";
-import PhotographLast from "./pages/PhotographLast";
-import TakePhotoModal from "./components/TakePhotoModal";
+import PhotographFirst from "./pages/Games/Photo/PhotographFirst";
+import PhotographLast from "./pages/Games/Photo/PhotographLast";
+import TakePhotoModal from "./components/Photo/TakePhotoModal";
 
 // 렙업 페이지들
-import WrapUp from "./pages/WrapUp";
-import WrapUpModal from "./components/WrapUpModal";
+import WrapUp from "./pages/Games/WrapUp";
+import WrapUpModal from "./components/Wrap_up/WrapUpModal";
 
 function App() {
   return (
@@ -75,7 +74,6 @@ function App() {
           path="/balance-change-choices"
           element={<BalanceChangeChoices />}
         />
-        <Route path="/balance-modal" element={<BalanceGameModal />} />
 
         {/* 기념사진촬영과 관련된 Route */}
         <Route path="/photo-first" element={<PhotographFirst />} />
