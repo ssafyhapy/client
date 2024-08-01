@@ -6,7 +6,7 @@ const NavBar = () => {
   const location = useLocation();
   const path = location.pathname;
 
-  const [loginOpen, setLoginOpen] = React.useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
   const openLogin = () => {
     setLoginOpen(true);
   };
