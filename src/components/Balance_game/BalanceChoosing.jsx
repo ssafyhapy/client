@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import useBalanceStore from "../store/useBalanceStore";
-import Chatbox from "../components/Chatbox";
-import ExitBtn from "../components/btn/ExitBtn";
-import GameTurns from "../components/GameTurns";
+import useBalanceStore from "../../store/useBalanceStore";
+import Chatbox from "../Chatbox";
+import ExitBtn from "../btn/ExitBtn";
+import GameTurns from "../GameTurns";
 
-const BalanceChoosing = () => {
+const BalanceChoosing = ({ onTimerEnd, currentStep }) => {
   const { pickedChoice, setPickedChoice } = useBalanceStore();
-  const { discussedNum, setDiscussedNum } = useBalanceStore();
-
+  const { discussedNum } = useBalanceStore();
 
   const balanceChoicesHard = {
     first: "밸런스 게임 A",
@@ -17,29 +15,28 @@ const BalanceChoosing = () => {
 
   const timerImg = "src/assets/timer.png";
 
-// 밸런스 게임 선택지 클릭 시 선택한 버튼에 따라 업데이트 (1, 2)
   const handlePickedChoice = (choice) => {
     setPickedChoice(choice); 
   };
 
   const [secondsLeft, setSecondsLeft] = useState(10);
-  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
+    if (currentStep){
     const timer = setInterval(() => {
       setSecondsLeft((prev) => {
         if (prev > 1) {
           return prev - 1;
         } else {
           clearInterval(timer);
-          navigate("/balance_change_choices");
+          onTimerEnd(); // 타이머가 0이 되었을 때 호출
           return 0;
         }
       });
     }, 1000);
 
-    return () => clearInterval(timer);
-  }, [navigate]); // Include navigate in the dependency array
+    return () => clearInterval(timer);} // 컴포넌트 언마운트 시 타이머 클리어
+  }, [currentStep]); // onTimerEnd를 의존성 배열에 포함
 
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
@@ -66,7 +63,7 @@ const BalanceChoosing = () => {
 
         {/* Bottom Div */}
         <div className="flex-none mt-10 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem] relative">
-        <div className={`text-[14px] text-[rgba(0,0,0,0.5)] absolute right-5 top-2 ${discussedNum===null?"hidden":""}`}>
+          <div className={`text-[14px] text-[rgba(0,0,0,0.5)] absolute right-5 top-2 ${discussedNum===null?"hidden":""}`}>
             현재 토론 완료 : {discussedNum}/5
           </div>
           <div className="flex-grow flex items-center justify-center relative gap-5">

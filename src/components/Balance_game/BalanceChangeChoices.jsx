@@ -1,45 +1,40 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import useBalanceStore from "../store/useBalanceStore";
-import Chatbox from "../components/Chatbox";
-import ExitBtn from "../components/btn/ExitBtn";
-import GameTurns from "../components/GameTurns";
-import BasicBtn from "../components/btn/BasicBtn";
-import refresh from "./../assets/refresh.png";
+import useBalanceStore from "../../store/useBalanceStore";
+import Chatbox from "../Chatbox";
+import ExitBtn from "../btn/ExitBtn";
+import GameTurns from "../GameTurns";
+import refresh from "./../../assets/Balance_game/refresh.png";
 
-const BalanceChangeChoices = () => {
+const BalanceChangeChoices = ({ onConfirm }) => {
   const { pickedChoice, setPickedChoice } = useBalanceStore();
   const { discussedNum, setDiscussedNum } = useBalanceStore();
-
   const balanceChoicesHard = {
     first: "밸런스 게임 A",
     second: "밸런스 게임 B",
   };
 
-  // Balance 게임 선택지 업데이트 (주제 변경 버튼 클릭시)
-  const [balanceChoices, setBalanceChoices] = useState({});
   const updateBalanceChoices = () => {
     setPickedChoice(null);
     // setBalanceChoices({first:, second:})
   };
 
-  const navigate = useNavigate();
-
   const handleConfirmChoices = () => {
-    navigate("/balance_choosing");
     setDiscussedNum((prevNum) => prevNum + 1);
     setPickedChoice(null);
+    onConfirm(); // 주제 확정 후 다음 단계로 이동
   };
 
-  const handleNextStep = () => {
-    setDiscussedNum(() => 0);
-    navigate("/wrap_up");
-  };
+  const navigate = useNavigate()
+
+ const handleNextStep=()=>{
+  navigate("/wrap-up")
+ }
+  
 
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
       <div className="w-[1024px] h-[90%] bg-[rgba(255,255,255,0.3)] m-auto rounded-[40px] flex flex-col relative p-10 overflow-hidden">
-        {/* Top Div */}
         <div className="h-[5%] flex justify-between items-center">
           <div className="w-[90%] flex justify-center absolute top-3">
             <GameTurns sectionNumber={3} />
@@ -48,8 +43,6 @@ const BalanceChangeChoices = () => {
             <ExitBtn />
           </div>
         </div>
-
-        {/* Middle Div */}
         <div className="flex-grow flex overflow-hidden mt-5 h-[52vh]">
           <div className="bg-[rgba(255,255,255,0.9)] flex-[7] h-full mr-5 rounded-[20px] flex justify-center items-center overflow-hidden">
             <p className="m-5">camera background</p>
@@ -58,8 +51,6 @@ const BalanceChangeChoices = () => {
             <Chatbox />
           </div>
         </div>
-
-        {/* Bottom Div */}
         <div className="flex-none mt-10 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem] relative">
           <div className="flex-grow flex items-center justify-center relative gap-5">
             <div

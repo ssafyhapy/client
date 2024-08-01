@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import BasicBtn from "./btn/BasicBtn";
+import BasicBtn from "./../../components/btn/BasicBtn";
 
 const BalanceGameModal = ({ btnText, onClose }) => {
 
