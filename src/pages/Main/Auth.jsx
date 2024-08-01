@@ -12,7 +12,7 @@ const Auth = () => {
   const [error, setError] = useState(null);
 
   // zustand store
-  const { setMemberName, setAccessToken } = useAuthStore();
+  const {memberName, isLogin, login} = useAuthStore();
 
   // URLSearchParams를 사용하여 인가코드를 가져옴
   useEffect(() => {
@@ -45,9 +45,9 @@ const Auth = () => {
         );
         const result = response.data;
 
-        // zustand store에 사용자 이름 저장
+        // zustand store에 사용자 이름 저장 및 로그인 상태 변경(true)
         console.log("memberName", result.data.memberName);
-        setMemberName(result.data.memberName);
+        login(result.data.memberName);
 
         const headerData = response.headers;
         console.log(
@@ -60,9 +60,7 @@ const Auth = () => {
         );
         // 토큰을 cessionStorage에 저장
         sessionStorage.setItem("accessToken", accessToken);
-        // zustand store에  accessToken 저장
-        setAccessToken(accessToken);
-
+        console.log("zustand", memberName, isLogin);
         // play로 리다이렉트
         navigate("/play");
       } catch (err) {
@@ -73,7 +71,7 @@ const Auth = () => {
     };
 
     fetchCode();
-  }, [code, setMemberName, navigate]);
+  }, [code, login, navigate]);
 
   return (
     <div>
@@ -87,12 +85,3 @@ const Auth = () => {
 };
 
 export default Auth;
-
-// 세션 스토리지의 accessToken을 확인하는 함수
-export const checkAccessToken=()=>{
-  const accessToken = sessionStorage.getItem("accessToken");
-  if (!accessToken) {
-    return false;
-  }
-  return true;
-}
