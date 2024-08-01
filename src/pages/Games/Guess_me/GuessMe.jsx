@@ -19,7 +19,7 @@ const GuessMe = () => {
   const answer = true; // Assuming this is a boolean indicating the correct answer
 
   const handleNextStep = () => {
-    navigate("/balance-getready");
+    navigate("/balance");
   };
 
   useEffect(() => {
