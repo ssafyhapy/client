@@ -6,7 +6,7 @@ const Login = ({ closeLogin }) => {
   // localhost
   // const REDIRECT_URI = "http://localhost:5173/auth/kakao/callback";
   // deploy
-  const REDIRECT_URI = "http://i11c209.p.ssafy.io:8080/auth/kakao/callback";
+  const REDIRECT_URI = "https://i11c209.p.ssafy.io/auth/kakao/callback";
 
 
   return (
