@@ -29,7 +29,7 @@ const Auth = () => {
     const fetchCode = async () => {
       try {
         const response = await axios.post(
-          "http://i11c209.p.ssafy.io:8080/oauth/login",
+          "https://i11c209.p.ssafy.io:8080/api/oauth/login",
           {
             registrationId: "kakao",
             authorization: code,
@@ -48,18 +48,23 @@ const Auth = () => {
         // zustand store에 사용자 이름 저장
         console.log("memberName", result.data.memberName);
         setMemberName(result.data.memberName);
-        
+
         const headerData = response.headers;
-        console.log("accessToken", headerData["authorization"].replace(/^Bearer\s/, ''));
-        const accessToken = headerData["authorization"].replace(/^Bearer\s/, '');
+        console.log(
+          "accessToken",
+          headerData["authorization"].replace(/^Bearer\s/, "")
+        );
+        const accessToken = headerData["authorization"].replace(
+          /^Bearer\s/,
+          ""
+        );
         // 토큰을 cessionStorage에 저장
         sessionStorage.setItem("accessToken", accessToken);
         // zustand store에  accessToken 저장
-        setAccessToken(accessToken)
+        setAccessToken(accessToken);
 
         // play로 리다이렉트
         navigate("/play");
-
       } catch (err) {
         setError(err);
       } finally {
