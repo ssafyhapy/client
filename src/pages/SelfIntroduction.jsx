@@ -4,9 +4,17 @@ import BasicBtn from "../components/btn/BasicBtn";
 import ExitBtn from "../components/btn/ExitBtn";
 import GameTurns from "../components/GameTurns";
 
+import { useNavigate } from "react-router-dom";
+
 const SelfIntroduction = () => {
   const btnText = "다음";
   const userText = "단 것을 좋아하는";
+  
+  const navigate = useNavigate();
+
+  const handleNextStep = () => {
+    navigate("/photo-first");
+  };
 
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
@@ -43,7 +51,7 @@ const SelfIntroduction = () => {
             <span>사람이다.</span>
           </div>
           <div className="absolute bottom-3 right-5">
-            <BasicBtn btnText={btnText} />
+            <BasicBtn btnText={btnText} onClick={handleNextStep} />
           </div>
           <img
             src="src/assets/thinking_character.png"

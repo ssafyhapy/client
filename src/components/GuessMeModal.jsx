@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import BasicBtn from "./btn/BasicBtn";
 
-const GuessMeModal = ({ userName, readyPeople, btnText, onClose }) => {
+const GuessMeModal = ({ userName, readyPeople, btnText, onClose, onReady }) => {
   const [selectedAnswers, setSelectedAnswers] = useState({ 1: null, 2: null, 3: null });
 
   const handleAnswerClick = (questionNumber, answer) => {
@@ -10,6 +10,11 @@ const GuessMeModal = ({ userName, readyPeople, btnText, onClose }) => {
       [questionNumber]: answer,
     }));
   };
+
+  const handleSave = () => {
+    onReady()
+    onClose()
+  }
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] z-50">
@@ -54,7 +59,7 @@ const GuessMeModal = ({ userName, readyPeople, btnText, onClose }) => {
             ))}
           </div>
           <div className="absolute bottom-5 right-5">
-            <BasicBtn btnText={btnText} onClick={onClose} />
+            <BasicBtn btnText={btnText} onClick={handleSave} />
           </div>
         </div>
       </div>

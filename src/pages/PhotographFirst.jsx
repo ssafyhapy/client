@@ -4,10 +4,14 @@ import GameTurns from "../components/GameTurns";
 import TakePhotoModal from "../components/TakePhotoModal";
 import html2canvas from "html2canvas";
 
+import { useNavigate } from "react-router-dom";
+
 const PhotographFirst = () => {
   const pics = Array(6).fill("pic");
   const [showModal, setShowModal] = useState(false);
   const photoRef = useRef(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -18,13 +22,18 @@ const PhotographFirst = () => {
 
   const handleCapture = () => {
     if (photoRef.current) {
-      html2canvas(photoRef.current).then(canvas => {
+      html2canvas(photoRef.current).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         // Save the image or send it to the server
         console.log(imgData); // This is the base64 encoded image
         // Example: Saving the image to a server
         // fetch('/upload', { method: 'POST', body: JSON.stringify({ image: imgData }) })
         setShowModal(false);
+
+        // 사진찍고 2초뒤 자동으로 나를 맞춰봐 겟레디 페이지로 이동
+        setTimeout(() => {
+          navigate("/guessme-getready");
+        }, 2000);
       });
     }
   };

@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Play from "./pages/Play";
@@ -9,7 +9,6 @@ import Auth from "./pages/Auth";
 import Report from "./pages/Report";
 
 // 게임 공통 페이지(기반)
-import CommonGamePage from "./components/CommonGamePage";
 import WaitingRoom from "./pages/WaitingRoom";
 import CamCheck from "./pages/CamCheck";
 
@@ -54,9 +53,14 @@ function App() {
         <Route path="/camera-check" element={<CamCheck />} />
 
         {/* 한줄 자기소개 페이지랑 관련된 Route */}
-        <Route path="/common" element={<CommonGamePage />} />
-        <Route path="/selfintro-getready" element={<SelfIntroductionGetReady />} />
-        <Route path="/selfintro-allprepared" element={<SelfIntroductionAllPrepared />} />
+        <Route
+          path="/selfintro-getready"
+          element={<SelfIntroductionGetReady />}
+        />
+        <Route
+          path="/selfintro-allprepared"
+          element={<SelfIntroductionAllPrepared />}
+        />
         <Route path="/self-introduction" element={<SelfIntroduction />} />
 
         {/* 나를 맞춰봐 페이지랑 관련된 Route */}
@@ -67,7 +71,10 @@ function App() {
         {/* 밸런스 게임과 관련된 Route */}
         <Route path="/balance-getready" element={<BalanceGetReady />} />
         <Route path="/balance-choosing" element={<BalanceChoosing />} />
-        <Route path="/balance-change-choices" element={<BalanceChangeChoices />} />
+        <Route
+          path="/balance-change-choices"
+          element={<BalanceChangeChoices />}
+        />
         <Route path="/balance-modal" element={<BalanceGameModal />} />
 
         {/* 기념사진촬영과 관련된 Route */}

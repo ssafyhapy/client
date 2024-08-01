@@ -6,9 +6,12 @@ import Chatbox from "../components/Chatbox";
 import BalanceGameModal from "../components/BalanceGameModal";
 import versus from "./../assets/versus.png"
 
+import { useNavigate } from "react-router-dom";
+
 const BalanceGetReady = () => {
   const [dots, setDots] = useState("");
   const [showModal, setShowModal] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     setShowModal(true)
@@ -21,6 +24,7 @@ const BalanceGetReady = () => {
 
   const handleCloseModal = ()=>{
     setShowModal(false)
+    navigate("/balance-change-choices")
   }
 
   return (
