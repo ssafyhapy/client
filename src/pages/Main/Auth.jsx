@@ -60,7 +60,6 @@ const Auth = () => {
         );
         // 토큰을 cessionStorage에 저장
         sessionStorage.setItem("accessToken", accessToken);
-        console.log("zustand", memberName, isLogin);
         // play로 리다이렉트
         navigate("/play");
       } catch (err) {
@@ -73,6 +72,10 @@ const Auth = () => {
     fetchCode();
   }, [code, login, navigate]);
 
+  useEffect(() => {
+    console.log("zustand", memberName, isLogin);
+  }, [memberName, isLogin]);
+  
   return (
     <div>
       {/* 로딩 중일 때 Spinner 컴포넌트를 렌더링 */}
