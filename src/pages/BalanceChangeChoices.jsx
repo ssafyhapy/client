@@ -26,14 +26,14 @@ const BalanceChangeChoices = () => {
   const navigate = useNavigate();
 
   const handleConfirmChoices = () => {
-    navigate("/balance_choosing");
+    navigate("/balance-choosing");
     setDiscussedNum((prevNum) => prevNum + 1);
     setPickedChoice(null);
   };
 
   const handleNextStep = () => {
     setDiscussedNum(() => 0);
-    navigate("/wrap_up");
+    navigate("/wrap-up");
   };
 
   return (
