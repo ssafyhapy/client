@@ -4,10 +4,14 @@ import GameTurns from "../components/GameTurns";
 import TakePhotoModal from "../components/TakePhotoModal";
 import html2canvas from "html2canvas";
 
+import { useNavigate } from "react-router-dom";
+
 const PhotographLast = () => {
   const pics = Array(6).fill("pic");
   const [showModal, setShowModal] = useState(false);
   const photoRef = useRef(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -24,6 +28,11 @@ const PhotographLast = () => {
         console.log(imgData); // This is the base64 encoded image
         setShowModal(false);
       });
+
+      // 사진찍고 2초뒤 자동으로 레포트 페이지로 이동
+      setTimeout(() => {
+        navigate("/report");
+      }, 2000);
     }
   };
 

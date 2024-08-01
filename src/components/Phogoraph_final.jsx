@@ -7,6 +7,8 @@ const Photograph_final = () => {
   const day = String(currentDate.getDate()).padStart(2, '0');
   const formattedDate = `${year}/${month}/${day}`
 
+  
+
   return (
     <div>
       <p className="mb-[15px]">{formattedDate}</p>
