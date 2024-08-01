@@ -4,6 +4,7 @@ import BasicBtn from "../components/btn/BasicBtn";
 import ExitBtn from "../components/btn/ExitBtn";
 import GameTurns from "../components/GameTurns";
 import WrapUpModal from "../components/WrapUpModal";
+import { useNavigate } from "react-router-dom";
 
 const WrapUp = () => {
   const btnText = "종료";
@@ -24,6 +25,11 @@ const WrapUp = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
+  const navigate = useNavigate()
+  const handleNextStep = ()=>{
+    navigate("/report")
+  }
 
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
@@ -54,7 +60,7 @@ const WrapUp = () => {
             <span className="text-[rgb(85,181,236)]">{userText}</span>
           </div>
           <div className="absolute bottom-3 right-5">
-            <BasicBtn btnText={btnText} />
+            <BasicBtn btnText={btnText} onClick={handleNextStep}/>
           </div>
         </div>
       </div>

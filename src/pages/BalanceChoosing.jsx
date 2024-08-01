@@ -32,7 +32,7 @@ const BalanceChoosing = () => {
           return prev - 1;
         } else {
           clearInterval(timer);
-          navigate("/balance_change_choices");
+          navigate("/balance-change-choices");
           return 0;
         }
       });
