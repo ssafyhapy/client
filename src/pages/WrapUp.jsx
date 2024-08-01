@@ -28,7 +28,7 @@ const WrapUp = () => {
 
   const navigate = useNavigate()
   const handleNextStep = ()=>{
-    navigate("/report")
+    navigate("/photo-last")
   }
 
   return (
