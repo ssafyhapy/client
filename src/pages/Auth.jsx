@@ -52,8 +52,8 @@ const Auth = () => {
         const headerData = response.headers;
         console.log("accessToken", headerData["authorization"].replace(/^Bearer\s/, ''));
         const accessToken = headerData["authorization"].replace(/^Bearer\s/, '');
-        // 토큰을 localStorage에 저장
-        localStorage.setItem("accessToken", accessToken);
+        // 토큰을 cessionStorage에 저장
+        sessionStorage.setItem("accessToken", accessToken);
         // zustand store에  accessToken 저장
         setAccessToken(accessToken)
 
