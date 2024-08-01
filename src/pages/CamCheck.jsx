@@ -5,6 +5,7 @@ import CameraCheckVideoView from "./../components/CameraCheckVideoView";
 import MicBtn from "./../components/btn/MicBtn";
 import MaskBtn from "./../components/btn/MaskBtn";
 import SelectMask from "../components/SelectMask";
+import { useNavigate } from "react-router-dom";
 
 const CamCheck = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,6 +19,12 @@ const CamCheck = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  const navigate = useNavigate()
+
+  const handleNextStep = ()=>{
+    navigate("/waiting-room")
+  }
 
   return (
     <GameBackground>
@@ -46,7 +53,7 @@ const CamCheck = () => {
               {text}
             </div>
             <div className="absolute bottom-4 right-4">
-              <BasicBtn btnText={btnText} />
+              <BasicBtn btnText={btnText} onClick={handleNextStep} />
             </div>
           </div>
         </div>
