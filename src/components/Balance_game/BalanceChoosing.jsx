@@ -99,7 +99,7 @@ const BalanceChoosing = ({ onTimerEnd, currentStep }) => {
           </div>
           <div className="flex items-center mb-2 absolute top-3 left-10">
             <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" />
-            <span>{secondsLeft}</span>
+            <span className="text-red-500">{secondsLeft}</span>
           </div>
         </div>
       </div>
