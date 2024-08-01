@@ -2,6 +2,7 @@ import React from "react";
 import MainGradientBackground from "../components/MainGradientBackground";
 import MainHomeFrame from "../components/MainHomeFrame";
 import Home2 from "./Home2";
+import MainGradientBackground2 from "../components/MainGradientBackgound2";
 
 const Home = () => {
   const scrollDown = () => {
@@ -48,11 +49,11 @@ const Home = () => {
           </div>
         </MainHomeFrame>
       </MainGradientBackground>
-      <MainGradientBackground>
+      <MainGradientBackground2>
         <MainHomeFrame>
           <Home2 />
         </MainHomeFrame>
-      </MainGradientBackground>
+      </MainGradientBackground2>
     </>
   );
 };

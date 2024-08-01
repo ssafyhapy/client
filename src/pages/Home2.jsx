@@ -7,7 +7,7 @@ const Home2 = () => {
   const [content, setContent] = useState("service");
 
   const service = (
-    <div className="flex flex-col items-center mt-5">
+    <div className="flex flex-col items-center mt-5 h-[350px]">
       <p className="text-sm opacity-80">
         사르르는 어떤 목적으로 모인 그룹이든 첫 만남에 어색하지 않도록
       </p>
@@ -118,21 +118,24 @@ const Home2 = () => {
 
   const balanceGame = (
     <div className="flex gap-5">
-      <p className="w-[350px] h-[350px] bg-white rounded-[30px] flex justify-center items-center">
+      <p className="w-[350px] h-[300px] bg-white rounded-[30px] flex justify-center items-center">
         이미지
       </p>
-      <div className="w-[350px] h-[350px] bg-white rounded-[30px] flex flex-col gap-3 items-center justify-center">
+      <div className="w-[350px] h-[300px] bg-white rounded-[30px] flex flex-col gap-3 items-center justify-center">
         <h1 className="text-base opacity-80">밸런스 게임</h1>
         <p className="text-black opacity-20">일상의 사소한 결정들!</p>
-        <p className="text-black opacity-20">부먹찍먹부터 시작해서</p>
+        {/* <p className="text-black opacity-20">부먹찍먹부터 시작해서</p> */}
         <p className="text-black opacity-20">
           참 많은 일에 결정이 갈리곤 하죠.
         </p>
-        <p className="text-black opacity-20">
-          저희 밸런스 게임은 모임의 주제를{" "}
+        {/* <p className="text-black opacity-20">
+          저희 밸런스 게임은 모임의 주제를
         </p>
         <p className="text-black opacity-20">입력받아 모임과 관련된 </p>
-        <p className="text-black opacity-20">밸런스 주제를 주기도 하고, </p>
+        <p className="text-black opacity-20">밸런스 주제를 주기도 하고, </p> */}
+        <p className="text-black opacity-20">
+          저희 밸런스 게임은 모임과 관련된 주제 혹은
+        </p>
         <p className="text-black opacity-20">
           재미있는 주제를 주기도 할 거예요!
         </p>
@@ -150,7 +153,7 @@ const Home2 = () => {
     <div>
       <NavBar />
       <div className="w-[800px] h-[500px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] rounded-[30px] border-[10px] border-[rgba(255,255,255,0.2)] flex flex-col justify-between items-center p-5">
-        <div className="w-[700px] h-[60px] bg-[rgba(255,255,255,0.7)] rounded-[15px] shadow-[0_4px_10px_rgba(66,72,81,0.5)] flex items-center justify-center space-x-4">
+        <div className="w-[700px] h-[40px] bg-[rgba(255,255,255,0.7)] rounded-[15px] shadow-[0_4px_10px_rgba(66,72,81,0.5)] flex items-center justify-center space-x-4">
           <button
             onClick={() => setContent("service")}
             className="bg-white w-[168px] h-[40px] flex items-center justify-center text-[20px] text-[#4D98F7] rounded-[15px]"
