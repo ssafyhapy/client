@@ -29,7 +29,7 @@ const Auth = () => {
     const fetchCode = async () => {
       try {
         const response = await axios.post(
-          "https://i11c209.p.ssafy.io:8080/api/oauth/login",
+          "https://i11c209.p.ssafy.io/api/oauth/login",
           {
             registrationId: "kakao",
             authorization: code,
