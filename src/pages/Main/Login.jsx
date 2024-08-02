@@ -3,11 +3,7 @@ import React from "react";
 const Login = ({ closeLogin }) => {
   const client_id = import.meta.env.VITE_CLIENT_ID;
   const client_secret = import.meta.env.VITE_CLIENT_SECRET;
-  // localhost
-  // const REDIRECT_URI = "http://localhost:5173/auth/kakao/callback";
-  // deploy
   const REDIRECT_URI = "https://i11c209.p.ssafy.io/auth/kakao/callback";
-
 
   return (
     
