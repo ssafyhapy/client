@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavBar from "../../components/NavBar";
 import MainGradientBackground from "../../components/Common/MainGradientBackground";
 import MyPageFrame from "../../components/My_page/MyPageFrame";
 import { EditIcon } from "../../components/My_page/EditIcon";
 import { PublicIcon } from "../../components/My_page/PublicIcon";
+import useMypageStore from "../../store/useMypageStore";
 
 const MyPage = () => {
+  const {
+    memberName,
+    memberProviderEmail,
+    memberProfileImageUrl,
+    memberIntroduction,
+    memberHistoryList,
+    memberMemoryboxList,
+    fetchdata,
+  } = useMypageStore();
+  useEffect(() => {
+    fetchdata("/member/mypage");
+  },[fetchdata]);
   return (
     <>
       <MainGradientBackground>
@@ -29,10 +42,8 @@ const MyPage = () => {
               <div className="w-[400px] h-[200px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)] flex p-5 gap-5 relative">
                 <div>프로필 이미지</div>
                 <div className="flex flex-col">
-                  <p>이름 : </p>
-                  <p>연령대 : </p>
-                  <p>E-mail : </p>
-                  <p>성별 : </p>
+                  <p>이름 : {memberName}</p>
+                  <p>E-mail : {memberProviderEmail}</p>
                 </div>
               </div>
               <div className="w-[400px] h-[200px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)] flex items-start p-5 gap-5 relative">
