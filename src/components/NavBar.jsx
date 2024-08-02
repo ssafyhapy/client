@@ -56,7 +56,7 @@ const NavBar = () => {
       openLoginAlert();
     }
     setPrevIsLogin(isLogin);
-  }, [isLogin, prevIsLogin]);
+  }, [isLogin]);
 
   const handleLogout = async () => {
     try {
