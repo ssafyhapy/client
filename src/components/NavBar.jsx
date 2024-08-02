@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Login from "../pages/Main/Login";
 import useAuthStore from "../store/useAuthStore";
 import { axiosInstance } from "../api/apiClient";
 import { useNavigate } from "react-router-dom";
-import LoginAlert from "../pages/Main/LoginAlert";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -19,44 +18,7 @@ const NavBar = () => {
     setLoginOpen(false);
   };
 
-  const { isLogin, logout, memberName } = useAuthStore();
-
-  const [loginAlert, setLoginAlert] = useState(false);
-  const [message, setMessage] = useState("");
-  const [prevIsLogin, setPrevIsLogin] = useState(false);
-
-  const openLoginAlert = () => {
-    setLoginAlert(true);
-  };
-  const closeLoginAlert = () => {
-    setLoginAlert(false);
-  };
-
-  useEffect(() => {
-    if (loginAlert) {
-      // 3초 후 로그인 알람 모달 닫기
-      const timer = setTimeout(() => {
-        closeLoginAlert();
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [loginAlert]);
-
-  useEffect(() => {
-    console.log("isLogin", isLogin);
-    console.log("prevIsLogin", prevIsLogin);
-
-    if (isLogin !== null && isLogin !== prevIsLogin) {
-      if (isLogin) {
-        setMessage("로그인 되었습니다.");
-      } else {
-        setMessage("로그아웃 되었습니다.");
-      }
-      openLoginAlert();
-    }
-    setPrevIsLogin(isLogin);
-  }, [isLogin]);
+  const { isLogin, logout, setLoginAlert } = useAuthStore();
 
   const handleLogout = async () => {
     try {
@@ -73,15 +35,11 @@ const NavBar = () => {
 
       // 메인 페이지로 이동
       navigate("/play");
+      setLoginAlert();
     } catch (error) {
       console.error("로그아웃 실패", error);
     }
   };
-
-  // zustand store 변경 시 로그인 상태 확인
-  useEffect(() => {
-    console.log("zustand", memberName, isLogin);
-  }, [memberName, isLogin]);
 
   return (
     <>
@@ -120,9 +78,6 @@ const NavBar = () => {
 
       {/* 로그인 모달 */}
       {loginOpen && <Login closeLogin={closeLogin} />}
-      {loginAlert && (
-        <LoginAlert closeLoginAlert={closeLoginAlert} message={message} />
-      )}
     </>
   );
 };

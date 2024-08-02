@@ -7,12 +7,15 @@ const useAuthStore = create(
     (set) => ({
       memberName: null,
       isLogin: null,
-      login: (memberName) => set({ memberName, isLogin: true }),
-      logout: () => set({ memberName: null, isLogin: false }),
+      isLoginAlert: false,
+      message: "",
+      login: (memberName) => set({ memberName, isLogin: true, message: "로그인 되었습니다." }),
+      logout: () => set({ memberName: null, isLogin: false, message: "로그아웃 되었습니다." }),
+      setLoginAlert: () => set(state => ({ isLoginAlert: !state.isLoginAlert })),
     }),
     {
       name: "auth-storage",
-      getStorage: () => sessionStorage,
+      storage: sessionStorage,
     }
   )
 );

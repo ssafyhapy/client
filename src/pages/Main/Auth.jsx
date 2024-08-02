@@ -12,7 +12,7 @@ const Auth = () => {
   const [error, setError] = useState(null);
 
   // zustand store
-  const { memberName, isLogin, login } = useAuthStore();
+  const { login, setLoginAlert } = useAuthStore();
 
   // URLSearchParams를 사용하여 인가코드를 가져옴
   useEffect(() => {
@@ -64,6 +64,7 @@ const Auth = () => {
         sessionStorage.setItem("accessToken", accessToken);
         // play로 리다이렉트
         navigate("/play");
+        setLoginAlert();
       } catch (err) {
         setError(err);
       } finally {
@@ -73,11 +74,6 @@ const Auth = () => {
 
     fetchCode();
   }, [code, login, navigate]);
-
-  // zustand store 변경 시 로그인 상태 확인
-  useEffect(() => {
-    console.log("zustand", memberName, isLogin);
-  }, [memberName, isLogin]);
 
   return (
     <div>
