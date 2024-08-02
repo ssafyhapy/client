@@ -23,7 +23,7 @@ const NavBar = () => {
 
   const [loginAlert, setLoginAlert] = useState(false);
   const [message, setMessage] = useState("");
-  const [prevIsLogin, setPrevIsLogin] = useState(null);
+  const [prevIsLogin, setPrevIsLogin] = useState(false);
 
   const openLoginAlert = () => {
     setLoginAlert(true);
@@ -47,7 +47,7 @@ const NavBar = () => {
     console.log("isLogin", isLogin);
     console.log("prevIsLogin", prevIsLogin);
 
-    if (prevIsLogin !== null && isLogin !== prevIsLogin) {
+    if (isLogin !== null && isLogin !== prevIsLogin) {
       if (isLogin) {
         setMessage("로그인 되었습니다.");
       } else {
