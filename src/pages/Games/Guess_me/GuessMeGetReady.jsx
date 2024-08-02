@@ -20,12 +20,8 @@ const GuessMeGetReady = () => {
   const [userStatus, setUserStatus] = useState("준비완료");
   const [allPrepared, setAllPrepared] = useState(false);
   const navigate = useNavigate();
-  const [questions, setQuestions] = useState({ 1: "", 2: "", 3: "" });
-  const [selectedAnswers, setSelectedAnswers] = useState({
-    1: null,
-    2: null,
-    3: null,
-  });
+  const [questions, setQuestions] = useState({});
+  const [selectedAnswers, setSelectedAnswers] = useState({});
 
   const userName = "김남숙"; // Example user name, you can replace it with actual data
   const readyPeople = 3; // Example number of people waiting, you can replace it with actual data
@@ -36,7 +32,7 @@ const GuessMeGetReady = () => {
       try {
         const data = Object.keys(questions).map((key) => ({
           roomId: roomId,
-          memberRoomId: 2,
+          memberRoomId: 1,
           content: questions[key],
           answer: selectedAnswers[key],
         }));

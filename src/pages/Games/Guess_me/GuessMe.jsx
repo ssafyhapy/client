@@ -5,7 +5,6 @@ import Chatbox from "../../../components/Common/Chatbox";
 import GameTurns from "../../../components/Common/GameTurns";
 import axios from "axios";
 import useGameStore from "../../../store/useGameStore";
-
 import { useNavigate } from "react-router-dom";
 
 const GuessMe = () => {
@@ -13,16 +12,40 @@ const GuessMe = () => {
   const [secondsLeft, setSecondsLeft] = useState(10);
   const [showResult, setShowResult] = useState(false);
   const navigate = useNavigate();
+  const [userQuestions, setUserQuestions] = useState([]);
+  const [timer, setTimer] = useState(null); // 타이머 상태 추가
 
-  const userText = "1. 내 MBTI는 ISTP이다.";
   const btnText = "다음";
-  const timerImg = "src/assets/common/timer.png";
-  const correctImg = "src/assets/Guess_me/correct_circle.png";
-  const wrongImg = "src/assets/Guess_me/wrong_x.png";
-  const answer = true; // Assuming this is a boolean indicating the correct answer
+  const timerImg = "/src/assets/common/timer.png";
+  const correctImg = "/src/assets/Guess_me/correct_circle.png";
+  const wrongImg = "/src/assets/Guess_me/wrong_x.png";
 
   const handleNextStep = () => {
-    navigate("/balance");
+    if (userQuestions.length > 1) {
+      const newQuestions = userQuestions.slice(1); // Create a new array without the first element
+      setUserQuestions(newQuestions); // Update the state with the new array
+      setSecondsLeft(10); // Reset the timer to 10 seconds
+      setShowResult(false); // Hide the result
+      if (timer) clearInterval(timer); // Clear the existing timer
+      startTimer(); // Start a new timer
+    } else if (userQuestions.length === 1) {
+      navigate("/balance");
+    }
+  };
+
+  const startTimer = () => {
+    const newTimer = setInterval(() => {
+      setSecondsLeft((prev) => {
+        if (prev > 1) {
+          return prev - 1;
+        } else {
+          clearInterval(newTimer);
+          setShowResult(true);
+          return 0;
+        }
+      });
+    }, 1000);
+    setTimer(newTimer); // Update the timer state
   };
 
   const handleGetAll = () => {
@@ -32,12 +55,12 @@ const GuessMe = () => {
           `https://i11c209.p.ssafy.io/api/result/ox/${roomId}`,
           {
             headers: {
-              Authorization:
-                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
+              Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
             },
           }
         );
         console.log(response.data); // Handle the response data
+        setUserQuestions(response.data.data);
       } catch (error) {
         console.error("Error in handleSave:", error);
       }
@@ -45,22 +68,16 @@ const GuessMe = () => {
     getAllGuessMe();
   };
 
-  // 렌더링 시 타이머 시작
   useEffect(() => {
-    const timer = setInterval(() => {
-      setSecondsLeft((prev) => {
-        if (prev > 1) {
-          return prev - 1;
-        } else {
-          clearInterval(timer);
-          setShowResult(true);
-          return 0;
-        }
-      });
-    }, 1000);
-    handleGetAll()
+    console.log(userQuestions);
+  }, [userQuestions]);
 
-    return () => clearInterval(timer);
+  // Start timer when component mounts
+  useEffect(() => {
+    startTimer();
+    handleGetAll();
+
+    return () => clearInterval(timer); // Clean up the timer when component unmounts
   }, []);
 
   return (
@@ -89,11 +106,14 @@ const GuessMe = () => {
         {/* Bottom Div */}
         <div className="flex-none mt-10 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem] relative">
           <div className="flex-grow flex items-center justify-center relative">
-            <span className="text-[rgba(85,181,236)]">{userText}</span>
-            {showResult && (
+            {/* 문제와 답 보여주기 */}
+            <span className="text-[rgba(85,181,236)]">
+              {userQuestions.length > 0 ? userQuestions[0].content : null}
+            </span>
+            {showResult && userQuestions.length > 0 && (
               <img
-                src={answer ? correctImg : wrongImg}
-                alt={answer ? "Correct" : "Wrong"}
+                src={userQuestions[0].answer ? correctImg : wrongImg}
+                alt={userQuestions[0].answer ? "Correct" : "Wrong"}
                 className="absolute w-[50px] h-[50px]"
                 style={{
                   top: "50%",
@@ -102,6 +122,7 @@ const GuessMe = () => {
                 }}
               />
             )}
+            {/* 문제와 답 보여주기 */}
           </div>
           <div className="absolute bottom-3 right-5 flex flex-col items-center">
             <div className="flex items-center mb-2">
@@ -113,7 +134,7 @@ const GuessMe = () => {
             )}
           </div>
           <img
-            src="src/assets/Guess_me/questionmark.png"
+            src="/src/assets/Guess_me/questionmark.png"
             alt="물음표 두개 그림"
             className="absolute bottom-0 left-0 mb-3 ml-3"
           />

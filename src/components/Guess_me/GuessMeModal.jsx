@@ -1,17 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import BasicBtn from "../Buttons/BasicBtn";
 
 const GuessMeModal = ({
-  userName = { userName },
-  readyPeople = { readyPeople },
+  userName,
+  readyPeople,
   btnText = "저장",
-  onClose = { handleCloseModal },
-  onReady = { handleReady },
-  questions = { questions },
-  setQuestions = { setQuestions },
-  selectedAnswers = { selectedAnswers },
-  setSelectedAnswers = { setSelectedAnswers },
+  onClose,
+  onReady,
+  questions,
+  setQuestions,
+  selectedAnswers,
+  setSelectedAnswers,
 }) => {
+  const [openAlertMsg, setOpenAlertMsg] = useState(false);
+
   const handleAnswerClick = (questionNumber, answer) => {
     setSelectedAnswers((prevState) => ({
       ...prevState,
@@ -21,8 +23,22 @@ const GuessMeModal = ({
   };
 
   const handleSave = () => {
-    onReady();
-    onClose();
+    // 모든 질문과 답변이 입력되었는지 확인
+    const allQuestionsFilled = [1, 2, 3].every(
+      (questionNumber) =>
+        questions[questionNumber] && questions[questionNumber].trim() !== ""
+    );
+
+    const allAnswersSelected = [1, 2, 3].every(
+      (questionNumber) => selectedAnswers[questionNumber] !== undefined
+    );
+
+    if (allQuestionsFilled && allAnswersSelected) {
+      onReady();
+      onClose();
+    } else {
+      setOpenAlertMsg(true);
+    }
   };
 
   const handleQuestionChange = (questionNumber, text) => {
@@ -60,9 +76,11 @@ const GuessMeModal = ({
                 <input
                   className="w-[70%] text-xl border rounded p-1"
                   type="text"
+                  value={questions[questionNumber] || ""}
                   onChange={(e) =>
                     handleQuestionChange(questionNumber, e.target.value)
                   }
+                  required
                 />
                 <span>
                   <button
@@ -90,6 +108,13 @@ const GuessMeModal = ({
                 </span>
               </div>
             ))}
+          </div>
+          <div
+            className={`text-red-400 absolute bottom-12 right-5 ${
+              openAlertMsg ? "" : "hidden"
+            }`}
+          >
+            *모든 질문과 답변을 입력해주세요.
           </div>
           <div className="absolute bottom-5 right-5">
             <BasicBtn btnText={btnText} onClick={handleSave} />
