@@ -25,7 +25,7 @@ export const axiosInstance = axios.create(config);
 // refreshToken을 사용하여 새로운 accessToken을 요청하는 함수
 const refreshToken = async () => {
   try {
-    const response = await axiosInstance.post("/oauth/reissue-tokens", null, {
+    const response = await axios.post("https://i11c209.p.ssafy.io/api/oauth/reissue-tokens", null, {
       withCredentials: true, // 쿠키를 포함하여 요청
     });
     const accessToken = response.headers.authorization.replace(/^Bearer\s/, "");
