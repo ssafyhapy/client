@@ -33,8 +33,8 @@ const Play = () => {
     console.log(data);
     try {
       const response = await axiosInstance.post(
-        "/room/enter?roomCode=196-931"
-        // `/room/enter?roomCode=${data.roomCode}`
+        // "/room/enter?roomCode=196-931"
+        `/room/enter?roomCode=${data.roomCode}`
       );
       console.log(response);
       // 방 입장 요청 완료시 카메라 체크 페이지로 이동
