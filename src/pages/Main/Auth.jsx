@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Spinner from "../../components/Spinner";
 import useAuthStore from "../../store/useAuthStore";
-import { axiosInstance } from "../../api/apiClient";
 
 const Auth = () => {
   const location = useLocation();
@@ -75,6 +74,7 @@ const Auth = () => {
     fetchCode();
   }, [code, login, navigate]);
 
+  // zustand store 변경 시 로그인 상태 확인
   useEffect(() => {
     console.log("zustand", memberName, isLogin);
   }, [memberName, isLogin]);
@@ -91,70 +91,3 @@ const Auth = () => {
 };
 
 export default Auth;
-
-// // 인가코드가 있을 경우 서버로 요청을 보내어 토큰을 받아옴
-// useEffect(() => {
-//   setIsLoading(true);
-//   // 서버로 인가코드를 보내어 토큰을 받아오는 함수
-//   const fetchCode = async () => {
-//     try {
-//       const response = await axios.post(
-//         "https://i11c209.p.ssafy.io/api/oauth/login",
-//         {
-//           registrationId: "kakao",
-//           authorization: code,
-//         },
-//         // headers 생략 가능(default 값임), 특정 API 요구 사항이나 커스텀 헤더 필요할 때 헤더 설정
-//         {
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           // 쿠키를 포함하는 옵션
-//           withCredentials: true,
-//         }
-//       );
-//       const result = response.data;
-
-//       // zustand store에 사용자 이름 저장 및 로그인 상태 변경(true)
-//       console.log("memberName", result.data.memberName);
-//       login(result.data.memberName);
-
-//       const headerData = response.headers;
-//       console.log(
-//         "accessToken",
-//         headerData["authorization"].replace(/^Bearer\s/, "")
-//       );
-//       const accessToken = headerData["authorization"].replace(
-//         /^Bearer\s/,
-//         ""
-//       );
-//       // 토큰을 cessionStorage에 저장
-//       sessionStorage.setItem("accessToken", accessToken);
-//       // play로 리다이렉트
-//       navigate("/play");
-//     } catch (err) {
-//       setError(err);
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-
-//   fetchCode();
-// }, [code, login, navigate]);
-
-// try {
-//   const response = await axiosInstance.post(
-//     "/oauth/login",
-//     {
-//       registrationId: "kakao",
-//       authorization: code,
-//     },
-//     // headers 생략 가능(default 값임), 특정 API 요구 사항이나 커스텀 헤더 필요할 때 헤더 설정
-//     {
-//       headers: {
-//         ...{},
-//       },
-//       // 쿠키를 포함하는 옵션
-//       withCredentials: true,
-//     }
-//   );
