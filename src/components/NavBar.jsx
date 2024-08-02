@@ -23,6 +23,7 @@ const NavBar = () => {
 
   const [loginAlert, setLoginAlert] = useState(false);
   const [message, setMessage] = useState("");
+  const [initialLoad, setInitialLoad] = useState(true);
 
   const openLoginAlert = () => {
     setLoginAlert(true);
@@ -40,17 +41,32 @@ const NavBar = () => {
 
       return () => clearTimeout(timer);
     }
-  },[loginAlert]);
+  }, [loginAlert]);
+
+  // useEffect(() => {
+  //   if (isLogin) {
+  //     setMessage("로그인 되었습니다.");
+  //   } else {
+  //     setMessage("로그아웃 되었습니다.");
+  //   }
+  //   if (isLogin !== null) {
+  //     openLoginAlert();
+  //   }
+  // }, [isLogin]);
 
   useEffect(() => {
+    if (!initialLoad) {
       if (isLogin) {
         setMessage("로그인 되었습니다.");
       } else {
         setMessage("로그아웃 되었습니다.");
       }
-      if (isLogin !== null){
+      if (isLogin !== null) {
         openLoginAlert();
       }
+    } else {
+      setInitialLoad(false);
+    }
   }, [isLogin]);
 
   const handleLogout = async () => {
