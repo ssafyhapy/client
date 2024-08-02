@@ -4,7 +4,6 @@ import MainGradientBackground from "../../components/Common/MainGradientBackgrou
 import MainHomeFrame from "../../components/Main_page/MainHomeFrame";
 import MakeRoom from "./MakeRoom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { axiosInstance } from "../api/apiClient";
 // import { useNavigate } from "react-router-dom";
 
@@ -85,12 +84,14 @@ const Play = () => {
                         className="w-[90%] mt-2 p-2 border rounded"
                         placeholder="접속코드를 입력해주세요"
                         // 접속코드 입력 폼, 유효성 검사
-                        {...register("roomCode", {
-                          required: "잘못된 접속코드입니다.",
-                          valueAsNumber: true,
-                          validate: (value) =>
-                            Number.isInteger(value) || "정수만 입력해주세요",
-                        })}
+                        {...register("roomCode", {required: true}
+                        //   {
+                        //   required: "잘못된 접속코드입니다.",
+                        //   valueAsNumber: true,
+                        //   validate: (value) =>
+                        //     Number.isInteger(value) || "정수만 입력해주세요",
+                        // }
+                      )}
                       />
                       {/* 접속코드 입력시 에러 메시지 */}
                       {errors.roomCode && (
