@@ -15,8 +15,8 @@ const config = { baseURL: baseUrl };
 export const axiosInstance = axios.create(config);
 
 // 인증 필요없는 요청
-// axiosInstance.get('/endpoint', { headers: {...{}}});
-// axiosInstance.post('/endpoint', { headers: {...{}}});
+// axios.get(`${baseUrl}/endpoint`, ...);
+// axios.post(`${baseUrl}/endpoint`, ...);
 
 // JWT 인증이 필요한 요청
 // axiosInstance.get('/endpoint');
