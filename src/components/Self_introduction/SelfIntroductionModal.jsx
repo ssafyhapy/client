@@ -1,10 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import BasicBtn from "../Buttons/BasicBtn";
-import writingCharacter from "../../assets/Self_introduction/writing_character.png"
+import writingCharacter from "../../assets/Self_introduction/writing_character.png";
+import axios from "axios";
 
-const SelfIntroductionModal = ({ userName, readyPeople, btnText, onClose, onReady }) => {
-  const handleSave = () => {
-    onReady();
+const SelfIntroductionModal = ({
+  readyPeople,
+  btnText,
+  onClose,
+  onReady,
+  initialContent,
+  roomId,
+  memberId,
+  isFirstTime,
+}) => {
+  const [content, setContent] = useState(initialContent);
+
+  const handleInputChange = (event) => {
+    setContent(event.target.value);
+  };
+
+  const handleSave = async () => {
+    const url = isFirstTime
+      ? `https://i11c209.p.ssafy.io/api/result/intro`
+      : `https://i11c209.p.ssafy.io/api/result/intro/${roomId}/modify`;
+
+    try {
+      const response = await axios.post(
+        url,
+        {
+          roomId: roomId,
+          content: content,
+        },
+        {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w`,
+          },
+        }
+      );
+      console.log("Response:", response.data);
+      onReady(response.data.data.content, isFirstTime); // Pass the updated content and isFirstTime status back to the parent component
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
     onClose();
   };
 
@@ -18,7 +56,7 @@ const SelfIntroductionModal = ({ userName, readyPeople, btnText, onClose, onRead
                 스스로를 정의할 수 있는 문구를 작성해보세요!
               </p>
               <p className="text-[rgba(220,89,100)] text-xs text-center absolute left-0 bottom-0">
-                *현재 {readyPeople}명이 {userName}님을 기다리고 있어요!
+                *현재 {readyPeople}명이 기다리고 있어요!
               </p>
             </div>
             <img
@@ -28,9 +66,14 @@ const SelfIntroductionModal = ({ userName, readyPeople, btnText, onClose, onRead
             />
           </div>
           <div className="p-3 mb-5 flex items-center justify-center">
-            <span className="mr-2 text-xl">{userName} 은 (는)</span>
-            <input className="text-xl border rounded p-1" type="text" />
-            <span className="ml-2 text-xl">이다.</span>
+            <span className="mr-2 text-xl">나는</span>
+            <input
+              className="text-xl border rounded p-1"
+              type="text"
+              value={content}
+              onChange={handleInputChange}
+            />
+            <span className="ml-2 text-xl">다.</span>
           </div>
           <div className="absolute bottom-5 right-5">
             <BasicBtn btnText={btnText} onClick={handleSave} />

@@ -38,7 +38,7 @@ const WaitingRoom = () => {
 
   const navigate = useNavigate()
   const handleNextStep = ()=>{
-    navigate("/selfintro-getready")
+    navigate("/self-introduction")
   }
 
   return (

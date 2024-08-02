@@ -13,9 +13,10 @@ import WaitingRoom from "./pages/Games/WaitingRoom";
 import CamCheck from "./pages/Games/CamCheck";
 
 // 한 줄 자기소개 페이지들
+// 다 합쳤음
+// import SelfIntroductionOld from "./pages/Games/Self_introduction/SelfIntroductionOld";
+// import SelfIntroductionAllPrepared from "./pages/Games/Self_introduction/SelfIntroductionAllPrepared";
 import SelfIntroduction from "./pages/Games/Self_introduction/SelfIntroduction";
-import SelfIntroductionGetReady from "./pages/Games/Self_introduction/SelfIntroductionGetReady";
-import SelfIntroductionAllPrepared from "./pages/Games/Self_introduction/SelfIntroductionAllPrepared";
 
 // 나를 맞춰봐 페이지들
 import GuessMeGetReady from "./pages/Games/Guess_me/GuessMeGetReady";
@@ -54,14 +55,14 @@ function App() {
         <Route path="/camera-check" element={<CamCheck />} />
 
         {/* 한줄 자기소개 페이지랑 관련된 Route */}
-        <Route
+        {/* <Route
           path="/selfintro-getready"
           element={<SelfIntroductionGetReady />}
         />
         <Route
           path="/selfintro-allprepared"
           element={<SelfIntroductionAllPrepared />}
-        />
+        /> */}
         <Route path="/self-introduction" element={<SelfIntroduction />} />
 
         {/* 나를 맞춰봐 페이지랑 관련된 Route */}
