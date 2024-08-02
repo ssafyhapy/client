@@ -112,7 +112,7 @@ const NavBar = () => {
 
         {/* 로그아웃 메시지 출력 */}
         {logoutMessage && (
-          <div className="absolute top-10 bg-green-200 text-green-800 p-2 rounded">
+          <div className="fixed top-1/2 left-1/2 bg-custom-gradient-main text-white p-2 rounded">
             {logoutMessage}
           </div>
         )}
