@@ -3,10 +3,13 @@ import ExitBtn from "../../../components/Buttons/ExitBtn";
 import BasicBtn from "../../../components/Buttons/BasicBtn";
 import Chatbox from "../../../components/Common/Chatbox";
 import GameTurns from "../../../components/Common/GameTurns";
+import axios from "axios";
+import useGameStore from "../../../store/useGameStore";
 
 import { useNavigate } from "react-router-dom";
 
 const GuessMe = () => {
+  const { roomId } = useGameStore();
   const [secondsLeft, setSecondsLeft] = useState(10);
   const [showResult, setShowResult] = useState(false);
   const navigate = useNavigate();
@@ -22,6 +25,27 @@ const GuessMe = () => {
     navigate("/balance");
   };
 
+  const handleGetAll = () => {
+    const getAllGuessMe = async () => {
+      try {
+        const response = await axios.get(
+          `https://i11c209.p.ssafy.io/api/result/ox/${roomId}`,
+          {
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
+            },
+          }
+        );
+        console.log(response.data); // Handle the response data
+      } catch (error) {
+        console.error("Error in handleSave:", error);
+      }
+    };
+    getAllGuessMe();
+  };
+
+  // 렌더링 시 타이머 시작
   useEffect(() => {
     const timer = setInterval(() => {
       setSecondsLeft((prev) => {
@@ -34,6 +58,7 @@ const GuessMe = () => {
         }
       });
     }, 1000);
+    handleGetAll()
 
     return () => clearInterval(timer);
   }, []);

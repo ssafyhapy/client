@@ -1,20 +1,37 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import BasicBtn from "../Buttons/BasicBtn";
 
-const GuessMeModal = ({ userName, readyPeople, btnText, onClose, onReady }) => {
-  const [selectedAnswers, setSelectedAnswers] = useState({ 1: null, 2: null, 3: null });
-
+const GuessMeModal = ({
+  userName = { userName },
+  readyPeople = { readyPeople },
+  btnText = "저장",
+  onClose = { handleCloseModal },
+  onReady = { handleReady },
+  questions = { questions },
+  setQuestions = { setQuestions },
+  selectedAnswers = { selectedAnswers },
+  setSelectedAnswers = { setSelectedAnswers },
+}) => {
   const handleAnswerClick = (questionNumber, answer) => {
-    setSelectedAnswers(prevState => ({
+    setSelectedAnswers((prevState) => ({
       ...prevState,
       [questionNumber]: answer,
     }));
+    console.log(answer);
   };
 
   const handleSave = () => {
-    onReady()
-    onClose()
-  }
+    onReady();
+    onClose();
+  };
+
+  const handleQuestionChange = (questionNumber, text) => {
+    setQuestions((prevState) => ({
+      ...prevState,
+      [questionNumber]: text,
+    }));
+    console.log(questions);
+  };
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] z-50">
@@ -31,15 +48,29 @@ const GuessMeModal = ({ userName, readyPeople, btnText, onClose, onReady }) => {
             </div>
           </div>
           <div className="flex flex-col items-center justify-center w-full flex-grow">
-            {[1, 2, 3].map(questionNumber => (
-              <div key={questionNumber} className="p-2 mb-5 flex items-center w-full justify-center">
-                <span className="mr-2 text-xl text-[rgba(87,136,208)]">{questionNumber}. </span>
-                <input className="w-[70%] text-xl border rounded p-1" type="text" />
+            {[1, 2, 3].map((questionNumber) => (
+              <div
+                key={questionNumber}
+                className="p-2 mb-5 flex items-center w-full justify-center"
+              >
+                <span className="mr-2 text-xl text-[rgba(87,136,208)]">
+                  {questionNumber}.{" "}
+                </span>
+                {/* 사용자가 작성하는 곳 */}
+                <input
+                  className="w-[70%] text-xl border rounded p-1"
+                  type="text"
+                  onChange={(e) =>
+                    handleQuestionChange(questionNumber, e.target.value)
+                  }
+                />
                 <span>
                   <button
-                    onClick={() => handleAnswerClick(questionNumber, 'O')}
+                    onClick={() => handleAnswerClick(questionNumber, true)}
                     className={`text-white text-[28px] bg-[rgba(141,179,235)] px-2 py-1 ml-10 rounded-lg ${
-                      selectedAnswers[questionNumber] === 'O' ? 'border-2 border-black' : ''
+                      selectedAnswers[questionNumber] === true
+                        ? "border-2 border-black"
+                        : ""
                     }`}
                   >
                     O
@@ -47,9 +78,11 @@ const GuessMeModal = ({ userName, readyPeople, btnText, onClose, onReady }) => {
                 </span>
                 <span>
                   <button
-                    onClick={() => handleAnswerClick(questionNumber, 'X')}
+                    onClick={() => handleAnswerClick(questionNumber, false)}
                     className={`text-white text-[28px] bg-[rgba(244,167,167)] px-2 py-1 ml-5 rounded-lg ${
-                      selectedAnswers[questionNumber] === 'X' ? 'border-2 border-black' : ''
+                      selectedAnswers[questionNumber] === false
+                        ? "border-2 border-black"
+                        : ""
                     }`}
                   >
                     X
