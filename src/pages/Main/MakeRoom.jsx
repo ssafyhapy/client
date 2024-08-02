@@ -1,7 +1,5 @@
-import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { axiosInstance } from "../../api/apiClient";
 // import { useNavigate } from "react-router-dom";
 
@@ -78,7 +76,7 @@ const MakeRoom = ({ closeMakeRoom }) => {
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded"
             >
-              <Link to="/camera-check">방 만들기</Link>
+              방 만들기
             </button>
             {/* 취소 */}
             <button
