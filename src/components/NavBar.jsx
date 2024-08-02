@@ -44,6 +44,9 @@ const NavBar = () => {
   }, [loginAlert]);
 
   useEffect(() => {
+    console.log("isLogin", isLogin);
+    console.log("prevIsLogin", prevIsLogin);
+
     if (prevIsLogin !== null && isLogin !== prevIsLogin) {
       if (isLogin) {
         setMessage("로그인 되었습니다.");
@@ -69,7 +72,7 @@ const NavBar = () => {
       logout();
 
       // 메인 페이지로 이동
-      navigate("/");
+      navigate("/play");
     } catch (error) {
       console.error("로그아웃 실패", error);
     }
