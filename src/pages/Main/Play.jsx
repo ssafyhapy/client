@@ -5,6 +5,7 @@ import MainHomeFrame from "../../components/Main_page/MainHomeFrame";
 import MakeRoom from "./MakeRoom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { axiosInstance } from "../api/apiClient";
 // import { useNavigate } from "react-router-dom";
 
 const Play = () => {
@@ -32,8 +33,9 @@ const Play = () => {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await axios.post(
-        `http://i11c209.p.ssafy.io/api/room/enter/roomCode=${data.roomCode}`
+      const response = await axiosInstance.post(
+        // `/room/enter/roomCode=${data.roomCode}`
+        `/room/enter/roomCode=${196-931}`
       );
       console.log(response);
       // 방 입장 요청 완료시 카메라 체크 페이지로 이동
