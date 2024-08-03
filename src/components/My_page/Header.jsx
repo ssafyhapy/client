@@ -1,17 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import { EditIcon } from "./EditIcon";
 import { PublicIcon } from "./PublicIcon";
 import { axiosInstance } from "../../api/apiClient";
 
 const Header = ({ isEditMode, setEditMode, onSubmit }) => {
-  const handlePublic = async () => {
-    try {
-      const response = await axiosInstance.put("/member/mypage/visibility");
-      console.log("공개 설정 성공", response);
-    } catch (error) {
-      console.error("공개 설정 실패", error);
-    }
-  };
+
   return (
     <div className="flex justify-between">
       <div className="w-[33%]"></div>
@@ -26,7 +19,7 @@ const Header = ({ isEditMode, setEditMode, onSubmit }) => {
         ) : (
           <EditIcon onClick={setEditMode} />
         )}
-        <PublicIcon onClick={handlePublic} />
+        <PublicIcon />
       </div>
     </div>
   );

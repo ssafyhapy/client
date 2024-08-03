@@ -1,3 +1,5 @@
+import React from "react";
+
 const Introduction = ({ memberIntroduction, isEditMode, register }) => {
   return (
     <div className="w-[820px] h-[200px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)] flex items-start p-5 gap-5 relative">

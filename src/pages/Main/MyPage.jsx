@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import NavBar from "../../components/NavBar";
 import MainGradientBackground from "../../components/Common/MainGradientBackground";
 import MyPageFrame from "../../components/My_page/MyPageFrame";
 import {
   useMypageStore,
-  useUpdateMypageStore,
+  useUpdateStore,
 } from "../../store/useMypageStore";
 import Header from "../../components/My_page/Header";
 import Profile from "../../components/My_page/Profile";
@@ -26,7 +26,7 @@ const MyPage = () => {
     updateData,
   } = useMypageStore();
 
-  const { isEditMode, setEditMode } = useUpdateMypageStore();
+  const { isEditMode, setEditMode } = useUpdateStore();
   const { register, handleSubmit } = useForm();
 
   useEffect(() => {
@@ -61,8 +61,8 @@ const MyPage = () => {
                 />
                 <History
                   memberHistoryList={memberHistoryList}
-                  isEditMode={isEditMode}
-                  register={register}
+                  // isEditMode={isEditMode}
+                  // register={register}
                 />
               </div>
               <div className="flex gap-5">
