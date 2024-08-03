@@ -6,7 +6,7 @@ const History = ({ memberHistoryList }) => {
       <div className="flex flex-col justify-center gap-2">
         <h1 className="text-2xl">History</h1>
         <ul>
-          {memberHistoryList?.memberHistoryList.map((history) => (
+          {memberHistoryList?.map((history) => (
             <li key={history.memberHistoryId}>
               {history.memberHistoryDate} {history.memberHistoryContent}
             </li>
