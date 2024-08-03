@@ -16,7 +16,7 @@ export const PublicIcon = () => {
   };
   const handlePrivate = async () => {
     try {
-      const response = await axiosInstance.delete("/member/mypage/visibility", {
+      const response = await axiosInstance.put("/member/mypage/visibility", {
         visibility: "PRIVATE",
       });
       console.log("비공개 설정 성공", response);
