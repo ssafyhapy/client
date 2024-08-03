@@ -1,5 +1,6 @@
 import React from "react";
 import { useVisibilityStore } from "../../store/useMypageStore";
+import { axiosInstance } from "../../api/apiClient";
 
 export const PublicIcon = () => {
   const { isVisibility, setVisibility } = useVisibilityStore();
