@@ -14,8 +14,8 @@ const useMypageStore = create(
       fetchData: async (endpoint) => {
         try {
           const response = await axiosInstance.get(endpoint);
-          set({ ...response.data });
-          console.log(response.data);
+          set({ ...response.data.data });
+          console.log(response);
         } catch (error) {
           console.error(error);
         }
