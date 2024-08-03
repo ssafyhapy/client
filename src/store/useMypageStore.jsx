@@ -22,7 +22,7 @@ const useMypageStore = create(
       },
       updateData: async (endpoint, data) => {
         try {
-          const response = await axiosInstance.put(endpoint, data);
+          const response = await axiosInstance.patch(endpoint, data);
           set({ ...response.data });
           console.log(response.data);
         } catch (error) {
