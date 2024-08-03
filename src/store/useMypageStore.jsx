@@ -34,14 +34,23 @@ const useMypageStore = create(
   )
 );
 
-const useUpdateMypageStore = create(
+const useUpdateStore = create(
   persist(
     (set) => ({
       isEditMode: false,
       setEditMode: () => set((state) => ({ isEditMode: !state.isEditMode })),
     }),
-    { name: "UpdateMyPage-storage", storage: sessionStorage }
+    { name: "Update-storage", storage: sessionStorage }
   )
 );
 
-export { useMypageStore, useUpdateMypageStore };
+const useVisibilityStore = create(
+  persist(
+    (set) => ({
+      isVisibility: false,
+      setVisibility: () => set((state) => ({ isVisibility: !state.isVisibility })),
+    }),
+    { name: "Visibility-storage", storage: sessionStorage }
+  )
+);
+export { useMypageStore, useUpdateStore, useVisibilityStore };
