@@ -3,17 +3,17 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // 필요한 컴포넌트 import
-import Chatbox from "../../../components/Common/Chatbox";
-import ExitBtn from "../../../components/Buttons/ExitBtn";
-import GameTurns from "../../../components/Common/GameTurns";
-import BasicBtn from "../../../components/Buttons/BasicBtn";
-import GuessMeModal from "../../../components/Guess_me/GuessMeModal";
+import Chatbox from "./../Common/Chatbox";
+import ExitBtn from "./../Buttons/ExitBtn";
+import GameTurns from "./../Common/GameTurns";
+import BasicBtn from "../Buttons/BasicBtn";
+import GuessMeModal from "./GuessMeModal";
 
-import snowingCloud from "../../../assets/Common/snowing_cloud.png";
-import star from "../../../assets/Common/star.png";
-import useGameStore from "../../../store/useGameStore";
+import snowingCloud from "../../assets/Common/snowing_cloud.png";
+import star from "../../assets/Common/star.png";
+import useGameStore from "../../store/useGameStore";
 
-const GuessMeGetReady = () => {
+const GuessMeGetReady = ({ guessMeStep, setGuessMeStep }) => {
   const { roomId } = useGameStore();
   const [dots, setDots] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -27,7 +27,6 @@ const GuessMeGetReady = () => {
   const readyPeople = 3; // Example number of people waiting, you can replace it with actual data
   const btnText = "작성 문구 수정"; // Example button text, you can replace it with actual data
 
-
   const handleSave = async () => {
     const oneSearch = await searchOneSelfIntro();
     if (oneSearch.length > 0) {
@@ -36,7 +35,7 @@ const GuessMeGetReady = () => {
       postSelfIntro();
     }
   };
-  
+
   const postSelfIntro = () => {
     const data = Object.keys(questions).map((key) => ({
       roomId: roomId,
@@ -44,14 +43,15 @@ const GuessMeGetReady = () => {
       answer: selectedAnswers[key],
     }));
 
-    axios.post("https://i11c209.p.ssafy.io/api/result/ox", data, {
-      headers: {
-        Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
-      },
-    })
+    axios
+      .post("https://i11c209.p.ssafy.io/api/result/ox", data, {
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
+        },
+      })
       .then((response) => {
         console.log("postSelfIntro 성공", response.data);
-
       })
       .catch((error) => {
         console.error("Error in postSelfIntro:", error);
@@ -60,18 +60,22 @@ const GuessMeGetReady = () => {
 
   const searchOneSelfIntro = async () => {
     try {
-      const response = await axios.get(`https://i11c209.p.ssafy.io/api/result/ox/${roomId}`, {
-        headers: {
-          Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
-        },
-      });
+      const response = await axios.get(
+        `https://i11c209.p.ssafy.io/api/result/ox/${roomId}`,
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
+          },
+        }
+      );
       console.log("단건 조회", response.data);
       const oneSearch = response.data.data;
-  
+
       if (oneSearch.length > 0) {
         const newQuestions = {};
         const newSelectedAnswers = {};
-  
+
         oneSearch.forEach((question, index) => {
           newQuestions[index + 1] = question.content;
           newSelectedAnswers[index + 1] = question.answer;
@@ -79,14 +83,13 @@ const GuessMeGetReady = () => {
         setQuestions(newQuestions);
         setSelectedAnswers(newSelectedAnswers);
       }
-  
+
       return oneSearch;
     } catch (error) {
       console.log("Error in searchOneSelfIntro:", error);
       return [];
     }
   };
-  
 
   const modifySelfIntro = async () => {
     const data = Object.keys(questions).map((key) => ({
@@ -97,19 +100,19 @@ const GuessMeGetReady = () => {
     try {
       const response = await axios.patch(
         `https://i11c209.p.ssafy.io/api/result/ox/${roomId}/modify`,
-        data, {
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
+        data,
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
+          },
         }
-      });
+      );
       console.log("수정 성공", response.data);
     } catch (error) {
       console.log("Error in modifySelfIntro:", error);
     }
   };
-
-
 
   // 준비중 ... (점들 계속 움직이게 만드는거)
   useEffect(() => {
@@ -124,7 +127,7 @@ const GuessMeGetReady = () => {
   useEffect(() => {
     // Show the modal after some time or based on a condition
     const timer = setTimeout(() => {
-      searchOneSelfIntro()
+      searchOneSelfIntro();
       setShowModal(true);
       setUserStatus("준비중"); // Set status to "준비중" when modal opens
     }, 250); // Show modal after 2 seconds
@@ -136,11 +139,11 @@ const GuessMeGetReady = () => {
   useEffect(() => {
     if (allPrepared) {
       const timer = setTimeout(() => {
-        navigate("/guessme");
+        setGuessMeStep("Answer");
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [allPrepared, navigate]);
+  }, [allPrepared, setGuessMeStep]); // useEffect 의존성 배열에 setGuessMeStep 추가
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -157,6 +160,14 @@ const GuessMeGetReady = () => {
     setUserStatus("ready");
     setAllPrepared(true); // For demonstration, set this to true when ready
   };
+
+  useEffect(() => {
+    if (allPrepared) {
+      setTimeout(() => {
+        setGuessMeStep("Answer");
+      }, 2000);
+    }
+  }, [allPrepared, setGuessMeStep]); // useEffect 의존성 배열에 setGuessMeStep 추가
 
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
@@ -184,7 +195,11 @@ const GuessMeGetReady = () => {
         {/* Mid-Bottom Between Div */}
         <div className="text-xs mt-3 flex justify-start">
           {!allPrepared ? (
-            <BasicBtn btnText={btnText} onClick={handleOpenModal} fontSize={12} />
+            <BasicBtn
+              btnText={btnText}
+              onClick={handleOpenModal}
+              fontSize={12}
+            />
           ) : (
             <div className="invisible">
               <BasicBtn btnText={"Hey"} fontSize={12} />

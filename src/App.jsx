@@ -18,9 +18,11 @@ import SelfIntroductionGetReady from "./pages/Games/Self_introduction/SelfIntrod
 import SelfIntroductionAllPrepared from "./pages/Games/Self_introduction/SelfIntroductionAllPrepared";
 
 // 나를 맞춰봐 페이지들
-import GuessMeGetReady from "./pages/Games/Guess_me/GuessMeGetReady";
-import GuessMeAllPrepared from "./pages/Games/Guess_me/GuessMeAllPrepared";
+import GuessMeGetReady from "./components/Guess_me/GuessMeGetReady";
+import GuessMeAllPrepared from "./components/Guess_me/GuessMeAllPrepared";
+import GuessMeAnswer from "./components/Guess_me/GuessMeAnswer";
 import GuessMe from "./pages/Games/Guess_me/GuessMe";
+
 
 // 밸런스 페이지들
 // import BalanceGetReady from "./components/Balance_game/BalanceGetReady";
