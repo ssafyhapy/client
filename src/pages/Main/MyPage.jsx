@@ -26,21 +26,22 @@ const MyPage = () => {
   } = useMypageStore();
 
   const { isEditMode, setEditMode } = useUpdateStore();
+
   const methods = useForm({
     defaultValues: {
-      memberName,
-      memberProviderEmail,
-      memberProfileImageUrl,
-      memberIntroduction,
-      memberHistoryList,
-      memberMemoryboxList,
+      memberName: memberName || "", 
+      memberProviderEmail: memberProviderEmail || "",
+      memberProfileImageUrl: memberProfileImageUrl || "",
+      memberIntroduction: memberIntroduction || "",
+      memberHistoryList: memberHistoryList || [],
+      memberMemoryboxList: memberMemoryboxList || [],
       deleteHistoryList: [],
     },
   });
 
   useEffect(() => {
     fetchData("/member/mypage");
-  }, [fetchData, updateData]);
+  }, [fetchData]);
 
   const onSubmit = (data) => {
     updateData("/member/mypage", data);
