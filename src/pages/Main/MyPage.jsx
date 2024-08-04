@@ -10,9 +10,11 @@ import Introduction from "../../components/My_page/Introduction";
 import Memory from "../../components/My_page/Memory";
 import MemoryBox from "../../components/My_page/MemoryBox";
 import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import Spinner from "../../components/Spinner";
 
 const MyPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
   const {
     memberName,
     memberProviderEmail,
@@ -28,7 +30,7 @@ const MyPage = () => {
 
   const methods = useForm({
     defaultValues: {
-      memberName: memberName || "", 
+      memberName: memberName || "",
       memberProviderEmail: memberProviderEmail || "",
       memberProfileImageUrl: memberProfileImageUrl || "",
       memberIntroduction: memberIntroduction || "",
@@ -39,8 +41,26 @@ const MyPage = () => {
   });
 
   useEffect(() => {
-    fetchData("/member/mypage");
-  }, [fetchData]);
+    const loadData = async () => {
+      await fetchData("/member/mypage");
+      methods.reset({
+        memberName: memberName || "",
+        memberProviderEmail: memberProviderEmail || "",
+        memberProfileImageUrl: memberProfileImageUrl || "",
+        memberIntroduction: memberIntroduction || "",
+        memberHistoryList: memberHistoryList || [],
+        memberMemoryboxList: memberMemoryboxList || [],
+        deleteHistoryList: [],
+      });
+      setIsLoading(false);
+    };
+
+    loadData();
+  }, []);
+
+  if (isLoading) {
+    return <Spinner />; // 로딩 중일 때 표시할 컴포넌트
+  }
 
   const onSubmit = (data) => {
     updateData("/member/mypage", data);
