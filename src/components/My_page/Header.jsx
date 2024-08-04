@@ -1,7 +1,6 @@
 import React from "react";
 import { EditIcon } from "./EditIcon";
 import { PublicIcon } from "./PublicIcon";
-import { axiosInstance } from "../../api/apiClient";
 
 const Header = ({ isEditMode, setEditMode, onSubmit }) => {
 
