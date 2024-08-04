@@ -78,8 +78,6 @@ const MyPage = () => {
   const onSubmit = async (data) => {
     setIsLoading(true);
     await updateData("/member/mypage", data);
-    setEditMode(false);
-
     methods.reset({
       memberName,
       memberProviderEmail,
@@ -90,6 +88,7 @@ const MyPage = () => {
       deleteHistoryList: [],
     });
     setIsLoading(false);
+    setEditMode(false);
   };
 
   if (isLoading) {
