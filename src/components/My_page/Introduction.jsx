@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 const Introduction = ({ memberIntroduction, isEditMode }) => {
-  const { register, watch } = useFormContext();
-  const memberIntroductionValue = watch("memberIntroduction");
+  const { register, setValue } = useFormContext();
+
+  useEffect(() => {
+    if (isEditMode) {
+      setValue("memberIntroduction", memberIntroduction);
+    }
+  }, [isEditMode, memberIntroduction, setValue]);
 
   return (
     <div className="w-[820px] h-[200px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)] flex items-start p-5 gap-5 relative">
@@ -21,4 +26,5 @@ const Introduction = ({ memberIntroduction, isEditMode }) => {
     </div>
   );
 };
+
 export default Introduction;

@@ -22,8 +22,10 @@ const useMypageStore = create(
       },
       updateData: async (endpoint, data) => {
         try {
+          console.log("updateData: ", data);
           const response = await axiosInstance.patch(endpoint, data);
-          set({ ...response.data.data });
+          // 여기 이 부분때문에 문제가 있는 것 같아요
+          // set({ ...response.data.data });
           console.log("updateData", response);
         } catch (error) {
           console.error(error);

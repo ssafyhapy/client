@@ -36,7 +36,7 @@ const MyPage = () => {
       memberIntroduction: memberIntroduction || "",
       memberHistoryList: memberHistoryList || [],
       memberMemoryboxList: memberMemoryboxList || [],
-      deleteHistoryList: [],
+      deletedHistoryList: [],
     },
   });
 
@@ -51,7 +51,7 @@ const MyPage = () => {
         memberIntroduction,
         memberHistoryList,
         memberMemoryboxList,
-        deleteHistoryList: [],
+        deletedHistoryList: [],
       });
 
       setIsLoading(false);
@@ -64,9 +64,17 @@ const MyPage = () => {
     return <Spinner />; // 로딩 중일 때 표시할 컴포넌트
   }
 
-  const onSubmit = (data) => {
-    updateData("/member/mypage", data);
+  const onSubmit = async (data) => {
+    console.log("Form data before submit:", data);
+    // 데이터 업데이트 시도
+    // TODO :여기 update 성공하면 fetch 데이터 되도록 수정해야 할 듯요(update반환값이 204이면 => fetchdata가 실행되도록?)
+    await updateData("/member/mypage", data);
+
+    // 업데이트 성공 시 최신 데이터 다시 불러오기
+    await fetchData("/member/mypage");
+    // 데이터가 업데이트되면 수정 모드 해제
     setEditMode(false);
+
   };
 
   return (
