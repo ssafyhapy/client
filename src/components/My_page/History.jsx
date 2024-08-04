@@ -1,12 +1,14 @@
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 
-const History = ({ memberHistoryList = [], isEditMode, onDelete }) => {
-  const { register, control } = useFormContext();
+const History = ({ memberHistoryList = [], isEditMode }) => {
+  const { register, watch, control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "memberHistoryList",
   });
+
+  const memberHistoryListValue = watch("memberHistoryList");
 
   return (
     <div className="w-[400px] h-[200px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)] flex items-start p-5 gap-5 relative">
@@ -51,7 +53,7 @@ const History = ({ memberHistoryList = [], isEditMode, onDelete }) => {
           </>
         ) : (
           <ul>
-            {(memberHistoryList || []).map((history) => (
+            {(memberHistoryListValue || []).map((history) => (
               <li key={history.memberHistoryId}>
                 {history.memberHistoryDate} {history.memberHistoryContent}
               </li>
