@@ -1,14 +1,15 @@
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
+import { useMypageStore } from "../../store/useMypageStore";
 
-const History = ({ memberHistoryList = [], isEditMode }) => {
+const History = ({ isEditMode }) => {
+  const { memberHistoryList } = useMypageStore();
   const { register, watch, control, setValue } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "memberHistoryList",
   });
 
-  const memberHistoryListValue = watch("memberHistoryList");
   const deleteHistoryList = watch("deleteHistoryList");
 
   const handleDelete = (index, id) => {
