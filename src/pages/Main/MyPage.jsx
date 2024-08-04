@@ -58,15 +58,25 @@ const MyPage = () => {
     };
 
     loadData();
-  }, [fetchData, memberIntroduction, memberHistoryList]);
+  }, [fetchData]);
 
   if (isLoading) {
     return <Spinner />; // 로딩 중일 때 표시할 컴포넌트
   }
 
-  const onSubmit = (data) => {
-    updateData("/member/mypage", data);
+  const onSubmit = async (data) => {
+    await updateData("/member/mypage", data);
     setEditMode(false);
+  
+    methods.reset({
+      memberName,
+      memberProviderEmail,
+      memberProfileImageUrl,
+      memberIntroduction,
+      memberHistoryList,
+      memberMemoryboxList,
+      deleteHistoryList: [],
+    });
   };
 
   return (
