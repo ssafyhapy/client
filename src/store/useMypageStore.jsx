@@ -23,7 +23,6 @@ const useMypageStore = create(
       updateData: async (endpoint, data) => {
         try {
           const response = await axiosInstance.patch(endpoint, data);
-          set({ ...response.data.data });
           console.log("updateData", response);
         } catch (error) {
           console.error(error);
