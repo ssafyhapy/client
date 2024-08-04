@@ -61,7 +61,7 @@ const History = ({ memberHistoryList = [], isEditMode }) => {
           </>
         ) : (
           <ul>
-            {(memberHistoryListValue || []).map((history) => (
+            {(memberHistoryList || []).map((history) => (
               <li key={history.memberHistoryId}>
                 {history.memberHistoryDate} {history.memberHistoryContent}
               </li>
