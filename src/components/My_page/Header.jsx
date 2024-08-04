@@ -2,8 +2,7 @@ import React from "react";
 import { EditIcon } from "./EditIcon";
 import { PublicIcon } from "./PublicIcon";
 
-const Header = ({ isEditMode, setEditMode, onSubmit }) => {
-
+const Header = ({ isEditMode, handleEditMode, onSubmit }) => {
   return (
     <div className="flex justify-between">
       <div className="w-[33%]"></div>
@@ -16,7 +15,7 @@ const Header = ({ isEditMode, setEditMode, onSubmit }) => {
             수정 완료
           </button>
         ) : (
-          <EditIcon onClick={setEditMode} />
+          <EditIcon onClick={handleEditMode} />
         )}
         <PublicIcon />
       </div>

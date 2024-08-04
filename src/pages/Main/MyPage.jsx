@@ -9,7 +9,7 @@ import History from "../../components/My_page/History";
 import Introduction from "../../components/My_page/Introduction";
 import Memory from "../../components/My_page/Memory";
 import MemoryBox from "../../components/My_page/MemoryBox";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, set, useForm } from "react-hook-form";
 import Spinner from "../../components/Spinner";
 
 const MyPage = () => {
@@ -26,8 +26,6 @@ const MyPage = () => {
     updateData,
   } = useMypageStore();
 
-  const { isEditMode, setEditMode } = useUpdateStore();
-
   const methods = useForm({
     defaultValues: {
       memberName: memberName || "",
@@ -40,10 +38,27 @@ const MyPage = () => {
     },
   });
 
+  const { isEditMode, setEditMode } = useUpdateStore();
+
+  const handleEditMode = () => {
+    setIsLoading(true);
+    methods.reset({
+      memberName,
+      memberProviderEmail,
+      memberProfileImageUrl,
+      memberIntroduction,
+      memberHistoryList,
+      memberMemoryboxList,
+      deleteHistoryList: [],
+    });
+    setEditMode();
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     const loadData = async () => {
+      setIsLoading(true);
       await fetchData("/member/mypage");
-
       methods.reset({
         memberName,
         memberProviderEmail,
@@ -60,15 +75,11 @@ const MyPage = () => {
     loadData();
   }, [fetchData]);
 
-  if (isLoading) {
-    return <Spinner />; // 로딩 중일 때 표시할 컴포넌트
-  }
-
   const onSubmit = async (data) => {
     setIsLoading(true);
     await updateData("/member/mypage", data);
     setEditMode(false);
-  
+
     methods.reset({
       memberName,
       memberProviderEmail,
@@ -81,6 +92,10 @@ const MyPage = () => {
     setIsLoading(false);
   };
 
+  if (isLoading) {
+    return <Spinner />; // 로딩 중일 때 표시할 컴포넌트
+  }
+
   return (
     <FormProvider {...methods}>
       <MainGradientBackground>
@@ -90,25 +105,25 @@ const MyPage = () => {
               <NavBar />
               <Header
                 isEditMode={isEditMode}
-                setEditMode={setEditMode}
+                handleEditMode={handleEditMode}
                 onSubmit={methods.handleSubmit(onSubmit)}
               />
             </div>
             <form className="flex flex-col items-center gap-5">
               <div className="flex gap-5">
                 <Profile
-                  memberName={memberName}
-                  memberProfileImageUrl={memberProfileImageUrl}
-                  memberProviderEmail={memberProviderEmail}
+                // memberName={memberName}
+                // memberProfileImageUrl={memberProfileImageUrl}
+                // memberProviderEmail={memberProviderEmail}
                 />
                 <History
-                  memberHistoryList={memberHistoryList}
+                  // memberHistoryList={memberHistoryList}
                   isEditMode={isEditMode}
                 />
               </div>
               <div className="flex gap-5">
                 <Introduction
-                  memberIntroduction={memberIntroduction}
+                  // memberIntroduction={memberIntroduction}
                   isEditMode={isEditMode}
                 />
               </div>
