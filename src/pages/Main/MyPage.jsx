@@ -56,7 +56,7 @@ const MyPage = () => {
     };
 
     loadData();
-  }, [fetchData, memberName, memberProviderEmail, memberProfileImageUrl, memberIntroduction, memberHistoryList, memberMemoryboxList]);
+  }, [fetchData]);
 
   if (isLoading) {
     return <Spinner />; // 로딩 중일 때 표시할 컴포넌트
