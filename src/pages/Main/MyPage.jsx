@@ -13,7 +13,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
-  const navigate = useNavigate();
   const {
     memberName,
     memberProviderEmail,
