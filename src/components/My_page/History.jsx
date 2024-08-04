@@ -2,7 +2,7 @@ import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 
 const History = ({ memberHistoryList = [], isEditMode, onDelete }) => {
-  const { register, control, getValues } = useFormContext();
+  const { register, control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "memberHistoryList",
@@ -25,12 +25,10 @@ const History = ({ memberHistoryList = [], isEditMode, onDelete }) => {
                     {...register(`memberHistoryList.${index}.memberHistoryDate`)}
                     type="date"
                     placeholder="날짜"
-                    defaultValue={item.memberHistoryDate}
                   />
                   <input
                     {...register(`memberHistoryList.${index}.memberHistoryContent`)}
                     placeholder="내용"
-                    defaultValue={item.memberHistoryContent}
                   />
                   <button type="button" onClick={() => remove(index)}>
                     삭제

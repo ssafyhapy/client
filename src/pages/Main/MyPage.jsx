@@ -28,12 +28,12 @@ const MyPage = () => {
   const { isEditMode, setEditMode } = useUpdateStore();
   const methods = useForm({
     defaultValues: {
-      memberName: "",
-      memberProviderEmail: "",
-      memberProfileImageUrl: "",
-      memberIntroduction: "",
-      memberHistoryList: [],
-      memberMemoryboxList: [],
+      memberName,
+      memberProviderEmail,
+      memberProfileImageUrl,
+      memberIntroduction,
+      memberHistoryList,
+      memberMemoryboxList,
       deleteHistoryList: [],
     },
   });
