@@ -40,12 +40,11 @@ const MyPage = () => {
 
   useEffect(() => {
     fetchData("/member/mypage");
-  }, [fetchData]);
+  }, [fetchData, updateData]);
 
   const onSubmit = (data) => {
     updateData("/member/mypage", data);
     setEditMode(false);
-    navigate("/mypage");
   };
 
   return (
