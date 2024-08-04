@@ -10,14 +10,21 @@ const History = ({ isEditMode }) => {
     name: "memberHistoryList",
   });
 
-  const deleteHistoryList = watch("deleteHistoryList");
+  const deletedHistoryList = watch("deletedHistoryList");
 
   const handleDelete = (index, id) => {
     if (id !== -1) {
-      setValue("deleteHistoryList", [...deleteHistoryList, id]);
+      setValue("deletedHistoryList", [...deletedHistoryList, id]);
     }
     remove(index);
   };
+
+  useEffect(() => {
+    if (isEditMode) {
+      setValue("memberHistoryList", memberHistoryList);
+      setValue("deletedHistoryList", []);
+    }
+  }, [isEditMode, memberHistoryList, setValue]);
 
   return (
     <div className="w-[400px] h-[200px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)] flex items-start p-5 gap-5 relative">
