@@ -9,7 +9,7 @@ import History from "../../components/My_page/History";
 import Introduction from "../../components/My_page/Introduction";
 import Memory from "../../components/My_page/Memory";
 import MemoryBox from "../../components/My_page/MemoryBox";
-import { FormProvider, set, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import Spinner from "../../components/Spinner";
 
 const MyPage = () => {
@@ -40,8 +40,7 @@ const MyPage = () => {
 
   const { isEditMode, setEditMode } = useUpdateStore();
 
-  const handleEditMode = () => {
-    setIsLoading(true);
+  const methodReset = () => {
     methods.reset({
       memberName,
       memberProviderEmail,
@@ -51,7 +50,12 @@ const MyPage = () => {
       memberMemoryboxList,
       deleteHistoryList: [],
     });
-    setEditMode();
+  };
+
+  const handleEditMode = async () => {
+    setIsLoading(true);
+    await methodReset();
+    await setEditMode();
     setIsLoading(false);
   };
 
@@ -59,16 +63,7 @@ const MyPage = () => {
     const loadData = async () => {
       setIsLoading(true);
       await fetchData("/member/mypage");
-      methods.reset({
-        memberName,
-        memberProviderEmail,
-        memberProfileImageUrl,
-        memberIntroduction,
-        memberHistoryList,
-        memberMemoryboxList,
-        deleteHistoryList: [],
-      });
-
+      methodReset();
       setIsLoading(false);
     };
 
@@ -77,18 +72,15 @@ const MyPage = () => {
 
   const onSubmit = async (data) => {
     setIsLoading(true);
-    await updateData("/member/mypage", data);
-    methods.reset({
-      memberName,
-      memberProviderEmail,
-      memberProfileImageUrl,
-      memberIntroduction,
-      memberHistoryList,
-      memberMemoryboxList,
-      deleteHistoryList: [],
-    });
+    try {
+      await updateData("/member/mypage", data);
+      await fetchData("/member/mypage");
+    } catch (error) {
+      console.error(error);
+    } finally {
     setIsLoading(false);
     setEditMode(false);
+    }
   };
 
   if (isLoading) {
@@ -111,18 +103,13 @@ const MyPage = () => {
             <form className="flex flex-col items-center gap-5">
               <div className="flex gap-5">
                 <Profile
-                // memberName={memberName}
-                // memberProfileImageUrl={memberProfileImageUrl}
-                // memberProviderEmail={memberProviderEmail}
                 />
                 <History
-                  // memberHistoryList={memberHistoryList}
                   isEditMode={isEditMode}
                 />
               </div>
               <div className="flex gap-5">
                 <Introduction
-                  // memberIntroduction={memberIntroduction}
                   isEditMode={isEditMode}
                 />
               </div>
