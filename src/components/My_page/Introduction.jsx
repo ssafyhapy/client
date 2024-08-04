@@ -14,7 +14,7 @@ const Introduction = ({ memberIntroduction, isEditMode }) => {
             className="bg-blue-100 border-2 border-blue-500 shadow-md p-4 rounded-lg resize-y min-h-[120px] text-lg w-[780px]"
           />
         ) : (
-          <p>{memberIntroduction?.memberIntroduction}</p>
+          <p>{memberIntroduction}</p>
         )}
       </div>
     </div>
