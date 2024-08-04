@@ -10,8 +10,10 @@ import Introduction from "../../components/My_page/Introduction";
 import Memory from "../../components/My_page/Memory";
 import MemoryBox from "../../components/My_page/MemoryBox";
 import { FormProvider, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
+  const navigate = useNavigate();
   const {
     memberName,
     memberProviderEmail,
@@ -36,24 +38,14 @@ const MyPage = () => {
     },
   });
 
-  const [deletedList, setDeletedList] = useState([]);
-
   useEffect(() => {
     fetchData("/member/mypage");
   }, [fetchData]);
 
-  const handleDelete = (deletedId) => {
-    setDeletedList((prev) => [...prev, deletedId]);
-  };
-
   const onSubmit = (data) => {
-    const updatedData = {
-      ...data,
-      deleteHistoryList: deletedList, // Include deletedList in the submitted data
-    };
-    console.log(updatedData);
-    updateData("/member/mypage", updatedData);
+    updateData("/member/mypage", data);
     setEditMode(false);
+    navigate("/mypage");
   };
 
   return (
@@ -79,7 +71,6 @@ const MyPage = () => {
                 <History
                   memberHistoryList={memberHistoryList}
                   isEditMode={isEditMode}
-                  onDelete={handleDelete}
                 />
               </div>
               <div className="flex gap-5">

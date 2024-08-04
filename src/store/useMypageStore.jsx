@@ -15,7 +15,7 @@ const useMypageStore = create(
         try {
           const response = await axiosInstance.get(endpoint);
           set({ ...response.data.data });
-          console.log(response);
+          console.log("fetchData", response);
         } catch (error) {
           console.error(error);
         }
@@ -24,7 +24,7 @@ const useMypageStore = create(
         try {
           const response = await axiosInstance.patch(endpoint, data);
           set({ ...response.data.data });
-          console.log(response);
+          console.log("updateData", response);
         } catch (error) {
           console.error(error);
         }

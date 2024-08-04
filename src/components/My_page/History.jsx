@@ -8,14 +8,6 @@ const History = ({ memberHistoryList = [], isEditMode, onDelete }) => {
     name: "memberHistoryList",
   });
 
-  const handleDelete = (index) => {
-    const fieldId = getValues(`memberHistoryList.${index}.memberHistoryId`);
-    if (fieldId > 0) {
-      onDelete(fieldId); // Notify parent component about the deletion
-    }
-    remove(index);
-  };
-
   return (
     <div className="w-[400px] h-[200px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)] flex items-start p-5 gap-5 relative">
       <div className="flex flex-col justify-center gap-2">
@@ -40,7 +32,7 @@ const History = ({ memberHistoryList = [], isEditMode, onDelete }) => {
                     placeholder="내용"
                     defaultValue={item.memberHistoryContent}
                   />
-                  <button type="button" onClick={() => handleDelete(index)}>
+                  <button type="button" onClick={() => remove(index)}>
                     삭제
                   </button>
                 </div>
