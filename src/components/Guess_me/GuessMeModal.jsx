@@ -11,6 +11,8 @@ const GuessMeModal = ({
   setQuestions,
   selectedAnswers,
   setSelectedAnswers,
+  clickSaveNum,
+  setclickSaveNum
 }) => {
   const [openAlertMsg, setOpenAlertMsg] = useState(false);
 
@@ -41,7 +43,7 @@ const GuessMeModal = ({
     }
   };
 
-  const handleQuestionChange = (questionNumber, text) => {
+  const handleQuestionInput = (questionNumber, text) => {
     setQuestions((prevState) => ({
       ...prevState,
       [questionNumber]: text,
@@ -78,7 +80,7 @@ const GuessMeModal = ({
                   type="text"
                   value={questions[questionNumber] || ""}
                   onChange={(e) =>
-                    handleQuestionChange(questionNumber, e.target.value)
+                    handleQuestionInput(questionNumber, e.target.value)
                   }
                   required
                 />

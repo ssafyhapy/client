@@ -8,12 +8,13 @@ import useGameStore from "../../../store/useGameStore";
 import { useNavigate } from "react-router-dom";
 
 const GuessMe = () => {
+  meberList = ['meberId'];
   const { roomId } = useGameStore();
   const [secondsLeft, setSecondsLeft] = useState(10);
   const [showResult, setShowResult] = useState(false);
   const navigate = useNavigate();
   const [userQuestions, setUserQuestions] = useState([]);
-  const [timer, setTimer] = useState(null); // 타이머 상태 추가
+  const [timer, setTimer] = useState(null);
 
   const btnText = "다음";
   const timerImg = "/src/assets/common/timer.png";
@@ -22,12 +23,12 @@ const GuessMe = () => {
 
   const handleNextStep = () => {
     if (userQuestions.length > 1) {
-      const newQuestions = userQuestions.slice(1); // Create a new array without the first element
-      setUserQuestions(newQuestions); // Update the state with the new array
-      setSecondsLeft(10); // Reset the timer to 10 seconds
-      setShowResult(false); // Hide the result
-      if (timer) clearInterval(timer); // Clear the existing timer
-      startTimer(); // Start a new timer
+      const newQuestions = userQuestions.slice(1);
+      setUserQuestions(newQuestions);
+      setSecondsLeft(10);
+      setShowResult(false);
+      if (timer) clearInterval(timer);
+      startTimer();
     } else if (userQuestions.length === 1) {
       navigate("/balance");
     }
@@ -45,39 +46,38 @@ const GuessMe = () => {
         }
       });
     }, 1000);
-    setTimer(newTimer); // Update the timer state
+    setTimer(newTimer);
   };
 
-  const handleGetAll = () => {
-    const getAllGuessMe = async () => {
-      try {
-        const response = await axios.get(
-          `https://i11c209.p.ssafy.io/api/result/ox/${roomId}`,
-          {
-            headers: {
-              Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
-            },
-          }
-        );
-        console.log(response.data); // Handle the response data
-        setUserQuestions(response.data.data);
-      } catch (error) {
-        console.error("Error in handleSave:", error);
-      }
+  const handleGetAll = async () => {
+    try {
+      const response = await axios.get(
+        `https://i11c209.p.ssafy.io/api/result/ox/${roomId}/all`,
+        {
+          headers: {
+            Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
+          },
+        }
+      );
+      console.log("전체 조회 성공", response.data.data[0]);
+      const newQuestions = response.data.data[0].map((oneQuestion) => {
+        return({
+        content: oneQuestion.content,
+        answer: oneQuestion.answer,
+      })});
+      console.log("questions", newQuestions)
+      setUserQuestions(newQuestions);
+      startTimer();
+    } catch (error) {
+      console.error("Error in handleGetAll:", error);
+    }
+  };
+
+  useEffect(() => {
+    const rerenderingQuestion = async () => {
+      await handleGetAll();
     };
-    getAllGuessMe();
-  };
-
-  useEffect(() => {
-    console.log(userQuestions);
-  }, [userQuestions]);
-
-  // Start timer when component mounts
-  useEffect(() => {
-    startTimer();
-    handleGetAll();
-
-    return () => clearInterval(timer); // Clean up the timer when component unmounts
+    rerenderingQuestion();
   }, []);
 
   return (

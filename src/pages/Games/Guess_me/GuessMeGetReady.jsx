@@ -27,61 +27,89 @@ const GuessMeGetReady = () => {
   const readyPeople = 3; // Example number of people waiting, you can replace it with actual data
   const btnText = "작성 문구 수정"; // Example button text, you can replace it with actual data
 
-  const handleSave = () => {
-    const postSelfIntro = async () => {
-      try {
-        const data = Object.keys(questions).map((key) => ({
-          roomId: roomId,
-          memberRoomId: 1,
-          content: questions[key],
-          answer: selectedAnswers[key],
-        }));
 
-        const response = await axios.post(
-          "https://i11c209.p.ssafy.io/api/result/ox",
-          data,
-          {
-            headers: {
-              Authorization:
-                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
-            },
-          }
-        );
-        console.log(response.data); // Handle the response data
-      } catch (error) {
-        console.error("Error in handleSave:", error);
-      }
-    };
-    postSelfIntro();
+  const handleSave = async () => {
+    const oneSearch = await searchOneSelfIntro();
+    if (oneSearch.length > 0) {
+      modifySelfIntro();
+    } else {
+      postSelfIntro();
+    }
+  };
+  
+  const postSelfIntro = () => {
+    const data = Object.keys(questions).map((key) => ({
+      roomId: roomId,
+      content: questions[key],
+      answer: selectedAnswers[key],
+    }));
+
+    axios.post("https://i11c209.p.ssafy.io/api/result/ox", data, {
+      headers: {
+        Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
+      },
+    })
+      .then((response) => {
+        console.log("postSelfIntro 성공", response.data);
+
+      })
+      .catch((error) => {
+        console.error("Error in postSelfIntro:", error);
+      });
   };
 
-  // const handleEdit = () => {
-  //   const modifySelfIntro = async () => {
-  //     try {
-  //       const data = Object.keys(questions).map((key) => ({
-  //         roomId: roomId,
-  //         memberRoomId: 1,
-  //         content: questions[key],
-  //         answer: selectedAnswers[key],
-  //       }));
+  const searchOneSelfIntro = async () => {
+    try {
+      const response = await axios.get(`https://i11c209.p.ssafy.io/api/result/ox/${roomId}`, {
+        headers: {
+          Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
+        },
+      });
+      console.log("단건 조회", response.data);
+      const oneSearch = response.data.data;
+  
+      if (oneSearch.length > 0) {
+        const newQuestions = {};
+        const newSelectedAnswers = {};
+  
+        oneSearch.forEach((question, index) => {
+          newQuestions[index + 1] = question.content;
+          newSelectedAnswers[index + 1] = question.answer;
+        });
+        setQuestions(newQuestions);
+        setSelectedAnswers(newSelectedAnswers);
+      }
+  
+      return oneSearch;
+    } catch (error) {
+      console.log("Error in searchOneSelfIntro:", error);
+      return [];
+    }
+  };
+  
 
-  //       const response = await axios.patch(
-  //         "https://i11c209.p.ssafy.io/api/result/ox/modify",
-  //         data,
-  //         {
-  //           headers: {
-  //             Authorization:
-  //               "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
-  //           },
-  //         }
-  //       );
-  //       console.log(response.data); // Handle the response data
-  //     } catch (error) {
-  //       console.error("Error in handleSave:", error);
-  //     }
-  //   };
-  //   modifySelfIntro();
-  // };
+  const modifySelfIntro = async () => {
+    const data = Object.keys(questions).map((key) => ({
+      content: questions[key],
+      answer: selectedAnswers[key],
+    }));
+
+    try {
+      const response = await axios.patch(
+        `https://i11c209.p.ssafy.io/api/result/ox/${roomId}/modify`,
+        data, {
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
+        }
+      });
+      console.log("수정 성공", response.data);
+    } catch (error) {
+      console.log("Error in modifySelfIntro:", error);
+    }
+  };
+
+
 
   // 준비중 ... (점들 계속 움직이게 만드는거)
   useEffect(() => {
@@ -96,6 +124,7 @@ const GuessMeGetReady = () => {
   useEffect(() => {
     // Show the modal after some time or based on a condition
     const timer = setTimeout(() => {
+      searchOneSelfIntro()
       setShowModal(true);
       setUserStatus("준비중"); // Set status to "준비중" when modal opens
     }, 250); // Show modal after 2 seconds
@@ -120,7 +149,7 @@ const GuessMeGetReady = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setUserStatus("준비중");
+    setUserStatus("준비완료");
     handleSave();
   };
 
