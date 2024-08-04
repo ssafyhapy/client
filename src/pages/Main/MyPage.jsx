@@ -58,7 +58,7 @@ const MyPage = () => {
     };
 
     loadData();
-  }, [fetchData]);
+  }, [fetchData, memberIntroduction, memberHistoryList]);
 
   if (isLoading) {
     return <Spinner />; // 로딩 중일 때 표시할 컴포넌트
