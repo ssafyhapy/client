@@ -65,6 +65,7 @@ const MyPage = () => {
   }
 
   const onSubmit = async (data) => {
+    setIsLoading(true);
     await updateData("/member/mypage", data);
     setEditMode(false);
   
@@ -77,6 +78,7 @@ const MyPage = () => {
       memberMemoryboxList,
       deleteHistoryList: [],
     });
+    setIsLoading(false);
   };
 
   return (
