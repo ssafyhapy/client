@@ -43,20 +43,30 @@ const MyPage = () => {
   useEffect(() => {
     const loadData = async () => {
       await fetchData("/member/mypage");
+
       methods.reset({
-        memberName: memberName || "",
-        memberProviderEmail: memberProviderEmail || "",
-        memberProfileImageUrl: memberProfileImageUrl || "",
-        memberIntroduction: memberIntroduction || "",
-        memberHistoryList: memberHistoryList || [],
-        memberMemoryboxList: memberMemoryboxList || [],
+        memberName,
+        memberProviderEmail,
+        memberProfileImageUrl,
+        memberIntroduction,
+        memberHistoryList,
+        memberMemoryboxList,
         deleteHistoryList: [],
       });
+
       setIsLoading(false);
     };
 
     loadData();
-  }, [fetchData]);
+  }, [
+    fetchData,
+    memberName,
+    memberProviderEmail,
+    memberProfileImageUrl,
+    memberIntroduction,
+    memberHistoryList,
+    memberMemoryboxList,
+  ]);
 
   if (isLoading) {
     return <Spinner />; // 로딩 중일 때 표시할 컴포넌트
