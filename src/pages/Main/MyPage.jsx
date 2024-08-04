@@ -34,7 +34,7 @@ const MyPage = () => {
       memberIntroduction: memberIntroduction || "",
       memberHistoryList: memberHistoryList || [],
       memberMemoryboxList: memberMemoryboxList || [],
-      deleteHistoryList: [],
+      deletedHistoryList: [],
     },
   });
 
@@ -48,7 +48,7 @@ const MyPage = () => {
       memberIntroduction,
       memberHistoryList,
       memberMemoryboxList,
-      deleteHistoryList: [],
+      deletedHistoryList: [],
     });
   };
 
