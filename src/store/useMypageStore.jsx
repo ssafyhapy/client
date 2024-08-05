@@ -29,7 +29,7 @@ const useMypageStore = create(
         }
       },
     }),
-    { name: "myPage-storage", storage: sessionStorage }
+    { name: "myPage-storage", getStorage: () => sessionStorage, }
   )
 );
 
@@ -39,7 +39,7 @@ const useUpdateStore = create(
       isEditMode: false,
       setEditMode: () => set((state) => ({ isEditMode: !state.isEditMode })),
     }),
-    { name: "Update-storage", storage: sessionStorage }
+    { name: "Update-storage", getStorage: () => sessionStorage, }
   )
 );
 
@@ -49,7 +49,7 @@ const useVisibilityStore = create(
       isVisibility: false,
       setVisibility: () => set((state) => ({ isVisibility: !state.isVisibility })),
     }),
-    { name: "Visibility-storage", storage: sessionStorage }
+    { name: "Visibility-storage", getStorage: () => sessionStorage, }
   )
 );
 export { useMypageStore, useUpdateStore, useVisibilityStore };
