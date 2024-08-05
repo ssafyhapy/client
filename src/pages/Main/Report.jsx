@@ -2,7 +2,6 @@ import React from "react";
 import MainGradientBackground from "../../components/Common/MainGradientBackground";
 import MyPageFrame from "../../components/My_page/MyPageFrame";
 import NavBar from "../../components/NavBar";
-import Carousel from "../../components/Carousel";
 import Profile from "../../components/Report/Profile";
 import Step1 from "../../components/Report/Step1";
 import Step2 from "../../components/Report/Step2";
