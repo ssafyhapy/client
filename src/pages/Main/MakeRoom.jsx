@@ -4,8 +4,10 @@ import axios from "axios";
 import { axiosInstance } from "../../api/apiClient";
 import useRoomStore from "../../store/useRoomStore";
 import { useNavigate } from "react-router-dom";
+import useGameStore from "../../store/useGameStore";
 
 const MakeRoom = ({ closeMakeRoom }) => {
+  const {testToken} = useGameStore()
   const {
     register,
     handleSubmit,
@@ -13,9 +15,8 @@ const MakeRoom = ({ closeMakeRoom }) => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-  const accessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w"
 
-  const { fetchRoomData } = useRoomStore();
+  // const { fetchRoomData } = useRoomStore();
 
   // form 제출시 방 만들기 요청
   const onSubmit = async (data) => {
@@ -29,16 +30,16 @@ const MakeRoom = ({ closeMakeRoom }) => {
         },
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${testToken}`,
           },
         }
       );
       const roomData = response.data.data;
-      console.log(roomData);
-      fetchRoomData(response.data.data);
+      console.log("[*] roomData",roomData);
+      // fetchRoomData(response.data.data);
 
       // 방 만들기 요청 완료시 대기실로 이동
-      navigate("/games", { state: { roomData, accessToken } });
+      navigate("/games", { state: { roomData, testToken } });
     } catch (error) {
       console.log("Error", error);
     }
