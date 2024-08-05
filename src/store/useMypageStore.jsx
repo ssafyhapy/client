@@ -23,9 +23,17 @@ const useMypageStore = create(
       updateData: async (endpoint, data) => {
         try {
           const formData = new FormData();
-          for (const key in data) {
-            formData.append(key, data[key]);
+          // 이미지가 있는 경우 FormData에 추가
+          if (data.memberProfileImage) {
+            formData.append("memberProfileImage", data.memberProfileImage);
           }
+          formData.append("memberName", data.memberName);
+          formData.append("memberProviderEmail", data.memberProviderEmail);
+          formData.append("memberIntroduction", data.memberIntroduction);
+          formData.append("memberHistoryList", JSON.stringify(data.memberHistoryList));
+          formData.append("memberMemoryboxList", JSON.stringify(data.memberMemoryboxList));
+          formData.append("deletedHistoryList", JSON.stringify(data.deletedHistoryList));
+
           const response = await axiosInstance.patch(endpoint, formData);
           console.log("updateData", response);
         } catch (error) {
