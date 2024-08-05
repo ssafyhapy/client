@@ -105,11 +105,15 @@ const Chatbox = () => {
               {msg.from === memberName && (
                 <div className="flex items-center flex-row-reverse">
                   <img
-                    src={msg.profileImage}
-                    alt="Your profile"
-                    className="w-8 h-8 rounded-full ml-2"
+                    src={msg.profileImage || defaultProfile} // Set a default image path if msg.profileImage is undefined
+                    onError={(e) => {
+                      e.target.onerror = null; // Prevents looping
+                      e.target.src = defaultProfile; // Fallback image
+                    }}
+                    alt={`Your profile`}
+                    className="w-8 h-8 rounded-full mr-2"
                   />
-                  <span className="text-xs ml-2 font-bold">You</span>
+                  <span className="text-xs ml-2 font-bold">{memberName}</span>
                 </div>
               )}
             </div>
