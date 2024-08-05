@@ -6,6 +6,8 @@ import chatsendbutton from "../../assets/Common/chatsendbutton.png";
 
 import useAuthStore from "../../store/useAuthStore";
 
+import defaultProfile from "../../assets/Profile/defaultprofile.png";
+
 const Chatbox = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -13,7 +15,7 @@ const Chatbox = () => {
 
   const roomId = 1; // Define room ID here or receive it from props
 
-  const {memberName} = useAuthStore()
+  const { memberName } = useAuthStore();
 
   // console.log(memberName)
 
@@ -27,7 +29,7 @@ const Chatbox = () => {
           {
             from: newMessage.memberName,
             message: newMessage.content,
-            profileImage: "src/assets/common/mic.webp", // Adjust if needed
+            profileImage: "src/assets/Common/mic.webp", // Adjust if needed
             timestamp: new Date(), // Consider adjusting based on incoming message timestamp
           },
         ]);
@@ -51,7 +53,7 @@ const Chatbox = () => {
     webSocketService.sendMessage(
       `/api/pub/message/${roomId}`,
       newMessage,
-      memberName,
+      memberName
     );
     setNewMessage("");
   };
@@ -78,24 +80,29 @@ const Chatbox = () => {
           <div
             key={index}
             className={`flex flex-col mb-4 ${
-              msg.from === "You" ? "items-end" : "items-start"
+              msg.from === memberName ? "items-end" : "items-start"
             }`}
           >
             <div className="flex items-center mb-2">
-              {msg.from !== "You" && (
+              {msg.from !== memberName && (
                 <div className="flex items-center flex-row">
                   <img
-                    src={msg.profileImage}
+                    src={msg.profileImage || defaultProfile} // Set a default image path if msg.profileImage is undefined
+                    onError={(e) => {
+                      e.target.onerror = null; // Prevents looping
+                      e.target.src = defaultProfile; // Fallback image
+                    }}
                     alt={`${msg.from}'s profile`}
                     className="w-8 h-8 rounded-full mr-2"
                   />
+
                   <span className="text-xs mr-2 font-bold">{msg.from}</span>
                 </div>
               )}
               <div className="text-xs text-gray-500">
                 {moment(msg.timestamp).format("HH:mm")}
               </div>
-              {msg.from === "You" && (
+              {msg.from === memberName && (
                 <div className="flex items-center flex-row-reverse">
                   <img
                     src={msg.profileImage}
@@ -108,7 +115,7 @@ const Chatbox = () => {
             </div>
             <div
               className={`p-2 rounded-lg break-words ${
-                msg.from === "You"
+                msg.from === memberName
                   ? "bg-[rgba(0,112,246,0.25)] text-white text-sm"
                   : "bg-[rgba(14,107,255,0.5)] text-white text-sm"
               }`}
