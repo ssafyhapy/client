@@ -5,7 +5,6 @@ import Chatbox from "../Common/Chatbox";
 import GameTurns from "../Common/GameTurns";
 import axios from "axios";
 import useGameStore from "../../store/useGameStore";
-import { useNavigate } from "react-router-dom";
 
 const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
   const { roomId } = useGameStore();
@@ -28,7 +27,7 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
       if (timer) clearInterval(timer);
       startTimer();
     } else if (userQuestions.length === 1) {
-      setGuessMeStep("Answer")
+      setGuessMeStep("Answer");
     }
   };
 
@@ -69,7 +68,6 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
       );
       console.log("questions", newQuestions);
       setUserQuestions(newQuestions);
-      startTimer();
     } catch (error) {
       console.error("Error in handleGetAll:", error);
     }
@@ -80,7 +78,28 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
       await handleGetAll();
     };
     rerenderingQuestion();
+
+    return () => {
+      if (timer) clearInterval(timer); // 컴포넌트 언마운트 시 타이머 정리
+    };
   }, []);
+
+  useEffect(() => {
+    if (userQuestions.length > 0) {
+      if (timer) clearInterval(timer); // 기존 타이머 정리
+      const delayTimer = setTimeout(() => {
+        startTimer();
+      }, 500); // 1초 후 타이머 시작
+
+      return () => clearTimeout(delayTimer); // 컴포넌트 언마운트 시 지연 타이머 정리
+    }
+  }, [userQuestions]);
+
+  useEffect(() => {
+    if (secondsLeft === 0) {
+      setShowResult(true);
+    }
+  }, [secondsLeft]);
 
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">

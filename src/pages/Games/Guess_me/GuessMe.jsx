@@ -1,3 +1,4 @@
+import React from "react";
 import GuessMeAnswer from "../../../components/Guess_me/GuessMeAnswer";
 import GuessMeGetReady from "../../../components/Guess_me/GuessMeGetReady";
 import GuessMeAllPrepared from "../../../components/Guess_me/GuessMeAllPrepared";
