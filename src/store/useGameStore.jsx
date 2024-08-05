@@ -1,5 +1,3 @@
-// 주스탠드 사용 예시
-
 import { create } from "zustand";
 
 const useGameStore = create((set) => ({
