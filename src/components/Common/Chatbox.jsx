@@ -4,17 +4,24 @@ import webSocketService from "../../WebSocketService";
 
 import chatsendbutton from "../../assets/Common/chatsendbutton.png";
 
+import useAuthStore from "../../store/useAuthStore";
+
 const Chatbox = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef(null);
 
-  const roomId = "1"; // Define room ID here or receive it from props
+  const roomId = 1; // Define room ID here or receive it from props
+
+  const {memberName} = useAuthStore()
+
+  // console.log(memberName)
 
   useEffect(() => {
     // Connect to WebSocket
     webSocketService.connect(() => {
-      webSocketService.subscribe(`/sub/${roomId}`, (newMessage) => {
+      webSocketService.subscribe(`/api/sub/${roomId}`, (newMessage) => {
+        // console.log(newMessage);
         setMessages((prevMessages) => [
           ...prevMessages,
           {
@@ -41,7 +48,11 @@ const Chatbox = () => {
       return;
     }
     // Send message via WebSocket
-    webSocketService.sendMessage(`/pub/message/${roomId}`, newMessage, "You");
+    webSocketService.sendMessage(
+      `/api/pub/message/${roomId}`,
+      newMessage,
+      memberName,
+    );
     setNewMessage("");
   };
 

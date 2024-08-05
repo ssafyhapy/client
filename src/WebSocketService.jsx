@@ -1,31 +1,34 @@
 // src/WebSocketService.js
-import { Client } from '@stomp/stompjs';
-import SockJS from 'sockjs-client';
+import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 
 class WebSocketService {
   constructor() {
     this.client = new Client({
-      webSocketFactory: () => new SockJS(`https://i11c209.p.ssafy.io/websocket`),
-      debug: (str) => { console.log(str); },
+      webSocketFactory: () =>
+        new SockJS(`https://i11c209.p.ssafy.io/api/websocket`),
+      debug: (str) => {
+        console.log(str);
+      },
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
     });
 
     this.client.onConnect = (frame) => {
-      console.log('Connected: ' + frame);
+      console.log("Connected: " + frame);
     };
 
     this.client.onStompError = (frame) => {
-      console.error('STOMP error: ' + frame.headers.message);
+      console.error("STOMP error: " + frame.headers.message);
     };
 
     this.client.onWebSocketClose = () => {
-      console.log('WebSocket closed');
+      console.log("WebSocket closed");
     };
 
     this.client.onWebSocketError = (error) => {
-      console.error('WebSocket error: ' + error.message);
+      console.error("WebSocket error: " + error.message);
     };
   }
 
@@ -34,7 +37,7 @@ class WebSocketService {
       if (onConnectCallback) {
         onConnectCallback(frame);
       }
-      console.log('Connected: ' + frame);
+      console.log("Connected: " + frame);
     };
     this.client.activate();
   }
@@ -47,8 +50,8 @@ class WebSocketService {
           onMessageCallback(parsedMessage);
         }
       } catch (error) {
-        console.error('Failed to parse message body as JSON:', message.body);
-        console.error('Error:', error);
+        console.error("Failed to parse message body as JSON:", message.body);
+        console.error("Error:", error);
       }
     });
   }
@@ -57,7 +60,7 @@ class WebSocketService {
     // Create a message object with content and memberName
     const message = {
       content,
-      memberName
+      memberName,
     };
 
     // Ensure the body is serialized as JSON
