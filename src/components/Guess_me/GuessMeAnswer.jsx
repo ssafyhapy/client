@@ -18,6 +18,9 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
   const correctImg = "/src/assets/Guess_me/correct_circle.png";
   const wrongImg = "/src/assets/Guess_me/wrong_x.png";
 
+  const gameStep = useGameStore((state) => state.gameStep);
+  const setGameStep = useGameStore((state) => state.setGameStep);
+
   const handleNextStep = () => {
     if (userQuestions.length > 1) {
       const newQuestions = userQuestions.slice(1);
@@ -27,7 +30,9 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
       if (timer) clearInterval(timer);
       startTimer();
     } else if (userQuestions.length === 1) {
-      setGuessMeStep("Answer");
+      // setGuessMeStep("Answer");
+      setGameStep("balance-game")
+
     }
   };
 

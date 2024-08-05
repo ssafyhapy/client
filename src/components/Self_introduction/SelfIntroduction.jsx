@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
-import useGameStore from "../../store/useGameStore";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Chatbox from "./../Common/Chatbox";
-import BasicBtn from "../Buttons/BasicBtn";
-import ExitBtn from "../Buttons/ExitBtn";
-import GameTurns from "../Common/GameTurns";
-import SelfIntroductionModal from "../Self_introduction/SelfIntroductionModal"; // Adjust the import path based on your project structure
+import useGameStore from "./../../store/useGameStore"
+import Chatbox from "./../Common/Chatbox"
+import BasicBtn from "./../Buttons/BasicBtn";
+import ExitBtn from "./../Buttons/ExitBtn";
+import GameTurns from "./../Common/GameTurns";
+import SelfIntroductionModal from "./../Self_introduction/SelfIntroductionModal"; // Adjust the import path based on your project structure
 
 const SelfIntroduction = () => {
-  const gameStep = useGameStore((state) => state.gameStep);
-  const setGameStep = useGameStore((state) => state.setGameStep);
   const [dots, setDots] = useState("");
   const [showModal, setShowModal] = useState(true); // Set to true to show modal initially
   const [userStatus, setUserStatus] = useState("준비완료");
@@ -23,10 +21,13 @@ const SelfIntroduction = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
+  const gameStep = useGameStore((state) => state.gameStep)
+  const setGameStep = useGameStore((state) => state.setGameStep)
+
   const readyPeople = 3; // Example number of people waiting, you can replace it with actual data
   const btnText = "작성 문구 수정"; // Example button text, you can replace it with actual data
   const roomId = 1;
-  const memberId = 4;
+  const memberId = 4
 
   // 준비중 ... (점들 계속 움직이게 만드는거)
   useEffect(() => {
@@ -52,13 +53,15 @@ const SelfIntroduction = () => {
         if (userIntro) {
           setInitialContent(userIntro.content);
           setIsFirstTime(false); // It is not the first time if content exists
+        } else {
+          setIsFirstTime(true); // Set to true if no content exists
         }
       } catch (error) {
         console.error('Error fetching initial content:', error);
       }
     };
     fetchInitialContent();
-  }, [roomId, memberId]);
+  }, [roomId]);
 
   // Fetch all introductions when entering the game phase
   useEffect(() => {
@@ -100,13 +103,18 @@ const SelfIntroduction = () => {
     setInitialContent(updatedContent);
     setIsFirstTime(isFirstTimeStatus); // Update isFirstTime status
     setUserStatus("준비완료");
-    setAllPrepared(true); // For demonstration, set this to true when ready
-
-    // Introduce a delay before moving to the game phase
-    setTimeout(() => {
-      setIsGamePhase(true); // Move to the game phase after 2 seconds
-    }, 2000);
+    setAllPrepared(true); // Set to true to show "준비 완료!"
   };
+
+  // Move to the game phase if allPrepared is true
+  useEffect(() => {
+    if (allPrepared) {
+      const timer = setTimeout(() => {
+        setIsGamePhase(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [allPrepared]);
 
   const handleNextStep = async () => {
     if (currentIndex < introductions.length - 1) {
@@ -124,7 +132,8 @@ const SelfIntroduction = () => {
           }
         );
         console.log("Redis data deleted and saved to the actual database");
-        navigate("/photo-first");
+        setGameStep("photo-first")
+        // navigate("/photo-first");
       } catch (error) {
         console.error("Error deleting Redis data:", error);
       }
@@ -154,12 +163,29 @@ const SelfIntroduction = () => {
           </div>
         </div>
 
+        {/* Mid-Bottom Between Div */}
+        {!isGamePhase && (
+          <div className="text-xs mt-3 flex justify-start">
+            {!allPrepared ? (
+              <BasicBtn
+                btnText={btnText}
+                onClick={handleOpenModal}
+                fontSize={12}
+              />
+            ) : (
+              <div className="invisible">
+                <BasicBtn btnText={"Hey"} fontSize={12} />
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Bottom Div */}
         {!isGamePhase ? (
           <div className="flex-none mt-3 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem]">
             {!allPrepared ? (
               <div className="flex-grow flex items-center justify-center">
-                <img src="src/assets/common/snowing_cloud.png" alt="star 그림" />
+                <img src="src/assets/common/snowing_cloud.png" alt="구름 그림" />
                 <span className="text-transparent">&nbsp;&nbsp;</span>
                 <span className="text-[rgba(85,181,236)]">
                   한 줄 자기소개 문제가 만들어지고 있어요{dots}
@@ -210,7 +236,6 @@ const SelfIntroduction = () => {
           onReady={handleReady}
           initialContent={initialContent}
           roomId={roomId}
-          memberId={memberId}
           isFirstTime={isFirstTime} // Pass the isFirstTime prop
         />
       )}

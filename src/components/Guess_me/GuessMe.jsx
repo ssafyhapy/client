@@ -1,7 +1,7 @@
 import React from "react";
-import GuessMeAnswer from "../../../components/Guess_me/GuessMeAnswer";
-import GuessMeGetReady from "../../../components/Guess_me/GuessMeGetReady";
-import GuessMeAllPrepared from "../../../components/Guess_me/GuessMeAllPrepared";
+import GuessMeAnswer from "./GuessMeAnswer";
+import GuessMeGetReady from "./GuessMeGetReady";
+import GuessMeAllPrepared from "./GuessMeAllPrepared";
 import { useState } from "react";
 
 const GuessMe = () => {

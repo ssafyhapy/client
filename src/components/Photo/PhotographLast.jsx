@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import Photograph_final from "../../../components/Photo/Photograph_final"
-import GameTurns from "../../../components/Common/GameTurns";
-import TakePhotoModal from "../../../components/Photo/TakePhotoModal";
+import Photograph_final from "./Photograph_final"
+import GameTurns from "./../Common/GameTurns";
+import TakePhotoModal from "./TakePhotoModal";
 import html2canvas from "html2canvas";
 
 import { useNavigate } from "react-router-dom";

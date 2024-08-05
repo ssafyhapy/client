@@ -9,20 +9,20 @@ import Auth from "./pages/Main/Auth";
 import Report from "./pages/Main/Report";
 
 // 게임 공통 페이지(기반)
-import WaitingRoom from "./pages/Games/WaitingRoom";
-import CamCheck from "./pages/Games/CamCheck";
+// import WaitingRoom from "./pages/Games/WaitingRoom";
+// import CamCheck from "./pages/Games/CamCheck";
 
 // 한 줄 자기소개 페이지들
 // 다 합쳤음
 // import SelfIntroductionOld from "./pages/Games/Self_introduction/SelfIntroductionOld";
 // import SelfIntroductionAllPrepared from "./pages/Games/Self_introduction/SelfIntroductionAllPrepared";
-import SelfIntroduction from "./pages/Games/Self_introduction/SelfIntroduction";
+// import SelfIntroduction from "./pages/Games/Self_introduction/SelfIntroduction";
 
 // 나를 맞춰봐 페이지들
 // import GuessMeGetReady from "./components/Guess_me/GuessMeGetReady";
 // import GuessMeAllPrepared from "./components/Guess_me/GuessMeAllPrepared";
 // import GuessMeAnswer from "./components/Guess_me/GuessMeAnswer";
-import GuessMe from "./pages/Games/Guess_me/GuessMe";
+// import GuessMe from "./pages/Games/Guess_me/GuessMe";
 
 
 // 밸런스 페이지들
@@ -30,16 +30,16 @@ import GuessMe from "./pages/Games/Guess_me/GuessMe";
 // import BalanceChangeChoices from "./components/Balance_game/BalanceChangeChoices";
 // import BalanceChoosing from "./components/Balance_game/BalanceChoosing";
 // import BalanceGameModal from "./components/BalanceGameModal";
-import Balance from "./pages/Games/Balance_game/BalanceGame";
+// import Balance from "./pages/Games/Balance_game/BalanceGame";
 
 // 기념사진 촬영 페이지
-import PhotographFirst from "./pages/Games/Photo/PhotographFirst";
-import PhotographLast from "./pages/Games/Photo/PhotographLast";
-import TakePhotoModal from "./components/Photo/TakePhotoModal";
+// import PhotographFirst from "./pages/Games/Photo/PhotographFirst";
+// import PhotographLast from "./pages/Games/Photo/PhotographLast";
+// import TakePhotoModal from "./components/Photo/TakePhotoModal";
 
 // 렙업 페이지들
-import WrapUp from "./pages/Games/WrapUp";
-import WrapUpModal from "./components/Wrap_up/WrapUpModal";
+// import WrapUp from "./pages/Games/WrapUp";
+// import WrapUpModal from "./components/Wrap_up/WrapUpModal";
 
 // 로그인 알람 모달
 import useAuthStore from "./store/useAuthStore";
@@ -71,8 +71,8 @@ function App() {
         <Route path="/report" element={<Report />} />
 
         {/* 대기실 */}
-        <Route path="/waiting-room" element={<WaitingRoom />} />
-        <Route path="/camera-check" element={<CamCheck />} />
+        {/* <Route path="/waiting-room" element={<WaitingRoom />} /> */}
+        {/* <Route path="/camera-check" element={<CamCheck />} /> */}
 
         {/* 한줄 자기소개 페이지랑 관련된 Route */}
         {/* <Route
@@ -83,28 +83,28 @@ function App() {
           path="/selfintro-allprepared"
           element={<SelfIntroductionAllPrepared />}
         /> */}
-        <Route path="/self-introduction" element={<SelfIntroduction />} />
+        {/* <Route path="/self-introduction" element={<SelfIntroduction />} /> */}
 
         {/* 나를 맞춰봐 페이지랑 관련된 Route */}
-        <Route path="/guessme" element={<GuessMe />} />
+        {/* <Route path="/guessme" element={<GuessMe />} /> */}
         {/* <Route path="/guessme-getready" element={<GuessMeGetReady />} />
         <Route path="/guessme-allprepared" element={<GuessMeAllPrepared />} /> */}
 
         {/* 밸런스 게임과 관련된 Route */}
-        <Route path="/balance" element={<Balance />} />
+        {/* <Route path="/balance" element={<Balance />} /> */}
         {/* <Route path="/balance-getready" element={<BalanceGetReady />} />
         <Route path="/balance-choosing" element={<BalanceChoosing />} />
         <Route path="/balance-change-choices" element={<BalanceChangeChoices />} /> */}
         {/* <Route path="/balance-modal" element={<BalanceGameModal />} /> */}
 
         {/* 기념사진촬영과 관련된 Route */}
-        <Route path="/photo-first" element={<PhotographFirst />} />
-        <Route path="/photo-last" element={<PhotographLast />} />
-        <Route path="/photomodal" element={<TakePhotoModal />} />
+        {/* <Route path="/photo-first" element={<PhotographFirst />} /> */}
+        {/* <Route path="/photo-last" element={<PhotographLast />} /> */}
+        {/* <Route path="/photomodal" element={<TakePhotoModal />} /> */}
 
         {/* 렙업 페이지랑 관련된 Route */}
-        <Route path="/wrap-up" element={<WrapUp />} />
-        <Route path="/wrapup-modal" element={<WrapUpModal />} />
+        {/* <Route path="/wrap-up" element={<WrapUp />} /> */}
+        {/* <Route path="/wrapup-modal" element={<WrapUpModal />} /> */}
 
         {/* 게임 합친 페이지 */}
         <Route path="/games" element={<Games />} />
