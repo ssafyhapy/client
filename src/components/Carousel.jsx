@@ -4,6 +4,7 @@ const Carousel = ({ children }) => {
   return (
     <div className="flex justify-between w-full h-full items-center">
       <svg
+        className="cursor-pointer"
         xmlns="http://www.w3.org/2000/svg"
         width="84"
         height="94"
@@ -58,6 +59,7 @@ const Carousel = ({ children }) => {
       </svg>
       <div>{children}</div>
       <svg
+        className="cursor-pointer"
         xmlns="http://www.w3.org/2000/svg"
         width="85"
         height="94"
