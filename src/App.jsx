@@ -45,6 +45,9 @@ import WrapUpModal from "./components/Wrap_up/WrapUpModal";
 import useAuthStore from "./store/useAuthStore";
 import LoginAlert from "./pages/Main/LoginAlert";
 
+// openvidu 연결시도
+import SessionConnect from "./components/Common/SessionConnect"
+
 function App() {
   const { message, isLoginAlert, setLoginAlert } = useAuthStore();
 
@@ -104,7 +107,12 @@ function App() {
         {/* 렙업 페이지랑 관련된 Route */}
         <Route path="/wrap-up" element={<WrapUp />} />
         <Route path="/wrapup-modal" element={<WrapUpModal />} />
+
+        {/* openvidu 연결하기 */}
+        <Route path="/openvidu" element={<SessionConnect />} />
       </Routes>
+
+
     </>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { axiosInstance } from "../../api/apiClient";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const MakeRoom = ({ closeMakeRoom }) => {
   const {
@@ -10,25 +10,39 @@ const MakeRoom = ({ closeMakeRoom }) => {
     watch,
     formState: { errors },
   } = useForm();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // form 제출시 방 만들기 요청
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await axiosInstance.post("/room/create", {
-        roomName: data.roomName,
-        roomPersonCount: data.roomPersonCount,
-      });
+      const response = await axios.post(
+        "https://i11c209.p.ssafy.io/api/room/create",
+        {
+          roomName: data.roomName,
+          roomPersonCount: data.roomPersonCount,
+        },
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w",
+          },
+        }
+      );
       console.log(response);
-      // 방 만들기 요청 완료시 대기실로 이동
-      // navigate("/waiting_room");
+      const roomData = response.data.data 
+      console.log("roomData",roomData);
+      if (response.status >= 200 && response.status < 300) {
+        // 방 만들기 요청 완료시 대기실로 이동
+        // roomData 정보를 openvidu url로 넘김
+        navigate("/openvidu", {state:{roomData}});
+      } else {
+        console.log("Failed to create room");
+      }
     } catch (error) {
       console.log("Error", error);
     }
   };
-  console.log(watch("roomName"));
-  console.log(watch("roomPersonCount"));
 
   return (
     // 방 만들기 모달

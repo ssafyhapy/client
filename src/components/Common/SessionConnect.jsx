@@ -2,12 +2,10 @@ import { OpenVidu } from 'openvidu-browser';
 
 import axios from 'axios';
 import React, { Component } from 'react';
-import './App.css';
-import UserVideoComponent from './UserVideoComponent';
 
 const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://demos.openvidu.io/';
 
-class OpenVidu extends Component {
+class SessionConnect extends Component {
     constructor(props) {
         super(props);
 
@@ -350,4 +348,4 @@ class OpenVidu extends Component {
     }
 }
 
-export default OpenVidu;
+export default SessionConnect;
