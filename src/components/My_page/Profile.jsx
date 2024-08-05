@@ -6,13 +6,14 @@ const Profile = ({ isEditMode }) => {
   const { register, setValue, getValues } = useFormContext();
   const { memberName, memberProviderEmail, memberProfileImageUrl } =
     useMypageStore();
-  const [previewImage, setPreviewImage] = useState(memberProfileImageUrl);
+  const [previewImage, setPreviewImage] = useState("");
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setPreviewImage(URL.createObjectURL(file));
-      setValue("memberProfileImage", file); // 이미지를 form 데이터로 설정
+      // 이미지를 form 데이터로 설정
+      setValue("memberProfileImage", file); 
     }
   };
 
@@ -27,6 +28,7 @@ const Profile = ({ isEditMode }) => {
             onChange = {handleImageChange}
           />
           <div className="w-full h-full bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden">
+            {/* 업로드 이미지 미리보기 */}
             {previewImage ? (
               <img src={previewImage} alt="미리보기" className="object-cover w-full h-full" />
             ) : (
