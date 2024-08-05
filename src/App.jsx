@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, } from "react-router-dom";
 
 import Home from "./pages/Main/Home";
 import Play from "./pages/Main/Play";
@@ -19,16 +19,18 @@ import CamCheck from "./pages/Games/CamCheck";
 import SelfIntroduction from "./pages/Games/Self_introduction/SelfIntroduction";
 
 // 나를 맞춰봐 페이지들
-import GuessMeGetReady from "./pages/Games/Guess_me/GuessMeGetReady";
-import GuessMeAllPrepared from "./pages/Games/Guess_me/GuessMeAllPrepared";
+import GuessMeGetReady from "./components/Guess_me/GuessMeGetReady";
+import GuessMeAllPrepared from "./components/Guess_me/GuessMeAllPrepared";
+import GuessMeAnswer from "./components/Guess_me/GuessMeAnswer";
 import GuessMe from "./pages/Games/Guess_me/GuessMe";
+
 
 // 밸런스 페이지들
 // import BalanceGetReady from "./components/Balance_game/BalanceGetReady";
 // import BalanceChangeChoices from "./components/Balance_game/BalanceChangeChoices";
 // import BalanceChoosing from "./components/Balance_game/BalanceChoosing";
 // import BalanceGameModal from "./components/BalanceGameModal";
-import Balance from "./pages/Games/Balance_game/BalanceGame"
+import Balance from "./pages/Games/Balance_game/BalanceGame";
 
 // 기념사진 촬영 페이지
 import PhotographFirst from "./pages/Games/Photo/PhotographFirst";
@@ -39,9 +41,26 @@ import TakePhotoModal from "./components/Photo/TakePhotoModal";
 import WrapUp from "./pages/Games/WrapUp";
 import WrapUpModal from "./components/Wrap_up/WrapUpModal";
 
+// 로그인 알람 모달
+import useAuthStore from "./store/useAuthStore";
+import LoginAlert from "./pages/Main/LoginAlert";
+
 function App() {
+  const { message, isLoginAlert, setLoginAlert } = useAuthStore();
+
+  useEffect(() => {
+    if (isLoginAlert) {
+      // 3초 후 로그인 알람 모달 닫기
+      const timer = setTimeout(() => {
+        setLoginAlert();
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isLoginAlert]);
   return (
     <>
+      {isLoginAlert && <LoginAlert message={message} setLoginAlert={setLoginAlert}/>}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/play" element={<Play />} />
