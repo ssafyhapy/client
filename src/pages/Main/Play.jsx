@@ -4,7 +4,7 @@ import MainGradientBackground from "../../components/Common/MainGradientBackgrou
 import MainHomeFrame from "../../components/Main_page/MainHomeFrame";
 import MakeRoom from "./MakeRoom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import { axiosInstance } from "../../api/apiClient";
 // import { useNavigate } from "react-router-dom";
 
 const Play = () => {
@@ -32,8 +32,9 @@ const Play = () => {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await axios.post(
-        `http://i11c209.p.ssafy.io/api/room/enter/roomCode=${data.roomCode}`
+      const response = await axiosInstance.post(
+        // "/room/enter?roomCode=196-931"
+        `/room/enter?roomCode=${data.roomCode}`
       );
       console.log(response);
       // 방 입장 요청 완료시 카메라 체크 페이지로 이동
@@ -83,12 +84,14 @@ const Play = () => {
                         className="w-[90%] mt-2 p-2 border rounded"
                         placeholder="접속코드를 입력해주세요"
                         // 접속코드 입력 폼, 유효성 검사
-                        {...register("roomCode", {
-                          required: "잘못된 접속코드입니다.",
-                          valueAsNumber: true,
-                          validate: (value) =>
-                            Number.isInteger(value) || "정수만 입력해주세요",
-                        })}
+                        {...register("roomCode", {required: true}
+                        //   {
+                        //   required: "잘못된 접속코드입니다.",
+                        //   valueAsNumber: true,
+                        //   validate: (value) =>
+                        //     Number.isInteger(value) || "정수만 입력해주세요",
+                        // }
+                      )}
                       />
                       {/* 접속코드 입력시 에러 메시지 */}
                       {errors.roomCode && (

@@ -1,7 +1,6 @@
-import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { axiosInstance } from "../../api/apiClient";
 // import { useNavigate } from "react-router-dom";
 
 const MakeRoom = ({ closeMakeRoom }) => {
@@ -17,12 +16,10 @@ const MakeRoom = ({ closeMakeRoom }) => {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await axios.post(
-        "http://i11c209.p.ssafy.io/api/room/create",{
-          roomName: data.roomName,
-          roomPersonCount: data.roomPersonCount
-        }
-      );
+      const response = await axiosInstance.post("/room/create", {
+        roomName: data.roomName,
+        roomPersonCount: data.roomPersonCount,
+      });
       console.log(response);
       // 방 만들기 요청 완료시 대기실로 이동
       // navigate("/waiting_room");
@@ -68,7 +65,9 @@ const MakeRoom = ({ closeMakeRoom }) => {
               {...register("roomPersonCount", { required: true })}
             />
             {errors.roomPersonCount && (
-              <p className="text-red-500 text-sm">{errors.roomPersonCount.message}</p>
+              <p className="text-red-500 text-sm">
+                {errors.roomPersonCount.message}
+              </p>
             )}
           </div>
           <div className="flex justify-end">
@@ -77,9 +76,7 @@ const MakeRoom = ({ closeMakeRoom }) => {
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded"
             >
-              <Link to="/camera-check">
-                방 만들기
-              </Link>
+              방 만들기
             </button>
             {/* 취소 */}
             <button
