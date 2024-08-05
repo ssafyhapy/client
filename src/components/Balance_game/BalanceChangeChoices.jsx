@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import useGameStore from "../../store/useGameStore";
 import useBalanceStore from "../../store/useBalanceStore";
 import Chatbox from "../../components/Common/Chatbox";
 import ExitBtn from "../../components/Buttons/ExitBtn";
@@ -7,6 +8,8 @@ import GameTurns from "../../components/Common/GameTurns";
 import refresh from "./../../assets/Balance_game/refresh.png";
 
 const BalanceChangeChoices = ({ onConfirm }) => {
+  const gameStep = useGameStore((state) => state.gameStep);
+  const setGameStep = useGameStore((state) => state.setGameStep);
   const { pickedChoice, setPickedChoice } = useBalanceStore();
   const { discussedNum, setDiscussedNum } = useBalanceStore();
   const balanceChoicesHard = {
@@ -28,7 +31,7 @@ const BalanceChangeChoices = ({ onConfirm }) => {
   const navigate = useNavigate()
 
  const handleNextStep=()=>{
-  navigate("/wrap-up")
+  setGameStep("wrap-up")
  }
   
 
