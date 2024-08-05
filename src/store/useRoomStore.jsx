@@ -1,4 +1,3 @@
-import { data } from "autoprefixer";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -12,7 +11,7 @@ const useRoomStore = create(
       "roomPersonCount" : null,
       "members" : [],
       "hostId" : null,
-      "webrtc" : [],
+      "webrtc" : {},
       "memberRooms" : [],
       fetchRoomData: (data) => set({...data}),
     }),
