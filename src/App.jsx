@@ -19,9 +19,9 @@ import CamCheck from "./pages/Games/CamCheck";
 import SelfIntroduction from "./pages/Games/Self_introduction/SelfIntroduction";
 
 // 나를 맞춰봐 페이지들
-import GuessMeGetReady from "./components/Guess_me/GuessMeGetReady";
-import GuessMeAllPrepared from "./components/Guess_me/GuessMeAllPrepared";
-import GuessMeAnswer from "./components/Guess_me/GuessMeAnswer";
+// import GuessMeGetReady from "./components/Guess_me/GuessMeGetReady";
+// import GuessMeAllPrepared from "./components/Guess_me/GuessMeAllPrepared";
+// import GuessMeAnswer from "./components/Guess_me/GuessMeAnswer";
 import GuessMe from "./pages/Games/Guess_me/GuessMe";
 
 
@@ -44,6 +44,7 @@ import WrapUpModal from "./components/Wrap_up/WrapUpModal";
 // 로그인 알람 모달
 import useAuthStore from "./store/useAuthStore";
 import LoginAlert from "./pages/Main/LoginAlert";
+import Games from "./pages/Games/Games";
 
 function App() {
   const { message, isLoginAlert, setLoginAlert } = useAuthStore();
@@ -86,8 +87,8 @@ function App() {
 
         {/* 나를 맞춰봐 페이지랑 관련된 Route */}
         <Route path="/guessme" element={<GuessMe />} />
-        <Route path="/guessme-getready" element={<GuessMeGetReady />} />
-        <Route path="/guessme-allprepared" element={<GuessMeAllPrepared />} />
+        {/* <Route path="/guessme-getready" element={<GuessMeGetReady />} />
+        <Route path="/guessme-allprepared" element={<GuessMeAllPrepared />} /> */}
 
         {/* 밸런스 게임과 관련된 Route */}
         <Route path="/balance" element={<Balance />} />
@@ -104,6 +105,11 @@ function App() {
         {/* 렙업 페이지랑 관련된 Route */}
         <Route path="/wrap-up" element={<WrapUp />} />
         <Route path="/wrapup-modal" element={<WrapUpModal />} />
+
+        {/* 게임 합친 페이지 */}
+        <Route path="/games" element={<Games />} />
+
+
       </Routes>
     </>
   );
