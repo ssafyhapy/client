@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import useGameStore from "../../store/useGameStore";
 import WaitingRoomGameTurns from "../../components/Waiting_room/WaitingRoomGameTurns";
 import ExitBtn from "../../components/Buttons/ExitBtn";
 import Chatbox from "../../components/Common/Chatbox";
@@ -8,6 +9,8 @@ import check from "../../assets/Waiting_room/check.webp";
 import { useNavigate } from "react-router-dom";
 
 const WaitingRoom = () => {
+  const gameStep = useGameStore((state) => state.gameStep);
+  const setGameStep = useGameStore((state) => state.setGameStep);
   const [accessCode, setAccessCode] = useState();
   const [copyState, setCopyState] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -38,7 +41,7 @@ const WaitingRoom = () => {
 
   const navigate = useNavigate()
   const handleNextStep = ()=>{
-    navigate("/self-introduction")
+    setGameStep("self-introduction")
   }
 
   return (

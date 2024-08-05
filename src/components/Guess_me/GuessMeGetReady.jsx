@@ -42,7 +42,7 @@ const GuessMeGetReady = ({ guessMeStep, setGuessMeStep }) => {
       content: questions[key],
       answer: selectedAnswers[key],
     }));
-
+    
     axios
       .post("https://i11c209.p.ssafy.io/api/result/ox", data, {
         headers: {

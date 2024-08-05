@@ -10,27 +10,38 @@ const SelfIntroductionModal = ({
   onReady,
   initialContent,
   roomId,
-  memberId,
   isFirstTime,
 }) => {
   const [content, setContent] = useState(initialContent);
+  const [error, setError] = useState(""); // Error state for empty input
 
   const handleInputChange = (event) => {
     setContent(event.target.value);
+    if (event.target.value.trim() === "") {
+      setError("내용을 입력하세요."); // Show error if input is empty
+    } else {
+      setError("");
+    }
   };
 
   const handleSave = async () => {
+    if (content.trim() === "") {
+      setError("내용을 입력하세요."); // Show error if input is empty
+      return;
+    }
+
     const url = isFirstTime
       ? `https://i11c209.p.ssafy.io/api/result/intro`
       : `https://i11c209.p.ssafy.io/api/result/intro/${roomId}/modify`;
 
+    const requestData = isFirstTime
+      ? { roomId: roomId, content: content }
+      : { content: content };
+
     try {
       const response = await axios.post(
         url,
-        {
-          roomId: roomId,
-          content: content,
-        },
+        requestData,
         {
           headers: {
             Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjM0MDQ2MTUzIiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo0LCJpYXQiOjE3MjI0MTUzNTcsImV4cCI6MTcyNTAwNzM1N30.qRva6SS4G0otEemMMYngU6-EgsBGkbVaGURxH7wi8VP6L6jfPj5kon0MCrJzKnVYIWPCgPZhxDpx95nvdILM6w`,
@@ -38,7 +49,7 @@ const SelfIntroductionModal = ({
         }
       );
       console.log("Response:", response.data);
-      onReady(response.data.data.content, isFirstTime); // Pass the updated content and isFirstTime status back to the parent component
+      onReady(response.data.data.content, false); // Always set isFirstTime to false after saving
     } catch (error) {
       console.error("Error:", error);
     }
@@ -65,6 +76,9 @@ const SelfIntroductionModal = ({
               className="w-14 h-14"
             />
           </div>
+          {error && (
+            <p className="text-red-500 text-xs mb-2">{error}</p>
+          )}
           <div className="p-3 mb-5 flex items-center justify-center">
             <span className="mr-2 text-xl">나는</span>
             <input

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import BalanceGetReady from "../../../components/Balance_game/BalanceGetReady";
-import BalanceChangeChoices from "../../../components/Balance_game/BalanceChangeChoices";
-import BalanceChoosing from "../../../components/Balance_game/BalanceChoosing";
+import useGameStore from "../../store/useGameStore";
+import BalanceGetReady from "./BalanceGetReady";
+import BalanceChangeChoices from "./BalanceChangeChoices";
+import BalanceChoosing from "./BalanceChoosing";
 
 const Balance = () => {
+  const gameStep = useGameStore((state) => state.gameStep);
+  const setGameStep = useGameStore((state) => state.setGameStep);
   const [showModal, setShowModal] = useState(true);
   const [currentStep, setCurrentStep] = useState("getReady");
   const [dots, setDots] = useState("");

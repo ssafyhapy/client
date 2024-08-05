@@ -6,7 +6,11 @@ import GameTurns from "../../components/Common/GameTurns";
 import WrapUpModal from "../../components/Wrap_up/WrapUpModal";
 import { useNavigate } from "react-router-dom";
 
+import useGameStore from "../../store/useGameStore";
+
 const WrapUp = () => {
+  const gameStep = useGameStore((state) => state.gameStep)
+  const setGameStep = useGameStore((state) => state.setGameStep)
   const btnText = "종료";
   const userText =
     "섹션 별 소감이나 궁금했던 점 등을 자유롭게 이야기 나눠주세요.";
@@ -28,7 +32,8 @@ const WrapUp = () => {
 
   const navigate = useNavigate()
   const handleNextStep = ()=>{
-    navigate("/photo-last")
+    setGameStep("photo-last")
+    // navigate("/photo-last")
   }
 
   return (

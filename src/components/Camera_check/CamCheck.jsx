@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import GameBackground from "../../components/Common/GameBackground";
-import BasicBtn from "../../components/Buttons/BasicBtn";
-import CameraCheckVideoView from "../../components/Camera_check/CameraCheckVideoView";
-import MicBtn from "../../components/Buttons/MicBtn";
-import MaskBtn from "../../components/Buttons/MaskBtn";
-import SelectMask from "../../components/Waiting_room/SelectMask";
-import { useNavigate } from "react-router-dom";
+import useGameStore from "../../store/useGameStore";
+import GameBackground from "../Common/GameBackground";
+import BasicBtn from "../Buttons/BasicBtn";
+import CameraCheckVideoView from "./CameraCheckVideoView";
+import MicBtn from "../Buttons/MicBtn";
+import MaskBtn from "../Buttons/MaskBtn";
+import SelectMask from "../Waiting_room/SelectMask";
 
 const CamCheck = () => {
+  const gameStep = useGameStore((state) => state.gameStep);
+  const setGameStep = useGameStore((state) => state.setGameStep);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const text = "나만의 가면을 선택하고 마이크와 비디오를 테스트해보세요!";
   const btnText = "완료";
@@ -20,10 +22,8 @@ const CamCheck = () => {
     setIsModalOpen(false);
   };
 
-  const navigate = useNavigate()
-
   const handleNextStep = ()=>{
-    navigate("/waiting-room")
+    setGameStep("waiting-room")
   }
 
   return (

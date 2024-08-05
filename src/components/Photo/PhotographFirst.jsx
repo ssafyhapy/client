@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import Photograph_intro from "../../../components/Photo/Photograph_intro";
-import GameTurns from "../../../components/Common/GameTurns";
-import TakePhotoModal from "../../../components/Photo/TakePhotoModal";
+import Photograph_intro from "./Photograph_intro"
+import GameTurns from "./../Common/GameTurns";
+import TakePhotoModal from "./../Photo/TakePhotoModal";
 import html2canvas from "html2canvas";
+import useGameStore from "./../../store/useGameStore"
 
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +13,9 @@ const PhotographFirst = () => {
   const photoRef = useRef(null);
 
   const navigate = useNavigate();
+
+  const gameStep = useGameStore((state) => state.gameStep)
+  const setGameStep = useGameStore((state) => state.setGameStep);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -32,7 +36,8 @@ const PhotographFirst = () => {
 
         // 사진찍고 2초뒤 자동으로 나를 맞춰봐 겟레디 페이지로 이동
         setTimeout(() => {
-          navigate("/guessme-getready");
+          setGameStep("guess-me")
+          // navigate("/guessme-getready");
         }, 2000);
       });
     }
