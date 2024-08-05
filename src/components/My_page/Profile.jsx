@@ -24,7 +24,7 @@ const Profile = ({ isEditMode }) => {
             type="file"
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
             accept="image/*"
-            {...register("memberProfileImage", { onChange: handleImageChange })}
+            onChange = {handleImageChange}
           />
           <div className="w-full h-full bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden">
             {previewImage ? (
