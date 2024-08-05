@@ -67,6 +67,8 @@ function App() {
         <Route path="/play" element={<Play />} />
         <Route path="/login" element={<Login />} />
         <Route path="/mypage" element={<MyPage />} />
+        {/* 마이페이지 동적 라우팅 */}
+        {/* <Route path="/mypage/:memberName" element={<MyPage />} /> */}
         <Route path="/auth/kakao/callback" element={<Auth />} />
         <Route path="/report" element={<Report />} />
 
