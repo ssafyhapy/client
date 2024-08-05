@@ -7,6 +7,8 @@ import versus from "./../../assets/Balance_game/versus.png";
 
 const BalanceGetReady = ({ onClose, dots }) => {
   const [showModal, setShowModal] = useState(false);
+  const[questions, setQuestions] = useState({1:"", 2:"",3:""})
+  const [selectedAnswers, setSelectedAnswers] = useState({ 1: null, 2: null, 3: null });
 
   useEffect(() => {
     setShowModal(true);
