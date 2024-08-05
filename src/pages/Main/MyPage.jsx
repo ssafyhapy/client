@@ -103,6 +103,7 @@ const MyPage = () => {
             <form className="flex flex-col items-center gap-5">
               <div className="flex gap-5">
                 <Profile
+                  isEditMode={isEditMode}
                 />
                 <History
                   isEditMode={isEditMode}
