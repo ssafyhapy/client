@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../../api/apiClient";
-import { useRoomStore } from "../../store/useMypageStore";
+import useRoomStore from "../../store/useRoomStore";
 // import { useNavigate } from "react-router-dom";
 
 const MakeRoom = ({ closeMakeRoom }) => {
