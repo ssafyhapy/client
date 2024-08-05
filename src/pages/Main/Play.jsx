@@ -5,6 +5,7 @@ import MainHomeFrame from "../../components/Main_page/MainHomeFrame";
 import MakeRoom from "./MakeRoom";
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../../api/apiClient";
+import { useRoomStore } from "../../store/useMypageStore";
 // import { useNavigate } from "react-router-dom";
 
 const Play = () => {
@@ -19,6 +20,8 @@ const Play = () => {
   };
 
   // const navigate = useNavigate();
+
+  const { fetchRoomData } = useRoomStore();
 
   // 접속코드 통해 입장
   const {
@@ -37,6 +40,7 @@ const Play = () => {
         `/room/enter?roomCode=${data.roomCode}`
       );
       console.log(response);
+      fetchRoomData(response.data.data);
       // 방 입장 요청 완료시 카메라 체크 페이지로 이동
       // navigate("/camera_check");
     } catch (error) {
