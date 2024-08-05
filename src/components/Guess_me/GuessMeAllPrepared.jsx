@@ -1,12 +1,11 @@
 import React from "react";
-import Chatbox from "../../../components/Common/Chatbox";
-import ExitBtn from "../../../components/Buttons/ExitBtn";
-import GameTurns from "../../../components/Common/GameTurns";
+import Chatbox from "./../Common/Chatbox";
+import ExitBtn from "./../Buttons/ExitBtn";
+import GameTurns from "./../Common/GameTurns";
 
-import star from "../../../assets/Common/star.png"
+import star from "../../assets/Common/star.png";
 
-const SelfIntroductionAllPrepared = () => {
-
+const GuessMeAllPrepared = ({ guessMeStep, setGuessMeStep }) => {
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
       <div className="w-[1024px] h-[90%] bg-[rgba(255,255,255,0.3)] m-auto rounded-[40px] flex flex-col relative p-10 overflow-hidden">
@@ -34,9 +33,13 @@ const SelfIntroductionAllPrepared = () => {
         <div className="flex-none mt-10 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem]">
           <div className="flex-grow flex items-center justify-center">
             <img src={star} alt="star 그림" />
-            <span className="text-transparent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span className="text-transparent">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
             <span className="text-[rgba(85,181,236)]">전원 준비 완료!!</span>
-            <span className="text-transparent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span className="text-transparent">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
             <img src={star} alt="star 그림" />
           </div>
           <div className="flex justify-end"></div>
@@ -46,4 +49,4 @@ const SelfIntroductionAllPrepared = () => {
   );
 };
 
-export default SelfIntroductionAllPrepared;
+export default GuessMeAllPrepared;
