@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { useMypageStore } from "../../store/useMypageStore";
 
@@ -40,7 +40,7 @@ const History = ({ isEditMode }) => {
         <h1 className="text-2xl">History</h1>
         {isEditMode ? (
           <>
-          {/* 필드 배열을 순회하며 이력 입력 폼 생성 */}
+            {/* 필드 배열을 순회하며 이력 입력 폼 생성 */}
             {fields.map((item, index) => (
               <div key={item.id} className="history-item">
                 {/* // 이력 아이디를 hidden으로 설정 */}
@@ -51,35 +51,44 @@ const History = ({ isEditMode }) => {
                 {/* // 날짜, 내용 입력 폼 */}
                 <div className="flex gap-2">
                   <input
-                    {...register(`memberHistoryList.${index}.memberHistoryDate`)}
+                    {...register(
+                      `memberHistoryList.${index}.memberHistoryDate`
+                    )}
                     type="date"
                     placeholder="날짜"
                   />
                   <input
-                    {...register(`memberHistoryList.${index}.memberHistoryContent`)}
+                    {...register(
+                      `memberHistoryList.${index}.memberHistoryContent`
+                    )}
                     placeholder="내용"
                   />
                   {/* // 삭제 버튼 */}
-                  <button type="button" onClick={() => handleDelete(index, item.memberHistoryId)}>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(index, item.memberHistoryId)}
+                  >
                     삭제
                   </button>
                 </div>
               </div>
             ))}
             {/* // 이력 추가 버튼 */}
-            <button
-              type="button"
-              onClick={() =>
-                // 필드 배열에 새로운 이력 추가
-                append({
-                  memberHistoryId: -1,
-                  memberHistoryDate: "",
-                  memberHistoryContent: "",
-                })
-              }
-            >
-              이력 추가
-            </button>
+            {fields.length < 4 && (
+              <button
+                type="button"
+                onClick={() =>
+                  // 필드 배열에 새로운 이력 추가
+                  append({
+                    memberHistoryId: -1,
+                    memberHistoryDate: "",
+                    memberHistoryContent: "",
+                  })
+                }
+              >
+                이력 추가
+              </button>
+            )}
           </>
         ) : (
           <ul>
