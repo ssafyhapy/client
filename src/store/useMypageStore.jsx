@@ -22,14 +22,18 @@ const useMypageStore = create(
       },
       updateData: async (endpoint, data) => {
         try {
-          const response = await axiosInstance.patch(endpoint, data);
+          const formData = new FormData();
+          for (const key in data) {
+            formData.append(key, data[key]);
+          }
+          const response = await axiosInstance.patch(endpoint, formData);
           console.log("updateData", response);
         } catch (error) {
           console.error(error);
         }
       },
     }),
-    { name: "myPage-storage", getStorage: () => sessionStorage, }
+    { name: "myPage-storage", getStorage: () => sessionStorage }
   )
 );
 
@@ -39,7 +43,7 @@ const useUpdateStore = create(
       isEditMode: false,
       setEditMode: () => set((state) => ({ isEditMode: !state.isEditMode })),
     }),
-    { name: "Update-storage", getStorage: () => sessionStorage, }
+    { name: "Update-storage", getStorage: () => sessionStorage }
   )
 );
 
@@ -47,9 +51,10 @@ const useVisibilityStore = create(
   persist(
     (set) => ({
       isVisibility: false,
-      setVisibility: () => set((state) => ({ isVisibility: !state.isVisibility })),
+      setVisibility: () =>
+        set((state) => ({ isVisibility: !state.isVisibility })),
     }),
-    { name: "Visibility-storage", getStorage: () => sessionStorage, }
+    { name: "Visibility-storage", getStorage: () => sessionStorage }
   )
 );
 export { useMypageStore, useUpdateStore, useVisibilityStore };
