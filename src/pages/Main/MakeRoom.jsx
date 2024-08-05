@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../../api/apiClient";
+import { useRoomStore } from "../../store/useMypageStore";
 // import { useNavigate } from "react-router-dom";
 
 const MakeRoom = ({ closeMakeRoom }) => {
@@ -12,6 +13,8 @@ const MakeRoom = ({ closeMakeRoom }) => {
   } = useForm();
   // const navigate = useNavigate();
 
+  const { fetchRoomData } = useRoomStore();
+
   // form 제출시 방 만들기 요청
   const onSubmit = async (data) => {
     console.log(data);
@@ -21,6 +24,7 @@ const MakeRoom = ({ closeMakeRoom }) => {
         roomPersonCount: data.roomPersonCount,
       });
       console.log(response);
+      fetchRoomData(response.data.data);
       // 방 만들기 요청 완료시 대기실로 이동
       // navigate("/waiting_room");
     } catch (error) {
