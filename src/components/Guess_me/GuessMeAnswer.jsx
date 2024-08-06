@@ -14,9 +14,10 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
   const [timer, setTimer] = useState(null);
 
   const btnText = "다음";
-  const timerImg = "/src/assets/common/timer.png";
-  const correctImg = "/src/assets/Guess_me/correct_circle.png";
-  const wrongImg = "/src/assets/Guess_me/wrong_x.png";
+  const timerImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/timer.png";
+  const correctImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/correct_circle.png";
+  const wrongImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/wrong_x.png";
+  const questionmarkImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/questionmark.png"
 
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
@@ -160,7 +161,7 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
             )}
           </div>
           <img
-            src="/src/assets/Guess_me/questionmark.png"
+            src={questionmarkImg}
             alt="물음표 두개 그림"
             className="absolute bottom-0 left-0 mb-3 ml-3"
           />

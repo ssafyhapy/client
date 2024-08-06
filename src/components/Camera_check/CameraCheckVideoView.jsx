@@ -1,9 +1,11 @@
 import React from "react";
 import profileSample from "../../assets/profile_sample.png";
-import mute from "../../assets/Camera_check/mute.png";
-import mic_on from "../../assets/Camera_check/mic_on.png";
+// import mute from "../../assets/Camera_check/mute.png";
+// import mic_on from "../../assets/Camera_check/mic_on.png";
 
 const CameraCheckVideoView = ({ data }) => {
+  const mute = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mute.png"
+  const mic_on = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic_on.png"
   return (
     <div className="relative w-full h-full flex justify-center items-center">
       <div className="relative w-[80%] h-[80%]">

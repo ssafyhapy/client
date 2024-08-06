@@ -3,9 +3,10 @@ import Chatbox from "./../Common/Chatbox";
 import ExitBtn from "./../Buttons/ExitBtn";
 import GameTurns from "./../Common/GameTurns";
 
-import star from "../../assets/Common/star.png";
+// import star from "../../assets/Common/star.png";
 
 const GuessMeAllPrepared = ({ guessMeStep, setGuessMeStep }) => {
+  const star = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/star.png"
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
       <div className="w-[1024px] h-[90%] bg-[rgba(255,255,255,0.3)] m-auto rounded-[40px] flex flex-col relative p-10 overflow-hidden">

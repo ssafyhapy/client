@@ -3,9 +3,11 @@ import GameTurns from "../../components/Common/GameTurns";
 import ExitBtn from "../../components/Buttons/ExitBtn";
 import Chatbox from "../../components/Common/Chatbox";
 import BalanceGameModal from "./BalanceGameModal";
-import versus from "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/versus.png";
+// import versus from "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/versus.png";
+// import versus from "./../../assets/Balance_game/versus.png"
 
 const BalanceGetReady = ({ onClose, dots }) => {
+  const versus = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/versus.png"
   const [showModal, setShowModal] = useState(false);
   const[questions, setQuestions] = useState({1:"", 2:"",3:""})
   const [selectedAnswers, setSelectedAnswers] = useState({ 1: null, 2: null, 3: null });

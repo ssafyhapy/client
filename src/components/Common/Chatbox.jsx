@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import moment from "moment";
 import webSocketService from "../../WebSocketService";
-import chatsendbutton from "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/chatsendbutton.png";
+// import chatsendbutton from "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/chatsendbutton.png";
+// import chatsendbutton from "./../../assets/Common/chatsendbutton.png"
 import useAuthStore from "../../store/useAuthStore";
-import defaultProfile from "../../assets/Profile/defaultprofile.png";
+// import defaultProfile from "../../assets/Profile/defaultprofile.png";
 
 const Chatbox = () => {
+  const chatsendbutton = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/chatsendbutton.png"
+  const defaultProfile = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/defaultprofile.png"
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef(null);

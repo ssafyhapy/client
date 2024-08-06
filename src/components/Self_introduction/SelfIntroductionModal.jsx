@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import BasicBtn from "../Buttons/BasicBtn";
-import writingCharacter from "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/writing_character.png";
+// import writingCharacter from "./../../assets/Self_introduction/writing_character.png"
 import webSocketService from "./../../WebSocketService";
 
 const SelfIntroductionModal = ({
@@ -13,6 +13,8 @@ const SelfIntroductionModal = ({
 }) => {
   const [content, setContent] = useState(initialContent);
   const [error, setError] = useState("");
+
+  const writingCharacter = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/writing_character.png"
 
   const handleInputChange = (event) => {
     setContent(event.target.value);
@@ -50,7 +52,7 @@ const SelfIntroductionModal = ({
               </p>
             </div>
             <img
-              src={writingCharacter}
+              src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/writing_character.png"
               alt="뭔갈 쓰고 있는 캐릭터 그림"
               className="w-14 h-14"
             />

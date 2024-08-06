@@ -1,10 +1,12 @@
 import React from "react";
 import profileSample from "src/assets/profile_sample.png";
-import mute from "src/assets/Camera_check/mute.png";
-import mic_on from "src/assets/Camera_check/mic_on.png";
+// import mute from "src/assets/Camera_check/mute.png";
+// import mic_on from "src/assets/Camera_check/mic_on.png";
 
 
 const SingleVideoView = ({data}) => {
+  const mute = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mute.png"
+  const mic_on = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic_on.png"
   // data에 들어가야 할 개인 정보 => 1. {name:,mic:,img:,ready:,}
   return (
     <div>

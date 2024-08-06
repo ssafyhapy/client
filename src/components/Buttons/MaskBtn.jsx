@@ -1,7 +1,8 @@
 import React from "react";
-import mask from "../../assets/Camera_check/mask.webp"
+// import mask from "../../assets/Camera_check/mask.webp"
 
 const MaskBtn = ({onClick}) => {
+  const mask = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mask.webp"
   return (
     // mask 고르는 버튼
     <div>
@@ -9,7 +10,7 @@ const MaskBtn = ({onClick}) => {
         <img
           className="w-[43px] h-[43px]"
           src={mask}
-          alt="smileyface"
+          alt="mask"
         />
       </button>
     </div>

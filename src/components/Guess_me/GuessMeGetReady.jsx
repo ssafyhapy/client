@@ -9,11 +9,14 @@ import GameTurns from "./../Common/GameTurns";
 import BasicBtn from "../Buttons/BasicBtn";
 import GuessMeModal from "./GuessMeModal";
 
-import snowingCloud from "../../assets/Common/snowing_cloud.png";
-import star from "../../assets/Common/star.png";
+// import snowingCloud from "../../assets/Common/snowing_cloud.png";
+// import star from "../../assets/Common/star.png";
 import useGameStore from "../../store/useGameStore";
 
 const GuessMeGetReady = ({ guessMeStep, setGuessMeStep }) => {
+  const snowingCloud = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/snowing_cloud.png"
+  const star = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/star.png"
+
   const { roomId } = useGameStore();
   const [dots, setDots] = useState("");
   const [showModal, setShowModal] = useState(false);
