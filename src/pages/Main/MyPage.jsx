@@ -10,9 +10,10 @@ import Introduction from "../../components/My_page/Introduction";
 import MemoryBox from "../../components/My_page/MemoryBox";
 import { FormProvider, useForm } from "react-hook-form";
 import Spinner from "../../components/Spinner";
-import { setProfileImage } from "../../store/useAuthStore"
+import useAuthStore from "../../store/useAuthStore"
 
 const MyPage = () => {
+  const {setProfileImageUrl} = useAuthStore
   // 로딩 상태
   const [isLoading, setIsLoading] = useState(true);
 
