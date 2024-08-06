@@ -19,7 +19,16 @@ const useAuthStore = create(
     }),
     {
       name: "auth-storage",
-      getStorage: () => sessionStorage,
+      storage: createJSONStorage(() => sessionStorage),
+      partialize: (state) => ({
+        memberId: state.memberId,
+        memberName: state.memberName,
+        memberProfileImageUrl: state.memberProfileImageUrl,
+        memberProviderEmail: state.memberProviderEmail,
+        isLogin: state.isLogin,
+        isLoginAlert: state.isLoginAlert,
+        message: state.message,
+      }),
     }
   )
 );
