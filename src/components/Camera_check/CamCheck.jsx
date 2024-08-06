@@ -7,7 +7,7 @@ import MicBtn from "../Buttons/MicBtn";
 import MaskBtn from "../Buttons/MaskBtn";
 import SelectMask from "../Waiting_room/SelectMask";
 
-const CamCheck = () => {
+const CamCheck = ({sub, setsub}) => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
   const [isModalOpen, setIsModalOpen] = useState(false);

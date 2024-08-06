@@ -37,8 +37,12 @@ const Games = () => {
       const session = OV.initSession();
 
       session.on("streamCreated", (event) => {
+        console.log("[*]stream Created");
+        console.log("[*] stream event",event.stream);
         const subscriber = session.subscribe(event.stream, undefined);
         setSubscribers((prevSubscribers) => [...prevSubscribers, subscriber]);
+        console.log("[*]구독자 넣기");
+        
       });
 
       session.on('connectionCreated', event => {
@@ -54,9 +58,6 @@ const Games = () => {
             (subscriber) => subscriber !== event.stream.streamManager
           )
         );
-
-        setSubscribers((prevSubscribers) => [...prevSubscribers, "추가됨?"]);
-
       });
 
       try {
@@ -80,9 +81,11 @@ const Games = () => {
         setSession(session);
         setMainStreamManager(publisher);
         setPublisher(publisher);
+
         console.log("[*]session", session);
         console.log("[*]publisher", publisher);
         console.log("[*]subscribers", subscribers);
+
       } catch (error) {
         console.error("There was an error connecting to the session:", error);
       }
@@ -95,10 +98,13 @@ const Games = () => {
     };
   }, []);
 
+    
+
 
   return (
     <>
-      {gameStep === "camera-check" && <CamCheck />}
+    
+      {gameStep === "camera-check" && <CamCheck sub={subscribers} setsub={setSubscribers} />}
       {gameStep === "waiting-room" && <WaitingRoom />}
       {gameStep === "self-introduction" && <SelfIntroduction />}
       {gameStep === "balance-game" && <BalanceGame />}

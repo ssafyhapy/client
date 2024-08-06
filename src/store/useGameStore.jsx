@@ -13,7 +13,7 @@ const useGameStore = create((set) => ({
   subscribers: [],
   setSubscribers: (subscribers) => set({ subscribers }),
   publisher: null,
-  setPublisher: (publisher) => set({ publisher }),
+  setPublisher: (state) => set({ publisher:state.publisher }),
 }));
 
 export default useGameStore;
