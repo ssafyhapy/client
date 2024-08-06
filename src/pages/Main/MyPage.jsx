@@ -10,8 +10,10 @@ import Introduction from "../../components/My_page/Introduction";
 import MemoryBox from "../../components/My_page/MemoryBox";
 import { FormProvider, useForm } from "react-hook-form";
 import Spinner from "../../components/Spinner";
+import useAuthStore from "../../store/useAuthStore";
 
 const MyPage = () => {
+  const { setProfileImageUrl } = useAuthStore();
   // 로딩 상태
   const [isLoading, setIsLoading] = useState(true);
 
@@ -83,6 +85,7 @@ const MyPage = () => {
     try {
       await updateData("/member/mypage", data);
       await fetchData("/member/mypage");
+      setProfileImageUrl(memberProfileImageUrl);
     } catch (error) {
       console.error(error);
     } finally {

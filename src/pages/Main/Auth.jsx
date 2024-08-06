@@ -48,8 +48,8 @@ const Auth = () => {
         const result = response.data;
 
         // zustand store에 사용자 이름 저장 및 로그인 상태 변경(true)
-        console.log("memberName", result.data.memberName);
-        login(result.data.memberName);
+        console.log("loginData", result.data);
+        login(result.data);
 
         const headerData = response.headers;
         console.log(
@@ -66,6 +66,7 @@ const Auth = () => {
         navigate("/play");
         setLoginAlert();
       } catch (err) {
+        console.error("Error during login:", err)
         setError(err);
       } finally {
         setIsLoading(false);
@@ -73,7 +74,7 @@ const Auth = () => {
     };
 
     fetchCode();
-  }, [code, login, navigate]);
+  }, [code, login, navigate, setLoginAlert]);
 
   return (
     <div>
