@@ -108,7 +108,7 @@ const SelfIntroduction = () => {
           <div className="flex-none mt-3 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem]">
             {!allPrepared ? (
               <div className="flex-grow flex items-center justify-center">
-                <img src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/chatsendbutton.png" alt="구름 그림" />
+                <img src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/snowing_cloud.png" alt="구름 그림" />
                 <span className="text-transparent">&nbsp;&nbsp;</span>
                 <span className="text-[rgba(85,181,236)]">
                   한 줄 자기소개 문제가 만들어지고 있어요{dots}
