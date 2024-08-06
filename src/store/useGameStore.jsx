@@ -9,11 +9,11 @@ const useGameStore = create((set) => ({
   gameStep:"camera-check",
   setGameStep:(step)=>set({gameStep:step}),
   mainStreamManager: null,
-  setMainStreamManager: (mainStreamManager) => set({ mainStreamManager }),
-  subscribers: [],
-  setSubscribers: (subscribers) => set({ subscribers }),
+  setMainStreamManager: (manager) => set({ mainStreamManager: manager }),
   publisher: null,
-  setPublisher: (state) => set({ publisher:state.publisher }),
+  setPublisher: (pub) => set({ publisher: pub }),
+  subscribers: [],
+  setSubscribers: (subs) => set({ subscribers: subs }),
 }));
 
 export default useGameStore;

@@ -55,7 +55,7 @@ const Play = () => {
       console.log("[*] 방 입장", response);
       // fetchRoomData(response.data.data);
       // 방 입장 요청 완료시 카메라 체크 페이지로 이동
-      // console.log("[*] roomdata",response.data.data);
+      console.log("[* 방 입장] roomdata",response.data.data);
       const roomData = response.data.data;
       navigate("/games", { state: { roomData, testToken:token, isHost:true } });
     } catch (error) {

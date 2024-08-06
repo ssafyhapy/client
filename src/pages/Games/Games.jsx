@@ -18,7 +18,7 @@ const Games = () => {
   const setGameStep = useGameStore((state) => state.setGameStep);
 
   const location = useLocation();
-  const { roomData, accessToken, isHost } = location.state;
+  const { roomData } = location.state;
   const [session, setSession] = useState(null);
   const {
     mainStreamManager,
@@ -36,20 +36,43 @@ const Games = () => {
     const joinSession = async () => {
       const session = OV.initSession();
 
+      // session.on("streamCreated", async (event) => {
+      //   console.log("[*]stream Created event", event);
+      //   try {
+      //     const subscriber = session.subscribe(event.stream, undefined);
+      //     console.log("[*]Subscriber created", subscriber);
+
+      //     await new Promise((resolve) => {
+      //       setSubscribers((prevSubscribers) => {
+      //         const updatedSubscribers = [...prevSubscribers, subscriber];
+      //         resolve(updatedSubscribers);
+      //         return updatedSubscribers;
+      //       });
+      //     });
+      //   } catch (error) {
+      //     console.error("Error subscribing to stream:", error);
+      //   }
+      // });
+
+
       session.on("streamCreated", (event) => {
-        console.log("[*]stream Created");
-        console.log("[*] stream event",event.stream);
+        console.log("[*]stream Created event", event);
         const subscriber = session.subscribe(event.stream, undefined);
-        setSubscribers((prevSubscribers) => [...prevSubscribers, subscriber]);
-        console.log("[*]구독자 넣기");
-        
+        console.log("[*]Subscriber created", subscriber);
+      
+        subscriber.on('videoElementCreated', (event) => {
+          console.log("[*]Video Element Created", event.element);
+          // You might want to append this video element to your DOM here
+        });
+      
+        setSubscribers(prevSubscribers => [...prevSubscribers, subscriber]);
       });
 
-      session.on('connectionCreated', event => {
-        console.log('----- connectionCreated event -----');
+      session.on("connectionCreated", (event) => {
+        console.log("----- connectionCreated event -----");
         console.log(event.connection);
         console.log(event.connection.data);
-        console.log('-------------------')
+        console.log("-------------------");
       });
 
       session.on("streamDestroyed", (event) => {
@@ -64,8 +87,9 @@ const Games = () => {
         await session.connect(roomData.webrtc.openviduToken, {
           clientData: myUserName,
         });
+        console.log("Session connected successfully");
 
-         const publisher = OV.initPublisher(undefined, {
+        const publisher = await OV.initPublisher(undefined, {
           audioSource: undefined,
           videoSource: undefined,
           publishAudio: true,
@@ -75,6 +99,9 @@ const Games = () => {
           insertMode: "APPEND",
           mirror: false,
         });
+        
+        await session.publish(publisher);
+        console.log("Publisher created and published successfully");
 
         session.publish(publisher);
 
@@ -85,7 +112,6 @@ const Games = () => {
         console.log("[*]session", session);
         console.log("[*]publisher", publisher);
         console.log("[*]subscribers", subscribers);
-
       } catch (error) {
         console.error("There was an error connecting to the session:", error);
       }
@@ -98,13 +124,12 @@ const Games = () => {
     };
   }, []);
 
-    
-
-
   return (
     <>
     
-      {gameStep === "camera-check" && <CamCheck sub={subscribers} setsub={setSubscribers} />}
+      {gameStep === "camera-check" && (
+        <CamCheck sub={subscribers} setsub={setSubscribers} />
+      )}
       {gameStep === "waiting-room" && <WaitingRoom />}
       {gameStep === "self-introduction" && <SelfIntroduction />}
       {gameStep === "balance-game" && <BalanceGame />}

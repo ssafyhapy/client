@@ -15,9 +15,12 @@ const CameraCheckVideoView = ({ data }) => {
     setSubscribers,
   } = useGameStore();
 
+  useEffect(()=>console.log("[*]구독자 변경",subscribers, "구독자 타입",typeof subscribers),[subscribers])
+
 
   return (
     <>
+
       <div className="w-full h-full flex justify-center items-center">
         <div className="relative w-[45vw] h-[40vh] bg-red-300 rounded-[15px] flex items-center justify-center">
           {mainStreamManager ? <video
@@ -25,6 +28,11 @@ const CameraCheckVideoView = ({ data }) => {
               ref={(video) => video && mainStreamManager.addVideoElement(video)}
             className="w-[90%] h-[90%] object-cover rounded-[15px]"
           />: <div>Video 없음</div>}
+           {/* {subscribers.map((sub, index) => (
+          <div key={index} id="subscriber">
+            <video autoPlay={true} ref={(video) => video && sub.addVideoElement(video)} />
+          </div>
+        ))} */}
           <div className="w-full text-white flex p-2">
             <span className="flex absolute bottom-0 left-0">
               <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
