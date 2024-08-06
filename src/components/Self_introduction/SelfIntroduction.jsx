@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 import useGameStore from "./../../store/useGameStore";
+import useAuthStore from "./../../store/useAuthStore";
+
 import Chatbox from "./../Common/Chatbox";
 import BasicBtn from "./../Buttons/BasicBtn";
 import ExitBtn from "./../Buttons/ExitBtn";
@@ -25,7 +28,9 @@ const SelfIntroduction = () => {
   const setGameStep = useGameStore((state) => state.setGameStep);
 
   const roomId = 1;
-  const memberId = 4; // Current user ID
+  
+  const { memberId } = useAuthStore();
+
   const hostId = 4; // Host user ID
 
   useEffect(() => {
