@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 import { axiosInstance } from "../api/apiClient";
 
 const useMypageStore = create(
@@ -41,7 +41,7 @@ const useMypageStore = create(
         }
       },
     }),
-    { name: "myPage-storage", getStorage: () => sessionStorage }
+    { name: "myPage-storage", storage: createJSONStorage(() => sessionStorage) }
   )
 );
 
@@ -51,7 +51,7 @@ const useUpdateStore = create(
       isEditMode: false,
       setEditMode: () => set((state) => ({ isEditMode: !state.isEditMode })),
     }),
-    { name: "Update-storage", getStorage: () => sessionStorage }
+    { name: "Update-storage", storage: createJSONStorage(() => sessionStorage) }
   )
 );
 
@@ -62,7 +62,7 @@ const useVisibilityStore = create(
       setVisibility: () =>
         set((state) => ({ isVisibility: !state.isVisibility })),
     }),
-    { name: "Visibility-storage", getStorage: () => sessionStorage }
+    { name: "Visibility-storage", storage: createJSONStorage(() => sessionStorage) }
   )
 );
 export { useMypageStore, useUpdateStore, useVisibilityStore };
