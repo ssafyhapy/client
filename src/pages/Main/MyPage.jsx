@@ -13,7 +13,7 @@ import Spinner from "../../components/Spinner";
 import useAuthStore from "../../store/useAuthStore"
 
 const MyPage = () => {
-  const {setProfileImageUrl} = useAuthStore
+  const {setProfileImageUrl} = useAuthStore()
   // 로딩 상태
   const [isLoading, setIsLoading] = useState(true);
 
@@ -90,7 +90,7 @@ const MyPage = () => {
     } finally {
       setIsLoading(false);
       setEditMode(false);
-      setProfileImage(memberProfileImageUrl)
+      setProfileImageUrl(memberProfileImageUrl)
     }
   };
 
