@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import useGameStore from "./../../store/useGameStore";
 import useAuthStore from "./../../store/useAuthStore";
-
 import Chatbox from "./../Common/Chatbox";
 import BasicBtn from "./../Buttons/BasicBtn";
 import ExitBtn from "./../Buttons/ExitBtn";
@@ -17,6 +15,7 @@ const SelfIntroduction = () => {
   const [userStatus, setUserStatus] = useState("준비완료");
   const [allPrepared, setAllPrepared] = useState(false);
   const [initialContent, setInitialContent] = useState("");
+  const [isFirstTime, setIsFirstTime] = useState(true);
   const [isGamePhase, setIsGamePhase] = useState(false);
   const [introductions, setIntroductions] = useState([]);
   const [userText, setUserText] = useState("");
@@ -27,11 +26,11 @@ const SelfIntroduction = () => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
 
-  const roomId = 1;
-  
+  // Get memberId from useAuthStore
   const { memberId } = useAuthStore();
+  const hostId = 4; // This can also be dynamic if needed
 
-  const hostId = 4; // Host user ID
+  const roomId = 1; // This can be dynamic based on your application logic
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -79,6 +78,11 @@ const SelfIntroduction = () => {
   const handleNextStep = () => {
     fetchNextIntroduction();
   };
+
+  useEffect(() => {
+    console.log('Member ID:', memberId);
+    console.log('Current Presenter ID:', currentPresenterId);
+  }, [memberId, currentPresenterId]);
 
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
@@ -157,6 +161,7 @@ const SelfIntroduction = () => {
           initialContent={initialContent}
           roomId={roomId}
           memberId={memberId}
+          isFirstTime={isFirstTime}
         />
       )}
     </div>
@@ -164,6 +169,7 @@ const SelfIntroduction = () => {
 };
 
 export default SelfIntroduction;
+
 
 
 
