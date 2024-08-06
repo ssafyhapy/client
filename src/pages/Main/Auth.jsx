@@ -66,6 +66,7 @@ const Auth = () => {
         navigate("/play");
         setLoginAlert();
       } catch (err) {
+        console.error("Error during login:", err)
         setError(err);
       } finally {
         setIsLoading(false);
@@ -73,7 +74,7 @@ const Auth = () => {
     };
 
     fetchCode();
-  }, [code, login, navigate]);
+  }, [code, login, navigate, setLoginAlert]);
 
   return (
     <div>

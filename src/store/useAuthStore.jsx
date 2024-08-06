@@ -12,10 +12,10 @@ const useAuthStore = create(
       isLogin: null,
       isLoginAlert: false,
       message: "",
-      login: (data) => set({ memberId, memberName, memberProfileImageUrl, memberProviderEmail, isLogin: true, message: "로그인 되었습니다." }),
+      login: ({memberId, memberName, memberProfileImageUrl, memberProviderEmail}) => set({ memberId, memberName, memberProfileImageUrl, memberProviderEmail, isLogin: true, message: "로그인 되었습니다." }),
       logout: () => set({ memberId: null, memberName: null, memberProfileImageUrl: null, memberProviderEmail: null, isLogin: false, message: "로그아웃 되었습니다." }),
       setLoginAlert: () => set(state => ({ isLoginAlert: !state.isLoginAlert })),
-      setProfileImageUrl: (data) => set({memberProfileImageUrl})
+      setProfileImageUrl: (memberProfileImageUrl) => set({memberProfileImageUrl})
     }),
     {
       name: "auth-storage",
