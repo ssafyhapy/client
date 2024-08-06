@@ -46,6 +46,7 @@ import useAuthStore from "./store/useAuthStore";
 import LoginAlert from "./pages/Main/LoginAlert";
 import Games from "./pages/Games/Games";
 
+
 function App() {
   const { message, isLoginAlert, setLoginAlert } = useAuthStore();
 
@@ -108,6 +109,7 @@ function App() {
 
         {/* 게임 합친 페이지 */}
         <Route path="/games" element={<Games />} />
+
 
 
       </Routes>

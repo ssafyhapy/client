@@ -7,7 +7,7 @@ import MicBtn from "../Buttons/MicBtn";
 import MaskBtn from "../Buttons/MaskBtn";
 import SelectMask from "../Waiting_room/SelectMask";
 
-const CamCheck = ({openviduData}) => {
+const CamCheck = ({mainStreamManager, subscribers}) => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,11 +28,31 @@ const CamCheck = ({openviduData}) => {
 
   return (
     <GameBackground>
+      <div id="video-container">
+        {mainStreamManager && mainStreamManager?.addVideoElement&& (
+          <div id="publisher">
+            <video
+              autoPlay={true}
+              ref={(video) => video && mainStreamManager.addVideoElement(video)}
+            />
+          </div>
+        )}
+        {subscribers && subscribers?.length > 0 && subscribers.map((sub, index) => {
+          console.log("[*] subcribe.map", sub);
+          return(
+          <div key={index} id="subscriber">
+            <video
+              autoPlay={true}
+              ref={(video) => video && sub.addVideoElement(video)}
+            />
+          </div>
+        )})}
+      </div>
       <div className="flex flex-col justify-center items-center p-[2rem] w-full max-h-[90vh] relative">
         <div className="w-[80%] relative ">
           <div className="bg-white flex flex-col justify-center items-center p-[2rem] rounded-[40px] shadow-[0_0_30px_rgba(66,72,81,0.2)] mb-[20px] max-h-[60vh]">
             <div className="h-[28rem] flex justify-center items-center">
-              <CameraCheckVideoView data={{ name: "someone", mic: false, ready: true }} openviduData={openviduData} />
+              <CameraCheckVideoView data={{ name: "someone", mic: false, ready: true }} />
             </div>
             <div className="flex justify-between">
               <span className="mr-20">

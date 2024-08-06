@@ -12,108 +12,56 @@ import PhotographFirst from "./../../components/Photo/PhotographFirst";
 import PhotographLast from "./../../components/Photo/PhotographLast";
 import useGameStore from "./../../store/useGameStore";
 import GuessMe from "./../../components/Guess_me/GuessMe";
+import { memo } from "react";
 
-const Games = () => {
+const Games = memo(() => {
   const gameStep = useGameStore((state) => state.gameStep);
-  const setGameStep = useGameStore((state) => state.setGameStep);
-
+  
   const location = useLocation();
   const { roomData } = location.state;
-  const [session, setSession] = useState(null);
-  const {
-    mainStreamManager,
-    setMainStreamManager,
-    publisher,
-    setPublisher,
-    subscribers,
-    setSubscribers,
-  } = useGameStore();
+  const OV = new OpenVidu();
+  const [session, setSession] = useState(OV.initSession());
+  const [mainStreamManager, setMainStreamManager] = useState(null);
+  const [publisher, setPublisher] = useState(null);
+  const [subscribers, setSubscribers] = useState([]);
   const mySessionId = roomData.webrtc.sessionId;
   const myUserName = "Participant" + Math.floor(Math.random() * 100);
-  const OV = new OpenVidu();
+
 
   useEffect(() => {
     const joinSession = async () => {
-      const session = OV.initSession();
-
-      // session.on("streamCreated", async (event) => {
-      //   console.log("[*]stream Created event", event);
-      //   try {
-      //     const subscriber = session.subscribe(event.stream, undefined);
-      //     console.log("[*]Subscriber created", subscriber);
-
-      //     await new Promise((resolve) => {
-      //       setSubscribers((prevSubscribers) => {
-      //         const updatedSubscribers = [...prevSubscribers, subscriber];
-      //         resolve(updatedSubscribers);
-      //         return updatedSubscribers;
-      //       });
-      //     });
-      //   } catch (error) {
-      //     console.error("Error subscribing to stream:", error);
-      //   }
-      // });
-
-
-      session.on("streamCreated", (event) => {
-        console.log("[*]stream Created event", event);
+      session.on('streamCreated', (event) => {
         const subscriber = session.subscribe(event.stream, undefined);
-        console.log("[*]Subscriber created", subscriber);
-      
-        subscriber.on('videoElementCreated', (event) => {
-          console.log("[*]Video Element Created", event.element);
-          // You might want to append this video element to your DOM here
-        });
-      
-        setSubscribers(prevSubscribers => [...prevSubscribers, subscriber]);
+        setSubscribers((prevSubscribers) => {console.log('[*] setSub', prevSubscribers, subscriber); return [...prevSubscribers, subscriber]});
       });
 
-      session.on("connectionCreated", (event) => {
-        console.log("----- connectionCreated event -----");
-        console.log(event.connection);
-        console.log(event.connection.data);
-        console.log("-------------------");
-      });
-
-      session.on("streamDestroyed", (event) => {
+      session.on('streamDestroyed', (event) => {
         setSubscribers((prevSubscribers) =>
-          prevSubscribers.filter(
-            (subscriber) => subscriber !== event.stream.streamManager
-          )
+          prevSubscribers.filter((subscriber) => subscriber !== event.stream.streamManager)
         );
       });
 
       try {
-        await session.connect(roomData.webrtc.openviduToken, {
-          clientData: myUserName,
-        });
-        console.log("Session connected successfully");
+        await session.connect(roomData.webrtc.openviduToken, { clientData: myUserName });
 
-        const publisher = await OV.initPublisher(undefined, {
+        const publisher = OV.initPublisher(undefined, {
           audioSource: undefined,
           videoSource: undefined,
           publishAudio: true,
           publishVideo: true,
-          resolution: "640x480",
+          resolution: '640x480',
           frameRate: 30,
-          insertMode: "APPEND",
-          mirror: false,
+          insertMode: 'APPEND',
+          mirror: false
         });
-        
-        await session.publish(publisher);
-        console.log("Publisher created and published successfully");
 
         session.publish(publisher);
 
         setSession(session);
         setMainStreamManager(publisher);
         setPublisher(publisher);
-
-        console.log("[*]session", session);
-        console.log("[*]publisher", publisher);
-        console.log("[*]subscribers", subscribers);
       } catch (error) {
-        console.error("There was an error connecting to the session:", error);
+        console.error('There was an error connecting to the session:', error);
       }
     };
 
@@ -126,10 +74,8 @@ const Games = () => {
 
   return (
     <>
-    
-      {gameStep === "camera-check" && (
-        <CamCheck sub={subscribers} setsub={setSubscribers} />
-      )}
+      
+      {gameStep === "camera-check" && <CamCheck mainStreamManager={mainStreamManager} subscribers={subscribers}/>}
       {gameStep === "waiting-room" && <WaitingRoom />}
       {gameStep === "self-introduction" && <SelfIntroduction />}
       {gameStep === "balance-game" && <BalanceGame />}
@@ -139,6 +85,6 @@ const Games = () => {
       {gameStep === "photo-last" && <PhotographLast />}
     </>
   );
-};
+});
 
 export default Games;

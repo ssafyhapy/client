@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import useGameStore from "../../store/useGameStore";
 
 const MakeRoom = ({ closeMakeRoom }) => {
-  const {testToken} = useGameStore()
+  const { testToken } = useGameStore();
   const {
     register,
     handleSubmit,
@@ -20,6 +20,29 @@ const MakeRoom = ({ closeMakeRoom }) => {
 
   // form 제출시 방 만들기 요청
   const onSubmit = async (data) => {
+    // try {
+    //   const response = await axios.post(
+    //     "https://i11c209.p.ssafy.io/api/room/create",
+    //     {
+    //       roomName: "방이름",
+    //       roomPersonCount: 6,
+    //     },
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjQ5OTM3OTE1Iiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjozNTIsImlhdCI6MTcyMjg2Mzg5MywiZXhwIjoxNzI1NDU1ODkzfQ.9a2TCaBxlJGbOW4VNi-FGzohBvUZY5bVAY1oItRqoBTZ_GP8Pho2DtR_AgdC1uQphllCNm0GEQkcuHFxSnLYnw`,
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   );
+    //   const roomData = response.data.data;
+    //   console.log(roomData);
+    //   navigate(`/games`, { state: { roomData } });
+    // } catch (error) {
+    //   console.error("Error creating room:", error);
+    // } finally {
+    //   setLoading(false);
+    // }
+
     console.log(data);
     try {
       const response = await axios.post(

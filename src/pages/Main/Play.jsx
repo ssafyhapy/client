@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import useGameStore from "../../store/useGameStore";
 
 const Play = () => {
-  const { testToken, setTestToken } = useGameStore();
   // 방 만들기 모달 상태
   const [makeRoom, setOpenMakeRoom] = useState(false);
   const openMakeRoom = (event) => {
@@ -21,7 +20,6 @@ const Play = () => {
   const closeMakeRoom = () => {
     setOpenMakeRoom(false);
   };
-  const token = new URLSearchParams(location.search).get('token')
 
   const navigate = useNavigate();
 
@@ -29,6 +27,8 @@ const Play = () => {
   // setTestToken(
   //   "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjQ5OTM3OTE1Iiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjozNTIsImlhdCI6MTcyMjg2Mzg5MywiZXhwIjoxNzI1NDU1ODkzfQ.9a2TCaBxlJGbOW4VNi-FGzohBvUZY5bVAY1oItRqoBTZ_GP8Pho2DtR_AgdC1uQphllCNm0GEQkcuHFxSnLYnw"
   // );
+  const [error, setError] = useState("");
+
 
 
   // 접속코드 통해 입장
@@ -41,6 +41,28 @@ const Play = () => {
   
   // 제출시 방 입장(조회) 요청
   const onSubmit = async (data) => {
+    // console.log(data);
+    // const roomCode = data.roomCode
+    // try {
+    //   const response = await axios.post(
+    //     `https://i11c209.p.ssafy.io/api/room/enter?roomCode=${roomCode}`,
+    //     {},
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjQ3NTgwMzQ4Iiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjozMDIsImlhdCI6MTcyMjkwNTA2NCwiZXhwIjoxNzI1NDk3MDY0fQ.oomS8oHTsVaTD9qzE6XjavMODt38vf9cEUv0z2beJwtkjtM2Nfc7MdRoQ8Kqel5v6Wxdr5KNMwOWWwOmYaWptQ`,
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   );
+    //   const roomData = response.data.data;
+    //   navigate(`/games`, { state: { roomData } });
+    // } catch (error) {
+    //   console.error("Error joining room:", error);
+    //   setError(error.response ? error.response.data.errorMsg : "Network Error");
+    // } finally {
+    // }
+
+
     console.log(data);
     try {
       const response = await axios.post(
@@ -48,7 +70,7 @@ const Play = () => {
         {},
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjQ5OTM3OTE1Iiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjozNTIsImlhdCI6MTcyMjg2Mzg5MywiZXhwIjoxNzI1NDU1ODkzfQ.9a2TCaBxlJGbOW4VNi-FGzohBvUZY5bVAY1oItRqoBTZ_GP8Pho2DtR_AgdC1uQphllCNm0GEQkcuHFxSnLYnw`,
           },
         }
       );
@@ -57,7 +79,7 @@ const Play = () => {
       // 방 입장 요청 완료시 카메라 체크 페이지로 이동
       console.log("[* 방 입장] roomdata",response.data.data);
       const roomData = response.data.data;
-      navigate("/games", { state: { roomData, testToken:token, isHost:true } });
+      navigate("/games", { state: { roomData, token:"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjQ5OTM3OTE1Iiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjozNTIsImlhdCI6MTcyMjg2Mzg5MywiZXhwIjoxNzI1NDU1ODkzfQ.9a2TCaBxlJGbOW4VNi-FGzohBvUZY5bVAY1oItRqoBTZ_GP8Pho2DtR_AgdC1uQphllCNm0GEQkcuHFxSnLYnw", } });
     } catch (error) {
       console.log("Error", error);
     }
