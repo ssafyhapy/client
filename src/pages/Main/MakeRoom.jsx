@@ -39,7 +39,7 @@ const MakeRoom = ({ closeMakeRoom }) => {
       // fetchRoomData(response.data.data);
 
       // 방 만들기 요청 완료시 대기실로 이동
-      navigate("/games", { state: { roomData, testToken } });
+      navigate("/games", { state: { roomData, testToken, ishost:true } });
     } catch (error) {
       console.log("Error", error);
     }

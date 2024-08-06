@@ -18,7 +18,7 @@ const Games = () => {
   const setGameStep = useGameStore((state) => state.setGameStep);
 
   const location = useLocation();
-  const { roomData, accessToken } = location.state;
+  const { roomData, accessToken, isHost } = location.state;
   const [session, setSession] = useState(null);
   const {
     mainStreamManager,
@@ -41,12 +41,22 @@ const Games = () => {
         setSubscribers((prevSubscribers) => [...prevSubscribers, subscriber]);
       });
 
+      session.on('connectionCreated', event => {
+        console.log('----- connectionCreated event -----');
+        console.log(event.connection);
+        console.log(event.connection.data);
+        console.log('-------------------')
+      });
+
       session.on("streamDestroyed", (event) => {
         setSubscribers((prevSubscribers) =>
           prevSubscribers.filter(
             (subscriber) => subscriber !== event.stream.streamManager
           )
         );
+
+        setSubscribers((prevSubscribers) => [...prevSubscribers, "추가됨?"]);
+
       });
 
       try {
@@ -54,7 +64,7 @@ const Games = () => {
           clientData: myUserName,
         });
 
-        const publisher = OV.initPublisher(undefined, {
+         const publisher = OV.initPublisher(undefined, {
           audioSource: undefined,
           videoSource: undefined,
           publishAudio: true,
@@ -83,7 +93,8 @@ const Games = () => {
     return () => {
       if (session) session.disconnect();
     };
-  }, [roomData]);
+  }, []);
+
 
   return (
     <>

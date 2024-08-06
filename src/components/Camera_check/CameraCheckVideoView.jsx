@@ -17,17 +17,6 @@ const CameraCheckVideoView = ({ data }) => {
 
   return (
     <>
-      {/* <div id="video-container">
-        {mainStreamManager && (
-          <div id="publisher">
-            <video
-              autoPlay={true}
-              ref={(video) => video && mainStreamManager.addVideoElement(video)}
-            />
-          </div>
-        )}
-      </div> */}
-
       <div className="w-full h-full flex justify-center items-center">
         <div className="relative w-[45vw] h-[40vh] bg-red-300 rounded-[15px] flex items-center justify-center">
           {mainStreamManager ? <video
