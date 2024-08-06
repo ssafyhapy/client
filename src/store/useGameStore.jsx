@@ -8,12 +8,12 @@ const useGameStore = create((set) => ({
     set((state) => ({ roomId: updateFunc(state.roomId) })),
   gameStep:"camera-check",
   setGameStep:(step)=>set({gameStep:step}),
-  mainStreamManager: null,
-  setMainStreamManager: (manager) => set({ mainStreamManager: manager }),
-  publisher: null,
-  setPublisher: (pub) => set({ publisher: pub }),
-  subscribers: [],
-  setSubscribers: (subs) => set({ subscribers: subs }),
+  useMainStreamManager: null,
+  setUseMainStreamManager: (manager) => set({ mainStreamManager: manager }),
+  usePublisher: null,
+  setusePublisher: (pub) => set({ publisher: pub }),
+  useSubscribers: [],
+  setUseSubscribers: (subs) => set({ subscribers: subs }),
 }));
 
 export default useGameStore;

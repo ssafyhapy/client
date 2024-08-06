@@ -47,7 +47,7 @@ const Games = memo(() => {
         const publisher = OV.initPublisher(undefined, {
           audioSource: undefined,
           videoSource: undefined,
-          publishAudio: true,
+          publishAudio: false,
           publishVideo: true,
           resolution: '640x480',
           frameRate: 30,
