@@ -30,9 +30,18 @@ const useMypageStore = create(
           formData.append("memberName", data.memberName);
           formData.append("memberProviderEmail", data.memberProviderEmail);
           formData.append("memberIntroduction", data.memberIntroduction);
-          formData.append("memberHistoryList", JSON.stringify(data.memberHistoryList));
-          formData.append("memberMemoryboxList", JSON.stringify(data.memberMemoryboxList));
-          formData.append("deletedHistoryList", JSON.stringify(data.deletedHistoryList));
+          formData.append(
+            "memberHistoryList",
+            JSON.stringify(data.memberHistoryList)
+          );
+          formData.append(
+            "memberMemoryboxList",
+            JSON.stringify(data.memberMemoryboxList)
+          );
+          formData.append(
+            "deletedHistoryList",
+            JSON.stringify(data.deletedHistoryList)
+          );
 
           const response = await axiosInstance.patch(endpoint, formData);
           console.log("updateData", response);
@@ -62,7 +71,10 @@ const useVisibilityStore = create(
       setVisibility: () =>
         set((state) => ({ isVisibility: !state.isVisibility })),
     }),
-    { name: "Visibility-storage", storage: createJSONStorage(() => sessionStorage) }
+    {
+      name: "Visibility-storage",
+      storage: createJSONStorage(() => sessionStorage),
+    }
   )
 );
 export { useMypageStore, useUpdateStore, useVisibilityStore };
