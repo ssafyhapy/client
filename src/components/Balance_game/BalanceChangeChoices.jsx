@@ -5,7 +5,7 @@ import useBalanceStore from "../../store/useBalanceStore";
 import Chatbox from "../../components/Common/Chatbox";
 import ExitBtn from "../../components/Buttons/ExitBtn";
 import GameTurns from "../../components/Common/GameTurns";
-import refresh from "./../../assets/Balance_game/refresh.png";
+import refresh from "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/refresh.png";
 
 const BalanceChangeChoices = ({ onConfirm }) => {
   const gameStep = useGameStore((state) => state.gameStep);

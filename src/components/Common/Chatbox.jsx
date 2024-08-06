@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import moment from "moment";
 import webSocketService from "../../WebSocketService";
-import chatsendbutton from "../../assets/Common/chatsendbutton.png";
+import chatsendbutton from "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/chatsendbutton.png";
 import useAuthStore from "../../store/useAuthStore";
 import defaultProfile from "../../assets/Profile/defaultprofile.png";
 

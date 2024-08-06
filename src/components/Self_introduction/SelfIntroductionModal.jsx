@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import BasicBtn from "../Buttons/BasicBtn";
-import writingCharacter from "../../assets/Self_introduction/writing_character.png";
+import writingCharacter from "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/writing_character.png";
 import webSocketService from "./../../WebSocketService";
 
 const SelfIntroductionModal = ({
