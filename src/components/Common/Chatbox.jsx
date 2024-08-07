@@ -67,7 +67,7 @@ const Chatbox = () => {
       }
     };
   useEffect(() => {
-    console.log("[*]messages", messages);
+    // console.log("[*]messages", messages);
   }, [messages]);
 
   return (

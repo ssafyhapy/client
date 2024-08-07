@@ -44,10 +44,10 @@ const SelfIntroduction = () => {
     const handleMessageReceived = (message) => {
       console.log('Received message:', message);
 
-      if (message.content === "더이상 확인 가능한 자기소개가 남아있지 않습니다.") {
-        setGameStep("photo-first");
-        return;
-      }
+      // if (message.content === "photofirst") {
+      //   setGameStep("photo-first");
+      //   return;
+      // }
 
       setIntroductions((prev) => [...prev, message]);
       setCurrentPresenterId(message.memberId);
@@ -60,6 +60,12 @@ const SelfIntroduction = () => {
 
     webSocketService.connect(() => {
       webSocketService.subscribe(`/api/sub/intro/${roomId}/next`, handleMessageReceived);
+      webSocketService.subscribeToMemberState(roomId, (message) => {
+        console.log('Received game state: ', message)
+        if (message.memberState === "photofirst") {
+          setGameStep("photo-first")
+        }
+      })
     });
 
     return () => {

@@ -15,19 +15,42 @@ class WebSocketService {
     });
 
     this.subscriptions = {};
+    this.connected = false;
   }
 
   connect(onConnectCallback) {
     this.client.onConnect = (frame) => {
+      this.connected = true;
       if (onConnectCallback) {
         onConnectCallback(frame);
       }
       console.log('Connected to STOMP: ' + frame);
     };
+
+    this.client.onStompError = (frame) => {
+      console.error('Broker reported error: ' + frame.headers['message']);
+      console.error('Additional details: ' + frame.body);
+    };
+
+    this.client.onWebSocketClose = () => {
+      this.connected = false;
+      console.log('WebSocket connection closed');
+    };
+
+    this.client.onWebSocketError = (error) => {
+      this.connected = false;
+      console.error('WebSocket error: ' + error);
+    };
+
     this.client.activate();
   }
 
   subscribe(topic, onMessageCallback) {
+    if (!this.connected) {
+      console.error('Cannot subscribe, no connection established');
+      return;
+    }
+
     if (this.subscriptions[topic]) {
       this.subscriptions[topic].unsubscribe();
     }
@@ -46,6 +69,11 @@ class WebSocketService {
   }
 
   sendMessage(destination, body) {
+    if (!this.connected) {
+      console.error('Cannot send message, no connection established');
+      return;
+    }
+
     this.client.publish({
       destination: destination,
       body: JSON.stringify(body),
@@ -60,6 +88,14 @@ class WebSocketService {
     this.sendMessage(`/api/pub/intro/${roomId}/next`, {});
   }
 
+  sendMemberState(roomId, memberState) {
+    this.sendMessage(`/api/pub/${roomId}/state`, { memberState });
+  }
+
+  subscribeToMemberState(roomId, onMessageCallback) {
+    this.subscribe(`/api/sub/${roomId}/state`, onMessageCallback);
+  }
+
   deactivate() {
     this.client.deactivate();
   }
@@ -67,6 +103,7 @@ class WebSocketService {
 
 const webSocketService = new WebSocketService();
 export default webSocketService;
+
 
 
 
