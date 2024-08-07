@@ -1,11 +1,12 @@
 // src/WebSocketService.jsx
-import { Client } from '@stomp/stompjs';
-import SockJS from 'sockjs-client';
+import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 
 class WebSocketService {
   constructor() {
     this.client = new Client({
-      webSocketFactory: () => new SockJS('https://i11c209.p.ssafy.io/api/websocket'),
+      webSocketFactory: () =>
+        new SockJS("https://i11c209.p.ssafy.io/api/websocket"),
       debug: (str) => {
         console.log(`STOMP Debug: ${str}`);
       },
@@ -24,22 +25,22 @@ class WebSocketService {
       if (onConnectCallback) {
         onConnectCallback(frame);
       }
-      console.log('Connected to STOMP: ' + frame);
+      console.log("Connected to STOMP: " + frame);
     };
 
     this.client.onStompError = (frame) => {
-      console.error('Broker reported error: ' + frame.headers['message']);
-      console.error('Additional details: ' + frame.body);
+      console.error("Broker reported error: " + frame.headers["message"]);
+      console.error("Additional details: " + frame.body);
     };
 
     this.client.onWebSocketClose = () => {
       this.connected = false;
-      console.log('WebSocket connection closed');
+      console.log("WebSocket connection closed");
     };
 
     this.client.onWebSocketError = (error) => {
       this.connected = false;
-      console.error('WebSocket error: ' + error);
+      console.error("WebSocket error: " + error);
     };
 
     this.client.activate();
@@ -47,7 +48,7 @@ class WebSocketService {
 
   subscribe(topic, onMessageCallback) {
     if (!this.connected) {
-      console.error('Cannot subscribe, no connection established');
+      console.error("Cannot subscribe, no connection established");
       return;
     }
 
@@ -57,20 +58,22 @@ class WebSocketService {
 
     this.subscriptions[topic] = this.client.subscribe(topic, (message) => {
       try {
+        console.log("1. message :", message);
         const parsedMessage = JSON.parse(message.body);
+        console.log("2. parsaedMessage :", parsedMessage);
         if (onMessageCallback) {
           onMessageCallback(parsedMessage);
         }
       } catch (error) {
-        console.error('Failed to parse message body as JSON:', message.body);
-        console.error('Error:', error);
+        console.error("Failed to parse message body as JSON:", message.body);
+        console.error("Error:", error);
       }
     });
   }
 
   sendMessage(destination, body) {
     if (!this.connected) {
-      console.error('Cannot send message, no connection established');
+      console.error("Cannot send message, no connection established");
       return;
     }
 
@@ -105,7 +108,6 @@ const webSocketService = new WebSocketService();
 export default webSocketService;
 
 // ======================================================================
-
 
 // // src/WebSocketService.js
 // import { Client } from "@stomp/stompjs";
