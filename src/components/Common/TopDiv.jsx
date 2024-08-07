@@ -1,15 +1,13 @@
-import React from "react"
+import React from "react";
 import { useState } from "react";
-import GameTurns from "./GameTurns"
+import GameTurns from "./GameTurns";
 import BasicBtn from "../Buttons/BasicBtn";
 
-
-
-const TopDiv = ({gameStep})=>{
+const TopDiv = ({ gameStep }) => {
   const [copyState, setCopyState] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  
-  const accessCode = "zustand에 담아놓기"
+
+  const accessCode = "zustand에 담아놓기";
   const handleClipBoard = () => {
     if (accessCode) {
       navigator.clipboard
@@ -28,16 +26,30 @@ const TopDiv = ({gameStep})=>{
     setShowModal(false);
   };
 
+  return (
+    <div className="flex justify-center items-center">
+      {gameStep === "waiting-room" ? (
+        <div className="flex items-center absolute top-3 left-10">
+          <div>접속 코드 : {accessCode} </div>
+          <button onClick={handleClipBoard} className="w-[30%] h-[30%]">
+            <img
+              className="w-[15%] h-[15%]"
+              src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/clipboard.webp"
+              alt=""
+            />
+          </button>
+        </div>
+      ) : null}
 
-return(<div className="h-[5%] flex justify-center items-center">
-    {gameStep==="waiting-room"?<div className="flex items-center absolute top-5 left-10">
-      <div>접속 코드 : {accessCode} </div>
-      <button onClick={handleClipBoard} className="w-[30%] h-[30%]">
-        <img className="w-[15%] h-[15%]" src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/clipboard.webp" alt="" />
-      </button>
-    </div>:null}
-    {gameStep=="camera-check"||gameStep=="waiting-room"||gameStep=="photo-first"||gameStep=="photo-first"?null:<GameTurns gameStep={gameStep}></GameTurns>}
-    {showModal && (
+      <div className="h-[7vh]">
+        {gameStep == "camera-check" ||
+        gameStep == "waiting-room" ||
+        gameStep == "photo-first" ||
+        gameStep == "photo-last" ? null : (
+          <GameTurns gameStep={gameStep}></GameTurns>
+        )}
+      </div>
+      {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-[rgba(255,255,255,0.95)] p-6 rounded-[30px] shadow-lg flex flex-col justify-center items-center gap-5">
             <div className="bg-custom-modal p-6 rounded-[30px] shadow-lg flex flex-col justify-center items-center gap-5">
@@ -49,7 +61,8 @@ return(<div className="h-[5%] flex justify-center items-center">
           </div>
         </div>
       )}
-  </div>)
-}
+    </div>
+  );
+};
 
-export default TopDiv
+export default TopDiv;

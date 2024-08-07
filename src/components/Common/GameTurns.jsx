@@ -2,10 +2,9 @@ import React from "react";
 import checkedCircle from "../../assets/Game_turns/checked.png";
 import circle from "../../assets/Game_turns/circle.png";
 import arrow from "../../assets/Game_turns/arrow.png";
-import useGameStore from "../../store/useGameStore";
-const GameTurns = ({}) => {
-  const { gameStep } = useGameStore();
 
+const GameTurns = ({gameStep}) => {
+  console.log("[*]gamestep",gameStep);
   return (
     <>
       <div className="flex justify-around w-[555px] h-[54px]">
@@ -16,7 +15,9 @@ const GameTurns = ({}) => {
             className={`${
               gameStep === "self-introduction" ||
               gameStep === "guess-me" ||
-              gameStep === "balance-game"
+              gameStep === "balance-game"||
+              gameStep === "wrap-up"||
+              gameStep === "photo-first"
                 ? null
                 : "hidden"
             }`}
@@ -27,9 +28,11 @@ const GameTurns = ({}) => {
             className={`${
               gameStep !== "self-introduction" &&
               gameStep !== "guess-me" &&
-              gameStep !== "balance-game"
-                ? "hidden"
-                : null
+              gameStep !== "balance-game" &&
+              gameStep !== "wrap-up" &&
+              gameStep !== "photo-first"
+                ? null
+                : "hidden"
             }`}
           />
           <div>한 줄 자기소개</div>
@@ -40,7 +43,7 @@ const GameTurns = ({}) => {
             src={checkedCircle}
             alt=""
             className={`${
-              gameStep === "self-introduction" || gameStep === "guess-me"
+              gameStep === "guess-me" || gameStep === "balance-game"||gameStep === "wrap-up"
                 ? null
                 : "hidden"
             }`}
@@ -49,9 +52,9 @@ const GameTurns = ({}) => {
             src={circle}
             alt=""
             className={`${
-              (gameStep !== "self-introduction") & (gameStep !== "guess-me")
-                ? "hidden"
-                : null
+              (gameStep !== "guess-me") & (gameStep !== "balance-game") &(gameStep !== "wrap-up")
+                ? null
+                : "hidden"
             }`}
           />
           <div>나를 맞춰봐</div>
@@ -61,12 +64,12 @@ const GameTurns = ({}) => {
           <img
             src={checkedCircle}
             alt=""
-            className={`${gameStep === "balance-game" ? null : "hidden"}`}
+            className={`${gameStep === "balance-game" ||gameStep === "wrap-up" ? null : "hidden"}`}
           />
           <img
             src={circle}
             alt=""
-            className={`${gameStep !== "balance-game" ? "hidden" : null}`}
+            className={`${gameStep !== "balance-game" && gameStep !== "wrap-up"? null : "hidden"}`}
           />
           <div>밸런스 게임</div>
         </div>

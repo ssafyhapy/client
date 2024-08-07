@@ -170,28 +170,7 @@ const GuessMeGetReady = ({ guessMeStep, setGuessMeStep }) => {
   }, [allPrepared, setGuessMeStep]); // useEffect 의존성 배열에 setGuessMeStep 추가
 
   return (
-    <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
-      <div className="w-[1024px] h-[90%] bg-[rgba(255,255,255,0.3)] m-auto rounded-[40px] flex flex-col relative p-10 overflow-hidden">
-        {/* Top Div */}
-        <div className="h-[5%] flex justify-between items-center mb-2">
-          <div className="w-[90%] flex justify-center absolute top-3">
-            <GameTurns sectionNumber={2} />
-          </div>
-          <div className="w-[10%] flex justify-center">
-            <ExitBtn />
-          </div>
-        </div>
-
-        {/* Middle Div */}
-        <div className="flex-grow flex overflow-hidden h-[52vh]">
-          <div className="bg-[rgba(255,255,255,0.9)] flex-[7] h-full mr-5 rounded-[20px] flex justify-center items-center overflow-hidden">
-            <p className="m-5">camera background</p>
-          </div>
-          <div className="flex-[3] h-full ml-5 rounded-[20px] flex flex-col justify-center items-center overflow-hidden">
-            <Chatbox />
-          </div>
-        </div>
-
+    <>
         {/* Mid-Bottom Between Div */}
         <div className="text-xs mt-3 flex justify-start">
           {!allPrepared ? (
@@ -232,7 +211,6 @@ const GuessMeGetReady = ({ guessMeStep, setGuessMeStep }) => {
           )}
           <div className="flex justify-end"></div>
         </div>
-      </div>
       {showModal && (
         <GuessMeModal
           userName={userName}
@@ -246,7 +224,7 @@ const GuessMeGetReady = ({ guessMeStep, setGuessMeStep }) => {
           setSelectedAnswers={setSelectedAnswers}
         />
       )}
-    </div>
+    </>
   );
 };
 

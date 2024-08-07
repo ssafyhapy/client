@@ -14,6 +14,8 @@ import PhotographLast from "./../../components/Photo/PhotographLast";
 import useGameStore from "./../../store/useGameStore";
 import GuessMe from "./../../components/Guess_me/GuessMe";
 import TopDiv from "../../components/Common/TopDiv";
+import MiddleDiv from "../../components/Common/MiddleDiv";
+import BottomDiv from "../../components/Common/BottomDiv";
 
 const Games = () => {
   const gameStep = useGameStore((state) => state.gameStep);
@@ -35,7 +37,7 @@ const Games = () => {
 
   const mySessionId = roomData.webrtc.sessionId;
   const myUserName = "Participant" + Math.floor(Math.random() * 100);
- 
+
   const OV = new OpenVidu();
 
   useEffect(() => {
@@ -112,15 +114,25 @@ const Games = () => {
 
   return (
     <GameBackground>
-      <TopDiv gameStep={gameStep}></TopDiv>
-      {gameStep === "camera-check" && <CamCheck />}
-      {gameStep === "waiting-room" && <WaitingRoom />}
-      {gameStep === "self-introduction" && <SelfIntroduction />}
-      {gameStep === "balance-game" && <BalanceGame />}
-      {gameStep === "wrap-up" && <WrapUp />}
-      {gameStep === "guess-me" && <GuessMe />}
-      {gameStep === "photo-first" && <PhotographFirst />}
-      {gameStep === "photo-last" && <PhotographLast />}
+      {/* TopDiv */}
+      <TopDiv gameStep={gameStep} setGameStep={setGameStep}></TopDiv>
+      {/* MiddleDiv */}
+      {gameStep !== "camera-check" &&
+      gameStep !== "photo-first" &&
+      gameStep !== "photo-last" ? (
+        <MiddleDiv></MiddleDiv>
+      ) : null}
+      {/* BottomDiv - 게임 로직 */}
+      <BottomDiv>
+        {gameStep === "camera-check" && <CamCheck />}
+        {gameStep === "waiting-room" && <WaitingRoom />}
+        {gameStep === "self-introduction" && <SelfIntroduction />}
+        {gameStep === "guess-me" && <GuessMe />}
+        {gameStep === "balance-game" && <BalanceGame />}
+        {gameStep === "wrap-up" && <WrapUp />}
+        {gameStep === "photo-first" && <PhotographFirst />}
+        {gameStep === "photo-last" && <PhotographLast />}
+      </BottomDiv>
     </GameBackground>
   );
 };
