@@ -15,15 +15,39 @@ import webSocketService from "./../../WebSocketService";
 const WaitingRoom = () => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
-  const { hostId, roomId } = useRoomStore();
-  // const roomId = 1
-  // const hostId = 4
+  // const { hostId, roomId } = useRoomStore();
+  const roomId = 1
+  const hostId = 4
   const { memberId } = useAuthStore();
   const [accessCode, setAccessCode] = useState();
   const [copyState, setCopyState] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const [currentPresenterId, setCurrentPresenterId] = useState(null);
+
   const btnText = "시작";
+
+  useEffect(() => {
+    console.log('Member ID:', memberId);
+    console.log('Current Presenter ID:', currentPresenterId);
+  }, [memberId, currentPresenterId]);
+
+  useEffect(() => {
+    const handleMessageReceived = (message) => {
+      console.log('Received message:', message);
+      setCurrentPresenterId(message.memberId);
+    };
+
+    webSocketService.connect(() => {
+      webSocketService.subscribe(`/api/sub/${roomId}/state`, handleMessageReceived)
+      webSocketService.subscribeToMemberState(roomId, (message) => {
+        console.log('Received game state: ', message)
+        if (message.memberState === "intro") {
+          setGameStep("self-introduction")
+        }
+      })
+    })
+  })
 
   useEffect(() => {
     setAccessCode("axios로 백에서 받아올 것");
@@ -31,7 +55,7 @@ const WaitingRoom = () => {
     // Subscribe to game state changes
     const connectWebSocket = () => {
       webSocketService.connect(() => {
-        webSocketService.subscribeToMemberState(1, (message) => {
+        webSocketService.subscribeToMemberState(roomId, (message) => {
           console.log('Received game state:', message);
           if (message.memberState === 'intro') {
             setGameStep("self-introduction");
@@ -67,7 +91,7 @@ const WaitingRoom = () => {
 
   const handleNextStep = () => {
     console.log('intro를 보냅니다')
-    webSocketService.sendMemberState(1, "intro");
+    webSocketService.sendMemberState(roomId, "intro");
   };
 
   useEffect(() => {
