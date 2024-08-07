@@ -42,7 +42,7 @@ const GuessMeGetReady = ({ guessMeStep, setGuessMeStep }) => {
       content: questions[key],
       answer: selectedAnswers[key],
     }));
-    
+
     axios
       .post("https://i11c209.p.ssafy.io/api/result/ox", data, {
         headers: {
@@ -171,46 +171,30 @@ const GuessMeGetReady = ({ guessMeStep, setGuessMeStep }) => {
 
   return (
     <>
-        {/* Mid-Bottom Between Div */}
-        <div className="text-xs mt-3 flex justify-start">
-          {!allPrepared ? (
-            <BasicBtn
-              btnText={btnText}
-              onClick={handleOpenModal}
-              fontSize={12}
-            />
-          ) : (
-            <div className="invisible">
-              <BasicBtn btnText={"Hey"} fontSize={12} />
-            </div>
-          )}
-        </div>
+      {/* Bottom Div */}
 
-        {/* Bottom Div */}
-        <div className="flex-none mt-3 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem]">
-          {!allPrepared ? (
-            <div className="flex-grow flex items-center justify-center">
-              <img src={snowingCloud} alt="star 그림" />
-              <span className="text-transparent">&nbsp;&nbsp;</span>
-              <span className="text-[rgba(85,181,236)]">
-                나를 맞춰봐 문제가 만들어지고 있어요{dots}
-              </span>
-            </div>
-          ) : (
-            <div className="flex-grow flex items-center justify-center">
-              <img src={star} alt="star 그림" />
-              <span className="text-transparent">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              </span>
-              <span className="text-[rgba(85,181,236)]">전원 준비 완료!!</span>
-              <span className="text-transparent">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              </span>
-              <img src={star} alt="star 그림" />
-            </div>
-          )}
-          <div className="flex justify-end"></div>
+      {!allPrepared ? (
+        <div className="flex-grow flex items-center justify-center">
+          <img src={snowingCloud} alt="star 그림" />
+          <span className="text-transparent">&nbsp;&nbsp;</span>
+          <span className="text-[rgba(85,181,236)]">
+            나를 맞춰봐 문제가 만들어지고 있어요{dots}
+          </span>
         </div>
+      ) : (
+        <div className="flex-grow w-[95%] flex items-center justify-center">
+          <img src={star} alt="star 그림" />
+          <span className="text-transparent">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </span>
+          <span className="text-[rgba(85,181,236)]">전원 준비 완료!!</span>
+          <span className="text-transparent">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </span>
+          <img src={star} alt="star 그림" />
+        </div>
+      )}
+      <div className="flex justify-end"></div>
       {showModal && (
         <GuessMeModal
           userName={userName}

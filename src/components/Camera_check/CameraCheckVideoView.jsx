@@ -27,45 +27,53 @@ const CameraCheckVideoView = ({ data }) => {
   );
 
   return (
-    <div className="relative w-full h-full flex justify-center items-center bg-red-300 rounded-[15px]">
-      <div className="relative w-[75%] h-[80%]">
-        {mainStreamManager ? (
-          <video
-            autoPlay={true}
-            ref={(video) => video && mainStreamManager.addVideoElement(video)}
-            className=" object-cover rounded-[15px]"
-          />
-        ) : (
-          <div>Video 없음</div>
-        )}
-        <div className="w-full text-white flex p-2">
-          <span className="flex ">
-            <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-              {data.name}
-            </span>
-            <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-              <img
-                src={mic_on}
-                alt="mic on"
-                className={`w-[12px] h-[18px] ${data.mic ? null : "hidden"}`}
-              />
-              <img
-                src={mute}
-                alt="mute"
-                className={`w-[12px] h-[18px] ${data.mic ? "hidden" : null}`}
-              />
-            </span>
-          </span>
-          <span
-            className={`flex items-center px-2 h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
-              data.ready ? null : "hidden"
-            }`}
-          >
-            준비완료
-          </span>
+    <>
+      {mainStreamManager ? (
+        <div className="relative w-full h-full flex justify-center items-center bg-red-300 rounded-[15px]">
+          <div id="videoFront" className="relative w-[90%] h-[90%]">
+            <video
+              autoPlay={true}
+              ref={(video) => video && mainStreamManager.addVideoElement(video)}
+              className="object-cover w-full h-full rounded-[15px]"
+            />
+            <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-between">
+              <div className="w-full text-white flex absolute bottom-0">
+                <span className="flex ">
+                  <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
+                    {data.name}
+                  </span>
+                  <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
+                    <img
+                      src={mic_on}
+                      alt="mic on"
+                      className={`w-[12px] h-[18px] ${
+                        data.mic ? null : "hidden"
+                      }`}
+                    />
+                    <img
+                      src={mute}
+                      alt="mute"
+                      className={`w-[12px] h-[18px] ${
+                        data.mic ? "hidden" : null
+                      }`}
+                    />
+                  </span>
+                </span>
+                <span
+                  className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
+                    data.ready ? null : "hidden"
+                  }`}
+                >
+                  준비완료
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <div>비디오를 연결하고 있습니다.</div>
+      )}
+    </>
   );
 };
 

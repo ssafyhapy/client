@@ -3,8 +3,8 @@ import BasicBtn from "../Buttons/BasicBtn";
 
 const WrapUpModal = ({ btnText, onClose }) => {
   return (
-    <div className="fixed inset-0 flex justify-center items-center z-50 bg-[rgba(0,0,0,0.5)]">
-      <div className="bg-[rgba(255,255,255,0.95)] w-[43%] h-[50%] rounded-2xl flex justify-center">
+    <div className="fixed inset-0 flex justify-center items-center z-50 bg-[rgba(0,0,0,0.5)] ">
+      <div className="bg-[rgba(255,255,255,0.95)] min-w-[500px] w-[43%] h-[50%] rounded-2xl flex justify-center">
         <div className="bg-custom-modal m-10 p-8 rounded-2xl relative flex flex-col justify-center">
           <div className="flex flex-col justify-center p-3 m-3 text-[rgba(85,181,236)]">
             <p>서로와 친밀감은 좀 쌓이셨나요?</p>

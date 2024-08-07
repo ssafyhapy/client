@@ -7,6 +7,7 @@ import BasicBtn from "./../Buttons/BasicBtn";
 import ExitBtn from "./../Buttons/ExitBtn";
 import GameTurns from "./../Common/GameTurns";
 import SelfIntroductionModal from "./../Self_introduction/SelfIntroductionModal"; // Adjust the import path based on your project structure
+import BottomDiv from "../Common/BottomDiv";
 
 const SelfIntroduction = () => {
   const {
@@ -152,10 +153,9 @@ const SelfIntroduction = () => {
 
   return (
     <>
-    
       {/* Bottom Div */}
       {!isGamePhase ? (
-        <div className="flex-none mt-3 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem]">
+        <>
           {!allPrepared ? (
             <div className="flex-grow flex items-center justify-center">
               <img src="src/assets/common/snowing_cloud.png" alt="구름 그림" />
@@ -178,10 +178,10 @@ const SelfIntroduction = () => {
             </div>
           )}
           <div className="flex justify-end"></div>
-        </div>
+        </>
       ) : (
-        <div className="flex-none mt-10 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem] relative">
-          <div className="flex-grow flex items-center justify-center relative">
+        <>
+          <div className="flex-grow flex items-center justify-center">
             <span>나는</span>
             <span className="text-transparent">&nbsp;</span>
             <span className="text-[rgb(129,109,255)] border-solid border-b-4 border-[rgb(129,109,255)]">
@@ -198,7 +198,7 @@ const SelfIntroduction = () => {
             alt="생각하는 캐릭터 그림"
             className="absolute bottom-0 left-0 mb-3 ml-3 max-w-[100px] max-h-[100px]"
           />
-        </div>
+        </>
       )}
       {showModal && (
         <SelfIntroductionModal

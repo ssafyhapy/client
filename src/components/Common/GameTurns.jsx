@@ -7,7 +7,7 @@ const GameTurns = ({gameStep}) => {
   console.log("[*]gamestep",gameStep);
   return (
     <>
-      <div className="flex justify-around w-[555px] h-[54px]">
+      <div className="flex justify-around items-center w-[555px] h-[54px]">
         <div className="flex flex-col items-center justify-center h-full">
           <img
             src={checkedCircle}

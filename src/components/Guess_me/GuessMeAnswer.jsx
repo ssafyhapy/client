@@ -109,7 +109,6 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
     <>
      
       {/* Bottom Div */}
-      <div className="flex-none mt-10 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem] relative">
         <div className="flex-grow flex items-center justify-center relative">
           {/* 문제와 답 보여주기 */}
           <span className="text-[rgba(85,181,236)]">
@@ -143,7 +142,6 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
           alt="물음표 두개 그림"
           className="absolute bottom-0 left-0 mb-3 ml-3"
         />
-      </div>
     </>
   );
 };

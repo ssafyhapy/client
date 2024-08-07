@@ -16,6 +16,12 @@ const useGameStore = create((set) => ({
   setSubscribers: (subs) => set({ subscribers: subs }),
   connectionInfo : [],
   setConnectionInfo: (connectionInfo) => set({ setConnectionInfo: connectionInfo }),
+  usernames:{},
+  setUsernames:((prevUsernames) => ({
+    ...prevUsernames,
+    [connectionId]: connectionData.memberName,
+  }))
+
 }));
 
 export default useGameStore;

@@ -40,50 +40,48 @@ const BalanceChoosing = ({ onTimerEnd, currentStep }) => {
 
   return (
     <>
-       {/* Bottom Div */}
-      <div className="flex-none mt-10 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem] relative">
-        <div
-          className={`text-[14px] text-[rgba(0,0,0,0.5)] absolute right-5 top-2 ${
-            discussedNum === null ? "hidden" : ""
+      {/* Bottom Div */}
+      <div
+        className={`text-[14px] text-[rgba(0,0,0,0.5)] absolute right-5 top-2 ${
+          discussedNum === null ? "hidden" : ""
+        }`}
+      >
+        현재 토론 완료 : {discussedNum}/5
+      </div>
+      <div className="flex-grow flex items-center justify-center relative gap-5">
+        <button
+          onClick={() => handlePickedChoice(1)}
+          className={`text-[rgba(85,181,236)] px-2 py-3 rounded-[15px] ${
+            pickedChoice === 1
+              ? "border-solid border-4 border-[#64B8FF]"
+              : "border-transparent"
           }`}
+          style={{
+            background:
+              "linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(30, 144, 255, 0.3))",
+          }}
         >
-          현재 토론 완료 : {discussedNum}/5
-        </div>
-        <div className="flex-grow flex items-center justify-center relative gap-5">
-          <button
-            onClick={() => handlePickedChoice(1)}
-            className={`text-[rgba(85,181,236)] px-2 py-3 rounded-[15px] ${
-              pickedChoice === 1
-                ? "border-solid border-4 border-[#64B8FF]"
-                : "border-transparent"
-            }`}
-            style={{
-              background:
-                "linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(30, 144, 255, 0.3))",
-            }}
-          >
-            {balanceChoicesHard.first}
-          </button>
-          <span className="text-[#FF607F]">VS</span>
-          <button
-            onClick={() => handlePickedChoice(2)}
-            className={`text-[#FF6A89] px-2 py-3 rounded-[15px] ${
-              pickedChoice === 2
-                ? "border-solid border-4 border-[rgba(254,176,207)]"
-                : "border-transparent"
-            }`}
-            style={{
-              background:
-                "linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(255,96,127,0.5))",
-            }}
-          >
-            {balanceChoicesHard.second}
-          </button>
-        </div>
-        <div className="flex items-center mb-2 absolute top-3 left-10">
-          <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" />
-          <span className="text-red-500">{secondsLeft}</span>
-        </div>
+          {balanceChoicesHard.first}
+        </button>
+        <span className="text-[#FF607F]">VS</span>
+        <button
+          onClick={() => handlePickedChoice(2)}
+          className={`text-[#FF6A89] px-2 py-3 rounded-[15px] ${
+            pickedChoice === 2
+              ? "border-solid border-4 border-[rgba(254,176,207)]"
+              : "border-transparent"
+          }`}
+          style={{
+            background:
+              "linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(255,96,127,0.5))",
+          }}
+        >
+          {balanceChoicesHard.second}
+        </button>
+      </div>
+      <div className="flex items-center mb-2 absolute top-3 left-10">
+        <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" />
+        <span className="text-red-500">{secondsLeft}</span>
       </div>
     </>
   );

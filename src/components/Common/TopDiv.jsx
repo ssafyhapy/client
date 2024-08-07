@@ -41,7 +41,7 @@ const TopDiv = ({ gameStep }) => {
         </div>
       ) : null}
 
-      <div className="h-[7vh]">
+      <div className="h-[7vh] flex items-center">
         {gameStep == "camera-check" ||
         gameStep == "waiting-room" ||
         gameStep == "photo-first" ||
