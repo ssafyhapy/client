@@ -1,4 +1,5 @@
 import React from "react";
+import kakaoLogin from "../../assets/Login/kakaoLogin.png";
 
 const Login = ({ closeLogin }) => {
   const client_id = import.meta.env.VITE_CLIENT_ID;
@@ -6,7 +7,6 @@ const Login = ({ closeLogin }) => {
   const REDIRECT_URI = "https://i11c209.p.ssafy.io/auth/kakao/callback";
 
   return (
-    
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div
         className="fixed inset-0 bg-black opacity-50"
@@ -17,24 +17,12 @@ const Login = ({ closeLogin }) => {
 
         <form>
           <div className="flex justify-center mt-4">
-            <button
-              type="button"
-              className="bg-yellow-400 text-black py-2 px-4 rounded w-full"
-            >
+            <button type="button">
               <a
                 href={`https://kauth.kakao.com/oauth/authorize?client_id=${client_id}&client_secret=${client_secret}&redirect_uri=${REDIRECT_URI}&response_type=code`}
               >
-                Kakao Login
+                <img className="w-[250px]" src={kakaoLogin} alt="" />
               </a>
-            </button>
-          </div>
-
-          <div className="flex justify-center mt-4">
-            <button
-              type="button"
-              className="bg-green-500 text-white py-2 px-4 rounded w-full"
-            >
-              네이버 로그인
             </button>
           </div>
 
