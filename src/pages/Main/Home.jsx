@@ -4,24 +4,35 @@ import MainHomeFrame from "../../components/Main_page/MainHomeFrame";
 import Home2 from "./Home2";
 import MainGradientBackground2 from "../../components/Common/MainGradientBackgound2";
 import MainDescription from "../../components/Main_page/MainDescription";
+import bgImage from "../../assets/bg/bgImage5.jpg";
+import SecondDescription from "../../components/Main_page/SecondDescription";
 
 const Home = () => {
-
   return (
-    <>
-      <MainGradientBackground>
+    <div
+      className="h-screen overflow-y-scroll snap-y snap-mandatory bg-fixed bg-cover bg-center scrollbar-hide"
+      style={{ backgroundImage: `url(${bgImage})` }}
+    >
+      <div className="w-full h-full snap-start flex justify-center items-center">
         <MainHomeFrame>
-          {/* 메인페이지 설명 */}
           <MainDescription />
         </MainHomeFrame>
-      </MainGradientBackground>
-      <MainGradientBackground2>
+      </div>
+      <div className="w-full h-full snap-start flex justify-center items-center">
         <MainHomeFrame>
-          {/* 하단 페이지 */}
-          <Home2 />
+          <SecondDescription />
         </MainHomeFrame>
-      </MainGradientBackground2>
-    </>
+      </div>
+      <div className="w-full h-full snap-start flex justify-center items-center">
+        <MainHomeFrame>
+        <Home2 />
+        </MainHomeFrame>
+      </div>
+      <div className="w-full h-full snap-start flex justify-center items-center">
+        <MainHomeFrame>
+        </MainHomeFrame>
+      </div>
+    </div>
   );
 };
 

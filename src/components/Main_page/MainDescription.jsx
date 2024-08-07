@@ -2,26 +2,47 @@ import React from "react";
 import ScrollDownBtn from "./ScrollDownBtn";
 
 const MainDescription = () => {
-
   return (
     <>
-      <h1 className="absolute top-[-50px] left-10 text-[#4D98F7] text-2xl">
-        새로운 관계를 위한 첫 걸음
-      </h1>
-      <div className="flex flex-col space-y-20">
-        <h1 className="text-9xl text-[#4D98F7] pt-12">사르르</h1>
-        <div className="flex flex-col space-y-5">
-          <h1 className="text-black opacity-20 text-3xl">
-            오프라인에서의 어색한 첫 만남, 걱정되지는 않으신가요?
+      <div className="w-[80%] h-[80%] flex flex-col justify-between items-center relative">
+        <h1 className="opacity-45 text-3xl self-start">
+          새로운 관계를 위한 첫 걸음
+        </h1>
+        <div className="flex">
+          <iframe src="https://lottie.host/embed/7b087024-b29f-4049-9373-1ffd9735b411/MwhAEk65d8.json"></iframe>
+          <iframe src="https://lottie.host/embed/7b087024-b29f-4049-9373-1ffd9735b411/MwhAEk65d8.json"></iframe>
+          <iframe src="https://lottie.host/embed/7b087024-b29f-4049-9373-1ffd9735b411/MwhAEk65d8.json"></iframe>
+        </div>
+        <div className="h-full flex gap-10 items-center">
+          <h1
+            className="text-[70px] self-center z-10 font-bold"
+            style={{
+              WebkitTextStroke: "2px #4D98F7",
+              color: "transparent",
+            }}
+          >
+            사르르
           </h1>
-          <h1 className="text-black opacity-20 text-3xl">
-            오프라인에서 처음 만나 대화를 나누고 서로에 대해 알아가고
+          <h1 className="text-[#4D98F7] text-[120px] self-center z-10">
+            사르르
           </h1>
-          <h1 className="text-black opacity-20 text-3xl">
-            친밀도를 올리기에는 시간도 체력도 부족한 당신을 위해
+          <h1
+            className="text-[70px] self-center z-10 font-bold"
+            style={{
+              WebkitTextStroke: "2px #4D98F7",
+              color: "transparent",
+            }}
+          >
+            사르르
           </h1>
         </div>
-        <ScrollDownBtn />
+        <div className="z-50">
+          <ScrollDownBtn />
+        </div>
+        <iframe
+          className="absolute bottom-0 right-1/4 z-0"
+          src="https://lottie.host/embed/f6bb91ac-8201-41a9-b1d5-87508a4d6679/0NOCFwtC2K.json"
+        ></iframe>
       </div>
     </>
   );
