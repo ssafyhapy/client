@@ -16,9 +16,11 @@ const WaitingRoom = () => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
   // const { hostId, roomId } = useRoomStore();
-  const roomId = 1
-  const hostId = 4
   const { memberId } = useAuthStore();
+  // 그냥 박아둠
+  const roomId = 1;
+  const hostId = 4;
+
   const [accessCode, setAccessCode] = useState();
   const [copyState, setCopyState] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -28,36 +30,27 @@ const WaitingRoom = () => {
   const btnText = "시작";
 
   useEffect(() => {
-    console.log('Member ID:', memberId);
-    console.log('Current Presenter ID:', currentPresenterId);
+    console.log("Member ID:", memberId);
+    console.log("Current Presenter ID:", currentPresenterId);
   }, [memberId, currentPresenterId]);
-
-  useEffect(() => {
-    const handleMessageReceived = (message) => {
-      console.log('Received message:', message);
-      setCurrentPresenterId(message.memberId);
-    };
-
-    webSocketService.connect(() => {
-      webSocketService.subscribe(`/api/sub/${roomId}/state`, handleMessageReceived)
-      webSocketService.subscribeToMemberState(roomId, (message) => {
-        console.log('Received game state: ', message)
-        if (message.memberState === "intro") {
-          setGameStep("self-introduction")
-        }
-      })
-    })
-  })
 
   useEffect(() => {
     setAccessCode("axios로 백에서 받아올 것");
 
-    // Subscribe to game state changes
+    const handleMessageReceived = (message) => {
+      console.log("Received message:", message);
+      setCurrentPresenterId(message.memberId);
+    };
+
     const connectWebSocket = () => {
       webSocketService.connect(() => {
+        webSocketService.subscribe(
+          `/api/sub/${roomId}/state`,
+          handleMessageReceived
+        );
         webSocketService.subscribeToMemberState(roomId, (message) => {
-          console.log('Received game state:', message);
-          if (message.memberState === 'intro') {
+          console.log("Received game state:", message);
+          if (message.memberState === "intro") {
             setGameStep("self-introduction");
           }
         });
@@ -90,7 +83,7 @@ const WaitingRoom = () => {
   };
 
   const handleNextStep = () => {
-    console.log('intro를 보냅니다')
+    console.log("intro를 보냅니다");
     webSocketService.sendMemberState(roomId, "intro");
   };
 
@@ -158,8 +151,6 @@ const WaitingRoom = () => {
 };
 
 export default WaitingRoom;
-
-
 
 // import React, { useEffect, useState } from "react";
 // import useGameStore from "../../store/useGameStore";
