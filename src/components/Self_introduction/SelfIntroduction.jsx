@@ -28,7 +28,8 @@ const SelfIntroduction = () => {
   const setGameStep = useGameStore((state) => state.setGameStep);
 
   // Get memberId from useAuthStore
-  const { memberId } = useAuthStore();
+  // const { memberId } = useAuthStore();
+  const memberId = 4
   const hostId = 4; // This can also be dynamic if needed
 
   const roomId = 1; // This can be dynamic based on your application logic
@@ -60,12 +61,12 @@ const SelfIntroduction = () => {
 
     webSocketService.connect(() => {
       webSocketService.subscribe(`/api/sub/intro/${roomId}/next`, handleMessageReceived);
-      webSocketService.subscribeToMemberState(roomId, (message) => {
-        console.log('Received game state: ', message)
-        if (message.memberState === "photofirst") {
-          setGameStep("photo-first")
-        }
-      })
+      // webSocketService.subscribeToMemberState(roomId, (message) => {
+      //   console.log('Received game state: ', message)
+      //   if (message.memberState === "photofirst") {
+      //     setGameStep("photo-first")
+      //   }
+      // })
     });
 
     return () => {

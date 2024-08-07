@@ -195,6 +195,16 @@ const WaitingRoom = () => {
     }
   };
 
+  // useEffect(() => {
+  //   const handleMessageReceived = (message) => {
+  //     console.log('Received message:', message)
+  //   }
+
+  //   webSocketService.connect(() => {
+  //     console.log('Websocket connected')
+  //   })
+  // })
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -204,7 +214,6 @@ const WaitingRoom = () => {
       console.log('Received message:', message)
     }
 
-    // webSocketService.connect(() => {
       webSocketService.subscribe(`/api/sub/${roomId}/state`, handleGameStateMessageReceived)
       webSocketService.subscribeToMemberState(roomId, (message) => {
         console.log('Received game state: ', message)
@@ -212,21 +221,21 @@ const WaitingRoom = () => {
           setGameStep("self-introduction")
         }
       })
-    // })
+    })
 
-    return () => {
-      webSocketService.deactivate()
-    }
-  }, [roomId, setGameStep])
+  //   return () => {
+  //     webSocketService.deactivate()
+  //   }
+  // }, [roomId, setGameStep])
 
-  const getNextGameStep = () => {
-    webSocketService.sendMemberState(roomId, "intro")
-  }
+  // const getNextGameStep = () => {
+  //   webSocketService.sendMemberState(roomId, "intro")
+  // }
 
   // const navigate = useNavigate()
   const handleNextStep = ()=>{
-    getNextGameStep()
-    // setGameStep("self-introduction")
+    // getNextGameStep()
+    setGameStep("self-introduction")
   }
 
   useEffect(() => {
@@ -266,11 +275,11 @@ const WaitingRoom = () => {
             <div className="text-[22px]">게임 설명</div>
             <WaitingRoomGameTurns sectionNumber={3} />
           </div>
-          {memberId === hostId && (
+          {/* {memberId === hostId && ( */}
             <div className="absolute bottom-3 right-5">
               <BasicBtn btnText={btnText} onClick={handleNextStep} />
             </div>
-          )}
+          {/* )} */}
         </div>
       </div>
       {showModal && (

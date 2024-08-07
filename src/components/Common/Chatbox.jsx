@@ -29,9 +29,9 @@ const Chatbox = () => {
         });
       };
   
-      webSocketService.connect(() => {
+      // webSocketService.connect(() => {
         webSocketService.subscribe(`/api/sub/${roomId}`, handleMessageReceived);
-      });
+      // });
   
       return () => {
         webSocketService.deactivate();
