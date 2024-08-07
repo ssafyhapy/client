@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import moment from "moment";
 import webSocketService from "../../WebSocketService";
+import { useWebSocket } from "../../WebSocketContext";
 // import chatsendbutton from "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/chatsendbutton.png";
 // import chatsendbutton from "./../../assets/Common/chatsendbutton.png"
 import useAuthStore from "../../store/useAuthStore";
@@ -12,63 +13,110 @@ const Chatbox = () => {
     "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/chatsendbutton.png";
   const defaultProfile =
     "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/defaultprofile.png";
-    const { messages, addMessage } = useChatStore(); // Use addMessage from Zustand store
-    const [newMessage, setNewMessage] = useState("");
-    const messagesEndRef = useRef(null);
-  
-    const roomId = 1;
-    const { memberName } = useAuthStore();
-  
-    useEffect(() => {
-      const handleMessageReceived = (newMessage) => {
-        addMessage({
-          from: newMessage.memberName,
-          message: newMessage.content,
-          profileImage: newMessage.profileImage || defaultProfile,
-          timestamp: new Date(),
-        });
-      };
-  
-      // webSocketService.connect(() => {
-        webSocketService.subscribe(`/api/sub/${roomId}`, handleMessageReceived);
-      // });
-  
-      return () => {
-        webSocketService.deactivate();
-      };
-    }, [roomId, addMessage]); // Include addMessage in the dependencies array
-  
-    useEffect(() => {
-      scrollToBottom();
-    }, [messages]);
-  
-    const handleSendMessage = () => {
-      if (newMessage.trim() === "") {
-        return;
-      }
-      webSocketService.sendMessage(
-        `/api/pub/message/${roomId}`,
-        { content: newMessage, memberName },
-        memberName
-      );
-      setNewMessage("");
-    };
-  
-    const handleKeyDown = (e) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        handleSendMessage();
-      }
-    };
-  
-    const scrollToBottom = () => {
-      if (messagesEndRef.current) {
-        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-      }
-    };
+  const { messages, addMessage } = useChatStore(); // Use addMessage from Zustand store
+  const [newMessage, setNewMessage] = useState("");
+  const messagesEndRef = useRef(null);
+
+  const roomId = 1;
+  const { memberName } = useAuthStore();
+
+  const webSocketService = useWebSocket();
+
+  //   useEffect(() => {
+  //     const handleMessageReceived = (newMessage) => {
+  //       addMessage({
+  //         from: newMessage.memberName,
+  //         message: newMessage.content,
+  //         profileImage: newMessage.profileImage || defaultProfile,
+  //         timestamp: new Date(),
+  //       });
+  //     };
+
+  //     // webSocketService.connect(() => {
+  //       webSocketService.subscribe(`/api/sub/${roomId}`, handleMessageReceived);
+  //     // });
+
+  //     return () => {
+  //       webSocketService.unsubscribe(`/api/sub/${roomId}`)
+  //     };
+  //   }, [roomId, addMessage]); // Include addMessage in the dependencies array
+
+  //   useEffect(() => {
+  //     scrollToBottom();
+  //   }, [messages]);
+
+  //   const handleSendMessage = () => {
+  //     if (newMessage.trim() === "") {
+  //       return;
+  //     }
+  //     webSocketService.sendMessage(
+  //       `/api/pub/message/${roomId}`,
+  //       { content: newMessage, memberName },
+  //       memberName
+  //     );
+  //     setNewMessage("");
+  //   };
+
+  //   const handleKeyDown = (e) => {
+  //     if (e.key === "Enter" && !e.shiftKey) {
+  //       e.preventDefault();
+  //       handleSendMessage();
+  //     }
+  //   };
+
+  //   const scrollToBottom = () => {
+  //     if (messagesEndRef.current) {
+  //       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  //     }
+  //   };
+  // useEffect(() => {
+  //   // console.log("[*]messages", messages);
+  // }, [messages]);
+
   useEffect(() => {
-    // console.log("[*]messages", messages);
+    const handleMessageReceived = (newMessage) => {
+      addMessage({
+        from: newMessage.memberName,
+        message: newMessage.content,
+        profileImage: newMessage.profileImage || defaultProfile,
+        timestamp: new Date(),
+      });
+    };
+
+    webSocketService.subscribe(`/api/sub/${roomId}`, handleMessageReceived);
+
+    return () => {
+      webSocketService.unsubscribe(`/api/sub/${roomId}`);
+    };
+  }, [roomId, addMessage, webSocketService]);
+
+  useEffect(() => {
+    scrollToBottom();
   }, [messages]);
+
+  const handleSendMessage = () => {
+    if (newMessage.trim() === "") {
+      return;
+    }
+    webSocketService.sendMessage(`/api/pub/message/${roomId}`, {
+      content: newMessage,
+      memberName,
+    });
+    setNewMessage("");
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <div className="flex flex-col rounded-[20px] w-full h-full bg-[rgba(255,255,255,0.4)] p-3 overflow-hidden">
