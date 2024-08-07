@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import useGameStore from "../../store/useGameStore";
 
 const Play = () => {
-  const { testToken, setTestToken } = useGameStore();
   // 방 만들기 모달 상태
   const [makeRoom, setOpenMakeRoom] = useState(false);
   const openMakeRoom = (event) => {
@@ -48,7 +47,7 @@ const Play = () => {
         {},
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjQ5OTM3OTE1Iiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjozNTIsImlhdCI6MTcyMjgyNDA4NCwiZXhwIjoxNzI1NDE2MDg0fQ.1Zpsq6_5AT3bp-yizrkzvRiH_Ck0GqIEtSYnBrZ9QOfjbCxx9FjM8NZbf9IQIMzCdxCj_CNNOF49iq1oePdQ7w`,
           },
         }
       );
@@ -57,7 +56,7 @@ const Play = () => {
       // 방 입장 요청 완료시 카메라 체크 페이지로 이동
       console.log("[* 방 입장] roomdata",response.data.data);
       const roomData = response.data.data;
-      navigate("/games", { state: { roomData, testToken:token, isHost:true } });
+      navigate("/games", { state: { roomData} });
     } catch (error) {
       console.log("Error", error);
     }

@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { OpenVidu } from "openvidu-browser";
 
+import GameBackground from "../../components/Common/GameBackground";
 import CamCheck from "./../../components/Camera_check/CamCheck";
 import WaitingRoom from "./../../components/Waiting_room/WaitingRoom";
 import SelfIntroduction from "./../../components/Self_introduction/SelfIntroduction";
@@ -12,14 +13,11 @@ import PhotographFirst from "./../../components/Photo/PhotographFirst";
 import PhotographLast from "./../../components/Photo/PhotographLast";
 import useGameStore from "./../../store/useGameStore";
 import GuessMe from "./../../components/Guess_me/GuessMe";
+import TopDiv from "../../components/Common/TopDiv";
 
 const Games = () => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
-
-  const location = useLocation();
-  const { roomData } = location.state;
-  const [session, setSession] = useState(null);
   const {
     mainStreamManager,
     setMainStreamManager,
@@ -27,52 +25,42 @@ const Games = () => {
     setPublisher,
     subscribers,
     setSubscribers,
+    connectionInfo,
+    setConnectionInfo,
   } = useGameStore();
+
+  const location = useLocation();
+  const { roomData } = location.state;
+  const [session, setSession] = useState(null);
+
   const mySessionId = roomData.webrtc.sessionId;
   const myUserName = "Participant" + Math.floor(Math.random() * 100);
+ 
   const OV = new OpenVidu();
 
   useEffect(() => {
     const joinSession = async () => {
       const session = OV.initSession();
 
-      // session.on("streamCreated", async (event) => {
-      //   console.log("[*]stream Created event", event);
-      //   try {
-      //     const subscriber = session.subscribe(event.stream, undefined);
-      //     console.log("[*]Subscriber created", subscriber);
-
-      //     await new Promise((resolve) => {
-      //       setSubscribers((prevSubscribers) => {
-      //         const updatedSubscribers = [...prevSubscribers, subscriber];
-      //         resolve(updatedSubscribers);
-      //         return updatedSubscribers;
-      //       });
-      //     });
-      //   } catch (error) {
-      //     console.error("Error subscribing to stream:", error);
-      //   }
-      // });
-
-
       session.on("streamCreated", (event) => {
         console.log("[*]stream Created event", event);
         const subscriber = session.subscribe(event.stream, undefined);
         console.log("[*]Subscriber created", subscriber);
-      
-        subscriber.on('videoElementCreated', (event) => {
+
+        subscriber.on("videoElementCreated", (event) => {
           console.log("[*]Video Element Created", event.element);
-          // You might want to append this video element to your DOM here
         });
-      
-        setSubscribers(prevSubscribers => [...prevSubscribers, subscriber]);
+        const newSubscribers = [...subscribers, subscriber];
+        setSubscribers(newSubscribers);
       });
 
       session.on("connectionCreated", (event) => {
-        console.log("----- connectionCreated event -----");
-        console.log(event.connection);
-        console.log(event.connection.data);
+        console.log("[*] connectionCreated event");
+        console.log("[*] connection", event.connection);
         console.log("-------------------");
+        const connectionData = JSON.parse(event.connection.data);
+        console.log("[*] connectionData", connectionData);
+        setConnectionInfo(connectionData);
       });
 
       session.on("streamDestroyed", (event) => {
@@ -84,9 +72,7 @@ const Games = () => {
       });
 
       try {
-        await session.connect(roomData.webrtc.openviduToken, {
-          clientData: myUserName,
-        });
+        await session.connect(roomData.webrtc.openviduToken);
         console.log("Session connected successfully");
 
         const publisher = await OV.initPublisher(undefined, {
@@ -99,7 +85,7 @@ const Games = () => {
           insertMode: "APPEND",
           mirror: false,
         });
-        
+
         await session.publish(publisher);
         console.log("Publisher created and published successfully");
 
@@ -125,11 +111,9 @@ const Games = () => {
   }, []);
 
   return (
-    <>
-    
-      {gameStep === "camera-check" && (
-        <CamCheck sub={subscribers} setsub={setSubscribers} />
-      )}
+    <GameBackground>
+      <TopDiv gameStep={gameStep}></TopDiv>
+      {gameStep === "camera-check" && <CamCheck />}
       {gameStep === "waiting-room" && <WaitingRoom />}
       {gameStep === "self-introduction" && <SelfIntroduction />}
       {gameStep === "balance-game" && <BalanceGame />}
@@ -137,7 +121,7 @@ const Games = () => {
       {gameStep === "guess-me" && <GuessMe />}
       {gameStep === "photo-first" && <PhotographFirst />}
       {gameStep === "photo-last" && <PhotographLast />}
-    </>
+    </GameBackground>
   );
 };
 

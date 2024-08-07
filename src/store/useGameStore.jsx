@@ -14,6 +14,8 @@ const useGameStore = create((set) => ({
   setPublisher: (pub) => set({ publisher: pub }),
   subscribers: [],
   setSubscribers: (subs) => set({ subscribers: subs }),
+  connectionInfo : [],
+  setConnectionInfo: (connectionInfo) => set({ setConnectionInfo: connectionInfo }),
 }));
 
 export default useGameStore;

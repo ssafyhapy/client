@@ -9,7 +9,6 @@ import Auth from "./pages/Main/Auth";
 import Report from "./pages/Main/Report";
 
 // 게임 공통 페이지(기반)
-// import WaitingRoom from "./pages/Games/WaitingRoom";
 // import CamCheck from "./pages/Games/CamCheck";
 
 // 한 줄 자기소개 페이지들

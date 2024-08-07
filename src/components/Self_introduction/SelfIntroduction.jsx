@@ -9,6 +9,14 @@ import GameTurns from "./../Common/GameTurns";
 import SelfIntroductionModal from "./../Self_introduction/SelfIntroductionModal"; // Adjust the import path based on your project structure
 
 const SelfIntroduction = () => {
+  const {
+    mainStreamManager,
+    setMainStreamManager,
+    publisher,
+    setPublisher,
+    subscribers,
+    setSubscribers,
+  } = useGameStore();
   const [dots, setDots] = useState("");
   const [showModal, setShowModal] = useState(true); // Set to true to show modal initially
   const [userStatus, setUserStatus] = useState("준비완료");
@@ -156,7 +164,29 @@ const SelfIntroduction = () => {
         {/* Middle Div */}
         <div className="flex-grow flex mt-5 overflow-hidden h-[52vh]">
           <div className="bg-[rgba(255,255,255,0.9)] flex-[7] h-full mr-5 rounded-[20px] flex justify-center items-center overflow-hidden">
-            <p className="m-5">camera background</p>
+            <p className="m-5">{mainStreamManager && mainStreamManager?.addVideoElement && (
+                <div id="publisher">
+                  <video
+                    autoPlay={true}
+                    ref={(video) =>
+                      video && mainStreamManager.addVideoElement(video)
+                    }
+                  />
+                </div>
+              )}
+              {subscribers &&
+                subscribers?.length > 0 &&
+                subscribers.map((sub, index) => {
+                  console.log("[*] subcribe.map", sub);
+                  return (
+                    <div key={index} id="subscriber">
+                      <video
+                        autoPlay={true}
+                        ref={(video) => video && sub.addVideoElement(video)}
+                      />
+                    </div>
+                  );
+                })}</p>
           </div>
           <div className="flex-[3] h-full ml-5 rounded-[20px] flex flex-col justify-center items-center overflow-hidden">
             <Chatbox />
