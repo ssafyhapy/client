@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useGameStore from "./../../store/useGameStore";
 import useAuthStore from "./../../store/useAuthStore";
+import useRoomStore from "../../store/useRoomStore";
 import Chatbox from "./../Common/Chatbox";
 import BasicBtn from "./../Buttons/BasicBtn";
 import ExitBtn from "./../Buttons/ExitBtn";
@@ -30,9 +31,13 @@ const SelfIntroduction = () => {
   const { memberId } = useAuthStore();
   // const memberId = 4
   // 호스트아이디는 일단 박아두기
-  const hostId = 4; // This can also be dynamic if needed
-  const roomId = 1; // This can be dynamic based on your application logic
+  const hostId = 4; 
+  const roomId = 1;
 
+  // 호스트아이디 룸아이디 받아오기
+  // const {roomId, hostId} = useRoomStore()
+
+  // 준비중... 점들 계속 움직이게 만드는거
   useEffect(() => {
     const interval = setInterval(() => {
       setDots((prevDots) => (prevDots.length < 6 ? prevDots + " ·" : ""));
@@ -40,6 +45,7 @@ const SelfIntroduction = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // 백에서 보내준 메시지 받으면!!
   useEffect(() => {
     const handleMessageReceived = (message) => {
       console.log("Received message:", message);
@@ -59,8 +65,12 @@ const SelfIntroduction = () => {
     };
 
     // webSocketService.connect(() => {
-    webSocketService.subscribe(
-      `/api/sub/intro/${roomId}/next`,
+    // webSocketService.subscribe(
+    //   `/api/sub/intro/${roomId}/next`,
+    //   handleMessageReceived
+    // );
+    webSocketService.subscribeToIntro(
+      roomId,
       handleMessageReceived
     );
     webSocketService.subscribeToMemberState(roomId, (message) => {
@@ -100,6 +110,8 @@ const SelfIntroduction = () => {
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
       <div className="w-[1024px] h-[90%] bg-[rgba(255,255,255,0.3)] m-auto rounded-[40px] flex flex-col relative p-10 overflow-hidden">
+
+        {/* Top Div */}
         <div className="h-[5%] flex justify-between items-center mb-2">
           <div className="w-[90%] flex justify-center absolute top-3">
             <GameTurns sectionNumber={1} />
@@ -108,6 +120,8 @@ const SelfIntroduction = () => {
             <ExitBtn />
           </div>
         </div>
+
+        {/* Middle Div */}
         <div className="flex-grow flex mt-5 overflow-hidden h-[52vh]">
           <div className="bg-[rgba(255,255,255,0.9)] flex-[7] h-full mr-5 rounded-[20px] flex justify-center items-center overflow-hidden">
             <p className="m-5">camera background</p>
@@ -116,6 +130,8 @@ const SelfIntroduction = () => {
             <Chatbox />
           </div>
         </div>
+
+        {/* Bottom Div */}
         {!isGamePhase ? (
           <div className="flex-none mt-3 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem]">
             {!allPrepared ? (

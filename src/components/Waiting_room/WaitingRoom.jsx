@@ -277,11 +277,11 @@ const WaitingRoom = () => {
             <WaitingRoomGameTurns sectionNumber={3} />
           </div>
           {/* 멤버아이디랑 호스트아이디랑 같을때만 다음버튼이보임 */}
-          {memberId === hostId && (
+          {/* {memberId === hostId && ( */}
             <div className="absolute bottom-3 right-5">
               <BasicBtn btnText={btnText} onClick={handleNextStep} />
             </div>
-          )}
+          {/* )} */}
         </div>
       </div>
       {showModal && (

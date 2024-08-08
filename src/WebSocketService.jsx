@@ -102,13 +102,37 @@ class WebSocketService {
     this.sendMessage(`/api/pub/intro/${roomId}/next`, {});
   }
 
+  // 한줄 자기소개 하나씩 데이터 받아온다
+  subscribeToIntro(roomId, onMessageCallback) {
+    this.subscribe(`/api/sub/intro/${roomId}/next`, onMessageCallback)
+  }
+
+  // 대기실 - selfintro 넘어갈때 나 intro로 넘어가야함! 하고 알려주는거
   sendMemberState(roomId, memberState) {
     this.sendMessage(`/api/pub/${roomId}/state`, { memberState });
   }
 
+  // intro로 넘어가!! 하고 sub하고 있다 메시지 받는거
   subscribeToMemberState(roomId, onMessageCallback) {
     this.subscribe(`/api/sub/${roomId}/state`, onMessageCallback);
   }
+
+  // 나를 맞춰봐 모달 작성하고 완료버튼 누르면 데이터 백으로 보냄
+  sendGuessMe(roomId, questions) {
+    this.sendMessage(`/api/pub/ox/${roomId}/check`, questions)
+  }
+
+  // 나를맞춰봐 다음거 달라고 백에 보내줌
+  sendGuessMeNext(roomId)  {
+    this.sendMessage(`/api/pub/ox/${roomId}/next`, {})
+  }
+
+  // 나를맞춰봐 다음 데이터 계속 받아옴
+  subscribeToGuessMe(roomId, onMessageCallback) {
+    this.subscribe(`/api/sub/ox/${roomId}/next`, onMessageCallback)
+  }
+
+
 
   deactivate() {
     this.client.deactivate();
