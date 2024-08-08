@@ -92,14 +92,14 @@ const GuessMeGetReady = ({ guessMeStep, setGuessMeStep }) => {
   }, []);
 
   // 모두 준비완료되면 3초 뒤에 guess-me 본게임으로 페이지 바뀜
-  useEffect(() => {
-    if (allPrepared) {
-      const timer = setTimeout(() => {
-        setGuessMeStep("Answer");
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [allPrepared, setGuessMeStep]); // useEffect 의존성 배열에 setGuessMeStep 추가
+  // useEffect(() => {
+  //   if (allPrepared) {
+  //     const timer = setTimeout(() => {
+  //       setGuessMeStep("Answer");
+  //     }, 3000);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [allPrepared, setGuessMeStep]);
 
   // const handleOpenModal = () => {
   //   setShowModal(true);
@@ -118,13 +118,14 @@ const GuessMeGetReady = ({ guessMeStep, setGuessMeStep }) => {
     // setAllPrepared(true); // For demonstration, set this to true when ready
   };
 
+  // 모두 준비완료되면 준비완료 div가 보여진 후 2초 뒤에 guess-me 본게임으로 페이지 바뀜
   useEffect(() => {
     if (allPrepared) {
       setTimeout(() => {
         setGuessMeStep("Answer");
       }, 2000);
     }
-  }, [allPrepared, setGuessMeStep]); // useEffect 의존성 배열에 setGuessMeStep 추가
+  }, [allPrepared, setGuessMeStep]);
 
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
