@@ -57,12 +57,17 @@ const Games = () => {
       });
 
       session.on("connectionCreated", (event) => {
-        console.log("[*] connectionCreated event");
         console.log("[*] connection", event.connection);
-        console.log("-------------------");
         const connectionData = JSON.parse(event.connection.data);
-        console.log("[*] connectionData", connectionData);
-        setConnectionInfo(connectionData);
+        console.log(connectionData);
+        const memberId = connectionData.memberId;
+        const newConnectionData = {
+          connectionId: event.connection.connectionId,
+          memberName: connectionData.memberName,
+          memberId: memberId,
+        };
+        console.log("[*] newconnectionData", newConnectionData);
+        setConnectionInfo(newConnectionData);
       });
 
       session.on("streamDestroyed", (event) => {
@@ -112,6 +117,11 @@ const Games = () => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log("[*] 전체 connectionInfo", connectionInfo);
+    console.log("[*] 전체 mainStream", mainStreamManager);
+  }, [connectionInfo]);
+
   return (
     <GameBackground>
       {/* TopDiv */}
@@ -120,7 +130,7 @@ const Games = () => {
       gameStep !== "photo-last" ? (
         <TopDiv gameStep={gameStep} setGameStep={setGameStep}></TopDiv>
       ) : null}
-      
+
       {/* MiddleDiv */}
       {gameStep !== "camera-check" &&
       gameStep !== "photo-first" &&

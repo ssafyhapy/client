@@ -29,7 +29,7 @@ const CameraCheckVideoView = ({ data }) => {
   return (
     <>
       {mainStreamManager ? (
-        <div className="relative w-full h-full flex justify-center items-center bg-red-300 rounded-[15px]">
+        <div className="relative w-full h-full flex justify-center items-center rounded-[15px]">
           <div id="videoFront" className="relative w-[90%] h-[90%]">
             <video
               autoPlay={true}

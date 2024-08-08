@@ -74,8 +74,8 @@ const Chatbox = () => {
 
   return (
     // Your existing UI code remains here
-    <div className="flex flex-col rounded-[20px] h-full bg-[rgba(255,255,255,0.4)] p-3 overflow-hidden">
-      <div className="flex-1 overflow-y-auto scrollbar-none">
+    <div className="flex flex-col rounded-[20px] h-full bg-[rgba(255,255,255,0.4)] p-3 overflow-hidden min-w-[230px]">
+      <div className="flex-1 overflow-y-auto scrollbar-none min-w-[230px]">
         {messages.map((msg, index) => (
           <div
             key={index}
