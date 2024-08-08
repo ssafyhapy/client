@@ -27,11 +27,11 @@ const SelfIntroduction = () => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
 
-  // Get memberId from useAuthStore
-  // const { memberId } = useAuthStore();
-  const memberId = 4
+  // 멤버아이디는 로그인하면 받아오게하기
+  const { memberId } = useAuthStore();
+  // const memberId = 4
+  // 호스트아이디는 일단 박아두기
   const hostId = 4; // This can also be dynamic if needed
-
   const roomId = 1; // This can be dynamic based on your application logic
 
   useEffect(() => {
@@ -59,20 +59,20 @@ const SelfIntroduction = () => {
       }, 2000);
     };
 
-    webSocketService.connect(() => {
+    // webSocketService.connect(() => {
       webSocketService.subscribe(`/api/sub/intro/${roomId}/next`, handleMessageReceived);
-      // webSocketService.subscribeToMemberState(roomId, (message) => {
-      //   console.log('Received game state: ', message)
-      //   if (message.memberState === "photofirst") {
-      //     setGameStep("photo-first")
-      //   }
-      // })
+      webSocketService.subscribeToMemberState(roomId, (message) => {
+        console.log('Received game state: ', message)
+        if (message.memberState === "photofirst") {
+          setGameStep("photo-first")
+        }
+      })
     });
 
-    return () => {
-      webSocketService.deactivate();
-    };
-  }, [roomId, setGameStep]);
+  //   return () => {
+  //     webSocketService.deactivate();
+  //   };
+  // }, [roomId, setGameStep]);
 
   const fetchNextIntroduction = () => {
     webSocketService.sendNext(roomId);

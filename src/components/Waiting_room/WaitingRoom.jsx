@@ -25,7 +25,6 @@
 //   const [copyState, setCopyState] = useState(false);
 //   const [showModal, setShowModal] = useState(false);
 
-
 //   const btnText = "시작";
 
 //   useEffect(() => {
@@ -124,11 +123,11 @@
 //             <div className="text-[22px]">게임 설명</div>
 //             <WaitingRoomGameTurns sectionNumber={3} />
 //           </div>
-          // {memberId === hostId && (
-          //   <div className="absolute bottom-3 right-5">
-          //     <BasicBtn btnText={btnText} onClick={handleNextStep} />
-          //   </div>
-          // )}
+// {memberId === hostId && (
+//   <div className="absolute bottom-3 right-5">
+//     <BasicBtn btnText={btnText} onClick={handleNextStep} />
+//   </div>
+// )}
 //         </div>
 //       </div>
 //       {showModal && (
@@ -173,9 +172,10 @@ const WaitingRoom = () => {
   const btnText = "시작";
 
   // 일단 그냥 박아두기
-  const roomId = 1
-  const hostId = 4
-  const {memberId} = useAuthStore()
+  const roomId = 1;
+  const hostId = 4;
+  // 멤버아이디는 로그인해서 받아오게만들고
+  const { memberId } = useAuthStore();
 
   useEffect(() => {
     setAccessCode("axios로 백에서 받아올 것");
@@ -211,17 +211,20 @@ const WaitingRoom = () => {
 
   useEffect(() => {
     const handleGameStateMessageReceived = (message) => {
-      console.log('Received message:', message)
-    }
+      console.log("Received message:", message);
+    };
 
-      webSocketService.subscribe(`/api/sub/${roomId}/state`, handleGameStateMessageReceived)
-      webSocketService.subscribeToMemberState(roomId, (message) => {
-        console.log('Received game state: ', message)
-        if (message.memberState === "intro") {
-          setGameStep("self-introduction")
-        }
-      })
-    })
+    webSocketService.subscribe(
+      `/api/sub/${roomId}/state`,
+      handleGameStateMessageReceived
+    );
+    webSocketService.subscribeToMemberState(roomId, (message) => {
+      console.log("Received game state: ", message);
+      if (message.memberState === "intro") {
+        setGameStep("self-introduction");
+      }
+    });
+  });
 
   //   return () => {
   //     webSocketService.deactivate()
@@ -233,15 +236,15 @@ const WaitingRoom = () => {
   // }
 
   // const navigate = useNavigate()
-  const handleNextStep = ()=>{
+  const handleNextStep = () => {
     // getNextGameStep()
-    setGameStep("self-introduction")
-  }
+    setGameStep("self-introduction");
+  };
 
   useEffect(() => {
-    console.log('Member ID: ', memberId)
-    console.log('Host ID: ', hostId)
-  }, [memberId, hostId])
+    console.log("Member ID: ", memberId);
+    console.log("Host ID: ", hostId);
+  }, [memberId, hostId]);
 
   return (
     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
@@ -275,11 +278,11 @@ const WaitingRoom = () => {
             <div className="text-[22px]">게임 설명</div>
             <WaitingRoomGameTurns sectionNumber={3} />
           </div>
-          {/* {memberId === hostId && ( */}
+          {memberId === hostId && (
             <div className="absolute bottom-3 right-5">
               <BasicBtn btnText={btnText} onClick={handleNextStep} />
             </div>
-          {/* )} */}
+          )}
         </div>
       </div>
       {showModal && (
