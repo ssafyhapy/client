@@ -111,10 +111,11 @@ const GuessMe = () => {
     const handleMessageReceived = (message) => {
       console.log("Received message:", message);
       // 데이터가 balance야? 나를맞춰봐게임끝. 밸런스게임으로 이동
-      if (message === "balance") {
-        setGameStep("balance-game");
-        // 1번 타자 사람이 발표할 데이터가 왔어?
-      } else if (message.length > 0 && message[0].memberId) {
+      // if (message === "balance") {
+      //   setGameStep("balance-game");
+      //   // 1번 타자 사람이 발표할 데이터가 왔어?
+      //   } else
+      if (message.length > 0 && message[0].memberId) {
         setCurrentPresenterId(message[0].memberId);
         setUserQuestions(message);
         setCurrentQuestionIndex(0);
@@ -124,6 +125,12 @@ const GuessMe = () => {
     };
 
     webSocketService.subscribeToGuessMe(roomId, handleMessageReceived);
+    webSocketService.subscribeToMemberState(roomId, (message) => {
+      console.log("Received game state: ", message);
+      if (message.memberState === "balance") {
+        setGameStep("balance-game")
+      }
+    })
 
     return () => {
       webSocketService.unsubscribe(`/api/sub/ox/${roomId}/next`);
