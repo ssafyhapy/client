@@ -12,6 +12,7 @@ import useAuthStore from "../../store/useAuthStore";
 const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
   const [secondsLeft, setSecondsLeft] = useState(10);
   const [showResult, setShowResult] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [userQuestions, setUserQuestions] = useState([]);
   const [timer, setTimer] = useState(null);
 
@@ -36,10 +37,16 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
   useEffect(() => {
     const handleMessageReceived = (message) => {
       console.log("Received message:", message)
-      setCurrentPresenterId(message.memberId)
-      if (message.memberId && message.content && message.answer !== undefined) {
-        setUserQuestions(message.content.map(q => ({content:q.content, answer:q.answer})))
+      if (message === "balance") {
+        setGameStep("balance-game")
+      } else {
+        setCurrentPresenterId(message[0].memberId)
+        setUserQuestions(message)
+        setCurrentQuestionIndex(0)
       }
+      // if (message.memberId && message.content && message.answer !== undefined) {
+      //   setUserQuestions(message.content.map(q => ({content:q.content, answer:q.answer})))
+      // }
     }
 
     webSocketService.subscribeToGuessMe(roomId, handleMessageReceived)
@@ -69,7 +76,9 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
     console.log("Current Presenter ID:", currentPresenterId);
   }, [memberId, currentPresenterId]);
 
+
   const startTimer = () => {
+    if (timer) clearInterval(timer);
     const newTimer = setInterval(() => {
       setSecondsLeft((prev) => {
         if (prev > 1) {
@@ -84,15 +93,30 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
     setTimer(newTimer);
   };
 
+  // const handleNextStep = () => {
+  //   if (userQuestions.length > 1) {
+  //     const newQuestions = userQuestions.slice(1);
+  //     setUserQuestions(newQuestions);
+  //     setSecondsLeft(10);
+  //     setShowResult(false);
+  //     if (timer) clearInterval(timer);
+  //     startTimer();
+  //   } else if (userQuestions.length === 1) {
+  //     webSocketService.sendGuessMeNext(roomId);
+  //     setSecondsLeft(10);
+  //     setShowResult(false);
+  //     setUserQuestions([]);
+  //     if (timer) clearInterval(timer);
+  //   }
+  // };
+
   const handleNextStep = () => {
-    if (userQuestions.length > 1) {
-      const newQuestions = userQuestions.slice(1);
-      setUserQuestions(newQuestions);
+    if (currentQuestionIndex < userQuestions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSecondsLeft(10);
       setShowResult(false);
-      if (timer) clearInterval(timer);
       startTimer();
-    } else if (userQuestions.length === 1) {
+    } else {
       webSocketService.sendGuessMeNext(roomId);
       setSecondsLeft(10);
       setShowResult(false);

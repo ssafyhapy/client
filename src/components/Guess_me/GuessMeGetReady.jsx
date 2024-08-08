@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import webSocketService from "../../WebSocketService";
 // import axios from "axios";
 
@@ -7,7 +7,7 @@ import webSocketService from "../../WebSocketService";
 import Chatbox from "./../Common/Chatbox";
 import ExitBtn from "./../Buttons/ExitBtn";
 import GameTurns from "./../Common/GameTurns";
-import BasicBtn from "../Buttons/BasicBtn";
+// import BasicBtn from "../Buttons/BasicBtn";
 import GuessMeModal from "./GuessMeModal";
 
 import useGameStore from "../../store/useGameStore";
@@ -27,7 +27,7 @@ const GuessMeGetReady = ({ guessMeStep, setGuessMeStep }) => {
   const [questions, setQuestions] = useState({});
   const [selectedAnswers, setSelectedAnswers] = useState({});
 
-  const [isGamePhase, setIsGamePhase] = useState(false)
+  // const [isGamePhase, setIsGamePhase] = useState(false)
 
   // memberId 받아와
   const {memberId} = useAuthStore()
@@ -53,7 +53,14 @@ const GuessMeGetReady = ({ guessMeStep, setGuessMeStep }) => {
   useEffect(() => {
     const handleMessageReceived = (message) => {
       console.log("Received message:", message)
+
+      // 다들 모달 적어서 내서 이제 첫번째 사람 response 가 왔다!! 하면
+      if (message.length > 0 && message[0].memberId) {
+        // setGuessMeStep("allPrepared")
+        setAllPrepared(true)
+      }
     }
+
 
     webSocketService.subscribeToGuessMe(roomId, handleMessageReceived)
 
@@ -106,8 +113,9 @@ const GuessMeGetReady = ({ guessMeStep, setGuessMeStep }) => {
   };
 
   const handleReady = () => {
-    setUserStatus("ready");
-    setAllPrepared(true); // For demonstration, set this to true when ready
+    setShowModal(false)
+    setUserStatus("준비완료");
+    // setAllPrepared(true); // For demonstration, set this to true when ready
   };
 
   useEffect(() => {

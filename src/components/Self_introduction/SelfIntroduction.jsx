@@ -60,7 +60,7 @@ const SelfIntroduction = () => {
       setUserText(message.content);
       setAllPrepared(true);
       setTimeout(() => {
-        setIsGamePhase(true);
+      setIsGamePhase(true);
       }, 2000);
     };
 
