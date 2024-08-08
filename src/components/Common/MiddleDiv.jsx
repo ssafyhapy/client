@@ -85,7 +85,7 @@ const MiddleDiv = () => {
         {mainStreamManager ? (
           <div
             id={mainStreamManager.stream.connection.connectionId}
-            className={`w-[80%] p-5 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
+            className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
           >
             <div className="w-full relative rounded-[15px]">
               {mainStreamManager ? (
@@ -143,7 +143,7 @@ const MiddleDiv = () => {
               <div
                 key={sub.stream.connection.connectionId}
                 id={sub.stream.connection.connectionId}
-                className={`w-[80%] p-5 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
+                className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
               >
                 <div className="w-full relative rounded-[15px]">
                   <div id="subscriber">
