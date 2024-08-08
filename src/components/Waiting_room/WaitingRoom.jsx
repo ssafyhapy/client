@@ -149,7 +149,9 @@
 // export default WaitingRoom;
 
 // ============================================================================================
+// src/components/Waiting_room/WaitingRoom.jsx
 
+// src/components/Waiting_room/WaitingRoom.jsx
 import React, { useEffect, useState } from "react";
 import useGameStore from "../../store/useGameStore";
 import WaitingRoomGameTurns from "../../components/Waiting_room/WaitingRoomGameTurns";
@@ -158,7 +160,6 @@ import Chatbox from "../../components/Common/Chatbox";
 import BasicBtn from "../../components/Buttons/BasicBtn";
 import clipboard from "../../assets/Waiting_room/clipboard.webp";
 import check from "../../assets/Waiting_room/check.webp";
-import { useNavigate } from "react-router-dom";
 import webSocketService from "../../WebSocketService";
 import useAuthStore from "../../store/useAuthStore";
 
@@ -195,50 +196,47 @@ const WaitingRoom = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const handleMessageReceived = (message) => {
-  //     console.log('Received message:', message)
-  //   }
-
-  //   webSocketService.connect(() => {
-  //     console.log('Websocket connected')
-  //   })
-  // })
-
   const handleCloseModal = () => {
     setShowModal(false);
   };
 
+  // UseEffect -> 바로 구독 (subscribe 함)
   useEffect(() => {
-    const handleGameStateMessageReceived = (message) => {
-      console.log("Received message:", message);
-    };
+    // const handleGameStateMessageReceived = (message) => {
+    //   console.log("Received message:", message);
+    //   if (message.memberState === "intro") {
+    //     setGameStep("self-introduction");
+    //   }
+    // };
 
-    webSocketService.subscribe(
-      `/api/sub/${roomId}/state`,
-      handleGameStateMessageReceived
-    );
+    // console.log(`Subscribing to /api/sub/${roomId}/state`);
+    // webSocketService.subscribe(
+    //   `/api/sub/${roomId}/state`,
+    //   handleGameStateMessageReceived
+    // );
+
     webSocketService.subscribeToMemberState(roomId, (message) => {
       console.log("Received game state: ", message);
       if (message.memberState === "intro") {
         setGameStep("self-introduction");
       }
     });
-  });
-
+  })
+  
   //   return () => {
-  //     webSocketService.deactivate()
-  //   }
-  // }, [roomId, setGameStep])
+  //     webSocketService.unsubscribe(`/api/sub/${roomId}/state`);
+  //   };
+  // }, [roomId, setGameStep]);
 
-  // const getNextGameStep = () => {
-  //   webSocketService.sendMemberState(roomId, "intro")
-  // }
+  // 다음 버튼 누르면 다음에 가야할 state를 보내준다 (pub 한다는 뜻)
+  const getNextGameStep = () => {
+    webSocketService.sendMemberState(roomId, "intro");
+  };
 
-  // const navigate = useNavigate()
+  // 다음 버튼에 붙어있는 함수
   const handleNextStep = () => {
-    // getNextGameStep()
-    setGameStep("self-introduction");
+    getNextGameStep();
+    // setGameStep("self-introduction");
   };
 
   useEffect(() => {
@@ -278,6 +276,7 @@ const WaitingRoom = () => {
             <div className="text-[22px]">게임 설명</div>
             <WaitingRoomGameTurns sectionNumber={3} />
           </div>
+          {/* 멤버아이디랑 호스트아이디랑 같을때만 다음버튼이보임 */}
           {memberId === hostId && (
             <div className="absolute bottom-3 right-5">
               <BasicBtn btnText={btnText} onClick={handleNextStep} />

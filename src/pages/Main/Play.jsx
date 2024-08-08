@@ -6,20 +6,21 @@ import MakeRoom from "./MakeRoom";
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../../api/apiClient";
 import useRoomStore from "../../store/useRoomStore";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Play = () => {
   // 방 만들기 모달 상태
   const [makeRoom, setOpenMakeRoom] = useState(false);
   const openMakeRoom = (event) => {
     event.preventDefault();
+
     setOpenMakeRoom(true);
   };
   const closeMakeRoom = () => {
     setOpenMakeRoom(false);
   };
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { fetchRoomData } = useRoomStore();
 
@@ -42,7 +43,7 @@ const Play = () => {
       console.log(response);
       fetchRoomData(response.data.data);
       // 방 입장 요청 완료시 카메라 체크 페이지로 이동
-      // navigate("/camera_check");
+      navigate("/camera-check");
     } catch (error) {
       console.log("Error", error);
     }
