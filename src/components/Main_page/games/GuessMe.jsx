@@ -3,10 +3,7 @@ import MainHomeFrame from "../MainHomeFrame";
 
 const GuessMe = () => {
   return (
-    <MainHomeFrame>
-      <p className="w-[350px] h-[300px] bg-white rounded-[30px] flex justify-center items-center">
-        이미지
-      </p>
+    <>
       <div className="w-[350px] h-[300px] bg-white rounded-[30px] flex flex-col gap-3 items-center justify-center">
         <h1 className="text-base opacity-80">나를 맞춰봐</h1>
         <p className="text-black opacity-20">특이한 tmi, 공유하고 </p>
@@ -20,7 +17,7 @@ const GuessMe = () => {
           맞출 수 있기 때문에 더 재미있어요!
         </p>
       </div>
-    </MainHomeFrame>
+    </>
   );
 };
 

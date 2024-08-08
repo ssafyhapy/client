@@ -11,6 +11,7 @@ import MemoryBox from "../../components/My_page/MemoryBox";
 import { FormProvider, useForm } from "react-hook-form";
 import Spinner from "../../components/Spinner";
 import useAuthStore from "../../store/useAuthStore";
+import bgImage from "../../assets/bg/bgImage5.jpg";
 
 const MyPage = () => {
   const { setProfileImageUrl } = useAuthStore();
@@ -102,7 +103,10 @@ const MyPage = () => {
   return (
     // FormProvider로 폼 데이터 제공
     <FormProvider {...methods}>
-      <MainGradientBackground>
+      <div
+        className="h-screen overflow-y-scroll flex justify-center items-center bg-fixed bg-cover bg-center scrollbar-hide"
+        style={{ backgroundImage: `url(${bgImage})` }}
+      >
         <MyPageFrame>
           <div className="flex flex-col items-center gap-6">
             <div className="w-[800px] flex flex-col">
@@ -130,7 +134,7 @@ const MyPage = () => {
             </form>
           </div>
         </MyPageFrame>
-      </MainGradientBackground>
+      </div>
     </FormProvider>
   );
 };

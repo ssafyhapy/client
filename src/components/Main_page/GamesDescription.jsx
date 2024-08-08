@@ -35,7 +35,7 @@ const GamesDescription = () => {
           {selectedId && (
             <motion.div
               layoutId={selectedId}
-              className="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50"
+              className="fixed inset-0 z-20 flex items-center justify-center bg-white bg-opacity-40 backdrop-blur-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

@@ -6,9 +6,6 @@ import FirstService from "../../components/Main_page/service/FirstService";
 import SecondService from "../../components/Main_page/service/SecondService";
 import ThirdService from "../../components/Main_page/service/ThirdService";
 import LastService from "../../components/Main_page/service/LastService";
-import SelfIntroduction from "../../components/Main_page/games/SelfIntroduction";
-import GuessMe from "../../components/Main_page/games/GuessMe";
-import BalanceGame from "../../components/Main_page/games/BalanceGame";
 import GamesDescription from "../../components/Main_page/GamesDescription";
 
 const Home = () => {
@@ -31,15 +28,6 @@ const Home = () => {
       </div>
       <div className="w-full h-full snap-start flex justify-center items-center">
         <LastService />
-      </div>
-      <div className="w-full h-full snap-start flex justify-center items-center">
-        <SelfIntroduction />
-      </div>
-      <div className="w-full h-full snap-start flex justify-center items-center">
-        <GuessMe />
-      </div>
-      <div className="w-full h-full snap-start flex justify-center items-center">
-        <BalanceGame />
       </div>
       <div className="w-full h-full snap-start flex justify-center items-center">
         <GamesDescription />

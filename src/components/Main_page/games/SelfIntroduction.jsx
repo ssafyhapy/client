@@ -3,11 +3,8 @@ import MainHomeFrame from "../MainHomeFrame";
 
 const SelfIntroduction = () => {
   return (
-    <MainHomeFrame>
+    <>
       <iframe src="https://lottie.host/embed/181499d8-6df1-44a1-94b7-f592ea5fdbe9/Lvh01c4yqz.json"></iframe>
-      <p className="w-[350px] h-[300px] bg-white rounded-[30px] flex justify-center items-center ">
-        이미지
-      </p>
       <div className="w-[350px] h-[300px] bg-white rounded-[30px] flex flex-col gap-3 items-center justify-center">
         <h1 className="text-base opacity-80">한 줄 자기소개</h1>
         <p className="text-black opacity-20">스스로를 어떻게 정의하시나요? </p>
@@ -24,7 +21,7 @@ const SelfIntroduction = () => {
           대화를 나누면 더 재미있을 거예요!
         </p>
       </div>
-    </MainHomeFrame>
+    </>
   );
 };
 
