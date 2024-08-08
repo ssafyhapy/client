@@ -1,7 +1,4 @@
 import React from "react";
-import homeMask from "../../assets/Main_page/home_mask.png"
-import homeCamera from "../../assets/Main_page/home_camera.png"
-import homeReport from "../../assets/Main_page/home_report.png"
 
 const Service = () => {
   return (
@@ -24,9 +21,7 @@ const Service = () => {
 
       <div className="flex flex-col justify-start border-4">
         <div className="flex items-center gap-10 ">
-          <div>
-            <img src={homeMask} alt="" />
-          </div>
+          <iframe src="https://lottie.host/embed/c924990c-7e15-4888-948c-ab88b111c16a/9bCc8fUiES.json"></iframe>
           <div className="flex flex-col gap-2">
             <p className="text-sm opacity-80">
               온라인에서의 첫 만남이 조금 덜 어색하고, 조금 더 재미있도록!{" "}
@@ -48,15 +43,10 @@ const Service = () => {
               있어요.
             </p>
           </div>
-          <div>
-            <img src={homeCamera} alt="" />
-          </div>
+          <iframe src="https://lottie.host/embed/53c4bf92-22a8-4f56-a53e-7b175a27b5a8/QkwtuerjJG.json"></iframe>
         </div>
 
         <div className="flex items-center gap-10">
-          <div>
-            <img src={homeReport} alt="" />
-          </div>
           <div className="flex flex-col gap-2">
             <p className="text-sm opacity-80">
               게임이 모두 끝나면 오늘 한 플레이에 대한 레포트를 받아보실 수
@@ -66,6 +56,7 @@ const Service = () => {
               각자 했던 자기소개나 나를 맞춰봐 문제들을 다시 확인할 수 있어요.
             </p>
           </div>
+          <iframe src="https://lottie.host/embed/aab4cb28-19fa-4f9a-a135-7c9dd3051300/3AdT1jVKUW.json"></iframe>
         </div>
       </div>
     </div>
