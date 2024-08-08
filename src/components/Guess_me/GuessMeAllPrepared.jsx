@@ -3,6 +3,7 @@ import Chatbox from "./../Common/Chatbox";
 import star from "../../assets/Common/star.png";
 
 const GuessMeAllPrepared = ({ guessMeStep, setGuessMeStep }) => {
+  const star = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/star.png"
   return (
     <>
       

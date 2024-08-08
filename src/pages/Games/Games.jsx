@@ -16,6 +16,7 @@ import GuessMe from "./../../components/Guess_me/GuessMe";
 import TopDiv from "../../components/Common/TopDiv";
 import MiddleDiv from "../../components/Common/MiddleDiv";
 import BottomDiv from "../../components/Common/BottomDiv";
+import { WebSocketProvider } from "../../WebSocketContext";
 
 const Games = () => {
   const gameStep = useGameStore((state) => state.gameStep);
@@ -123,39 +124,41 @@ const Games = () => {
   }, [connectionInfo]);
 
   return (
-    <GameBackground>
-      {/* TopDiv */}
-      {gameStep !== "camera-check" &&
-      gameStep !== "photo-first" &&
-      gameStep !== "photo-last" ? (
-        <TopDiv gameStep={gameStep} setGameStep={setGameStep}></TopDiv>
-      ) : null}
+    <WebSocketProvider>
+      <GameBackground>
+        {/* TopDiv */}
+        {gameStep !== "camera-check" &&
+        gameStep !== "photo-first" &&
+        gameStep !== "photo-last" ? (
+          <TopDiv gameStep={gameStep} setGameStep={setGameStep}></TopDiv>
+        ) : null}
 
-      {/* MiddleDiv */}
-      {gameStep !== "camera-check" &&
-      gameStep !== "photo-first" &&
-      gameStep !== "photo-last" ? (
-        <MiddleDiv></MiddleDiv>
-      ) : null}
+        {/* MiddleDiv */}
+        {gameStep !== "camera-check" &&
+        gameStep !== "photo-first" &&
+        gameStep !== "photo-last" ? (
+          <MiddleDiv></MiddleDiv>
+        ) : null}
 
-      {/* 자체 UI */}
-      {gameStep === "camera-check" && <CamCheck />}
-      {gameStep === "photo-first" && <PhotographFirst />}
-      {gameStep === "photo-last" && <PhotographLast />}
+        {/* 자체 UI */}
+        {gameStep === "camera-check" && <CamCheck />}
+        {gameStep === "photo-first" && <PhotographFirst />}
+        {gameStep === "photo-last" && <PhotographLast />}
 
-      {/* BottomDiv - 게임 로직 */}
-      {gameStep !== "camera-check" &&
-      gameStep !== "photo-first" &&
-      gameStep !== "photo-last" ? (
-        <BottomDiv>
-          {gameStep === "waiting-room" && <WaitingRoom />}
-          {gameStep === "self-introduction" && <SelfIntroduction />}
-          {gameStep === "guess-me" && <GuessMe />}
-          {gameStep === "balance-game" && <BalanceGame />}
-          {gameStep === "wrap-up" && <WrapUp />}
-        </BottomDiv>
-      ) : null}
-    </GameBackground>
+        {/* BottomDiv - 게임 로직 */}
+        {gameStep !== "camera-check" &&
+        gameStep !== "photo-first" &&
+        gameStep !== "photo-last" ? (
+          <BottomDiv>
+            {gameStep === "waiting-room" && <WaitingRoom />}
+            {gameStep === "self-introduction" && <SelfIntroduction />}
+            {gameStep === "guess-me" && <GuessMe />}
+            {gameStep === "balance-game" && <BalanceGame />}
+            {gameStep === "wrap-up" && <WrapUp />}
+          </BottomDiv>
+        ) : null}
+      </GameBackground>
+    </WebSocketProvider>
   );
 };
 

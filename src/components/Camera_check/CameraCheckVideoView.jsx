@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import profileSample from "../../assets/profile_sample.png";
-import mute from "../../assets/Camera_check/mute.png";
-import mic_on from "../../assets/Camera_check/mic_on.png";
-import useGameStore from "../../store/useGameStore";
+// import mute from "../../assets/Camera_check/mute.png";
+// import mic_on from "../../assets/Camera_check/mic_on.png";
 
 const CameraCheckVideoView = ({ data }) => {
+  const mute = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mute.png"
+  const mic_on = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic_on.png"
   console.log("[*]", data);
   const {
     mainStreamManager,

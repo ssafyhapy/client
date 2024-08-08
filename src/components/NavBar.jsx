@@ -18,7 +18,7 @@ const NavBar = () => {
     setLoginOpen(false);
   };
 
-  const { isLogin, logout, setLoginAlert } = useAuthStore();
+  const { memberName, isLogin, logout, setLoginAlert } = useAuthStore();
 
   const handleLogout = async () => {
     try {
@@ -52,6 +52,7 @@ const NavBar = () => {
             <li className="text-[#4D98F7]">
               <Link to="/play">Play</Link>
             </li>
+            <li className="text-[#4D98F7]"></li>
           </div>
           {/*  로그인 상태에 따라 메뉴 변경 */}
           <div className="flex gap-8">
@@ -59,6 +60,8 @@ const NavBar = () => {
               <>
                 <li className="text-[#4D98F7]">
                   <Link to="/mypage">Mypage</Link>
+                  {/* 마이페이지 동적라우팅 */}
+                  {/* <Link to={`/mypage/${memberName}`}>Mypage</Link> */}
                 </li>
                 <li className="text-[#4D98F7]" onClick={handleLogout}>
                   <button>Logout</button>

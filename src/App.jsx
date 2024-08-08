@@ -21,7 +21,7 @@ import Report from "./pages/Main/Report";
 // import GuessMeGetReady from "./components/Guess_me/GuessMeGetReady";
 // import GuessMeAllPrepared from "./components/Guess_me/GuessMeAllPrepared";
 // import GuessMeAnswer from "./components/Guess_me/GuessMeAnswer";
-// import GuessMe from "./pages/Games/Guess_me/GuessMe";
+import GuessMe from "./components/Guess_me/GuessMe";
 
 
 // 밸런스 페이지들
@@ -66,6 +66,8 @@ function App() {
         <Route path="/play" element={<Play />} />
         <Route path="/login" element={<Login />} />
         <Route path="/mypage" element={<MyPage />} />
+        {/* 마이페이지 동적 라우팅 */}
+        {/* <Route path="/mypage/:memberName" element={<MyPage />} /> */}
         <Route path="/auth/kakao/callback" element={<Auth />} />
         <Route path="/report" element={<Report />} />
 
@@ -85,7 +87,7 @@ function App() {
         {/* <Route path="/self-introduction" element={<SelfIntroduction />} /> */}
 
         {/* 나를 맞춰봐 페이지랑 관련된 Route */}
-        {/* <Route path="/guessme" element={<GuessMe />} /> */}
+        <Route path="/guessme" element={<GuessMe />} />
         {/* <Route path="/guessme-getready" element={<GuessMeGetReady />} />
         <Route path="/guessme-allprepared" element={<GuessMeAllPrepared />} /> */}
 

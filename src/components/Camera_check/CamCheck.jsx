@@ -22,8 +22,9 @@ const CamCheck = () => {
     setIsModalOpen(false);
   };
 
-  const handleNextStep = ()=>{
-    setGameStep("waiting-room")
+  const handleNextStep = () => {
+    console.log("대기실로 갑니다.");
+    setGameStep("waiting-room");
   }
 
   return (

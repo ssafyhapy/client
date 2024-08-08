@@ -8,13 +8,13 @@ import { axiosInstance } from "../../api/apiClient";
 import axios from "axios";
 import useRoomStore from "../../store/useRoomStore";
 import { useNavigate } from "react-router-dom";
-import useGameStore from "../../store/useGameStore";
 
 const Play = () => {
   // 방 만들기 모달 상태
   const [makeRoom, setOpenMakeRoom] = useState(false);
   const openMakeRoom = (event) => {
     event.preventDefault();
+
     setOpenMakeRoom(true);
   };
   const closeMakeRoom = () => {

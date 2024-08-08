@@ -3,9 +3,11 @@ import useBalanceStore from "../../store/useBalanceStore";
 import Chatbox from "../../components/Common/Chatbox";
 import ExitBtn from "../../components/Buttons/ExitBtn";
 import GameTurns from "../../components/Common/GameTurns";
-import timerImg from "../../assets/Common/timer.png";
+// import timerImg from "./../../assets/Common/timer.png"
 
 const BalanceChoosing = ({ onTimerEnd, currentStep }) => {
+  const timerImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/timer.png"
+
   const { pickedChoice, setPickedChoice } = useBalanceStore();
   const { discussedNum } = useBalanceStore();
 
