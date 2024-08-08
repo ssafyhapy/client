@@ -205,7 +205,7 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
               <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" />
               <span className="text-red-500">{secondsLeft}</span>
             </div>
-            {showResult && (
+            {memberId === currentPresenterId && showResult && (
               <BasicBtn btnText={btnText} onClick={handleNextStep} />
             )}
           </div>
