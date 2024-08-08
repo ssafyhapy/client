@@ -221,8 +221,8 @@ const WaitingRoom = () => {
         setGameStep("self-introduction");
       }
     });
-  })
-  
+  });
+
   //   return () => {
   //     webSocketService.unsubscribe(`/api/sub/${roomId}/state`);
   //   };

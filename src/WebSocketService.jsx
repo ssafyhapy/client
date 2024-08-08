@@ -92,11 +92,13 @@ class WebSocketService {
     });
   }
 
+  // 모달 작성하고 완료버튼 누르면 날아가는거임
   sendIntro(roomId, memberId, content) {
     this.sendMessage(`/api/pub/intro/${roomId}/check`, { memberId, content });
   }
 
-  sendNext(roomId) {
+  // 한줄 자기소개 각각 하나씩 띄워주는 역할 + 마지막사람이면 다음 state 보내주는 역할
+  sendIntroNext(roomId) {
     this.sendMessage(`/api/pub/intro/${roomId}/next`, {});
   }
 
