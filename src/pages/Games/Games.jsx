@@ -17,6 +17,7 @@ import TopDiv from "../../components/Common/TopDiv";
 import MiddleDiv from "../../components/Common/MiddleDiv";
 import BottomDiv from "../../components/Common/BottomDiv";
 import { WebSocketProvider } from "../../WebSocketContext";
+import useRoomStore from "../../store/useRoomStore";
 
 const Games = () => {
   const gameStep = useGameStore((state) => state.gameStep);
@@ -32,8 +33,7 @@ const Games = () => {
     setConnectionInfo,
   } = useGameStore();
 
-  const location = useLocation();
-  const { roomData } = location.state;
+  const { webrtc } = useRoomStore()
   const [session, setSession] = useState(null);
 
   const mySessionId = roomData.webrtc.sessionId;
@@ -80,7 +80,7 @@ const Games = () => {
       });
 
       try {
-        await session.connect(roomData.webrtc.openviduToken);
+        await session.connect(webrtc.openviduToken);
         console.log("Session connected successfully");
 
         const publisher = await OV.initPublisher(undefined, {

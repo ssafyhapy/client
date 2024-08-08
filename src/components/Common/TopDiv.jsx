@@ -2,16 +2,18 @@ import React from "react";
 import { useState } from "react";
 import GameTurns from "./GameTurns";
 import BasicBtn from "../Buttons/BasicBtn";
+import useRoomStore from "../../store/useRoomStore";
 
 const TopDiv = ({ gameStep }) => {
   const [copyState, setCopyState] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const {roomCode} = useRoomStore
 
-  const accessCode = "zustand에 담아놓기";
+
   const handleClipBoard = () => {
-    if (accessCode) {
+    if (roomCode) {
       navigator.clipboard
-        .writeText(accessCode)
+        .writeText(roomCode)
         .then(() => {
           setCopyState(true);
           setShowModal(true);
@@ -30,7 +32,7 @@ const TopDiv = ({ gameStep }) => {
     <div className="flex justify-center items-center">
       {gameStep === "waiting-room" ? (
         <div className="flex items-center absolute top-3 left-10">
-          <div>접속 코드 : {accessCode} </div>
+          <div>접속 코드 : {roomCode} </div>
           <button onClick={handleClipBoard} className="w-[30%] h-[30%]">
             <img
               className="w-[15%] h-[15%]"

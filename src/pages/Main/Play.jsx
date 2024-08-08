@@ -20,47 +20,61 @@ const Play = () => {
   const closeMakeRoom = () => {
     setOpenMakeRoom(false);
   };
-  const token = new URLSearchParams(location.search).get('token')
 
   const navigate = useNavigate();
 
-  // const { fetchRoomData } = useRoomStore();
-  // setTestToken(
-  //   "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjQ5OTM3OTE1Iiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjozNTIsImlhdCI6MTcyMjg2Mzg5MywiZXhwIjoxNzI1NDU1ODkzfQ.9a2TCaBxlJGbOW4VNi-FGzohBvUZY5bVAY1oItRqoBTZ_GP8Pho2DtR_AgdC1uQphllCNm0GEQkcuHFxSnLYnw"
-  // );
-
-
   // 접속코드 통해 입장
+    const { fetchRoomData } = useRoomStore();
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  
+
   // 제출시 방 입장(조회) 요청
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await axios.post(
-        `https://i11c209.p.ssafy.io/api/room/enter?roomCode=${data.roomCode}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjQ5OTM3OTE1Iiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjozNTIsImlhdCI6MTcyMjgyNDA4NCwiZXhwIjoxNzI1NDE2MDg0fQ.1Zpsq6_5AT3bp-yizrkzvRiH_Ck0GqIEtSYnBrZ9QOfjbCxx9FjM8NZbf9IQIMzCdxCj_CNNOF49iq1oePdQ7w`,
-          },
-        }
+      const response = await axiosInstance.post(
+        // "/room/enter?roomCode=196-931"
+        `/room/enter?roomCode=${data.roomCode}`
       );
-      console.log("[*] 방 입장", response);
-      // fetchRoomData(response.data.data);
+      console.log("[* 방 입장]",response);
+      fetchRoomData(response.data.data);
       // 방 입장 요청 완료시 카메라 체크 페이지로 이동
-      console.log("[* 방 입장] roomdata",response.data.data);
-      const roomData = response.data.data;
-      navigate("/games", { state: { roomData} });
+      navigate("/games");
     } catch (error) {
       console.log("Error", error);
     }
   };
+
+  console.log(watch("roomCode"));
+  
+  // 제출시 방 입장(조회) 요청
+  // const onSubmit = async (data) => {
+  //   console.log(data);
+  //   try {
+  //     const response = await axios.post(
+  //       `https://i11c209.p.ssafy.io/api/room/enter?roomCode=${data.roomCode}`,
+  //       {},
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjQ5OTM3OTE1Iiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjozNTIsImlhdCI6MTcyMjgyNDA4NCwiZXhwIjoxNzI1NDE2MDg0fQ.1Zpsq6_5AT3bp-yizrkzvRiH_Ck0GqIEtSYnBrZ9QOfjbCxx9FjM8NZbf9IQIMzCdxCj_CNNOF49iq1oePdQ7w`,
+  //         },
+  //       }
+  //     );
+  //     console.log("[*] 방 입장", response);
+  //     // fetchRoomData(response.data.data);
+  //     // 방 입장 요청 완료시 카메라 체크 페이지로 이동
+  //     console.log("[* 방 입장] roomdata",response.data.data);
+  //     const roomData = response.data.data;
+  //     navigate("/games", { state: { roomData} });
+  //   } catch (error) {
+  //     console.log("Error", error);
+  //   }
+  // };
 
   // console.log(watch("roomCode"));
 

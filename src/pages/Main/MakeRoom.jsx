@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import useGameStore from "../../store/useGameStore";
 
 const MakeRoom = ({ closeMakeRoom }) => {
-  const {testToken} = useGameStore()
   const {
     register,
     handleSubmit,
@@ -18,32 +17,50 @@ const MakeRoom = ({ closeMakeRoom }) => {
 
   // const { fetchRoomData } = useRoomStore();
 
-  // form 제출시 방 만들기 요청
-  const onSubmit = async (data) => {
-    console.log(data);
-    try {
-      const response = await axios.post(
-        "https://i11c209.p.ssafy.io/api/room/create",
-        {
-          roomName: data.roomName,
-          roomPersonCount: data.roomPersonCount,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${testToken}`,
-          },
-        }
-      );
-      const roomData = response.data.data;
-      console.log("[*] roomData",roomData);
-      // fetchRoomData(response.data.data);
+// 제출시 방 입장(조회) 요청
+const onSubmit = async (data) => {
+  console.log(data);
+  try {
+    const response = await axiosInstance.post(
+      // "/room/enter?roomCode=196-931"
+      `/room/enter?roomCode=${data.roomCode}`
+    );
+    console.log(response);
+    fetchRoomData(response.data.data);
+    // 방 입장 요청 완료시 카메라 체크 페이지로 이동
+    navigate("/games");
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
 
-      // 방 만들기 요청 완료시 대기실로 이동
-      navigate("/games", { state: { roomData } });
-    } catch (error) {
-      console.log("Error", error);
-    }
-  };
+
+  // form 제출시 방 만들기 요청
+  // const onSubmit = async (data) => {
+  //   console.log(data);
+  //   try {
+  //     const response = await axios.post(
+  //       "https://i11c209.p.ssafy.io/api/room/create",
+  //       {
+  //         roomName: data.roomName,
+  //         roomPersonCount: data.roomPersonCount,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${testToken}`,
+  //         },
+  //       }
+  //     );
+  //     const roomData = response.data.data;
+  //     console.log("[*] roomData",roomData);
+  //     // fetchRoomData(response.data.data);
+
+  //     // 방 만들기 요청 완료시 대기실로 이동
+  //     navigate("/games", { state: { roomData } });
+  //   } catch (error) {
+  //     console.log("Error", error);
+  //   }
+  // };
   console.log(watch("roomName"));
   console.log(watch("roomPersonCount"));
 

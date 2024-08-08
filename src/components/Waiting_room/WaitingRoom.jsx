@@ -8,26 +8,25 @@ import clipboard from "../../assets/Waiting_room/clipboard.webp";
 import check from "../../assets/Waiting_room/check.webp";
 import webSocketService from "../../WebSocketService";
 import useAuthStore from "../../store/useAuthStore";
+import useRoomStore from "../../store/useRoomStore";
 
 const WaitingRoom = () => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
+  const { roomCode } = useRoomStore;
   const btnText = "시작";
 
   // 일단 그냥 박아두기
   const roomId = 1;
   const hostId = 4;
   // 멤버아이디는 로그인해서 받아오게만들고
-  const { memberId } = useAuthStore();
-
-  useEffect(() => {
-    setAccessCode("axios로 백에서 받아올 것");
-  }, []);
+  // const { memberId } = useAuthStore();
+  const memberId = 4;
 
   const handleClipBoard = () => {
-    if (accessCode) {
+    if (roomCode) {
       navigator.clipboard
-        .writeText(accessCode)
+        .writeText(roomCode)
         .then(() => {
           setCopyState(true);
           setShowModal(true);

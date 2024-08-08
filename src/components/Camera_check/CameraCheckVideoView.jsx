@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import useGameStore from "./../../store/useGameStore"
 import profileSample from "../../assets/profile_sample.png";
 // import mute from "../../assets/Camera_check/mute.png";
 // import mic_on from "../../assets/Camera_check/mic_on.png";
