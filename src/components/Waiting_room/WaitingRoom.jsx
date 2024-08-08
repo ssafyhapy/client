@@ -198,16 +198,21 @@ const WaitingRoom = () => {
     setShowModal(false);
   };
 
+  // UseEffect -> 바로 구독 (subscribe 함)
   useEffect(() => {
-    const handleGameStateMessageReceived = (message) => {
-      console.log("Received message:", message);
-    };
+    // const handleGameStateMessageReceived = (message) => {
+    //   console.log("Received message:", message);
+    //   if (message.memberState === "intro") {
+    //     setGameStep("self-introduction");
+    //   }
+    // };
 
-    console.log(`Subscribing to /api/sub/${roomId}/state`);
-    webSocketService.subscribe(
-      `/api/sub/${roomId}/state`,
-      handleGameStateMessageReceived
-    );
+    // console.log(`Subscribing to /api/sub/${roomId}/state`);
+    // webSocketService.subscribe(
+    //   `/api/sub/${roomId}/state`,
+    //   handleGameStateMessageReceived
+    // );
+
     webSocketService.subscribeToMemberState(roomId, (message) => {
       console.log("Received game state: ", message);
       if (message.memberState === "intro") {
@@ -220,10 +225,12 @@ const WaitingRoom = () => {
     };
   }, [roomId, setGameStep]);
 
+  // 다음 버튼 누르면 다음에 가야할 state를 보내준다 (pub 한다는 뜻)
   const getNextGameStep = () => {
     webSocketService.sendMemberState(roomId, "intro");
   };
 
+  // 다음 버튼에 붙어있는 함수
   const handleNextStep = () => {
     getNextGameStep();
     // setGameStep("self-introduction");

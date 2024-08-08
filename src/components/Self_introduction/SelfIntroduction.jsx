@@ -28,8 +28,8 @@ const SelfIntroduction = () => {
   const setGameStep = useGameStore((state) => state.setGameStep);
 
   // Get memberId from useAuthStore
-  // const { memberId } = useAuthStore();
-  const memberId = 4
+  const { memberId } = useAuthStore();
+  // const memberId = 4
   const hostId = 4; // This can also be dynamic if needed
 
   const roomId = 1; // This can be dynamic based on your application logic
