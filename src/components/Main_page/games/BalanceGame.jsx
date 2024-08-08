@@ -1,8 +1,9 @@
 import React from "react";
+import MainHomeFrame from "../MainHomeFrame";
 
 const BalanceGame = () => {
   return (
-    <div className="flex gap-5">
+    <MainHomeFrame>
       <iframe src="https://lottie.host/embed/cd990655-08aa-4206-84f2-14c4ea6c9cc9/EUSLBGOxOM.json"></iframe>
       <p className="w-[350px] h-[300px] bg-white rounded-[30px] flex justify-center items-center">
         이미지
@@ -26,7 +27,7 @@ const BalanceGame = () => {
           치열하게 토론하며 더 친밀해져 보세요.
         </p>
       </div>
-    </div>
+    </MainHomeFrame>
   );
 };
 

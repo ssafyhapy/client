@@ -1,8 +1,9 @@
 import React from "react";
+import MainHomeFrame from "../MainHomeFrame";
 
 const SelfIntroduction = () => {
   return (
-    <div className="flex gap-5">
+    <MainHomeFrame>
       <iframe src="https://lottie.host/embed/181499d8-6df1-44a1-94b7-f592ea5fdbe9/Lvh01c4yqz.json"></iframe>
       <p className="w-[350px] h-[300px] bg-white rounded-[30px] flex justify-center items-center ">
         이미지
@@ -23,7 +24,7 @@ const SelfIntroduction = () => {
           대화를 나누면 더 재미있을 거예요!
         </p>
       </div>
-    </div>
+    </MainHomeFrame>
   );
 };
 

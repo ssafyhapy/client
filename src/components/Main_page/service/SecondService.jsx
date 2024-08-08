@@ -1,11 +1,11 @@
 import React from "react";
 import NavBar from "../../NavBar";
 import PlayBtn from "../../Buttons/PlayBtn";
-
+import MainHomeFrame from "../MainHomeFrame";
 
 const SecondService = () => {
   return (
-    <div className="">
+    <MainHomeFrame>
       <NavBar />
       <div className="flex flex-col gap-2">
         <p className="text-sm opacity-80">
@@ -17,7 +17,7 @@ const SecondService = () => {
       </div>
       <iframe src="https://lottie.host/embed/53c4bf92-22a8-4f56-a53e-7b175a27b5a8/QkwtuerjJG.json"></iframe>
       <PlayBtn />
-    </div>
+    </MainHomeFrame>
   );
 };
 

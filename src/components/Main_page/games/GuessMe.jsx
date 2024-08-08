@@ -1,8 +1,9 @@
 import React from "react";
+import MainHomeFrame from "../MainHomeFrame";
 
 const GuessMe = () => {
   return (
-    <div className="flex gap-5">
+    <MainHomeFrame>
       <p className="w-[350px] h-[300px] bg-white rounded-[30px] flex justify-center items-center">
         이미지
       </p>
@@ -19,7 +20,7 @@ const GuessMe = () => {
           맞출 수 있기 때문에 더 재미있어요!
         </p>
       </div>
-    </div>
+    </MainHomeFrame>
   );
 };
 

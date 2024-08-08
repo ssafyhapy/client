@@ -1,11 +1,11 @@
 import React from "react";
 import NavBar from "../../NavBar";
 import PlayBtn from "../../Buttons/PlayBtn";
-
+import MainHomeFrame from "../MainHomeFrame";
 
 const LastService = () => {
   return (
-    <div className="">
+    <MainHomeFrame>
       <NavBar />
       <iframe src="https://lottie.host/embed/c924990c-7e15-4888-948c-ab88b111c16a/9bCc8fUiES.json"></iframe>
       <div className="flex flex-col gap-2">
@@ -18,7 +18,7 @@ const LastService = () => {
         </p>
       </div>
       <PlayBtn />
-    </div>
+    </MainHomeFrame>
   );
 };
 

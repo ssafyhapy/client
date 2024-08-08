@@ -1,10 +1,11 @@
 import React from "react";
 import NavBar from "../../NavBar";
 import PlayBtn from "../../Buttons/PlayBtn";
+import MainHomeFrame from "../MainHomeFrame";
 
 const FirstService = () => {
   return (
-    <div>
+    <MainHomeFrame>
       <div className="w-full">
       <NavBar />
       </div>
@@ -24,7 +25,7 @@ const FirstService = () => {
         사르르만의 독특한 서비스
       </h1>
       <PlayBtn />
-    </div>
+    </MainHomeFrame>
   );
 };
 

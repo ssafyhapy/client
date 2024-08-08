@@ -1,10 +1,11 @@
 import React from "react";
 import ScrollDownBtn from "./ScrollDownBtn";
 import SecondDescription from "./SecondDescription";
+import MainHomeFrame from "./MainHomeFrame";
 
 const MainDescription = () => {
   return (
-    <>
+    <MainHomeFrame>
       <div className="w-[90%] h-[90%] flex flex-col justify-between items-center relative">
         <h1 className="opacity-45 text-3xl self-start">
           새로운 관계를 위한 첫 걸음
@@ -31,7 +32,7 @@ const MainDescription = () => {
           <ScrollDownBtn />
         </div>
       </div>
-    </>
+    </MainHomeFrame>
   );
 };
 

@@ -1,17 +1,15 @@
 import React from "react";
-import MainGradientBackground from "../../components/Common/MainGradientBackground";
 import MainHomeFrame from "../../components/Main_page/MainHomeFrame";
-import Home2 from "./Home2";
-import MainGradientBackground2 from "../../components/Common/MainGradientBackgound2";
 import MainDescription from "../../components/Main_page/MainDescription";
 import bgImage from "../../assets/bg/bgImage5.jpg";
 import FirstService from "../../components/Main_page/service/FirstService";
 import SecondService from "../../components/Main_page/service/SecondService";
 import ThirdService from "../../components/Main_page/service/ThirdService";
 import LastService from "../../components/Main_page/service/LastService";
-import SelfIntroduction from "../../components/Main_page/SelfIntroduction";
-import GuessMe from "../../components/Main_page/GuessMe";
-import BalanceGame from "../../components/Main_page/BalanceGame";
+import SelfIntroduction from "../../components/Main_page/games/SelfIntroduction";
+import GuessMe from "../../components/Main_page/games/GuessMe";
+import BalanceGame from "../../components/Main_page/games/BalanceGame";
+import GamesDescription from "../../components/Main_page/GamesDescription";
 
 const Home = () => {
   return (
@@ -20,44 +18,31 @@ const Home = () => {
       style={{ backgroundImage: `url(${bgImage})` }}
     >
       <div className="w-full h-full snap-start flex justify-center items-center">
-        <MainHomeFrame>
-          <MainDescription />
-        </MainHomeFrame>
+        <MainDescription />
       </div>
       <div className="w-full h-full snap-start flex justify-center items-center">
-        <MainHomeFrame>
-          <FirstService />
-        </MainHomeFrame>
+        <FirstService />
       </div>
       <div className="w-full h-full snap-start flex justify-center items-center">
-        <MainHomeFrame>
-          <SecondService />
-        </MainHomeFrame>
+        <SecondService />
       </div>
       <div className="w-full h-full snap-start flex justify-center items-center">
-        <MainHomeFrame>
-          <ThirdService />
-        </MainHomeFrame>
+        <ThirdService />
       </div>
       <div className="w-full h-full snap-start flex justify-center items-center">
-        <MainHomeFrame>
-          <LastService />
-        </MainHomeFrame>
+        <LastService />
       </div>
       <div className="w-full h-full snap-start flex justify-center items-center">
-        <MainHomeFrame>
-          <SelfIntroduction />
-        </MainHomeFrame>
+        <SelfIntroduction />
       </div>
       <div className="w-full h-full snap-start flex justify-center items-center">
-        <MainHomeFrame>
-          <GuessMe />
-        </MainHomeFrame>
+        <GuessMe />
       </div>
       <div className="w-full h-full snap-start flex justify-center items-center">
-        <MainHomeFrame>
-          <BalanceGame />
-        </MainHomeFrame>
+        <BalanceGame />
+      </div>
+      <div className="w-full h-full snap-start flex justify-center items-center">
+        <GamesDescription />
       </div>
     </div>
   );
