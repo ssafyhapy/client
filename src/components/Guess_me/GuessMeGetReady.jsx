@@ -24,7 +24,7 @@ const GuessMeGetReady = ({ guessMeStep, setGuessMeStep }) => {
   const [userStatus, setUserStatus] = useState("준비완료");
   const [allPrepared, setAllPrepared] = useState(false);
   // const navigate = useNavigate();
-  const [questions, setQuestions] = useState({});
+  const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
 
   // const [isGamePhase, setIsGamePhase] = useState(false)
