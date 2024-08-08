@@ -22,10 +22,10 @@ class WebSocketService {
   connect(onConnectCallback) {
     this.client.onConnect = (frame) => {
       this.connected = true;
+      console.log("Connected to STOMP: " + frame);
       if (onConnectCallback) {
         onConnectCallback(frame);
       }
-      console.log("Connected to STOMP: " + frame);
     };
 
     this.client.onStompError = (frame) => {
@@ -52,15 +52,15 @@ class WebSocketService {
       return;
     }
 
+    console.log(`Subscribing to topic: ${topic}`);
     if (this.subscriptions[topic]) {
       this.subscriptions[topic].unsubscribe();
     }
 
     this.subscriptions[topic] = this.client.subscribe(topic, (message) => {
       try {
-        console.log("1. message :", message);
         const parsedMessage = JSON.parse(message.body);
-        console.log("2. parsaedMessage :", parsedMessage);
+        console.log(`Received message on topic ${topic}:`, parsedMessage);
         if (onMessageCallback) {
           onMessageCallback(parsedMessage);
         }
@@ -71,12 +71,21 @@ class WebSocketService {
     });
   }
 
+  unsubscribe(topic) {
+    if (this.subscriptions[topic]) {
+      this.subscriptions[topic].unsubscribe();
+      delete this.subscriptions[topic];
+      console.log(`Unsubscribed from topic: ${topic}`);
+    }
+  }
+
   sendMessage(destination, body) {
     if (!this.connected) {
       console.error("Cannot send message, no connection established");
       return;
     }
 
+    console.log(`Sending message to ${destination}:`, body);
     this.client.publish({
       destination: destination,
       body: JSON.stringify(body),
