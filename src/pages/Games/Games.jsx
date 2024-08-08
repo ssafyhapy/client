@@ -120,6 +120,7 @@ const Games = () => {
       gameStep !== "photo-last" ? (
         <TopDiv gameStep={gameStep} setGameStep={setGameStep}></TopDiv>
       ) : null}
+      
       {/* MiddleDiv */}
       {gameStep !== "camera-check" &&
       gameStep !== "photo-first" &&
