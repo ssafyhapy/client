@@ -116,7 +116,7 @@ const useOpenViduSession = () => {
                 const isAudioEnabled = event.newValue;
                 console.log(`Microphone is now ${isAudioEnabled ? 'enabled' : 'disabled'}`);
                 // 필요한 작업 수행
-                setPublisher(publisher);
+                setPublisher({...publisher});
             }
         });
     }
