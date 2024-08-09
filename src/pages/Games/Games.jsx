@@ -95,7 +95,7 @@ const Games = () => {
         await session.publish(newpublisher);
         console.log("Publisher created and published successfully");
 
-        session.publish(newpublisher);
+        // session.publish(newpublisher);
 
         setSession(session);
         setMainStreamManager(newpublisher);
