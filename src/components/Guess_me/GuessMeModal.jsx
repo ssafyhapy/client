@@ -60,9 +60,6 @@ const GuessMeModal = ({
               <p className="font-bold text-[32px] text-[rgba(87,136,208)] text-center mb-5">
                 OX 문제 작성
               </p>
-              <p className="text-[rgba(220,89,100)] text-[14px] text-center">
-                *현재 {readyPeople}명이 {userName}님을 기다리고 있어요!
-              </p>
             </div>
           </div>
           <div className="flex flex-col items-center justify-center w-full flex-grow">
