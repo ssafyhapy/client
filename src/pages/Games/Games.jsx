@@ -51,11 +51,9 @@ const Games = () => {
         subscriber.on("videoElementCreated", (event) => {
           console.log("[*]Video Element Created", event.element);
         });
-
-        const newSubscribers = [...subscribers, subscriber]
-
+        const newSubscribers = [...subscribers, subscriber];
         setSubscribers(newSubscribers);
-        console.log("[* 구독자 명단 생성]",subscribers);
+        console.log("[*] 새로운 구독자 명단", newSubscribers);
       });
 
       session.on("connectionCreated", (event) => {
@@ -122,8 +120,7 @@ const Games = () => {
   useEffect(() => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
     console.log("[*] 전체 mainStream", mainStreamManager);
-    console.log("[*] 구독자 명단 변경", subscribers);
-  }, [connectionInfo, subscribers]);
+  }, [connectionInfo]);
 
   return (
     <WebSocketProvider>

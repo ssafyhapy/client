@@ -14,8 +14,8 @@ const useGameStore = create((set) => ({
   publisher: null,
   setPublisher: (pub) => set({ publisher: pub }),
   subscribers: [],
-  setSutSubscribers: (newSubscriber) => set((prev) => [...prev, newSubscriber]),
-  connectionInfo: [],
+  setSubscribers: (sub) => set((prev)=>[...prev, sub]),
+  connectionInfo:[],
   setConnectionInfo: (newConnectionInfo) =>
     set((prev) => ({
       connectionInfo: {
