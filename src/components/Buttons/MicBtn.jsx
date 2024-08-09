@@ -3,6 +3,7 @@ import useGameStore from "../../store/useGameStore";
 
 const MicBtn = () => {
   const mic = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic.png";
+  const {publisher}=useGameStore()
 
   // 오디오를 변경하는 함수
   const toggleAudio = () => {
