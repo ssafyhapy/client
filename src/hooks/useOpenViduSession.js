@@ -43,11 +43,11 @@ const useOpenViduSession = () => {
         console.log("[*] Subscriber created", newSubscriber);
         setSubscriber(newSubscriber)
         
-        subscriber.on("videoElementCreated", (event) => {
+        newSubscriber.on("videoElementCreated", (event) => {
           console.log("[*]Video Element Created", event.element);
         });
         // const newSubscribers = [...subscribers, subscriber];
-        setSubscribers(subscriber);
+        setSubscribers(newSubscriber);
       });
 
       //   session이 연결되면 connection 정보를 parsing하여 각 객체의 정보를 저장한다.
