@@ -43,15 +43,11 @@ const useOpenViduSession = () => {
         console.log("[*] Subscriber created", newSubscriber);
         setSubscriber(newSubscriber)
         
-        // 현재 사용자의 비디오가 생성되면 비디오를 확인한다.
-        newSubscriber.on("videoElementCreated", (event) => {
-          console.log("[*] Video Element Created", event.element);
+        subscriber.on("videoElementCreated", (event) => {
+          console.log("[*]Video Element Created", event.element);
         });
-
-        console.log("여기에 도착해?");
-        
-        // 과거 구독자 명단과 현재 사용자가 구독하여 생성된 구독자 객체를 배열로 합친다.
-        setSubscribers((prev) => [...prev, newSubscriber]);
+        // const newSubscribers = [...subscribers, subscriber];
+        setSubscribers(subscriber);
       });
 
       //   session이 연결되면 connection 정보를 parsing하여 각 객체의 정보를 저장한다.
@@ -120,7 +116,7 @@ const useOpenViduSession = () => {
     console.log("[*] newSubscriber", subscriber);
     
     console.log("[*] subscribers", subscribers);
-    console.log("[*] 배포됨 2");
+    console.log("[*] 배포됨 1");
   }, [subscribers, connectionInfo, publisher, mainStreamManager, subscriber]);
 
   return { session };
