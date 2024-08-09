@@ -16,7 +16,7 @@ const WaitingRoom = () => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
   const { memberId } = useAuthStore();
-  const { roomCode, hostId, roomId } = useRoomStore;
+  const { roomCode, hostId, roomId } = useRoomStore();
   const btnText = "시작";
 
   // 일단 그냥 박아두기
