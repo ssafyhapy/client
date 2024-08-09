@@ -15,7 +15,7 @@ const useOpenViduSession = () => {
     setPublisher,
     subscribers,
     subscriber,
-    setSubsriber,
+    setSubsciber,
     setSubscribers,
     connectionInfo,
     setConnectionInfo,
