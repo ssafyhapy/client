@@ -180,7 +180,6 @@
 //     setUserStatus("준비완료");
 //   };
 
-
 //   // 2초 동안 준비완료!! 보여주기
 //   useEffect(() => {
 //     if (showReadyMessage) {
@@ -256,97 +255,95 @@
 //   }, [secondsLeft]);
 
 //   return (
-//     <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
-//       <div className="w-[1024px] h-[90%] bg-[rgba(255,255,255,0.3)] m-auto rounded-[40px] flex flex-col relative p-10 overflow-hidden">
+// <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
+//   <div className="w-[1024px] h-[90%] bg-[rgba(255,255,255,0.3)] m-auto rounded-[40px] flex flex-col relative p-10 overflow-hidden">
 
-//         {/* top div */}
-//         <div className="h-[5%] flex justify-between items-center mb-2">
-//           <div className="w-[90%] flex justify-center absolute top-3">
-//             <GameTurns sectionNumber={2} />
-//           </div>
-//           <div className="w-[10%] flex justify-center">
-//             <ExitBtn />
-//           </div>
-//         </div>
-
-
-//         {/* middle div */}
-//         <div className="flex-grow flex overflow-hidden h-[52vh]">
-//           <div className="bg-[rgba(255,255,255,0.9)] flex-[7] h-full mr-5 rounded-[20px] flex justify-center items-center overflow-hidden">
-//             <p className="m-5">camera background</p>
-//           </div>
-//           <div className="flex-[3] h-full ml-5 rounded-[20px] flex flex-col justify-center items-center overflow-hidden">
-//             <Chatbox />
-//           </div>
-//         </div>
-
-
-//         {/* bottom div */}
-//         <div className="flex-none mt-3 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem] relative">
-//           {!allPrepared ? (
-//             showReadyMessage ? (
-//               <div className="flex-grow flex items-center justify-center">
-//                 <img src={star} alt="star 그림" />
-//                 <span className="text-transparent">
-//                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-//                 </span>
-//                 <span className="text-[rgba(85,181,236)]">전원 준비 완료!!</span>
-//                 <span className="text-transparent">
-//                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-//                 </span>
-//                 <img src={star} alt="star 그림" />
-//               </div>
-//             ) : (
-//               <div className="flex-grow flex items-center justify-center">
-//                 <img src={snowingCloud} alt="star 그림" />
-//                 <span className="text-transparent">&nbsp;&nbsp;</span>
-//                 <span className="text-[rgba(85,181,236)]">
-//                   나를 맞춰봐 문제가 만들어지고 있어요{dots}
-//                 </span>
-//               </div>
-//             )
-//           ) : (
-//             <div className="flex-grow flex items-center justify-center relative">
-//               <span className="text-[rgba(85,181,236)]">
-//                 {userQuestions.length > 0 ? userQuestions[currentQuestionIndex].content : null}
-//               </span>
-//               {showResult && userQuestions.length > 0 && (
-//                 <img
-//                   src={userQuestions[currentQuestionIndex].answer ? correctImg : wrongImg}
-//                   alt={userQuestions[currentQuestionIndex].answer ? "Correct" : "Wrong"}
-//                   className="absolute w-[50px] h-[50px]"
-//                   style={{
-//                     top: "50%",
-//                     left: "50%",
-//                     transform: "translate(-50%, -50%)",
-//                   }}
-//                 />
-//               )}
-//               <div className="absolute bottom-3 right-5 flex flex-col items-center">
-//                 <div className="flex items-center mb-2">
-//                   <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" />
-//                   <span className="text-red-500">{secondsLeft}</span>
-//                 </div>
-//                 {memberId === currentPresenterId && showResult && (
-//                   <BasicBtn btnText={btnText} onClick={handleNextStep} />
-//                 )}
-//               </div>
-//             </div>
-//           )}
-//         </div>
+//     {/* top div */}
+//     <div className="h-[5%] flex justify-between items-center mb-2">
+//       <div className="w-[90%] flex justify-center absolute top-3">
+//         <GameTurns sectionNumber={2} />
 //       </div>
-//       {showModal && (
-//         <GuessMeModal
-//           btnText="저장"
-//           onClose={handleCloseModal}
-//           onReady={handleReady}
-//           questions={questions}
-//           setQuestions={setQuestions}
-//           selectedAnswers={selectedAnswers}
-//           setSelectedAnswers={setSelectedAnswers}
-//         />
+//       <div className="w-[10%] flex justify-center">
+//         <ExitBtn />
+//       </div>
+//     </div>
+
+//     {/* middle div */}
+//     <div className="flex-grow flex overflow-hidden h-[52vh]">
+//       <div className="bg-[rgba(255,255,255,0.9)] flex-[7] h-full mr-5 rounded-[20px] flex justify-center items-center overflow-hidden">
+//         <p className="m-5">camera background</p>
+//       </div>
+//       <div className="flex-[3] h-full ml-5 rounded-[20px] flex flex-col justify-center items-center overflow-hidden">
+//         <Chatbox />
+//       </div>
+//     </div>
+
+//     {/* bottom div */}
+//     <div className="flex-none mt-3 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem] relative">
+//       {!allPrepared ? (
+//         showReadyMessage ? (
+//           <div className="flex-grow flex items-center justify-center">
+//             <img src={star} alt="star 그림" />
+//             <span className="text-transparent">
+//               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//             </span>
+//             <span className="text-[rgba(85,181,236)]">전원 준비 완료!!</span>
+//             <span className="text-transparent">
+//               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//             </span>
+//             <img src={star} alt="star 그림" />
+//           </div>
+//         ) : (
+//           <div className="flex-grow flex items-center justify-center">
+//             <img src={snowingCloud} alt="star 그림" />
+//             <span className="text-transparent">&nbsp;&nbsp;</span>
+//             <span className="text-[rgba(85,181,236)]">
+//               나를 맞춰봐 문제가 만들어지고 있어요{dots}
+//             </span>
+//           </div>
+//         )
+//       ) : (
+//         <div className="flex-grow flex items-center justify-center relative">
+//           <span className="text-[rgba(85,181,236)]">
+//             {userQuestions.length > 0 ? userQuestions[currentQuestionIndex].content : null}
+//           </span>
+//           {showResult && userQuestions.length > 0 && (
+//             <img
+//               src={userQuestions[currentQuestionIndex].answer ? correctImg : wrongImg}
+//               alt={userQuestions[currentQuestionIndex].answer ? "Correct" : "Wrong"}
+//               className="absolute w-[50px] h-[50px]"
+//               style={{
+//                 top: "50%",
+//                 left: "50%",
+//                 transform: "translate(-50%, -50%)",
+//               }}
+//             />
+//           )}
+//           <div className="absolute bottom-3 right-5 flex flex-col items-center">
+//             <div className="flex items-center mb-2">
+//               <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" />
+//               <span className="text-red-500">{secondsLeft}</span>
+//             </div>
+//             {memberId === currentPresenterId && showResult && (
+//               <BasicBtn btnText={btnText} onClick={handleNextStep} />
+//             )}
+//           </div>
+//         </div>
 //       )}
 //     </div>
+//   </div>
+//   {showModal && (
+//     <GuessMeModal
+//       btnText="저장"
+//       onClose={handleCloseModal}
+//       onReady={handleReady}
+//       questions={questions}
+//       setQuestions={setQuestions}
+//       selectedAnswers={selectedAnswers}
+//       setSelectedAnswers={setSelectedAnswers}
+//     />
+//   )}
+// </div>
 //   );
 // };
 
@@ -364,12 +361,17 @@ import useAuthStore from "../../store/useAuthStore";
 import useRoomStore from "../../store/useRoomStore";
 
 const GuessMe = () => {
-  const snowingCloud = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/snowing_cloud.png";
+  const snowingCloud =
+    "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/snowing_cloud.png";
   const star = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/star.png";
-  const timerImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/timer.png";
-  const correctImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/correct_circle.png";
-  const wrongImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/wrong_x.png";
-  const questionmarkImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/questionmark.png";
+  const timerImg =
+    "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/timer.png";
+  const correctImg =
+    "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/correct_circle.png";
+  const wrongImg =
+    "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/wrong_x.png";
+  const questionmarkImg =
+    "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/questionmark.png";
 
   const [dots, setDots] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -387,7 +389,7 @@ const GuessMe = () => {
 
   const { memberId } = useAuthStore();
   // const memberId = 4
-  const {roomId} = useRoomStore()
+  const { roomId } = useRoomStore();
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
   const btnText = "다음";
@@ -404,34 +406,34 @@ const GuessMe = () => {
   useEffect(() => {
     const handleMessageReceived = (message) => {
       console.log("Received message:", message);
-    // 받은게 문제3개세트 데이터면
-    if (Array.isArray(message) && message.length > 0 && message[0].memberId) {
-      // 현재 발표자 id, 현재 발표자의 발표내용 (문제3개), 현재 발표데이터의 인덱스0으로 설정 (1번문제), 준비완료!! div 보여질수있게 true로 설정
-      setCurrentPresenterId(message[0].memberId);
-      setUserQuestions(message); // Load the new set of questions
-      setCurrentQuestionIndex(0);
-      setShowReadyMessage(true);
-      setSecondsLeft(10)
-      setShowResult(false)
-      startTimer()
-    }
-    // 받은게 memberId, nextIndex 면
-    // 현재인덱스 받아온 인덱스로 설정, 10초 남은걸로 다시 설정
-    else if (message.memberId && typeof message.nextIndex === 'number') {
-      setCurrentQuestionIndex(message.nextIndex);
-      setSecondsLeft(10)
-      setShowResult(false)
-      startTimer(); // Start the timer for the next question
-    }
-  };
+      // 받은게 문제3개세트 데이터면
+      if (Array.isArray(message) && message.length > 0 && message[0].memberId) {
+        // 현재 발표자 id, 현재 발표자의 발표내용 (문제3개), 현재 발표데이터의 인덱스0으로 설정 (1번문제), 준비완료!! div 보여질수있게 true로 설정
+        setCurrentPresenterId(message[0].memberId);
+        setUserQuestions(message); // Load the new set of questions
+        setCurrentQuestionIndex(0);
+        setShowReadyMessage(true);
+        setSecondsLeft(10);
+        setShowResult(false);
+        startTimer();
+      }
+      // 받은게 memberId, nextIndex 면
+      // 현재인덱스 받아온 인덱스로 설정, 10초 남은걸로 다시 설정
+      else if (message.memberId && typeof message.nextIndex === "number") {
+        setCurrentQuestionIndex(message.nextIndex);
+        setSecondsLeft(10);
+        setShowResult(false);
+        startTimer(); // Start the timer for the next question
+      }
+    };
 
     webSocketService.subscribeToGuessMe(roomId, handleMessageReceived);
     webSocketService.subscribeToMemberState(roomId, (message) => {
       console.log("Received game state: ", message);
       if (message.memberState === "balance") {
-        setGameStep("balance-game")
+        setGameStep("balance-game");
       }
-    })
+    });
 
     return () => {
       webSocketService.unsubscribe(`/api/sub/ox/${roomId}/next`);
@@ -471,7 +473,6 @@ const GuessMe = () => {
     setUserStatus("준비완료");
   };
 
-
   // 2초 동안 준비완료!! 보여주기
   useEffect(() => {
     if (showReadyMessage) {
@@ -506,12 +507,12 @@ const GuessMe = () => {
   // 다음 버튼과  연결된 함수
   const handleNextStep = () => {
     // 다음 버튼을 누를때마다 pub 요청 보냄
-    webSocketService.sendGuessMeNext(roomId, memberId, currentQuestionIndex)
+    webSocketService.sendGuessMeNext(roomId, memberId, currentQuestionIndex);
 
     // 다음문제! 10초로 타이머 다시설정
     // 정답보여주는거 닷미 false로 설정
     // setSecondsLeft(10)
-    setShowResult(false)
+    setShowResult(false);
     // startTimer()
   };
 
@@ -534,84 +535,69 @@ const GuessMe = () => {
   }, [secondsLeft]);
 
   return (
-    <div className="bg-custom-gradient-game w-[100vw] h-[100vh] flex justify-center items-center">
-      <div className="w-[1024px] h-[90%] bg-[rgba(255,255,255,0.3)] m-auto rounded-[40px] flex flex-col relative p-10 overflow-hidden">
-
-        {/* top div */}
-        <div className="h-[5%] flex justify-between items-center mb-2">
-          <div className="w-[90%] flex justify-center absolute top-3">
-            <GameTurns sectionNumber={2} />
-          </div>
-          <div className="w-[10%] flex justify-center">
-            <ExitBtn />
-          </div>
-        </div>
-
-
-        {/* middle div */}
-        <div className="flex-grow flex overflow-hidden h-[52vh]">
-          <div className="bg-[rgba(255,255,255,0.9)] flex-[7] h-full mr-5 rounded-[20px] flex justify-center items-center overflow-hidden">
-            <p className="m-5">camera background</p>
-          </div>
-          <div className="flex-[3] h-full ml-5 rounded-[20px] flex flex-col justify-center items-center overflow-hidden">
-            <Chatbox />
-          </div>
-        </div>
-
-
-        {/* bottom div */}
-        <div className="flex-none mt-3 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem] relative">
-          {!allPrepared ? (
-            showReadyMessage ? (
-              <div className="flex-grow flex items-center justify-center">
-                <img src={star} alt="star 그림" />
-                <span className="text-transparent">
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </span>
-                <span className="text-[rgba(85,181,236)]">전원 준비 완료!!</span>
-                <span className="text-transparent">
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </span>
-                <img src={star} alt="star 그림" />
-              </div>
-            ) : (
-              <div className="flex-grow flex items-center justify-center">
-                <img src={snowingCloud} alt="star 그림" />
-                <span className="text-transparent">&nbsp;&nbsp;</span>
-                <span className="text-[rgba(85,181,236)]">
-                  나를 맞춰봐 문제가 만들어지고 있어요{dots}
-                </span>
-              </div>
-            )
-          ) : (
-            <div className="flex-grow flex items-center justify-center relative">
-              <span className="text-[rgba(85,181,236)]">
-                {userQuestions.length > 0 ? userQuestions[currentQuestionIndex].content : null}
+    <>
+      {/* bottom div */}
+      <div className="flex-none mt-3 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem] relative">
+        {!allPrepared ? (
+          showReadyMessage ? (
+            <div className="flex-grow flex items-center justify-center">
+              <img src={star} alt="star 그림" />
+              <span className="text-transparent">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </span>
-              {showResult && userQuestions.length > 0 && (
-                <img
-                  src={userQuestions[currentQuestionIndex].answer ? correctImg : wrongImg}
-                  alt={userQuestions[currentQuestionIndex].answer ? "Correct" : "Wrong"}
-                  className="absolute w-[50px] h-[50px]"
-                  style={{
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                />
-              )}
-              <div className="absolute bottom-3 right-5 flex flex-col items-center">
-                <div className="flex items-center mb-2">
-                  <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" />
-                  <span className="text-red-500">{secondsLeft}</span>
-                </div>
-                {memberId === currentPresenterId && showResult && (
-                  <BasicBtn btnText={btnText} onClick={handleNextStep} />
-                )}
-              </div>
+              <span className="text-[rgba(85,181,236)]">전원 준비 완료!!</span>
+              <span className="text-transparent">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </span>
+              <img src={star} alt="star 그림" />
             </div>
-          )}
-        </div>
+          ) : (
+            <div className="flex-grow flex items-center justify-center">
+              <img src={snowingCloud} alt="star 그림" />
+              <span className="text-transparent">&nbsp;&nbsp;</span>
+              <span className="text-[rgba(85,181,236)]">
+                나를 맞춰봐 문제가 만들어지고 있어요{dots}
+              </span>
+            </div>
+          )
+        ) : (
+          <div className="flex-grow flex items-center justify-center relative">
+            <span className="text-[rgba(85,181,236)]">
+              {userQuestions.length > 0
+                ? userQuestions[currentQuestionIndex].content
+                : null}
+            </span>
+            {showResult && userQuestions.length > 0 && (
+              <img
+                src={
+                  userQuestions[currentQuestionIndex].answer
+                    ? correctImg
+                    : wrongImg
+                }
+                alt={
+                  userQuestions[currentQuestionIndex].answer
+                    ? "Correct"
+                    : "Wrong"
+                }
+                className="absolute w-[50px] h-[50px]"
+                style={{
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              />
+            )}
+            <div className="absolute bottom-3 right-5 flex flex-col items-center">
+              <div className="flex items-center mb-2">
+                <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" />
+                <span className="text-red-500">{secondsLeft}</span>
+              </div>
+              {memberId === currentPresenterId && showResult && (
+                <BasicBtn btnText={btnText} onClick={handleNextStep} />
+              )}
+            </div>
+          </div>
+        )}
       </div>
       {showModal && (
         <GuessMeModal
@@ -624,7 +610,7 @@ const GuessMe = () => {
           setSelectedAnswers={setSelectedAnswers}
         />
       )}
-    </div>
+    </>
   );
 };
 
