@@ -18,13 +18,13 @@ import MiddleDiv from "../../components/Common/MiddleDiv";
 import BottomDiv from "../../components/Common/BottomDiv";
 import { WebSocketProvider } from "../../WebSocketContext";
 import useRoomStore from "../../store/useRoomStore";
+import useOpenViduSession from "../../hooks/useOpenViduSession";
 
 const Games = () => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
 
   const { session } = useOpenViduSession();
-
 
   // const {
   //   mainStreamManager,

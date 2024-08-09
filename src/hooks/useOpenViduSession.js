@@ -114,7 +114,7 @@ const useOpenViduSession = ({}) => {
     console.log("[*] subscriber", subscriber);
     
     console.log("[*] 전체 subscribers", subscribers);
-    console.log("[*] 배포됨 1");
+    console.log("[*] 배포됨 2");
   }, [connectionInfo]);
 
   return { session };
