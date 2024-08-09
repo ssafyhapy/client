@@ -114,10 +114,10 @@ const useOpenViduSession = () => {
     console.log("[*] publisher",publisher);
     
     console.log("[*] mainStream", mainStreamManager);
-    console.log("[*] subscriber", subscriber);
-
+    
     if (subscriber) {
-      console.log("[*] subscriber", subscriber);
+        console.log("[*] subscriber", subscriber);
+        console.log("[*] subscribers", subscribers);
     }
     console.log("[*] 배포됨 2");
   }, [connectionInfo]);
