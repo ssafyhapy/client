@@ -15,7 +15,7 @@ const WaitingRoomGameTurns = () => {
 
   return (
     <>
-      <div className="flex justify-center gap-5 w-[60vw] h-[50%]">
+      <div className="flex justify-center gap-5 w-[60vw] h-[50%] z-30">
         <div
           className="flex flex-col items-center justify-center h-full relative"
           onMouseEnter={() => handleMouseEnter("self-introduction")}
