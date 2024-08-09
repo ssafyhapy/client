@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import BasicBtn from "../Buttons/BasicBtn";
+import webSocketService from "../../WebSocketService";
 
-const BalanceGameModal = ({ btnText, onClose }) => {
+const BalanceGameModal = ({ btnText, onClose, setPurpose }) => {
+
+  const [purposeText, setPurposeText] = useState("")
+
+  const handleSave = () => {
+    setPurpose(purposeText)
+    onClose()
+  }
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] z-50">
@@ -21,7 +29,10 @@ const BalanceGameModal = ({ btnText, onClose }) => {
             </div>
           </div>
           <div className="p-2 mb-5 flex items-center">
-            <textarea className="w-[90%] text-xl border rounded p-1 resize-none" />
+            <textarea className="w-[90%] text-xl border rounded p-1 resize-none" 
+            value={purposeText}
+            onChange={(e) => setPurposeText(e.target.value)}
+            />
           </div>
           <p className="text-[rgba(0,0,0,0.45)] text-[14px]">
             *밸런스 게임을 위해 받는 질문으로
@@ -31,7 +42,7 @@ const BalanceGameModal = ({ btnText, onClose }) => {
             랜덤으로 공개됩니다.
           </p>
           <div className="absolute bottom-5 right-5">
-            <BasicBtn btnText={btnText} onClick={onClose} />
+            <BasicBtn btnText={btnText} onClick={handleSave} />
           </div>
         </div>
       </div>

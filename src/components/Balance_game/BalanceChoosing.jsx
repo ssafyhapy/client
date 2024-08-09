@@ -4,17 +4,19 @@ import Chatbox from "../../components/Common/Chatbox";
 import ExitBtn from "../../components/Buttons/ExitBtn";
 import GameTurns from "../../components/Common/GameTurns";
 // import timerImg from "./../../assets/Common/timer.png"
+import useAuthStore from "../../store/useAuthStore";
+import webSocketService from "../../WebSocketService";
 
-const BalanceChoosing = ({ onTimerEnd, currentStep }) => {
+const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond, onTimerEnd, currentStep }) => {
   const timerImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/timer.png"
+
+  const {memberId} = useAuthStore()
 
   const { pickedChoice, setPickedChoice } = useBalanceStore();
   const { discussedNum } = useBalanceStore();
 
-  const balanceChoicesHard = {
-    first: "밸런스 게임 A",
-    second: "밸런스 게임 B",
-  };
+  const [first, setOptionFirst] = useState("")
+  const [second, setOptionSecond] = useState("")
 
   const handlePickedChoice = (choice) => {
     setPickedChoice(choice);
@@ -30,6 +32,14 @@ const BalanceChoosing = ({ onTimerEnd, currentStep }) => {
             return prev - 1;
           } else {
             clearInterval(timer);
+
+            webSocketService.sendBalancePersonChoice(
+              roomId,
+              topicId,
+              memberId,
+              pickedChoice
+
+            )
             onTimerEnd(); // 타이머가 0이 되었을 때 호출
             return 0;
           }
@@ -39,6 +49,12 @@ const BalanceChoosing = ({ onTimerEnd, currentStep }) => {
       return () => clearInterval(timer);
     } // 컴포넌트 언마운트 시 타이머 클리어
   }, [currentStep]); // onTimerEnd를 의존성 배열에 포함
+
+  // 선택지 1 2 바꾸자
+  useEffect(() => {
+    setOptionFirst(optionFirst)
+    setOptionSecond(optionSecond)
+  })
 
   return (
     <>
@@ -52,9 +68,9 @@ const BalanceChoosing = ({ onTimerEnd, currentStep }) => {
       </div>
       <div className="flex-grow flex items-center justify-center relative gap-5">
         <button
-          onClick={() => handlePickedChoice(1)}
+          onClick={() => handlePickedChoice("FIRST")}
           className={`text-[rgba(85,181,236)] px-2 py-3 rounded-[15px] ${
-            pickedChoice === 1
+            pickedChoice ==="FIRST"
               ? "border-solid border-4 border-[#64B8FF]"
               : "border-transparent"
           }`}
@@ -63,13 +79,13 @@ const BalanceChoosing = ({ onTimerEnd, currentStep }) => {
               "linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(30, 144, 255, 0.3))",
           }}
         >
-          {balanceChoicesHard.first}
+          {first}
         </button>
         <span className="text-[#FF607F]">VS</span>
         <button
-          onClick={() => handlePickedChoice(2)}
+          onClick={() => handlePickedChoice("FIRST")}
           className={`text-[#FF6A89] px-2 py-3 rounded-[15px] ${
-            pickedChoice === 2
+            pickedChoice === "SECOND"
               ? "border-solid border-4 border-[rgba(254,176,207)]"
               : "border-transparent"
           }`}
@@ -78,7 +94,7 @@ const BalanceChoosing = ({ onTimerEnd, currentStep }) => {
               "linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(255,96,127,0.5))",
           }}
         >
-          {balanceChoicesHard.second}
+          {second}
         </button>
       </div>
       <div className="flex items-center mb-2 absolute top-3 left-10">

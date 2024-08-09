@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import useGameStore from "../../store/useGameStore";
 import useBalanceStore from "../../store/useBalanceStore";
@@ -7,24 +7,33 @@ import ExitBtn from "../../components/Buttons/ExitBtn";
 import GameTurns from "../../components/Common/GameTurns";
 // import refresh from "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/refresh.png";
 // import refresh from "./../../assets/Balance_game/refresh.png"
+import webSocketService from "../../WebSocketService";
 
-const BalanceChangeChoices = ({ onConfirm }) => {
+const BalanceChangeChoices = ({ roomId, purpose, onConfirm, optionFirst, optionSecond }) => {
   const refresh = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/refresh.png"
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
   const { pickedChoice, setPickedChoice } = useBalanceStore();
   const { discussedNum, setDiscussedNum } = useBalanceStore();
-  const balanceChoicesHard = {
-    first: "밸런스 게임 A",
-    second: "밸런스 게임 B",
-  };
+
+  const [First, setOptionFirst] = useState("")
+  const [Second, setOptionSecond] = useState("")
+
+  useEffect(() => {
+    setOptionFirst(optionFirst)
+    setOptionSecond(optionSecond)
+  })
 
   const updateBalanceChoices = () => {
+    // 주제변경 버튼 누르면 다시 pub해줌
+    webSocketService.sendBalancePurpose(roomId, purpose)
     setPickedChoice(null);
     // setBalanceChoices({first:, second:})
   };
 
   const handleConfirmChoices = () => {
+    // 확정된 주제 백에 보내줌
+    webSocketService.sendBalanceChosenTopic(roomId, optionFirst, optionSecond)
     setDiscussedNum((prevNum) => prevNum + 1);
     setPickedChoice(null);
     onConfirm(); // 주제 확정 후 다음 단계로 이동
@@ -48,7 +57,7 @@ const BalanceChangeChoices = ({ onConfirm }) => {
               "linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(30, 144, 255, 0.3))",
           }}
         >
-          {balanceChoicesHard.first}
+          {First}
         </div>
         <span className="text-[#FF607F]">VS</span>
         <div
@@ -62,7 +71,7 @@ const BalanceChangeChoices = ({ onConfirm }) => {
               "linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(255,96,127,0.5))",
           }}
         >
-          {balanceChoicesHard.second}
+          {Second}
         </div>
       </div>
       <div

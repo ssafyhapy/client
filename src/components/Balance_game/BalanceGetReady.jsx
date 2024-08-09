@@ -6,11 +6,16 @@ import BalanceGameModal from "./BalanceGameModal";
 // import versus from "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/versus.png";
 // import versus from "./../../assets/Balance_game/versus.png"
 
-const BalanceGetReady = ({ onClose, dots }) => {
+import useRoomStore from "../../store/useRoomStore";
+import useAuthStore from "../../store/useAuthStore";
+
+const BalanceGetReady = ({ onClose, dots, setPurpose }) => {
   const versus = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/versus.png"
   const [showModal, setShowModal] = useState(false);
   const[questions, setQuestions] = useState({1:"", 2:"",3:""})
   const [selectedAnswers, setSelectedAnswers] = useState({ 1: null, 2: null, 3: null });
+  const {memberId} = useAuthStore()
+  const {hostId, roomId} = useRoomStore()
 
   useEffect(() => {
     setShowModal(true);
@@ -25,8 +30,9 @@ const BalanceGetReady = ({ onClose, dots }) => {
             </span>
           </div>
           <div className="flex justify-end"></div>
-      {showModal && (
-        <BalanceGameModal btnText="저장" onClose={onClose} />
+          {/* 호스트만 모달 볼 수 있습니다 */}
+      {memberId === hostId && showModal && (
+        <BalanceGameModal setPurpose={setPurpose} btnText="저장" onClose={onClose} />
       )}
     </>
   );

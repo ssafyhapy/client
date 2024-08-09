@@ -232,7 +232,7 @@ const MiddleDiv = () => {
       </div>
 
       {/* Chatbox */}
-      <div className="h-full rounded-[20px] flex flex-col justify-center items-center overflow-hidden">
+      <div className="h-full rounded-[20px] flex flex-col justify-center items-center overflow-hidden min-w-[230px]">
         <Chatbox />
       </div>
     </div>
