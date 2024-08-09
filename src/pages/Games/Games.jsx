@@ -51,8 +51,8 @@ const Games = () => {
         subscriber.on("videoElementCreated", (event) => {
           console.log("[*]Video Element Created", event.element);
         });
-        const newSubscribers = [...subscribers, subscriber];
-        setSubscribers(newSubscribers);
+        // const newSubscribers = [...subscribers, subscriber];
+        setSubscribers(subscriber);
       });
 
       session.on("connectionCreated", (event) => {
@@ -95,7 +95,7 @@ const Games = () => {
         await session.publish(newpublisher);
         console.log("Publisher created and published successfully");
 
-        session.publish(newpublisher);
+        // session.publish(newpublisher);
 
         setSession(session);
         setMainStreamManager(newpublisher);
@@ -120,7 +120,8 @@ const Games = () => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
     console.log("[*] 전체 mainStream", mainStreamManager);
     console.log("[*] 전체 subscribers", subscribers);
-  }, [connectionInfo, subscribers]);
+    console.log("[*] 배포됨 2");
+  }, [connectionInfo]);
 
   return (
     <WebSocketProvider>

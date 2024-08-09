@@ -68,7 +68,7 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         {/* 마이페이지 동적 라우팅 */}
         {/* <Route path="/mypage/:memberName" element={<MyPage />} /> */}
-        <Route path="/auth/kakao/callback" element={<Auth />} />
+        <Route path="/login/oauth2/code/*" element={<Auth />} />
         <Route path="/report" element={<Report />} />
 
         {/* 대기실 */}
