@@ -9,6 +9,8 @@ import check from "../../assets/Waiting_room/check.webp";
 import webSocketService from "../../WebSocketService";
 import useAuthStore from "../../store/useAuthStore";
 import useRoomStore from "../../store/useRoomStore";
+import SelectMask from "../Waiting_room/SelectMask";
+
 
 const WaitingRoom = () => {
   const gameStep = useGameStore((state) => state.gameStep);

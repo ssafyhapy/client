@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import useGameStore from "../../store/useGameStore";
 import Chatbox from "./Chatbox";
 import useAuthStore from "../../store/useAuthStore";
+import MicBtn from "../Buttons/MicBtn";
+import EmojiBtn from "../Buttons/EmojiBtn"
+import SelectEmoji from "./SelectEmoji";
 
 const MiddleDiv = () => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     mainStreamManager,
     setMainStreamManager,
@@ -17,6 +21,15 @@ const MiddleDiv = () => {
   } = useGameStore();
 
   const { memberName } = useAuthStore();
+
+  
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   const data = { ready: true, mic: true };
 
@@ -200,6 +213,20 @@ const MiddleDiv = () => {
             ))}
           </>
         ) : null}
+
+        <div className="flex justify-between mt-3">
+          <span className="mr-20">
+            <MicBtn />
+          </span>
+          <span className="relative">
+            <EmojiBtn onClick={handleOpenModal} />
+            {isModalOpen && (
+              <div className="absolute top-0 left-full ml-4">
+                <SelectEmoji handleCloseModal={handleCloseModal} />
+              </div>
+            )}
+          </span>
+        </div>
       </div>
 
       {/* Chatbox */}
