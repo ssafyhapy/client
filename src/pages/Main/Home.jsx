@@ -1,10 +1,10 @@
 import React from "react";
 import MainDescription from "../../components/Main_page/MainDescription";
 import bgImage from "../../assets/bg/bgImage.jpg";
-import FirstService from "../../components/Main_page/service/FirstService";
-import SecondService from "../../components/Main_page/service/SecondService";
-import ThirdService from "../../components/Main_page/service/ThirdService";
-import LastService from "../../components/Main_page/service/LastService";
+import WholeService from "../../components/Main_page/service/WholeService";
+import PhotoService from "../../components/Main_page/service/PhotoService";
+import ReportService from "../../components/Main_page/service/ReportService";
+import MaskService from "../../components/Main_page/service/MaskService";
 import GamesDescription from "../../components/Main_page/GamesDescription";
 
 const Home = () => {
@@ -17,16 +17,16 @@ const Home = () => {
         <MainDescription />
       </div>
       <div className="w-full h-full snap-start flex justify-center items-center">
-        <FirstService />
+        <WholeService />
       </div>
       <div className="w-full h-full snap-start flex justify-center items-center">
-        <SecondService />
+        <MaskService />
       </div>
       <div className="w-full h-full snap-start flex justify-center items-center">
-        <ThirdService />
+        <PhotoService />
       </div>
       <div className="w-full h-full snap-start flex justify-center items-center">
-        <LastService />
+        <ReportService />
       </div>
       <div className="w-full h-full snap-start flex justify-center items-center">
         <GamesDescription />
