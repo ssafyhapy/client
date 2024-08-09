@@ -1,27 +1,38 @@
 import React from "react";
-import MainGradientBackground from "../../components/Common/MainGradientBackground";
 import MainHomeFrame from "../../components/Main_page/MainHomeFrame";
-import Home2 from "./Home2";
-import MainGradientBackground2 from "../../components/Common/MainGradientBackgound2";
 import MainDescription from "../../components/Main_page/MainDescription";
+import bgImage from "../../assets/bg/bgImage5.jpg";
+import FirstService from "../../components/Main_page/service/FirstService";
+import SecondService from "../../components/Main_page/service/SecondService";
+import ThirdService from "../../components/Main_page/service/ThirdService";
+import LastService from "../../components/Main_page/service/LastService";
+import GamesDescription from "../../components/Main_page/GamesDescription";
 
 const Home = () => {
-
   return (
-    <>
-      <MainGradientBackground>
-        <MainHomeFrame>
-          {/* 메인페이지 설명 */}
-          <MainDescription />
-        </MainHomeFrame>
-      </MainGradientBackground>
-      <MainGradientBackground2>
-        <MainHomeFrame>
-          {/* 하단 페이지 */}
-          <Home2 />
-        </MainHomeFrame>
-      </MainGradientBackground2>
-    </>
+    <div
+      className="h-screen overflow-y-scroll snap-y snap-mandatory bg-fixed bg-cover bg-center scrollbar-hide"
+      style={{ backgroundImage: `url(${bgImage})` }}
+    >
+      <div className="w-full h-full snap-start flex justify-center items-center">
+        <MainDescription />
+      </div>
+      <div className="w-full h-full snap-start flex justify-center items-center">
+        <FirstService />
+      </div>
+      <div className="w-full h-full snap-start flex justify-center items-center">
+        <SecondService />
+      </div>
+      <div className="w-full h-full snap-start flex justify-center items-center">
+        <ThirdService />
+      </div>
+      <div className="w-full h-full snap-start flex justify-center items-center">
+        <LastService />
+      </div>
+      <div className="w-full h-full snap-start flex justify-center items-center">
+        <GamesDescription />
+      </div>
+    </div>
   );
 };
 

@@ -18,7 +18,7 @@ const NavBar = () => {
     setLoginOpen(false);
   };
 
-  const { memberName, isLogin, logout, setLoginAlert } = useAuthStore();
+  const { isLogin, logout, setLoginAlert } = useAuthStore();
 
   const handleLogout = async () => {
     try {
@@ -43,7 +43,7 @@ const NavBar = () => {
 
   return (
     <>
-      <nav className="flex flex-col items-center">
+      <nav className="flex flex-col items-center w-full">
         <ul className="flex justify-between w-[90%]">
           <div className="flex gap-8">
             <li className="text-[#4D98F7]">
