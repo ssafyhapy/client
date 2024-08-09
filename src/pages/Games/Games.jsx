@@ -120,7 +120,7 @@ const Games = () => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
     console.log("[*] 전체 mainStream", mainStreamManager);
     console.log("[*] 전체 subscribers", subscribers);
-    console.log("[*] 배포됨 1");
+    console.log("[*] 배포됨 2");
   }, [connectionInfo]);
 
   return (
