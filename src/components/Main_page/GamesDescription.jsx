@@ -38,7 +38,7 @@ const GamesDescription = () => {
                   repeat: Infinity,
                   repeatType: "reverse",
                 }} // 반복 설정
-                className="text-3xl font-bold text-center"
+                className="text-3xl font-bold text-center text-black opacity-50"
               >
                 {section.title}
               </motion.h2>
