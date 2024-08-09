@@ -5,20 +5,14 @@ const MicBtn = () => {
   const mic = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic.png";
 
   // 오디오를 변경하는 함수
-  const toggleAudioTrack = () => {
-    const { publisher } = useGameStore();
-
+  const toggleAudio = () => {
     if (publisher) {
-      const audioTracks = publisher.stream.getMediaStream().getAudioTracks();
-      if (audioTracks.length > 0) {
-        const audioTrack = audioTracks[0];
-        audioTrack.enabled = !audioTrack.enabled; // 오디오 트랙 활성화/비활성화 토글
-        console.log(
-          `Microphone is now ${audioTrack.enabled ? "enabled" : "disabled"}`
-        );
-      }
+        const isAudioEnabled = publisher.stream.audioActive; // 현재 오디오 상태 확인
+        publisher.publishAudio(!isAudioEnabled); // 오디오 상태를 토글
+        console.log(`Microphone is now ${!isAudioEnabled ? 'enabled' : 'disabled'}`);
     }
-  };
+};
+
 
   return (
     // 마이크 버튼
