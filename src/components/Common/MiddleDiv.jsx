@@ -94,7 +94,7 @@ const MiddleDiv = () => {
       <div className="bg-[rgba(255,255,255,0.9)] w-[80%] min-w-[550px] h-full mr-5 rounded-[20px] ">
         <div className="flex flex-col justify-center items-center h-full w-full">
           <div
-            className={`w-full h-full grid place-items-center ${getGridColsClass()}`}
+            className={`w-full h-[90%] grid place-items-center ${getGridColsClass()}`}
           >
             {/* mainStreamManager 비디오 */}
             {mainStreamManager ? (
@@ -215,7 +215,7 @@ const MiddleDiv = () => {
               </>
             ) : null}
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between h-[10%] mb-2">
             <span className="mr-20">
               <MicBtn />
             </span>
