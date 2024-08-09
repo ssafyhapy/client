@@ -106,7 +106,7 @@ const useOpenViduSession = () => {
     return () => {
       if (session) session.disconnect();
     };
-  }, [webrtcToken]);
+  }, [webrtc.openviduToken]);
 
   useEffect(() => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
