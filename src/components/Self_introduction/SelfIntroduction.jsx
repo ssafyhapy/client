@@ -44,7 +44,8 @@ const SelfIntroduction = () => {
   // const {roomId} = useGameStore()
 
   // 호스트아이디 룸아이디 받아오기
-  const { roomId, hostId } = useRoomStore();
+  const {roomId, hostId} = useRoomStore()
+  
 
   // 준비중... 점들 계속 움직이게 만드는거
   useEffect(() => {
@@ -119,7 +120,7 @@ const SelfIntroduction = () => {
       {!isGamePhase ? (
         <>
           {!allPrepared ? (
-            <>
+            <div className="flex-grow flex items-center justify-center">
               <img
                 src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/snowing_cloud.png"
                 alt="구름 그림"
@@ -128,9 +129,9 @@ const SelfIntroduction = () => {
               <span className="text-[rgba(85,181,236)]">
                 한 줄 자기소개 문제가 만들어지고 있어요{dots}
               </span>
-            </>
+            </div>
           ) : (
-            <>
+            <div className="flex-grow flex items-center justify-center">
               <img
                 src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/star.png"
                 alt="star 그림"
@@ -146,19 +147,19 @@ const SelfIntroduction = () => {
                 src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/star.png"
                 alt="star 그림"
               />
-            </>
+            </div>
           )}
           <div className="flex justify-end"></div>
-        </>
+          </>
       ) : (
-        <>
+        <div className="flex-none mt-10 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem] relative">
           <div className="flex-grow flex items-center justify-center relative">
             <span>나는</span>
             <span className="text-transparent">&nbsp;</span>
             <span className="text-[rgb(129,109,255)] border-solid border-b-4 border-[rgb(129,109,255)]">
               {userText}
             </span>
-            <span className="text-transparent">&n bsp;</span>
+            <span className="text-transparent">&nbsp;</span>
             <span>다.</span>
           </div>
           {memberId === currentPresenterId && (
@@ -171,7 +172,7 @@ const SelfIntroduction = () => {
             alt="생각하는 캐릭터 그림"
             className="absolute bottom-0 left-0 mb-3 ml-3 max-w-[100px] max-h-[100px]"
           />
-        </>
+        </div>
       )}
       {showModal && (
         <SelfIntroductionModal
