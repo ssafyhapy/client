@@ -31,7 +31,15 @@ const GamesDescription = () => {
               }`}
               whileHover={{ scale: 1.05 }}
             >
-              <motion.h2 className="text-3xl font-bold text-center">
+              <motion.h2
+                animate={{ scale: [1, 1.05, 1] }} // 펄스 효과
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }} // 반복 설정
+                className="text-3xl font-bold text-center text-black opacity-50"
+              >
                 {section.title}
               </motion.h2>
             </motion.div>
