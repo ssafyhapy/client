@@ -48,7 +48,7 @@ const useOpenViduSession = () => {
         setSubscribers((prev) => [...prev, subscriber]);
       });
 
-    //   session이 연결되면 connection 정보를 parsing하여 각 객체의 정보를 저장한다.
+      //   session이 연결되면 connection 정보를 parsing하여 각 객체의 정보를 저장한다.
       session.on("connectionCreated", (event) => {
         console.log("[*] connection", event.connection);
         const connectionData = JSON.parse(event.connection.data);
@@ -60,7 +60,7 @@ const useOpenViduSession = () => {
         setConnectionInfo(newConnectionData);
       });
 
-    //  만약 특정 구독자가 방에서 나가거나 그 사람의 stream을 삭제 시킨다. (오픈비두의 자동 기능)
+      //  만약 특정 구독자가 방에서 나가거나 그 사람의 stream을 삭제 시킨다. (오픈비두의 자동 기능)
       session.on("streamDestroyed", (event) => {
         setSubscribers((prevSubscribers) =>
           prevSubscribers.filter(
@@ -68,7 +68,6 @@ const useOpenViduSession = () => {
           )
         );
       });
-
 
       try {
         // 세션 연결 시도
@@ -95,7 +94,7 @@ const useOpenViduSession = () => {
         setSession(session);
         setMainStreamManager(newpublisher);
         setPublisher(newpublisher);
-        setSubsriber
+        setSubsriber;
       } catch (error) {
         console.error("There was an error connecting to the session:", error);
       }
@@ -112,8 +111,10 @@ const useOpenViduSession = () => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
     console.log("[*] mainStream", mainStreamManager);
     console.log("[*] subscriber", subscriber);
-    
-    console.log("[*] 전체 subscribers", subscribers);
+
+    if (subscriber) {
+      console.log("[*] subscriber", subscriber);
+    }
     console.log("[*] 배포됨 2");
   }, [connectionInfo]);
 
