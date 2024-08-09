@@ -53,7 +53,6 @@ const Games = () => {
         });
         const newSubscribers = [...subscribers, subscriber];
         setSubscribers(newSubscribers);
-        console.log("[*] 새로운 구독자 명단", newSubscribers);
       });
 
       session.on("connectionCreated", (event) => {
@@ -82,7 +81,7 @@ const Games = () => {
         await session.connect(webrtc.openviduToken);
         console.log("Session connected successfully");
 
-        const publisher = await OV.initPublisher(undefined, {
+        const newpublisher = await OV.initPublisher(undefined, {
           audioSource: undefined,
           videoSource: undefined,
           publishAudio: true,
@@ -93,17 +92,17 @@ const Games = () => {
           mirror: false,
         });
 
-        await session.publish(publisher);
+        await session.publish(newpublisher);
         console.log("Publisher created and published successfully");
 
-        session.publish(publisher);
+        session.publish(newpublisher);
 
         setSession(session);
-        setMainStreamManager(publisher);
-        setPublisher(publisher);
+        setMainStreamManager(newpublisher);
+        setPublisher(newpublisher);
 
         console.log("[*]session", session);
-        console.log("[*]publisher", publisher);
+        console.log("[*]publisher", newpublisher);
         console.log("[*]subscribers", subscribers);
       } catch (error) {
         console.error("There was an error connecting to the session:", error);
@@ -120,7 +119,8 @@ const Games = () => {
   useEffect(() => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
     console.log("[*] 전체 mainStream", mainStreamManager);
-  }, [connectionInfo]);
+    console.log("[*] 전체 subscribers", subscribers);
+  }, [connectionInfo, subscribers]);
 
   return (
     <WebSocketProvider>
