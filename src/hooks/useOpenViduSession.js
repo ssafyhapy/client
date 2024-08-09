@@ -111,6 +111,8 @@ const useOpenViduSession = () => {
 
   useEffect(() => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
+    console.log("[*] publisher",publisher);
+    
     console.log("[*] mainStream", mainStreamManager);
     console.log("[*] subscriber", subscriber);
 
