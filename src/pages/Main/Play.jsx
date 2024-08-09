@@ -5,25 +5,27 @@ import MainHomeFrame from "../../components/Main_page/MainHomeFrame";
 import MakeRoom from "./MakeRoom";
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../../api/apiClient";
+import axios from "axios";
 import useRoomStore from "../../store/useRoomStore";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Play = () => {
   // 방 만들기 모달 상태
   const [makeRoom, setOpenMakeRoom] = useState(false);
   const openMakeRoom = (event) => {
     event.preventDefault();
+
     setOpenMakeRoom(true);
   };
   const closeMakeRoom = () => {
     setOpenMakeRoom(false);
   };
 
-  // const navigate = useNavigate();
-
-  const { fetchRoomData } = useRoomStore();
+  const navigate = useNavigate();
 
   // 접속코드 통해 입장
+    const { fetchRoomData } = useRoomStore();
+
   const {
     register,
     handleSubmit,
@@ -39,16 +41,42 @@ const Play = () => {
         // "/room/enter?roomCode=196-931"
         `/room/enter?roomCode=${data.roomCode}`
       );
-      console.log(response);
       fetchRoomData(response.data.data);
+      console.log("[* 방 입장]",response.data.data);
       // 방 입장 요청 완료시 카메라 체크 페이지로 이동
-      // navigate("/camera_check");
+      navigate("/games");
     } catch (error) {
       console.log("Error", error);
     }
   };
 
   console.log(watch("roomCode"));
+  
+  // 제출시 방 입장(조회) 요청
+  // const onSubmit = async (data) => {
+  //   console.log(data);
+  //   try {
+  //     const response = await axios.post(
+  //       `https://i11c209.p.ssafy.io/api/room/enter?roomCode=${data.roomCode}`,
+  //       {},
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjQ5OTM3OTE1Iiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjozNTIsImlhdCI6MTcyMjgyNDA4NCwiZXhwIjoxNzI1NDE2MDg0fQ.1Zpsq6_5AT3bp-yizrkzvRiH_Ck0GqIEtSYnBrZ9QOfjbCxx9FjM8NZbf9IQIMzCdxCj_CNNOF49iq1oePdQ7w`,
+  //         },
+  //       }
+  //     );
+  //     console.log("[*] 방 입장", response);
+  //     // fetchRoomData(response.data.data);
+  //     // 방 입장 요청 완료시 카메라 체크 페이지로 이동
+  //     console.log("[* 방 입장] roomdata",response.data.data);
+  //     const roomData = response.data.data;
+  //     navigate("/games", { state: { roomData} });
+  //   } catch (error) {
+  //     console.log("Error", error);
+  //   }
+  // };
+
+  // console.log(watch("roomCode"));
 
   return (
     <>
@@ -88,14 +116,16 @@ const Play = () => {
                         className="w-[90%] mt-2 p-2 border rounded"
                         placeholder="접속코드를 입력해주세요"
                         // 접속코드 입력 폼, 유효성 검사
-                        {...register("roomCode", {required: true}
-                        //   {
-                        //   required: "잘못된 접속코드입니다.",
-                        //   valueAsNumber: true,
-                        //   validate: (value) =>
-                        //     Number.isInteger(value) || "정수만 입력해주세요",
-                        // }
-                      )}
+                        {...register(
+                          "roomCode",
+                          { required: true }
+                          //   {
+                          //   required: "잘못된 접속코드입니다.",
+                          //   valueAsNumber: true,
+                          //   validate: (value) =>
+                          //     Number.isInteger(value) || "정수만 입력해주세요",
+                          // }
+                        )}
                       />
                       {/* 접속코드 입력시 에러 메시지 */}
                       {errors.roomCode && (

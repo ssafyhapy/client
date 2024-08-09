@@ -9,7 +9,6 @@ import Auth from "./pages/Main/Auth";
 import Report from "./pages/Main/Report";
 
 // 게임 공통 페이지(기반)
-// import WaitingRoom from "./pages/Games/WaitingRoom";
 // import CamCheck from "./pages/Games/CamCheck";
 
 // 한 줄 자기소개 페이지들
@@ -22,7 +21,7 @@ import Report from "./pages/Main/Report";
 // import GuessMeGetReady from "./components/Guess_me/GuessMeGetReady";
 // import GuessMeAllPrepared from "./components/Guess_me/GuessMeAllPrepared";
 // import GuessMeAnswer from "./components/Guess_me/GuessMeAnswer";
-// import GuessMe from "./pages/Games/Guess_me/GuessMe";
+import GuessMe from "./components/Guess_me/GuessMe";
 
 
 // 밸런스 페이지들
@@ -88,7 +87,7 @@ function App() {
         {/* <Route path="/self-introduction" element={<SelfIntroduction />} /> */}
 
         {/* 나를 맞춰봐 페이지랑 관련된 Route */}
-        {/* <Route path="/guessme" element={<GuessMe />} /> */}
+        <Route path="/guessme" element={<GuessMe />} />
         {/* <Route path="/guessme-getready" element={<GuessMeGetReady />} />
         <Route path="/guessme-allprepared" element={<GuessMeAllPrepared />} /> */}
 

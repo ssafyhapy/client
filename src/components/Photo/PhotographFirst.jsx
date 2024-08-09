@@ -58,7 +58,7 @@ const PhotographFirst = () => {
           ))}
         </div>
         <div className="m-2 flex items-center justify-center">
-          <GameTurns sectionNumber={1} />
+          <GameTurns gameStep={gameStep} />
         </div>
         <div className="text-center text-sm m-5 font-bold">
           <Photograph_intro />

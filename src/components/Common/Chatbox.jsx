@@ -1,42 +1,94 @@
 import React, { useState, useEffect, useRef } from "react";
 import moment from "moment";
 import webSocketService from "../../WebSocketService";
+import { useWebSocket } from "../../WebSocketContext";
 // import chatsendbutton from "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/chatsendbutton.png";
 // import chatsendbutton from "./../../assets/Common/chatsendbutton.png"
 import useAuthStore from "../../store/useAuthStore";
+import useChatStore from "../../store/useChatStore";
+import useRoomStore from "../../store/useRoomStore";
 // import defaultProfile from "../../assets/Profile/defaultprofile.png";
 
 const Chatbox = () => {
-  const chatsendbutton = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/chatsendbutton.png"
-  const defaultProfile = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/defaultprofile.png"
-  const [messages, setMessages] = useState([]);
+  const chatsendbutton =
+    "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/chatsendbutton.png";
+  const defaultProfile =
+    "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/defaultprofile.png";
+  const { messages, addMessage } = useChatStore(); // Use addMessage from Zustand store
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef(null);
+  const { roomId } = useRoomStore();
+  const { memberName, memberId, memberProfileImageUrl } = useAuthStore();
 
-  const roomId = 1;
-  const { memberName } = useAuthStore();
+  const webSocketService = useWebSocket();
+
+  //   useEffect(() => {
+  //     const handleMessageReceived = (newMessage) => {
+  //       addMessage({
+  //         from: newMessage.memberName,
+  //         message: newMessage.content,
+  //         profileImage: newMessage.profileImage || defaultProfile,
+  //         timestamp: new Date(),
+  //       });
+  //     };
+
+  //     // webSocketService.connect(() => {
+  //       webSocketService.subscribe(`/api/sub/${roomId}`, handleMessageReceived);
+  //     // });
+
+  //     return () => {
+  //       webSocketService.unsubscribe(`/api/sub/${roomId}`)
+  //     };
+  //   }, [roomId, addMessage]); // Include addMessage in the dependencies array
+
+  //   useEffect(() => {
+  //     scrollToBottom();
+  //   }, [messages]);
+
+  //   const handleSendMessage = () => {
+  //     if (newMessage.trim() === "") {
+  //       return;
+  //     }
+  //     webSocketService.sendMessage(
+  //       `/api/pub/message/${roomId}`,
+  //       { content: newMessage, memberName },
+  //       memberName
+  //     );
+  //     setNewMessage("");
+  //   };
+
+  //   const handleKeyDown = (e) => {
+  //     if (e.key === "Enter" && !e.shiftKey) {
+  //       e.preventDefault();
+  //       handleSendMessage();
+  //     }
+  //   };
+
+  //   const scrollToBottom = () => {
+  //     if (messagesEndRef.current) {
+  //       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  //     }
+  //   };
+  // useEffect(() => {
+  //   // console.log("[*]messages", messages);
+  // }, [messages]);
 
   useEffect(() => {
     const handleMessageReceived = (newMessage) => {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          from: newMessage.memberName,
-          message: newMessage.content,
-          profileImage: newMessage.profileImage,
-          timestamp: new Date(),
-        },
-      ]);
+      addMessage({
+        from: newMessage.memberName,
+        message: newMessage.content,
+        profileImage: newMessage.memberProfileImageUrl || defaultProfile,
+        timestamp: new Date(),
+      });
     };
 
-    webSocketService.connect(() => {
-      webSocketService.subscribe(`/api/sub/${roomId}`, handleMessageReceived);
-    });
+    webSocketService.subscribe(`/api/sub/${roomId}`, handleMessageReceived);
 
     return () => {
-      webSocketService.deactivate();
+      webSocketService.unsubscribe(`/api/sub/${roomId}`);
     };
-  }, [roomId]);
+  }, [roomId, addMessage, webSocketService]);
 
   useEffect(() => {
     scrollToBottom();
@@ -46,11 +98,11 @@ const Chatbox = () => {
     if (newMessage.trim() === "") {
       return;
     }
-    webSocketService.sendMessage(
-      `/api/pub/message/${roomId}`,
-      { content: newMessage, memberName },
-      memberName
-    );
+    webSocketService.sendMessage(`/api/pub/message/${roomId}`, {
+      content: newMessage,
+      memberName,
+      memberId
+    });
     setNewMessage("");
   };
 
@@ -68,8 +120,9 @@ const Chatbox = () => {
   };
 
   return (
-    <div className="flex flex-col rounded-[20px] w-full h-full bg-[rgba(255,255,255,0.4)] p-3 overflow-hidden">
-      <div className="flex-1 overflow-y-auto scrollbar-none">
+    // Your existing UI code remains here
+    <div className="flex flex-col rounded-[20px] h-full bg-[rgba(255,255,255,0.4)] p-3 overflow-hidden min-w-[230px]">
+      <div className="flex-1 overflow-y-auto scrollbar-none min-w-[230px]">
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -98,7 +151,7 @@ const Chatbox = () => {
               {msg.from === memberName && (
                 <div className="flex items-center flex-row-reverse">
                   <img
-                    src={msg.profileImage || defaultProfile}
+                    src={memberProfileImageUrl || defaultProfile}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = defaultProfile;
@@ -152,7 +205,6 @@ const Chatbox = () => {
 };
 
 export default Chatbox;
-
 
 // import React, { useState, useEffect, useRef } from "react";
 // import moment from "moment";

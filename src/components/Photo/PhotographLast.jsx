@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import Photograph_final from "./Photograph_final"
+import Photograph_final from "./Photograph_final";
 import GameTurns from "./../Common/GameTurns";
 import TakePhotoModal from "./TakePhotoModal";
 import html2canvas from "html2canvas";
 
 import { useNavigate } from "react-router-dom";
+import useGameStore from "../../store/useGameStore";
 
 const PhotographLast = () => {
+  const { gameStep } = useGameStore();
   const pics = Array(6).fill("pic");
   const [showModal, setShowModal] = useState(false);
   const photoRef = useRef(null);
@@ -37,7 +39,7 @@ const PhotographLast = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-custom-gradient-game flex items-center justify-center">
+    <>
       <div
         ref={photoRef}
         style={{ height: "calc(100vh - 50px)" }}
@@ -51,14 +53,14 @@ const PhotographLast = () => {
           ))}
         </div>
         <div className="m-2 flex items-center justify-center">
-          <GameTurns sectionNumber={3} />
+          <GameTurns gameStep={gameStep} />
         </div>
         <div className="text-center text-sm m-5 font-bold">
           <Photograph_final />
         </div>
       </div>
       {showModal && <TakePhotoModal onCapture={handleCapture} />}
-    </div>
+    </>
   );
 };
 
