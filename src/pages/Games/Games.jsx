@@ -53,6 +53,7 @@ const Games = () => {
         });
         const newSubscribers = [...subscribers, subscriber];
         setSubscribers(newSubscribers);
+        console.log("[* 구독자 명단 생성]",subscribers);
       });
 
       session.on("connectionCreated", (event) => {
