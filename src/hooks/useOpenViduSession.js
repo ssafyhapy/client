@@ -109,6 +109,20 @@ const useOpenViduSession = () => {
   }, []);
 
   useEffect(() => {
+    if (publisher) {
+        // 'streamPropertyChanged' 이벤트 리스너 추가
+        publisher.stream.on('streamPropertyChanged', (event) => {
+            if (event.changedProperty === 'audioActive') {
+                const isAudioEnabled = event.newValue;
+                console.log(`Microphone is now ${isAudioEnabled ? 'enabled' : 'disabled'}`);
+                // 여기에서 publisher의 새로운 상태를 저장하거나 UI 업데이트 등의 작업을 수행할 수 있습니다.
+                setPublisher(publisher)                
+            }
+        });
+    }
+}, [publisher]);
+
+  useEffect(() => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
     console.log("[*] publisher", publisher);
 
