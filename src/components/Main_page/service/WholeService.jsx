@@ -21,6 +21,7 @@ const FirstService = () => {
             "하나하나 따라가는 것만으로도",
             "서로를 더 잘 이해하게 될 거예요.",
           ]}
+          fontsize="64px"
         />
         <div className="flex flex-col w-full">
           <ScrollDownBtn text="사르르 서비스 확인하기" color="#000000" />
