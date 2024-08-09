@@ -13,33 +13,13 @@ import useRoomStore from "../../store/useRoomStore";
 const WaitingRoom = () => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
-  const { roomCode } = useRoomStore;
+  const { memberId } = useAuthStore();
+  const { roomCode, hostId, roomId } = useRoomStore;
   const btnText = "시작";
 
   // 일단 그냥 박아두기
-  const roomId = 1;
-  const hostId = 4;
-  // 멤버아이디는 로그인해서 받아오게만들고
-  // const { memberId } = useAuthStore();
-  const memberId = 4;
-
-  const handleClipBoard = () => {
-    if (roomCode) {
-      navigator.clipboard
-        .writeText(roomCode)
-        .then(() => {
-          setCopyState(true);
-          setShowModal(true);
-        })
-        .catch((err) => {
-          console.error("클립보드에 복사 실패:", err);
-        });
-    }
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+  // const roomId = 1;
+  // const hostId = 4;
 
   // UseEffect -> 바로 구독 (subscribe 함)
   useEffect(() => {
@@ -89,7 +69,7 @@ const WaitingRoom = () => {
     <div className="relative">
       <div className="flex-col flex items-center justify-center relative text-[#96A5FE]">
         <div className="text-[22px]">게임 설명</div>
-        <WaitingRoomGameTurns sectionNumber={3} />
+        <WaitingRoomGameTurns/>
       </div>
       {/* 멤버아이디랑 호스트아이디랑 같을때만 다음버튼이보임 */}
       {memberId === hostId && (

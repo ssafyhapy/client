@@ -13,6 +13,7 @@ const MiddleDiv = () => {
     setPublisher,
     subscribers,
     setSubscribers,
+    connectionInfo,
   } = useGameStore();
 
   const { memberName } = useAuthStore();
@@ -50,23 +51,23 @@ const MiddleDiv = () => {
   };
 
   useEffect(() => {
-    redIds.forEach(id => changeBackgroundColor(id, "salmon"));
+    redIds.forEach((id) => changeBackgroundColor(id, "salmon"));
   }, [redIds]);
-  
+
   useEffect(() => {
-    blueIds.forEach(id => changeBackgroundColor(id, "cornflowerblue"));
+    blueIds.forEach((id) => changeBackgroundColor(id, "cornflowerblue"));
   }, [blueIds]);
-  
+
   const handleChangeToRed = (ids) => {
     setRedIds(ids);
-    setBlueIds(prevBlueIds => prevBlueIds.filter(id => !ids.includes(id)));
+    setBlueIds((prevBlueIds) => prevBlueIds.filter((id) => !ids.includes(id)));
   };
 
   const handleChangeToBlue = (ids) => {
     setBlueIds(ids);
-    setRedIds(prevRedIds => prevRedIds.filter(id => !ids.includes(id)));
+    setRedIds((prevRedIds) => prevRedIds.filter((id) => !ids.includes(id)));
   };
-  
+
   useEffect(() => {
     if (mainStreamManager) {
       setTimeout(() => {
@@ -74,7 +75,6 @@ const MiddleDiv = () => {
       }, 3000);
     }
   }, [mainStreamManager]);
-
 
   return (
     <div id="middleDiv" className="flex justify-center h-[68vh] w-[95%] m-3">
@@ -102,7 +102,11 @@ const MiddleDiv = () => {
               <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
                 <span className="flex ">
                   <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                    {memberName}
+                    {
+                      connectionInfo[
+                        mainStreamManager.stream.connection.connectionId
+                      ].memberName
+                    }
                   </span>
                   <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
                     <img
@@ -158,7 +162,11 @@ const MiddleDiv = () => {
                     <span className="flex ">
                       <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
                         {/* 이름 */}
-                        {memberName}
+                        {
+                          connectionInfo[
+                            mainStreamManager.sub.stream.connection.connectionId
+                          ].memberName
+                        }
                       </span>
                       <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
                         {/* 마이크 상태 */}
