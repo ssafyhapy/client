@@ -1,8 +1,8 @@
 // useOpenViduSession.js
 import { useState, useEffect } from "react";
 import { OpenVidu } from "openvidu-browser";
-import { useRoomStore } from "../store/useRoomStore";
-import { useGameStore } from "../store/useGameStore";
+import useRoomStore from "../store/useRoomStore";
+import useGameStore from "../store/useGameStore";
 
 const useOpenViduSession = ({}) => {
   // Session 연결 시 필요한 정보를 zustand에서 가져오기
