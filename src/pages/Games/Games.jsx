@@ -36,8 +36,6 @@ const Games = () => {
   const { webrtc } = useRoomStore()
   const [session, setSession] = useState(null);
 
-  const mySessionId = roomData.webrtc.sessionId;
-  const myUserName = "Participant" + Math.floor(Math.random() * 100);
 
   const OV = new OpenVidu();
 
