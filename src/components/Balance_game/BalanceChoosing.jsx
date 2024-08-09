@@ -10,7 +10,7 @@ import webSocketService from "../../WebSocketService";
 const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond, onTimerEnd, currentStep }) => {
   const timerImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/timer.png"
 
-  const {memberId} = useAuthStore()
+  // const {memberId} = useAuthStore()
 
   const { pickedChoice, setPickedChoice } = useBalanceStore();
   const { discussedNum } = useBalanceStore();
