@@ -72,7 +72,7 @@ const useOpenViduSession = () => {
 
       try {
         // 세션 연결 시도
-        await session.connect(webrtcToken);
+        await session.connect(webrtc.openviduToken);
         console.log("Session connected successfully");
 
         // 로컬 스트림 생성
