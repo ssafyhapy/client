@@ -51,14 +51,14 @@ const CameraCheckVideoView = ({ data }) => {
                       src={mic_on}
                       alt="mic on"
                       className={`w-[12px] h-[18px] ${
-                        publisher.stream.hasAudio? null : "hidden"
+                        publisher.stream.audioActive? null : "hidden"
                       }`}
                     />
                     <img
                       src={mute}
                       alt="mute"
                       className={`w-[12px] h-[18px] ${
-                        publisher.stream.hasAudio ? "hidden" : null
+                        publisher.stream.audioActive ? "hidden" : null
                       }`}
                     />
                   </span>
