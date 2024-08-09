@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const RotateDescription = ({ sentences, fontsize = "64px", time=3000 }) => {
+const RotateDescription = ({ sentences, fontsize="64px", time=3000 }) => {
   const [index, setIndex] = useState(0);
   // const sentences = [
   //   "오프라인에서의 어색한 첫 만남, 걱정되지는 않으신가요?",
