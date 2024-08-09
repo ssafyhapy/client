@@ -25,8 +25,8 @@ const MakeRoom = ({ closeMakeRoom }) => {
       roomName: data.roomName,
       roomPersonCount: data.roomPersonCount,
     });
-    console.log(response);
     fetchRoomData(response.data.data);
+    console.log("[*] 방 입장", response.data);
     // 방 만들기 요청 완료시 대기실로 이동
     navigate("/games");
   } catch (error) {
