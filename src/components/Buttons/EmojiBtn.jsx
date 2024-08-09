@@ -2,7 +2,7 @@ import React from "react";
 // import smileyface from "src/assets/Common/smileyface.webp"
 
 const EmojiBtn = () => {
-  const smileyface = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/smileyface.png"
+  const smileyface = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/smileyface.webp"
   return (
     // smileyface
     <div>

@@ -25,6 +25,7 @@ const MiddleDiv = () => {
   
   const handleOpenModal = () => {
     setIsModalOpen(true);
+    console.log("클릭됨");
   };
 
   const handleCloseModal = () => {
@@ -214,7 +215,7 @@ const MiddleDiv = () => {
           </>
         ) : null}
 
-        <div className="flex justify-between mt-3">
+        <div className="flex justify-between">
           <span className="mr-20">
             <MicBtn />
           </span>
