@@ -51,8 +51,7 @@ const Games = () => {
         subscriber.on("videoElementCreated", (event) => {
           console.log("[*]Video Element Created", event.element);
         });
-        const newSubscribers = [...subscribers, subscriber];
-        setSubscribers(newSubscribers);
+        setSubscribers(subscriber);
         console.log("[* 구독자 명단 생성]",subscribers);
       });
 
