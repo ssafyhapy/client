@@ -8,6 +8,7 @@ const Auth = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [code, setCode] = useState(null);
+  const [registrationId, setRegistrationId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -20,11 +21,18 @@ const Auth = () => {
     const codeParam = params.get("code");
     console.log("codeParam", codeParam);
     setCode(codeParam);
+    
+    // registrationId를 설정
+    if (location.pathname.includes("/kakao")) {
+      setRegistrationId("kakao");
+    } else if (location.pathname.includes("/google")) {
+      setRegistrationId("google");
+    }
   }, [location]);
 
   // 인가코드가 있을 경우 서버로 요청을 보내어 토큰을 받아옴
   useEffect(() => {
-    if (!code) return;
+    if (!code || !registrationId) return;
 
     // 서버로 인가코드를 보내어 토큰을 받아오는 함수
     const fetchCode = async () => {
@@ -33,7 +41,7 @@ const Auth = () => {
         const response = await axios.post(
           "https://i11c209.p.ssafy.io/api/oauth/login",
           {
-            registrationId: "kakao",
+            registrationId: registrationId,
             authorization: code,
           },
           // headers 생략 가능(default 값임), 특정 API 요구 사항이나 커스텀 헤더 필요할 때 헤더 설정
