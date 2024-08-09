@@ -3,8 +3,8 @@ import kakaoLogin from "../../assets/Login/kakaoLogin.png";
 import googleLogin from "../../assets/Login/googleLogin.png";
 
 const Login = ({ closeLogin }) => {
-  const kakao_client_id = import.meta.env.VITE_CLIENT_ID;
-  const kakao_client_secret = import.meta.env.VITE_CLIENT_SECRET;
+  const kakao_client_id = import.meta.env.VITE_KAKAO_CLIENT_ID;
+  const kakao_client_secret = import.meta.env.VITE_KAKAO_CLIENT_SECRET;
   const KAKAO_REDIRECT_URI = "https://i11c209.p.ssafy.io/login/oauth2/code/kakao";
   const google_client_id = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   const GOOGLE_REDIRECT_URI = "https://i11c209.p.ssafy.io/login/oauth2/code/google";
