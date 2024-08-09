@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import useGameStore from "./../../store/useGameStore"
 import profileSample from "../../assets/profile_sample.png";
+import useAuthStore from "../../store/useAuthStore";
 // import mute from "../../assets/Camera_check/mute.png";
 // import mic_on from "../../assets/Camera_check/mic_on.png";
 
@@ -16,6 +17,8 @@ const CameraCheckVideoView = ({ data }) => {
     subscribers,
     setSubscribers,
   } = useGameStore();
+
+  const {memberName} = useAuthStore()
 
   useEffect(
     () =>
@@ -42,7 +45,7 @@ const CameraCheckVideoView = ({ data }) => {
               <div className="w-full text-white flex absolute bottom-0">
                 <span className="flex ">
                   <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                    {data.name}
+                    {memberName}
                   </span>
                   <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
                     <img
@@ -61,13 +64,7 @@ const CameraCheckVideoView = ({ data }) => {
                     />
                   </span>
                 </span>
-                <span
-                  className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
-                    data.ready ? null : "hidden"
-                  }`}
-                >
-                  준비완료
-                </span>
+
               </div>
             </div>
           </div>
