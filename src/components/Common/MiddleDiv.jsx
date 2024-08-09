@@ -91,9 +91,9 @@ const MiddleDiv = () => {
 
   return (
     <div id="middleDiv" className="flex justify-center h-[68vh] w-[95%] m-3">
-      <div>
+      <div className="bg-[rgba(255,255,255,0.9)] w-[80%] min-w-[550px] h-[90%] mr-5 rounded-[20px] ">
         <div
-          className={`bg-[rgba(255,255,255,0.9)] w-[80%] min-w-[550px] h-full mr-5 rounded-[20px] grid place-items-center ${getGridColsClass()}`}
+          className={`w-full h-full grid place-items-center ${getGridColsClass()}`}
         >
           {/* mainStreamManager 비디오 */}
           {mainStreamManager ? (
