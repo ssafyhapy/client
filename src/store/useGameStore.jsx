@@ -22,8 +22,6 @@ const useGameStore = create((set) => ({
         [newConnectionInfo.connectionId]: newConnectionInfo,
       },
     })),
-  mic:true,
-  setMic:(micToggle)=>set({mic:micToggle})
 }));
 
 export default useGameStore;

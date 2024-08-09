@@ -159,7 +159,7 @@ const MiddleDiv = () => {
                 {/* 구독자 비디오 배경 */}
                 {/* 구독자 비디오 돌리기 */}
                 {subscribers.map((sub) => (
-                  (sub.strea && sub.strea.connectionId ? 
+                  (sub.stream && sub.stream.connectionId ? 
                   <div
                     key={sub.stream.connection.connectionId}
                     id={sub.stream.connection.connectionId}

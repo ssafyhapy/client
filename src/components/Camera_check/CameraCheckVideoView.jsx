@@ -8,7 +8,6 @@ import useAuthStore from "../../store/useAuthStore";
 const CameraCheckVideoView = ({ data }) => {
   const mute = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mute.png"
   const mic_on = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic_on.png"
-  console.log("[*]", data);
   const {
     mainStreamManager,
     setMainStreamManager,
