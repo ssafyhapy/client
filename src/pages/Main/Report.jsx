@@ -1,5 +1,4 @@
 import React from "react";
-import MainGradientBackground from "../../components/Common/MainGradientBackground";
 import MyPageFrame from "../../components/My_page/MyPageFrame";
 import NavBar from "../../components/NavBar";
 import Profile from "../../components/Report/Profile";
@@ -7,7 +6,7 @@ import Step1 from "../../components/Report/Step1";
 import Step2 from "../../components/Report/Step2";
 import Step3 from "../../components/Report/Step3";
 import Picture from "../../components/Report/Picture";
-import bgImage from "../../assets/bg/bgImage5.jpg";
+import bgImage from "../../assets/bg/bgImage.jpg";
 
 const Report = () => {
   return (

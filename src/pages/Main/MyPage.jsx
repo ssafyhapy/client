@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar";
-import MainGradientBackground from "../../components/Common/MainGradientBackground";
 import MyPageFrame from "../../components/My_page/MyPageFrame";
 import { useMypageStore, useUpdateStore } from "../../store/useMypageStore";
 import Header from "../../components/My_page/Header";
@@ -11,7 +10,7 @@ import MemoryBox from "../../components/My_page/MemoryBox";
 import { FormProvider, useForm } from "react-hook-form";
 import Spinner from "../../components/Spinner";
 import useAuthStore from "../../store/useAuthStore";
-import bgImage from "../../assets/bg/bgImage5.jpg";
+import bgImage from "../../assets/bg/bgImage.jpg";
 
 const MyPage = () => {
   const { setProfileImageUrl } = useAuthStore();
