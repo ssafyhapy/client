@@ -51,8 +51,8 @@ const Games = () => {
         subscriber.on("videoElementCreated", (event) => {
           console.log("[*]Video Element Created", event.element);
         });
-        setSubscribers((prevSubscribers) => [...prevSubscribers, subscriber]);
-
+        const newSubscribers = [...subscribers, subscriber];
+        setSubscribers(newSubscribers);
       });
 
       session.on("connectionCreated", (event) => {
