@@ -4,7 +4,7 @@ import { OpenVidu } from "openvidu-browser";
 import useRoomStore from "../store/useRoomStore";
 import useGameStore from "../store/useGameStore";
 
-const useOpenViduSession = ({}) => {
+const useOpenViduSession = () => {
   // Session 연결 시 필요한 정보를 zustand에서 가져오기
   // webrtc안의 openviduToken을 통해 session을 연결함
   const { webrtc } = useRoomStore();
