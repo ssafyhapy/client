@@ -123,8 +123,8 @@ class WebSocketService {
   }
 
   // 나를맞춰봐 다음거 달라고 백에 보내줌
-  sendGuessMeNext(roomId)  {
-    this.sendMessage(`/api/pub/ox/${roomId}/next`, {})
+  sendGuessMeNext(roomId, memberId, nowIndex)  {
+    this.sendMessage(`/api/pub/ox/${roomId}/next`, { memberId, nowIndex })
   }
 
   // 나를맞춰봐 다음 데이터 계속 받아옴

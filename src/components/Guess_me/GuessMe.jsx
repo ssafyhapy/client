@@ -110,19 +110,19 @@ const GuessMe = () => {
   useEffect(() => {
     const handleMessageReceived = (message) => {
       console.log("Received message:", message);
-      // 데이터가 balance야? 나를맞춰봐게임끝. 밸런스게임으로 이동
-      // if (message === "balance") {
-      //   setGameStep("balance-game");
-      //   // 1번 타자 사람이 발표할 데이터가 왔어?
-      //   } else
-      if (message.length > 0 && message[0].memberId) {
-        setCurrentPresenterId(message[0].memberId);
-        setUserQuestions(message);
-        setCurrentQuestionIndex(0);
-        // 준비 완료!! div 보일수있게 true로 설정
-        setShowReadyMessage(true);
-      }
-    };
+    // 받은게 문제3개세트 데이터면
+    if (Array.isArray(message) && message.length > 0 && message[0].memberId) {
+      setCurrentPresenterId(message[0].memberId);
+      setUserQuestions(message); // Load the new set of questions
+      setCurrentQuestionIndex(0);
+      setShowReadyMessage(true);
+    }
+    // 받은게 memberId, nextIndex 면
+    else if (message.memberId && typeof message.nextIndex === 'number') {
+      setCurrentQuestionIndex(message.nextIndex);
+      startTimer(); // Start the timer for the next question
+    }
+  };
 
     webSocketService.subscribeToGuessMe(roomId, handleMessageReceived);
     webSocketService.subscribeToMemberState(roomId, (message) => {
@@ -201,15 +201,18 @@ const GuessMe = () => {
 
   // 다음 버튼과  연결된 함수
   const handleNextStep = () => {
+    // 다음 버튼을 누를때마다 pub 요청 보냄
+    webSocketService.sendGuessMeNext(roomId, memberId, currentQuestionIndex)
+
     // 아직 첫번째 타자 발표할 내용 남았어? 그럼 보여줘
     if (currentQuestionIndex < userQuestions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      // setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSecondsLeft(10);
       setShowResult(false);
       startTimer();
     } else {
       // 첫타자 발표끝났으면 (인덱스가 3번째면) 다시 pub 요청 보냄
-      webSocketService.sendGuessMeNext(roomId);
+      // webSocketService.sendGuessMeNext(roomId);
       setSecondsLeft(10);
       setShowResult(false);
       setUserQuestions([]);
