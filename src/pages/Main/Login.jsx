@@ -5,9 +5,9 @@ import googleLogin from "../../assets/Login/googleLogin.png";
 const Login = ({ closeLogin }) => {
   const kakao_client_id = import.meta.env.VITE_CLIENT_ID;
   const kakao_client_secret = import.meta.env.VITE_CLIENT_SECRET;
-  const KAKAO_REDIRECT_URI = "https://i11c209.p.ssafy.io/oauth2/code/kakao";
+  const KAKAO_REDIRECT_URI = "https://i11c209.p.ssafy.io/login/oauth2/code/kakao";
   const google_client_id = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-  const GOOGLE_REDIRECT_URI = "https://i11c209.p.ssafy.io/oauth2/code/google";
+  const GOOGLE_REDIRECT_URI = "https://i11c209.p.ssafy.io/login/oauth2/code/google";
   
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
