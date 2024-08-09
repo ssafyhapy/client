@@ -153,13 +153,12 @@ const MiddleDiv = () => {
             ) : null}
 
             {/* 여러명 있을 때 */}
-            {mainStreamManager && subscribers.length > 0 && mainStreamManager.stream.connection ? (
+            {subscribers.length > 0 ? (
               // 구독자 비디오 표현
               <>
                 {/* 구독자 비디오 배경 */}
                 {/* 구독자 비디오 돌리기 */}
                 {subscribers.map((sub) => (
-                  (sub.stream && sub.stream.connectionId ? 
                   <div
                     key={sub.stream.connection.connectionId}
                     id={sub.stream.connection.connectionId}
@@ -211,7 +210,7 @@ const MiddleDiv = () => {
                         </span>
                       </div>
                     </div>
-                  </div> : null)
+                  </div>
                 ))}
               </>
             ) : null}
