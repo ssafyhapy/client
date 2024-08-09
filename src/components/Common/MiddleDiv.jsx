@@ -158,10 +158,16 @@ const MiddleDiv = () => {
               <>
                 {/* 구독자 비디오 배경 */}
                 {/* 구독자 비디오 돌리기 */}
-                {subscribers.map((sub) => (
+                {subscribers.map((sub) => {
+                  const connectionId = sub.stream?.connection?.connectionId;
+                  if (!connectionId) {
+                    console.warn(`No connectionId found for subscriber:`, sub);
+                    return null;
+                  }
+                  return;
                   <div
-                    key={sub.stream.connection.connectionId}
-                    id={sub.stream.connection.connectionId}
+                    key={connectionId}
+                    id={connectionId}
                     className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
                   >
                     <div className="w-full relative rounded-[15px]">
@@ -210,8 +216,8 @@ const MiddleDiv = () => {
                         </span>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  </div>;
+                })}
               </>
             ) : null}
           </div>
