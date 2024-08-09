@@ -44,8 +44,7 @@ const SelfIntroduction = () => {
   // const {roomId} = useGameStore()
 
   // 호스트아이디 룸아이디 받아오기
-  const {roomId, hostId} = useRoomStore()
-  
+  const { roomId, hostId } = useRoomStore();
 
   // 준비중... 점들 계속 움직이게 만드는거
   useEffect(() => {
@@ -150,9 +149,9 @@ const SelfIntroduction = () => {
             </div>
           )}
           <div className="flex justify-end"></div>
-          </>
+        </>
       ) : (
-        <div className="flex-none mt-10 w-full h-[7rem] rounded-[40px] bg-[rgba(255,255,255,0.7)] shadow-[0_0_30px_rgba(66,72,81,0.2)] text-[#55B5EC] text-[24px] flex flex-col justify-between p-[1rem] relative">
+        <>
           <div className="flex-grow flex items-center justify-center relative">
             <span>나는</span>
             <span className="text-transparent">&nbsp;</span>
@@ -172,7 +171,7 @@ const SelfIntroduction = () => {
             alt="생각하는 캐릭터 그림"
             className="absolute bottom-0 left-0 mb-3 ml-3 max-w-[100px] max-h-[100px]"
           />
-        </div>
+        </>
       )}
       {showModal && (
         <SelfIntroductionModal
