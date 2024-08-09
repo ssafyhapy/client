@@ -8,6 +8,7 @@ import GameTurns from "../Common/GameTurns";
 import useGameStore from "../../store/useGameStore";
 import webSocketService from "../../WebSocketService";
 import useAuthStore from "../../store/useAuthStore";
+import useRoomStore from "../../store/useRoomStore";
 
 const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
   const [secondsLeft, setSecondsLeft] = useState(10);
@@ -32,7 +33,7 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
   const setGameStep = useGameStore((state) => state.setGameStep);
 
   // 일단 박아둠
-  const roomId = 1;
+  const {roomId} = useRoomStore()
   // const { roomId } = useGameStore();
   const { memberId } = useAuthStore();
   // const memberId = 4

@@ -6,6 +6,7 @@ import { useWebSocket } from "../../WebSocketContext";
 // import chatsendbutton from "./../../assets/Common/chatsendbutton.png"
 import useAuthStore from "../../store/useAuthStore";
 import useChatStore from "../../store/useChatStore";
+import useRoomStore from "../../store/useRoomStore";
 // import defaultProfile from "../../assets/Profile/defaultprofile.png";
 
 const Chatbox = () => {
@@ -16,9 +17,8 @@ const Chatbox = () => {
   const { messages, addMessage } = useChatStore(); // Use addMessage from Zustand store
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef(null);
-
-  const roomId = 1;
-  const { memberName } = useAuthStore();
+  const { roomId } = useRoomStore();
+  const { memberName, memberId, memberProfileImageUrl } = useAuthStore();
 
   const webSocketService = useWebSocket();
 
@@ -78,7 +78,7 @@ const Chatbox = () => {
       addMessage({
         from: newMessage.memberName,
         message: newMessage.content,
-        profileImage: newMessage.profileImage || defaultProfile,
+        profileImage: newMessage.memberProfileImageUrl || defaultProfile,
         timestamp: new Date(),
       });
     };
@@ -101,6 +101,7 @@ const Chatbox = () => {
     webSocketService.sendMessage(`/api/pub/message/${roomId}`, {
       content: newMessage,
       memberName,
+      memberId
     });
     setNewMessage("");
   };
@@ -133,7 +134,7 @@ const Chatbox = () => {
               {msg.from !== memberName && (
                 <div className="flex items-center flex-row">
                   <img
-                    src={msg.profileImage || defaultProfile}
+                    src={msg.memberProfileImageUrl || defaultProfile}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = defaultProfile;
@@ -150,7 +151,7 @@ const Chatbox = () => {
               {msg.from === memberName && (
                 <div className="flex items-center flex-row-reverse">
                   <img
-                    src={msg.profileImage || defaultProfile}
+                    src={memberProfileImageUrl || defaultProfile}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = defaultProfile;

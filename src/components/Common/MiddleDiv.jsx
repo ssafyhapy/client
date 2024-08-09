@@ -178,7 +178,7 @@ const MiddleDiv = () => {
                         {/* 이름 */}
                         {
                           connectionInfo[
-                            mainStreamManager.sub.stream.connection.connectionId
+                            sub.stream.connection.connectionId
                           ].memberName
                         }
                       </span>

@@ -41,7 +41,7 @@ const SelfIntroduction = () => {
   // const memberId = 4
   // 호스트아이디는 일단 박아두기
   const hostId = 4;
-  const roomId = 1;
+  const {roomId} = useGameStore()
 
   // 호스트아이디 룸아이디 받아오기
   // const {roomId, hostId} = useRoomStore()

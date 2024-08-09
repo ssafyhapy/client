@@ -68,6 +68,7 @@ import BasicBtn from "../Buttons/BasicBtn";
 import GuessMeModal from "./GuessMeModal";
 import useGameStore from "../../store/useGameStore";
 import useAuthStore from "../../store/useAuthStore";
+import useRoomStore from "../../store/useRoomStore";
 
 const GuessMe = () => {
   const snowingCloud = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/snowing_cloud.png";
@@ -93,7 +94,7 @@ const GuessMe = () => {
 
   const { memberId } = useAuthStore();
   // const memberId = 4
-  const roomId = 1;
+  const {roomId} = useRoomStore()
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
   const btnText = "다음";
