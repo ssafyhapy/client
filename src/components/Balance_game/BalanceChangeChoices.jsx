@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useGameStore from "../../store/useGameStore";
 import useBalanceStore from "../../store/useBalanceStore";
@@ -9,31 +9,40 @@ import GameTurns from "../../components/Common/GameTurns";
 // import refresh from "./../../assets/Balance_game/refresh.png"
 import webSocketService from "../../WebSocketService";
 
-const BalanceChangeChoices = ({ roomId, purpose, onConfirm, optionFirst, optionSecond }) => {
-  const refresh = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/refresh.png"
+const BalanceChangeChoices = ({
+  memberId,
+  hostId,
+  roomId,
+  purpose,
+  onConfirm,
+  optionFirst,
+  optionSecond,
+}) => {
+  const refresh =
+    "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/refresh.png";
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
   const { pickedChoice, setPickedChoice } = useBalanceStore();
   const { discussedNum, setDiscussedNum } = useBalanceStore();
 
-  const [First, setOptionFirst] = useState("")
-  const [Second, setOptionSecond] = useState("")
+  const [First, setOptionFirst] = useState("");
+  const [Second, setOptionSecond] = useState("");
 
   useEffect(() => {
-    setOptionFirst(optionFirst)
-    setOptionSecond(optionSecond)
-  })
+    setOptionFirst(optionFirst);
+    setOptionSecond(optionSecond);
+  });
 
   const updateBalanceChoices = () => {
     // 주제변경 버튼 누르면 다시 pub해줌
-    webSocketService.sendBalancePurpose(roomId, purpose)
+    webSocketService.sendBalancePurpose(roomId, purpose);
     setPickedChoice(null);
     // setBalanceChoices({first:, second:})
   };
 
   const handleConfirmChoices = () => {
     // 확정된 주제 백에 보내줌
-    webSocketService.sendBalanceChosenTopic(roomId, optionFirst, optionSecond)
+    webSocketService.sendBalanceChosenTopic(roomId, optionFirst, optionSecond);
     setDiscussedNum((prevNum) => prevNum + 1);
     setPickedChoice(null);
     onConfirm(); // 주제 확정 후 다음 단계로 이동
@@ -79,15 +88,17 @@ const BalanceChangeChoices = ({ roomId, purpose, onConfirm, optionFirst, optionS
           discussedNum >= 5 ? "hidden" : ""
         }`}
       >
-        <div>
-          <button
-            onClick={updateBalanceChoices}
-            className="flex flex-col justify-center items-center "
-          >
-            <img src={refresh} alt="주제 변경" className="w-[80%]" />
-          </button>
-          <div className="text-[12px]">주제 변경</div>
-        </div>
+        {memberId == hostId && (
+          <div>
+            <button
+              onClick={updateBalanceChoices}
+              className="flex flex-col justify-center items-center "
+            >
+              <img src={refresh} alt="주제 변경" className="w-[80%]" />
+            </button>
+            <div className="text-[12px]">주제 변경</div>
+          </div>
+        )}
       </div>
 
       <div
@@ -97,24 +108,26 @@ const BalanceChangeChoices = ({ roomId, purpose, onConfirm, optionFirst, optionS
       >
         현재 토론 완료 : {discussedNum}/5
       </div>
-      <div className="absolute bottom-3 right-5 flex flex-col items-center">
-        <div className="flex flex-col justify-center items-center">
-          <button
-            onClick={handleConfirmChoices}
-            className={`bg-[rgba(150,165,254,0.6)] text-white w-[76px] h-[30px] text-[16px] rounded-[30px] mb-3 shadow-[0_4px_10px_rgba(66,72,81,0.5)] ${
-              pickedChoice !== null ? "hidden" : ""
-            } ${discussedNum >= 5 ? "hidden" : ""}`}
-          >
-            주제 확정
-          </button>
-          <button
-            onClick={handleNextStep}
-            className="w-[76px] h-[30px] rounded-[30px] text-[#458EF7] text-[16px] bg-custom-gradient-basicBtn shadow-[0_4px_10px_rgba(66,72,81,0.5)]"
-          >
-            다음 단계
-          </button>
+      {memberId === hostId && (
+        <div className="absolute bottom-3 right-5 flex flex-col items-center">
+          <div className="flex flex-col justify-center items-center">
+            <button
+              onClick={handleConfirmChoices}
+              className={`bg-[rgba(150,165,254,0.6)] text-white w-[76px] h-[30px] text-[16px] rounded-[30px] mb-3 shadow-[0_4px_10px_rgba(66,72,81,0.5)] ${
+                pickedChoice !== null ? "hidden" : ""
+              } ${discussedNum >= 5 ? "hidden" : ""}`}
+            >
+              주제 확정
+            </button>
+            <button
+              onClick={handleNextStep}
+              className="w-[76px] h-[30px] rounded-[30px] text-[#458EF7] text-[16px] bg-custom-gradient-basicBtn shadow-[0_4px_10px_rgba(66,72,81,0.5)]"
+            >
+              다음 단계
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

@@ -96,9 +96,9 @@ const Balance = () => {
         <BalanceGetReady setPurpose={setPurpose} onClose={handleSubjectSaveModal} dots={dots} />
       )}
       {currentStep === "changeChoices" && (
-        <BalanceChangeChoices topicId={topicId} roomId={roomId} purpose={purpose} onConfirm={handleSubjectConfirm} optionFirst={optionFirst} optionSecond={optionSecond} />
+        <BalanceChangeChoices memberId={memberId} hostId={hostId} topicId={topicId} roomId={roomId} purpose={purpose} onConfirm={handleSubjectConfirm} optionFirst={optionFirst} optionSecond={optionSecond} />
       )}
-      {currentStep === "choosing" && <BalanceChoosing roomId={roomId} memberId={memberId} topicId={topicId} purpose={purpose} onTimerEnd={handleTimerEnd} currentStep={`${currentStep==="choosing"?true:false}`}/>}
+      {currentStep === "choosing" && <BalanceChoosing hostId={hostId} roomId={roomId} memberId={memberId} topicId={topicId} purpose={purpose} onTimerEnd={handleTimerEnd} currentStep={`${currentStep==="choosing"?true:false}`}/>}
     </>
   );
 };
