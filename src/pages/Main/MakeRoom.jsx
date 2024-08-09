@@ -15,25 +15,24 @@ const MakeRoom = ({ closeMakeRoom }) => {
   } = useForm();
   const navigate = useNavigate();
 
-  // const { fetchRoomData } = useRoomStore();
+  const { fetchRoomData } = useRoomStore();
 
-// 제출시 방 입장(조회) 요청
-const onSubmit = async (data) => {
+ // form 제출시 방 만들기 요청
+ const onSubmit = async (data) => {
   console.log(data);
   try {
-    const response = await axiosInstance.post(
-      // "/room/enter?roomCode=196-931"
-      `/room/enter?roomCode=${data.roomCode}`
-    );
+    const response = await axiosInstance.post("/room/create", {
+      roomName: data.roomName,
+      roomPersonCount: data.roomPersonCount,
+    });
     console.log(response);
     fetchRoomData(response.data.data);
-    // 방 입장 요청 완료시 카메라 체크 페이지로 이동
+    // 방 만들기 요청 완료시 대기실로 이동
     navigate("/games");
   } catch (error) {
     console.log("Error", error);
   }
 };
-
 
   // form 제출시 방 만들기 요청
   // const onSubmit = async (data) => {
