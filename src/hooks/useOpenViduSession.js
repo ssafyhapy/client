@@ -15,7 +15,7 @@ const useOpenViduSession = () => {
     setPublisher,
     subscribers,
     subscriber,
-    setSubsciber,
+    setSubscriber,
     setSubscribers,
     connectionInfo,
     setConnectionInfo,
@@ -39,15 +39,16 @@ const useOpenViduSession = () => {
 
       session.on("streamCreated", (event) => {
         // session에 연결하여 현재 사용자를 session에 구독시키고 비디오를 생성한다.
-        const subscriber = session.subscribe(event.stream, undefined);
-        console.log("[*] Subscriber created", subscriber);
-
+        const newSubscriber = session.subscribe(event.stream, undefined);
+        console.log("[*] Subscriber created", newSubscriber);
+        setSubscriber(newSubscriber)
+        
         // 현재 사용자의 비디오가 생성되면 비디오를 확인한다.
-        subscriber.on("videoElementCreated", (event) => {
+        newSubscriber.on("videoElementCreated", (event) => {
           console.log("[*] Video Element Created", event.element);
         });
         // 과거 구독자 명단과 현재 사용자가 구독하여 생성된 구독자 객체를 배열로 합친다.
-        setSubscribers((prev) => [...prev, subscriber]);
+        setSubscribers((prev) => [...prev, newSubscriber]);
       });
 
       //   session이 연결되면 connection 정보를 parsing하여 각 객체의 정보를 저장한다.
@@ -96,7 +97,6 @@ const useOpenViduSession = () => {
         setSession(session);
         setMainStreamManager(newpublisher);
         setPublisher(newpublisher);
-        setSubsriber;
       } catch (error) {
         console.error("There was an error connecting to the session:", error);
       }
@@ -111,14 +111,12 @@ const useOpenViduSession = () => {
 
   useEffect(() => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
-    console.log("[*] publisher",publisher);
-    
+    console.log("[*] publisher", publisher);
+
     console.log("[*] mainStream", mainStreamManager);
+    console.log("[*] newSubscriber", subscriber);
     
-    if (subscriber) {
-        console.log("[*] subscriber", subscriber);
-        console.log("[*] subscribers", subscribers);
-    }
+    console.log("[*] subscribers", subscribers);
     console.log("[*] 배포됨 2");
   }, [connectionInfo]);
 
