@@ -32,12 +32,12 @@ const CameraCheckVideoView = ({ data }) => {
 
   return (
     <>
-      {mainStreamManager ? (
+      {publisher ? (
         <div className="relative w-full h-full flex justify-center items-center rounded-[15px]">
           <div id="videoFront" className="relative w-[90%] h-[90%]">
             <video
               autoPlay={true}
-              ref={(video) => video && mainStreamManager.addVideoElement(video)}
+              ref={(video) => video && publisher.addVideoElement(video)}
               className="object-cover w-full h-full rounded-[15px]"
             />
             <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-between">
@@ -51,14 +51,14 @@ const CameraCheckVideoView = ({ data }) => {
                       src={mic_on}
                       alt="mic on"
                       className={`w-[12px] h-[18px] ${
-                        data.mic ? null : "hidden"
+                        publisher.stream.hasAudio? null : "hidden"
                       }`}
                     />
                     <img
                       src={mute}
                       alt="mute"
                       className={`w-[12px] h-[18px] ${
-                        data.mic ? "hidden" : null
+                        publisher.stream.hasAudio ? "hidden" : null
                       }`}
                     />
                   </span>
