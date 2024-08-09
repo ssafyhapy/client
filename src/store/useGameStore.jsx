@@ -8,13 +8,13 @@ const useGameStore = create((set) => ({
   publisher: null,
   setPublisher: (pub) => set({ publisher: pub }),
   subscriber: null,
-  setSubsciber: (sub) => set({ subscriber: sub }),
-  subscribers: [],
+  setSubscriber: (sub) => set({ subscriber: sub }),  // 함수명 수정
+  subscribers: [],  // 구독자 목록
   setSubscribers: (sub) =>
     set((prev) => ({
       subscribers: [...prev.subscribers, sub],
     })),
-  connectionInfo: [],
+  connectionInfo: {},  // 객체 형태로 수정
   setConnectionInfo: (newConnectionInfo) =>
     set((prev) => ({
       connectionInfo: {
