@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import checkedCircle from "../../assets/Game_turns/checked.png";
-import circle from "../../assets/Game_turns/circle.png";
 import arrow from "../../assets/Game_turns/arrow.png";
 
 const WaitingRoomGameTurns = () => {
@@ -63,10 +62,6 @@ const WaitingRoomGameTurns = () => {
             src={checkedCircle}
             alt=""
           />
-          <img
-            src={circle}
-            alt=""
-          />
           <div className="text-[18px]">나를 맞춰봐</div>
           {hoveredSection === "guess" && (
             <div
@@ -103,10 +98,6 @@ const WaitingRoomGameTurns = () => {
         >
           <img
             src={checkedCircle}
-            alt=""
-          />
-          <img
-            src={circle}
             alt=""
           />
           <div className="text-[18px]">밸런스 게임</div>
