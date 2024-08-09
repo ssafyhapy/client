@@ -109,18 +109,19 @@ const useOpenViduSession = () => {
   }, []);
 
   useEffect(() => {
-    if (publisher) {
+    if (publisher && publisher.stream && typeof publisher.stream.on === 'function') {
         // 'streamPropertyChanged' 이벤트 리스너 추가
         publisher.stream.on('streamPropertyChanged', (event) => {
             if (event.changedProperty === 'audioActive') {
                 const isAudioEnabled = event.newValue;
                 console.log(`Microphone is now ${isAudioEnabled ? 'enabled' : 'disabled'}`);
-                // 여기에서 publisher의 새로운 상태를 저장하거나 UI 업데이트 등의 작업을 수행할 수 있습니다.
-                setPublisher(publisher)                
+                // 필요한 작업 수행
+                setPublisher(publisher);
             }
         });
     }
 }, [publisher]);
+
 
   useEffect(() => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
@@ -130,7 +131,7 @@ const useOpenViduSession = () => {
     console.log("[*] newSubscriber", subscriber);
     
     console.log("[*] subscribers", subscribers);
-    console.log("[*] 배포됨 1");
+    console.log("[*] 배포됨 2");
   }, [subscribers, connectionInfo, publisher, mainStreamManager, subscriber]);
 
   return { session };
