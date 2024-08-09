@@ -134,7 +134,7 @@ const Chatbox = () => {
               {msg.from !== memberName && (
                 <div className="flex items-center flex-row">
                   <img
-                    src={msg.memberProfileImageUrl || defaultProfile}
+                    src={msg.profileImage || defaultProfile}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = defaultProfile;

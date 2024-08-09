@@ -510,9 +510,9 @@ const GuessMe = () => {
 
     // 다음문제! 10초로 타이머 다시설정
     // 정답보여주는거 닷미 false로 설정
-    setSecondsLeft(10)
+    // setSecondsLeft(10)
     setShowResult(false)
-    startTimer()
+    // startTimer()
   };
 
   // 타이머 시작하기 전에 약간의 delay
