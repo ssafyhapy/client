@@ -41,8 +41,8 @@ const Play = () => {
         // "/room/enter?roomCode=196-931"
         `/room/enter?roomCode=${data.roomCode}`
       );
-      console.log("[* 방 입장]",response);
       fetchRoomData(response.data.data);
+      console.log("[* 방 입장]",response.data.data);
       // 방 입장 요청 완료시 카메라 체크 페이지로 이동
       navigate("/games");
     } catch (error) {

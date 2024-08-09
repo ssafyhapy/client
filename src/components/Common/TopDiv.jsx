@@ -7,7 +7,7 @@ import useRoomStore from "../../store/useRoomStore";
 const TopDiv = ({ gameStep }) => {
   const [copyState, setCopyState] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const {roomCode} = useRoomStore
+  const {roomCode} = useRoomStore()
 
 
   const handleClipBoard = () => {
