@@ -60,7 +60,7 @@ const BalanceChangeChoices = ({
       <div className="flex-grow flex items-center justify-center relative gap-5">
         <div
           className={`text-[rgba(85,181,236)] px-2 py-3 rounded-[10px] ${
-            pickedChoice === 1
+            pickedChoice === "FIRST"
               ? "border-solid border-4 border-[#64B8FF]"
               : "border-transparent"
           }`}
@@ -74,7 +74,7 @@ const BalanceChangeChoices = ({
         <span className="text-[#FF607F]">VS</span>
         <div
           className={`text-[#FF6A89] px-2 py-3 rounded-[10px] ${
-            pickedChoice === 2
+            pickedChoice === "SECOND"
               ? "border-solid border-4 border-[rgba(254,176,207)]"
               : "border-transparent"
           }`}
