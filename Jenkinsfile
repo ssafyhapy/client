@@ -103,6 +103,13 @@ pipeline {
                         # Add frontend subtree
                         git subtree pull --prefix=frontend https://${GITHUB_TOKEN}@${GITHUB_FRONTEND_REPO_URL} main
 
+                        # 서브 리포지토리들의 .gitattributes 파일을 메인으로 병합
+                        if [ -f frontend/.gitattributes ]; then
+                            cp frontend/.gitattributes ./
+                            git add .gitattributes
+                            git commit -m "Merge .gitattributes from frontend subtree" || true
+                        fi
+                        
                         # 모든 LFS 객체 가져오기 및 체크아웃
                         git lfs fetch --all
                         git lfs checkout
