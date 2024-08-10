@@ -71,6 +71,8 @@ const useOpenViduSession = () => {
         );
       });
 
+      //
+
       try {
         // 세션 연결 시도
         await session.connect(webrtc.openviduToken);
@@ -92,6 +94,25 @@ const useOpenViduSession = () => {
         await session.publish(newpublisher);
         console.log("Publisher created and published successfully");
 
+        // Publisher의 마이크 상태가 변경되었을 때
+        newPublisher.stream.on("streamPropertyChanged", (event) => {
+          if (event.changedProperty === "audioActive") {
+            const isAudioEnabled = event.newValue;
+            console.log(
+              `Your microphone is now ${
+                isAudioEnabled ? "enabled" : "disabled"
+              }`
+            );
+            setPublisher((prevPublisher) => ({
+              ...prevPublisher,
+              stream: {
+                ...prevPublisher.stream,
+                audioActive: isAudioEnabled,
+              },
+            }));
+          }
+        });
+
         // Session, MainStreamManager, Publisher, Subscriber를 업데이트함
         setSession(session);
         setMainStreamManager(newpublisher);
@@ -108,73 +129,48 @@ const useOpenViduSession = () => {
     };
   }, []);
 
-  // pub의 오디오 상태 감지를 위해 이벤트 리스너 추가
-
   useEffect(() => {
-    if (
-      publisher &&
-      publisher.stream &&
-      typeof publisher.stream.on === "function"
-    ) {
-      publisher.stream.on("streamPropertyChanged", (event) => {
-        if (event.changedProperty === "audioActive") {
-          const isAudioEnabled = event.newValue;
-          console.log(
-            `Your microphone is now ${isAudioEnabled ? "enabled" : "disabled"}`
-          );
-          // publisher 상태 업데이트
-          setPublisher((prevPublisher) => { console.log("pub은 바뀜?");
-           return ({
-            ...prevPublisher, // 기존의 publisher 객체를 복사
-            stream: {
-              ...prevPublisher.stream, // 기존의 stream 객체를 복사
-              audioActive: isAudioEnabled, // 새로운 audioActive 값을 설정
-            },
-          })});
-        }
-      });
-    }
-  }, [publisher, setPublisher]);
-
-  // 구독자들의 오디오 상태 감지를 위해 이벤트 리스너 추가
-  useEffect(() => {
-    subscribers.forEach((subscriber, index) => {
+    // 모든 구독자에 대해 이벤트 리스너 등록
+    subscribers.forEach((subscriber) => {
       if (subscriber.stream && typeof subscriber.stream.on === "function") {
-        // 구독자의 스트림 상태 변경을 감지하여 업데이트
-        subscriber.stream.on("streamPropertyChanged", (event) => {
+        const handleStreamPropertyChanged = (event) => {
           if (event.changedProperty === "audioActive") {
-            const isAudioState = event.newValue;
+            const isAudioEnabled = event.newValue;
             console.log(
               `Subscriber's microphone is now ${
-                isAudioState ? "enabled" : "disabled"
+                isAudioEnabled ? "enabled" : "disabled"
               }`
             );
-            // subscribers 상태 업데이트
-            setSubscribers((prevSubscribers) => {
-              console.log("바뀌고 있어?", prevSubscribers);
-              return prevSubscribers.map((sub, i) =>
-                i === index
+            setSubscribers((prevSubscribers) =>
+              prevSubscribers.map((sub) =>
+                sub === subscriber
                   ? {
-                      ...sub, // 기존 sub 객체 복사
+                      ...sub,
                       stream: {
-                        ...sub.stream, // 기존의 stream 객체 복사
-                        audioActive: isAudioState, // 새로운 audioActive 값을 설정
+                        ...sub.stream,
+                        audioActive: isAudioEnabled,
                       },
                     }
-                  : sub // 인덱스가 일치하지 않는 구독자는 기존 상태 유지
-              );
-            });
+                  : sub
+              )
+            );
           }
-        });
-      } else {
-        console.error(
-          `Subscriber at index ${index} has an invalid stream object:`,
-          subscriber
+        };
+
+        subscriber.stream.on(
+          "streamPropertyChanged",
+          handleStreamPropertyChanged
         );
+
+        return () => {
+          subscriber.stream.off(
+            "streamPropertyChanged",
+            handleStreamPropertyChanged
+          );
+        };
       }
     });
   }, [subscribers, setSubscribers]);
-  
 
   useEffect(() => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
