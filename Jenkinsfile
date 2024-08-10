@@ -106,10 +106,12 @@ pipeline {
 
                         # Add backend subtree (to ensure it remains updated)
                         git subtree pull --prefix=backend https://${GITHUB_TOKEN}@${GITHUB_BACKEND_REPO_URL} main
+                        git lfs fetch --include="backend/**"
 
                         # Add frontend subtree
                         git subtree pull --prefix=frontend https://${GITHUB_TOKEN}@${GITHUB_FRONTEND_REPO_URL} main
-
+                        git lfs fetch --include="frontend/**"
+                        
                         # Set remote URL for GitLab
                         git remote set-url origin https://${GITLAB_USERNAME}:${GITLAB_PASSWORD}@lab.ssafy.com/s11-webmobile1-sub2/S11P12C209.git
                         
