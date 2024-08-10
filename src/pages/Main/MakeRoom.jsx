@@ -17,49 +17,51 @@ const MakeRoom = ({ closeMakeRoom }) => {
 
   const { fetchRoomData } = useRoomStore();
 
- // form 제출시 방 만들기 요청
- const onSubmit = async (data) => {
-  console.log(data);
-  try {
-    const response = await axiosInstance.post("/room/create", {
-      roomName: data.roomName,
-      roomPersonCount: data.roomPersonCount,
-    });
-    fetchRoomData(response.data.data);
-    console.log("[*] 방 입장", response.data);
-    // 방 만들기 요청 완료시 대기실로 이동
-    navigate("/games");
-  } catch (error) {
-    console.log("Error", error);
-  }
-};
+//  // form 제출시 방 만들기 요청
+//  const onSubmit = async (data) => {
+//   console.log(data);
+//   try {
+//     const response = await axiosInstance.post("/room/create", {
+//       roomName: data.roomName,
+//       roomPersonCount: data.roomPersonCount,
+//     });
+//     fetchRoomData(response.data.data);
+//     console.log("[*] 방 입장", response.data);
+//     // 방 만들기 요청 완료시 대기실로 이동
+//     navigate("/games");
+//   } catch (error) {
+//     console.log("Error", error);
+//   }
+// };
+
+const token = new URLSearchParams(location.search).get('token')
 
   // form 제출시 방 만들기 요청
-  // const onSubmit = async (data) => {
-  //   console.log(data);
-  //   try {
-  //     const response = await axios.post(
-  //       "https://i11c209.p.ssafy.io/api/room/create",
-  //       {
-  //         roomName: data.roomName,
-  //         roomPersonCount: data.roomPersonCount,
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${testToken}`,
-  //         },
-  //       }
-  //     );
-  //     const roomData = response.data.data;
-  //     console.log("[*] roomData",roomData);
-  //     // fetchRoomData(response.data.data);
+  const onSubmit = async (data) => {
+    console.log(data);
+    try {
+      const response = await axios.post(
+        "https://i11c209.p.ssafy.io/api/room/create",
+        {
+          roomName: data.roomName,
+          roomPersonCount: data.roomPersonCount,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const roomData = response.data.data;
+      console.log("[*] roomData",roomData);
+      // fetchRoomData(response.data.data);
 
-  //     // 방 만들기 요청 완료시 대기실로 이동
-  //     navigate("/games", { state: { roomData } });
-  //   } catch (error) {
-  //     console.log("Error", error);
-  //   }
-  // };
+      // 방 만들기 요청 완료시 대기실로 이동
+      navigate("/games");
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
   console.log(watch("roomName"));
   console.log(watch("roomPersonCount"));
 

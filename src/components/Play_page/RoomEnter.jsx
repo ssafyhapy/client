@@ -17,11 +17,33 @@ const RoomEnter = () => {
     formState: { errors },
   } = useForm();
 
+  // const onSubmit = async (data) => {
+  //   console.log(data);
+  //   try {
+  //     const response = await axiosInstance.post(
+  //       `/room/enter?roomCode=${data.roomCode}`
+  //     );
+  //     fetchRoomData(response.data.data);
+  //     console.log("[* 방 입장]", response.data.data);
+  //     navigate("/games");
+  //   } catch (error) {
+  //     console.log("Error", error);
+  //   }
+  // };
+
+  const token = new URLSearchParams(location.search).get("token");
+
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await axiosInstance.post(
-        `/room/enter?roomCode=${data.roomCode}`
+      const response = await axios.post(
+        `/room/enter?roomCode=${data.roomCode}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       fetchRoomData(response.data.data);
       console.log("[* 방 입장]", response.data.data);
