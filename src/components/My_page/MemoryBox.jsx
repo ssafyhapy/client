@@ -11,7 +11,7 @@ const MemoryBox = () => {
       </div>
       {/* // Memory 컴포넌트를 사용하여 memberMemoryboxList를 순회하며 출력 */}
       {memberMemoryboxList?.map((memorybox) => (
-        <Memory key={memorybox.memberMemoryboxId} memorybox={memorybox} />
+        <Memory key={memorybox.roomId} memorybox={memorybox} />
       ))}
     </div>
   );
