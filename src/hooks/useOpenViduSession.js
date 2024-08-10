@@ -37,54 +37,17 @@ const useOpenViduSession = () => {
     const joinSession = async () => {
       const session = OV.initSession();
 
-      // session.on("streamCreated", (event) => {
-      //   // session에 연결하여 현재 사용자를 session에 구독시키고 비디오를 생성한다.
-      //   const newSubscriber = session.subscribe(event.stream, undefined);
-      //   console.log("[*] Subscriber created", newSubscriber);
-      //   setSubscriber(newSubscriber)
-
-      //   newSubscriber.on("videoElementCreated", (event) => {
-      //     console.log("[*]Video Element Created", event.element);
-      //   });
-      //   // const newSubscribers = [...subscribers, subscriber];
-      //   setSubscribers(newSubscriber);
-      // });
       session.on("streamCreated", (event) => {
+        // session에 연결하여 현재 사용자를 session에 구독시키고 비디오를 생성한다.
         const newSubscriber = session.subscribe(event.stream, undefined);
         console.log("[*] Subscriber created", newSubscriber);
-
-        // 오디오 상태 변경 감지 리스너 등록
-        newSubscriber.stream.on("streamPropertyChanged", (event) => {
-          if (event.changedProperty === "audioActive") {
-            const isAudioEnabled = event.newValue;
-            console.log(
-              `Subscriber's microphone is now ${
-                isAudioEnabled ? "enabled" : "disabled"
-              }`
-            );
-
-            // 상태 업데이트: 변경된 구독자의 오디오 상태를 반영
-            setSubscribers((prevSubscribers) =>
-              prevSubscribers.map((sub) =>
-                sub === newSubscriber
-                  ? {
-                      ...sub,
-                      stream: {
-                        ...sub.stream,
-                        audioActive: isAudioEnabled,
-                      },
-                    }
-                  : sub
-              )
-            );
-          }
+        setSubscriber(newSubscriber)
+        
+        newSubscriber.on("videoElementCreated", (event) => {
+          console.log("[*]Video Element Created", event.element);
         });
-
-        // 새로운 구독자를 subscribers 상태에 추가
-        setSubscribers((prevSubscribers) => [
-          ...prevSubscribers,
-          newSubscriber,
-        ]);
+        // const newSubscribers = [...subscribers, subscriber];
+        setSubscribers(newSubscriber);
       });
 
       //   session이 연결되면 connection 정보를 parsing하여 각 객체의 정보를 저장한다.
@@ -97,33 +60,6 @@ const useOpenViduSession = () => {
           memberId: connectionData.memberId,
         };
         setConnectionInfo(newConnectionData);
-      });
-
-      // 새로운 코드: publisher의 streamPropertyChanged 이벤트 리스너 등록
-      session.on("streamPropertyChanged", (event) => {
-        if (event.changedProperty === "audioActive") {
-          const isAudioEnabled = event.newValue;
-          const publisherOfEvent = event.stream.streamManager;
-
-          console.log(
-            `Publisher's microphone is now ${
-              isAudioEnabled ? "enabled" : "disabled"
-            }`
-          );
-
-          setPublisher((prevPublisher) => {
-            if (prevPublisher === publisherOfEvent) {
-              return {
-                ...prevPublisher,
-                stream: {
-                  ...prevPublisher.stream,
-                  audioActive: isAudioEnabled,
-                },
-              };
-            }
-            return prevPublisher;
-          });
-        }
       });
 
       //  만약 특정 구독자가 방에서 나가거나 그 사람의 stream을 삭제 시킨다. (오픈비두의 자동 기능)
@@ -141,7 +77,7 @@ const useOpenViduSession = () => {
         console.log("Session connected successfully");
 
         // 로컬 스트림 생성
-        const newPublisher = await OV.initPublisher(undefined, {
+        const newpublisher = await OV.initPublisher(undefined, {
           audioSource: undefined,
           videoSource: undefined,
           publishAudio: true,
@@ -153,13 +89,13 @@ const useOpenViduSession = () => {
         });
 
         // 로컬 스트림 공개
-        await session.publish(newPublisher);
+        await session.publish(newpublisher);
         console.log("Publisher created and published successfully");
 
         // Session, MainStreamManager, Publisher, Subscriber를 업데이트함
         setSession(session);
-        setMainStreamManager(newPublisher);
-        setPublisher(newPublisher);
+        setMainStreamManager(newpublisher);
+        setPublisher(newpublisher);
       } catch (error) {
         console.error("There was an error connecting to the session:", error);
       }
@@ -178,9 +114,9 @@ const useOpenViduSession = () => {
 
     console.log("[*] mainStream", mainStreamManager);
     console.log("[*] newSubscriber", subscriber);
-
+    
     console.log("[*] subscribers", subscribers);
-    console.log("[*] 확인1");
+    console.log("[*] 배포됨 2");
   }, [subscribers, connectionInfo, publisher, mainStreamManager, subscriber]);
 
   return { session };
