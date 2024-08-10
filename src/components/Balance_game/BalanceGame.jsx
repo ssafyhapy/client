@@ -82,7 +82,10 @@ const Balance = () => {
       console.log("Topic is Chosen: ", message)
 
       settopicId(message.id)
-      console.log(topicId)
+      // console.log(topicId)
+
+      // 주제 확정된거 메시지로 다시 받으면 호스트 아닌사람들도 choosing으로 넘어가
+      setCurrentStep("choosing")
     })
 
     // 받아오는 데이터
@@ -103,7 +106,7 @@ const Balance = () => {
       webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`)
     }
     // dependency array 추가 (아마도 constant subscribing 의 원인...)
-  }, [roomId, setGameStep])
+  }, [roomId, topicId, setGameStep])
 
   return (
     <>
