@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import useGameStore from "../../store/useGameStore";
 import webSocketService from "../../WebSocketService";
 import useRoomStore from "../../store/useRoomStore";
+import useAuthStore from "../../store/useAuthStore";
 
 const WrapUp = () => {
   const gameStep = useGameStore((state) => state.gameStep);
@@ -17,7 +18,9 @@ const WrapUp = () => {
   const userText =
     "섹션 별 소감이나 궁금했던 점 등을 자유롭게 이야기 나눠주세요.";
 
-  const {roomId} = useRoomStore()
+  const { roomId, hostId } = useRoomStore()
+  const { memberId } = useAuthStore()
+
 
   const [showModal, setShowModal] = useState(false);
 
@@ -57,13 +60,15 @@ const WrapUp = () => {
 
   return (
     <>
-         {/* Bottom Div */}
-        <div className="flex-grow flex items-center justify-center relative">
-          <span className="text-[rgb(85,181,236)]">{userText}</span>
-        </div>
-        <div className="absolute bottom-3 right-5">
+      {/* Bottom Div */}
+      <div className="flex-grow flex items-center justify-center relative">
+        <span className="text-[rgb(85,181,236)]">{userText}</span>
+      </div>
+      {memberId === hostId &&
+        (<div className="absolute bottom-3 right-5">
           <BasicBtn btnText={btnText} onClick={handleNextStep} />
-        </div>
+        </div>)
+      }
       {showModal && <WrapUpModal btnText="닫기" onClose={handleCloseModal} />}
     </>
   );

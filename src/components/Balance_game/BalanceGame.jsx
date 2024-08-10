@@ -106,7 +106,7 @@ const Balance = () => {
       webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`)
     }
     // dependency array 추가 (아마도 constant subscribing 의 원인...)
-  }, [roomId, topicId, setGameStep])
+  }, [roomId, topicId, setGameStep, currentStep])
 
   useEffect(() => {
     console.log("Topic Id: ", topicId)
