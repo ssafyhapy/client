@@ -40,7 +40,7 @@ const Balance = () => {
     // 모달 닫을때 purpose pub 해줘야함
     webSocketService.sendBalancePurpose(roomId, purpose)
     setShowModal(false);
-    setCurrentStep("changeChoices");
+    // setCurrentStep("changeChoices");
   };
 
   const handleSubjectConfirm = () => {
@@ -69,6 +69,9 @@ const Balance = () => {
 
       setOptionFirst(message.optionFirst)
       setOptionSecond(message.optionSecond)
+
+      // 주제 받아왔으면 그때 그다음 changeChoices로 넘어가
+      setCurrentStep("changeChoices");
     })
 
     // 받아오는 데이터
