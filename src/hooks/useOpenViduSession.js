@@ -109,6 +109,8 @@ const useOpenViduSession = () => {
   }, []);
 
   // pub의 오디오 상태 감지를 위해 이벤트 리스너 추가
+  const [forceRender, setForceRender] = useState(0); // 리렌더링을 강제하기 위한 상태
+
   useEffect(() => {
     if (
       publisher &&
@@ -129,6 +131,7 @@ const useOpenViduSession = () => {
               audioActive: isAudioEnabled, // 새로운 audioActive 값을 설정
             },
           }));
+          setForceRender((prev) => prev + 1);
         }
       });
     }
@@ -162,6 +165,7 @@ const useOpenViduSession = () => {
                     : sub // 인덱스가 일치하지 않는 구독자는 기존 상태 유지
               )
             );
+            setForceRender((prev) => prev + 1); // 리렌더링 유도
           }
         });
       } else {
