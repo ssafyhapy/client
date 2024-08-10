@@ -31,23 +31,23 @@ const SelectMask = ({ handleCloseModal }) => {
 
 export default SelectMask;
 
-import React from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF } from "@react-three/drei";
+// import React from "react";
+// import { Canvas, useFrame } from "@react-three/fiber";
+// import { useGLTF } from "@react-three/drei";
 
-const ModelPreview = ({ url, onClick }) => {
-  const { scene } = useGLTF(url);
+// const ModelPreview = ({ url, onClick }) => {
+//   const { scene } = useGLTF(url);
 
-  return (
-    <div className="relative w-full h-full cursor-pointer" onClick={onClick}>
-      <Canvas className="w-full h-full">
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} />
-        <primitive object={scene} scale={[1.5, 1.5, 1.5]} />
-      </Canvas>
-    </div>
-  );
-};
+//   return (
+//     <div className="relative w-full h-full cursor-pointer" onClick={onClick}>
+//       <Canvas className="w-full h-full">
+//         <ambientLight intensity={0.5} />
+//         <directionalLight position={[10, 10, 5]} />
+//         <primitive object={scene} scale={[1.5, 1.5, 1.5]} />
+//       </Canvas>
+//     </div>
+//   );
+// };
 
 // const SelectMask = ({ handleCloseModal, handleChangeMask }) => {
 //   return (

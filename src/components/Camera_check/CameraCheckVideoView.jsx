@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-ㅑㅡㅔ
 import useGameStore from "./../../store/useGameStore";
 import profileSample from "../../assets/profile_sample.png";
 import useAuthStore from "../../store/useAuthStore";
