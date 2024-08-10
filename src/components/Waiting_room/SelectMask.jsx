@@ -33,6 +33,9 @@
 
 // SelectMask.js
 import React from "react";
+import PartyMask from "../../assets/Mask/party_mask/party_mask_1.glb"
+import Fox from "../../assets/Mask/fox/fox.glb"
+import CatWomanMask from "../../assets/Mask/catwoman_mask/s.glb"
 
 const SelectMask = ({ handleCloseModal, handleChangeMask }) => {
   return (
@@ -47,9 +50,9 @@ const SelectMask = ({ handleCloseModal, handleChangeMask }) => {
         <p className="text-center"> 원하는 가면을 고르세요</p>
         <div className="bg-custom-gradient-game bg-opacity-10 w-[80%] h-[80%] rounded-[20px]">
           <div className="grid grid-cols-3 gap-4 bg-[rgba(255,255,255,0.4)] w-[100%] h-[100%] p-2 rounded-[20px]">
-            <div><button onClick={() => handleChangeMask("mask/fox/fox.glb")}>가면1</button></div>
-            <div><button onClick={() => handleChangeMask("mask/catwoman_mask/scene.glb")}>가면2</button></div>
-            <div><button onClick={() => handleChangeMask("mask/party_mask/party_mask_1.glb")}>가면3</button></div>
+            <div><button onClick={() => handleChangeMask("mask/fox/fox.glb")}>{Fox}</button></div>
+            <div><button onClick={() => handleChangeMask("mask/catwoman_mask/scene.glb")}>{CatWomanMask}</button></div>
+            <div><button onClick={() => handleChangeMask("mask/party_mask/party_mask_1.glb")}>{PartyMask}</button></div>
             {/* 다른 가면들 추가 */}
           </div>
         </div>
