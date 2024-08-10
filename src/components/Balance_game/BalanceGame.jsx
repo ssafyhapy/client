@@ -6,6 +6,7 @@ import BalanceChoosing from "./BalanceChoosing";
 
 import useAuthStore from "../../store/useAuthStore";
 import useRoomStore from "../../store/useRoomStore";
+import useBalanceStore from "../../store/useBalanceStore";
 import webSocketService from "../../WebSocketService";
 
 const Balance = () => {
@@ -17,6 +18,8 @@ const Balance = () => {
   const [showModal, setShowModal] = useState(true);
   const [currentStep, setCurrentStep] = useState("getReady");
   const [dots, setDots] = useState("");
+
+  const { discussedNum, setDiscussedNum } = useBalanceStore();
 
   // 방장이 적은 text
   const [purpose, setPurpose] = useState("")
@@ -86,6 +89,9 @@ const Balance = () => {
 
       // 주제 확정된거 메시지로 다시 받으면 호스트 아닌사람들도 choosing으로 넘어가
       setCurrentStep("choosing")
+
+      // 주제 확정되고 나면 discussedNum 도 + 1
+      setDiscussedNum((prevNum) => prevNum + 1);
     })
 
     // 받아오는 데이터
@@ -106,7 +112,7 @@ const Balance = () => {
       webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`)
     }
     // dependency array 추가 (아마도 constant subscribing 의 원인...)
-  }, [roomId, topicId, setGameStep, currentStep])
+  }, [roomId, topicId, setGameStep, currentStep, setDiscussedNum])
 
   useEffect(() => {
     console.log("Topic Id: ", topicId)
@@ -118,9 +124,9 @@ const Balance = () => {
         <BalanceGetReady setPurpose={setPurpose} onClose={handleSubjectSaveModal} dots={dots} />
       )}
       {currentStep === "changeChoices" && (
-        <BalanceChangeChoices memberId={memberId} hostId={hostId} topicId={topicId} roomId={roomId} purpose={purpose} onConfirm={handleSubjectConfirm} optionFirst={optionFirst} optionSecond={optionSecond} />
+        <BalanceChangeChoices discussedNum={discussedNum} memberId={memberId} hostId={hostId} topicId={topicId} roomId={roomId} purpose={purpose} onConfirm={handleSubjectConfirm} optionFirst={optionFirst} optionSecond={optionSecond} />
       )}
-      {currentStep === "choosing" && <BalanceChoosing optionFirst={optionFirst} optionSecond={optionSecond} hostId={hostId} roomId={roomId} memberId={memberId} topicId={topicId} purpose={purpose} onTimerEnd={handleTimerEnd} currentStep={`${currentStep==="choosing"?true:false}`}/>}
+      {currentStep === "choosing" && <BalanceChoosing discussedNum={discussedNum} optionFirst={optionFirst} optionSecond={optionSecond} hostId={hostId} roomId={roomId} memberId={memberId} topicId={topicId} purpose={purpose} onTimerEnd={handleTimerEnd} currentStep={`${currentStep==="choosing"?true:false}`}/>}
     </>
   );
 };

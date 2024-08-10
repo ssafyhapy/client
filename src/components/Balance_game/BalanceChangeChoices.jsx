@@ -17,13 +17,14 @@ const BalanceChangeChoices = ({
   onConfirm,
   optionFirst,
   optionSecond,
+  discussedNum
 }) => {
   const refresh =
     "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/refresh.png";
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
   const { pickedChoice, setPickedChoice } = useBalanceStore();
-  const { discussedNum, setDiscussedNum } = useBalanceStore();
+  // const { discussedNum, setDiscussedNum } = useBalanceStore();
 
   const [First, setOptionFirst] = useState("");
   const [Second, setOptionSecond] = useState("");
@@ -44,7 +45,7 @@ const BalanceChangeChoices = ({
   const handleConfirmChoices = () => {
     // 확정된 주제 백에 보내줌
     webSocketService.sendBalanceChosenTopic(roomId, optionFirst, optionSecond);
-    setDiscussedNum((prevNum) => prevNum + 1);
+    // setDiscussedNum((prevNum) => prevNum + 1);
     setPickedChoice(null);
     onConfirm(); // 주제 확정 후 다음 단계로 이동 (이러면 호스트만 이동함.. 호스트만 이 버튼을 누를수있으니까)
   };

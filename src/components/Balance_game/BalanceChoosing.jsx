@@ -7,13 +7,13 @@ import GameTurns from "../../components/Common/GameTurns";
 import useAuthStore from "../../store/useAuthStore";
 import webSocketService from "../../WebSocketService";
 
-const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond, onTimerEnd, currentStep }) => {
+const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond, onTimerEnd, currentStep, discussedNum }) => {
   const timerImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/timer.png"
 
   // const {memberId} = useAuthStore()
 
   const { pickedChoice, setPickedChoice } = useBalanceStore();
-  const { discussedNum } = useBalanceStore();
+  // const { discussedNum } = useBalanceStore();
 
   const [first, setOptionFirst] = useState("")
   const [second, setOptionSecond] = useState("")
