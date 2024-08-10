@@ -43,9 +43,9 @@ const Balance = () => {
     // setCurrentStep("changeChoices");
   };
 
-  const handleSubjectConfirm = () => {
-    setCurrentStep("choosing");
-  };
+  // const handleSubjectConfirm = () => {
+  //   setCurrentStep("choosing");
+  // };
 
   const handleTimerEnd = () => {
     setCurrentStep("changeChoices");
@@ -107,6 +107,10 @@ const Balance = () => {
     }
     // dependency array 추가 (아마도 constant subscribing 의 원인...)
   }, [roomId, topicId, setGameStep])
+
+  useEffect(() => {
+    console.log("Topic Id: ", topicId)
+  }, [topicId])
 
   return (
     <>
