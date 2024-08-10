@@ -180,7 +180,7 @@ const useOpenViduSession = () => {
     console.log("[*] newSubscriber", subscriber);
 
     console.log("[*] subscribers", subscribers);
-    console.log("[*] 확인");
+    console.log("[*] 확인1");
   }, [subscribers, connectionInfo, publisher, mainStreamManager, subscriber]);
 
   return { session };
