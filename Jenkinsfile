@@ -99,6 +99,11 @@ pipeline {
                         # Fetch all LFS files
                         git lfs fetch --all
 
+                        # LFS 캐시 정리 및 재동기화
+                        git lfs prune
+                        git lfs fetch --all
+                        git lfs checkout
+
                         # Add backend subtree (to ensure it remains updated)
                         git subtree pull --prefix=backend https://${GITHUB_TOKEN}@${GITHUB_BACKEND_REPO_URL} main
 
