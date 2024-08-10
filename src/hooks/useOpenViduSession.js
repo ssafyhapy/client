@@ -37,17 +37,54 @@ const useOpenViduSession = () => {
     const joinSession = async () => {
       const session = OV.initSession();
 
+      // session.on("streamCreated", (event) => {
+      //   // session에 연결하여 현재 사용자를 session에 구독시키고 비디오를 생성한다.
+      //   const newSubscriber = session.subscribe(event.stream, undefined);
+      //   console.log("[*] Subscriber created", newSubscriber);
+      //   setSubscriber(newSubscriber)
+
+      //   newSubscriber.on("videoElementCreated", (event) => {
+      //     console.log("[*]Video Element Created", event.element);
+      //   });
+      //   // const newSubscribers = [...subscribers, subscriber];
+      //   setSubscribers(newSubscriber);
+      // });
       session.on("streamCreated", (event) => {
-        // session에 연결하여 현재 사용자를 session에 구독시키고 비디오를 생성한다.
         const newSubscriber = session.subscribe(event.stream, undefined);
         console.log("[*] Subscriber created", newSubscriber);
-        setSubscriber(newSubscriber)
-        
-        newSubscriber.on("videoElementCreated", (event) => {
-          console.log("[*]Video Element Created", event.element);
+
+        // 오디오 상태 변경 감지 리스너 등록
+        newSubscriber.stream.on("streamPropertyChanged", (event) => {
+          if (event.changedProperty === "audioActive") {
+            const isAudioEnabled = event.newValue;
+            console.log(
+              `Subscriber's microphone is now ${
+                isAudioEnabled ? "enabled" : "disabled"
+              }`
+            );
+
+            // 상태 업데이트: 변경된 구독자의 오디오 상태를 반영
+            setSubscribers((prevSubscribers) =>
+              prevSubscribers.map((sub) =>
+                sub === newSubscriber
+                  ? {
+                      ...sub,
+                      stream: {
+                        ...sub.stream,
+                        audioActive: isAudioEnabled,
+                      },
+                    }
+                  : sub
+              )
+            );
+          }
         });
-        // const newSubscribers = [...subscribers, subscriber];
-        setSubscribers(newSubscriber);
+
+        // 새로운 구독자를 subscribers 상태에 추가
+        setSubscribers((prevSubscribers) => [
+          ...prevSubscribers,
+          newSubscriber,
+        ]);
       });
 
       //   session이 연결되면 connection 정보를 parsing하여 각 객체의 정보를 저장한다.
@@ -60,6 +97,33 @@ const useOpenViduSession = () => {
           memberId: connectionData.memberId,
         };
         setConnectionInfo(newConnectionData);
+      });
+
+      // 새로운 코드: publisher의 streamPropertyChanged 이벤트 리스너 등록
+      session.on("streamPropertyChanged", (event) => {
+        if (event.changedProperty === "audioActive") {
+          const isAudioEnabled = event.newValue;
+          const publisherOfEvent = event.stream.streamManager;
+
+          console.log(
+            `Publisher's microphone is now ${
+              isAudioEnabled ? "enabled" : "disabled"
+            }`
+          );
+
+          setPublisher((prevPublisher) => {
+            if (prevPublisher === publisherOfEvent) {
+              return {
+                ...prevPublisher,
+                stream: {
+                  ...prevPublisher.stream,
+                  audioActive: isAudioEnabled,
+                },
+              };
+            }
+            return prevPublisher;
+          });
+        }
       });
 
       //  만약 특정 구독자가 방에서 나가거나 그 사람의 stream을 삭제 시킨다. (오픈비두의 자동 기능)
@@ -114,7 +178,7 @@ const useOpenViduSession = () => {
 
     console.log("[*] mainStream", mainStreamManager);
     console.log("[*] newSubscriber", subscriber);
-    
+
     console.log("[*] subscribers", subscribers);
     console.log("[*] 확인");
   }, [subscribers, connectionInfo, publisher, mainStreamManager, subscriber]);
