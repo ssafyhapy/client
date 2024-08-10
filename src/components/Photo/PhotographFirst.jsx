@@ -60,6 +60,12 @@ const PhotographFirst = () => {
     if (count >= 3) return "w-[40%] max-w-[400px] min-w-[250px]";
   };
 
+  const getMicIcon = (isAudioActive) => {
+    return isAudioActive
+      ? "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic_on.png"
+      : "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mute.png";
+  };
+
   return (
     <div className="w-full h-screen bg-custom-gradient-game flex items-center justify-center">
       <div
@@ -71,8 +77,6 @@ const PhotographFirst = () => {
           <div
             className={`w-full h-[90%] grid place-items-center ${getGridColsClass()}`}
           >
-
-
             {publisher ? (
               <div
                 id={publisher.stream.connection.connectionId}
