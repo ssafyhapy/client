@@ -42,7 +42,7 @@ const RoomEnter = () => {
         <div className="flex flex-col w-full items-center">
           <input
             type="text"
-            className="w-[90%] mb-3 p-2 border rounded-[30px]"
+            className="w-[90%] mb-3 p-2 border rounded-[30px] text-center"
             placeholder="접속코드를 입력해주세요"
             // 접속코드 입력 폼, 유효성 검사
             {...register("roomCode", { required: true })}
