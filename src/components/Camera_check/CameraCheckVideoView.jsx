@@ -215,16 +215,22 @@ const CameraCheckVideoView = ({ data }) => {
   };
 
   useEffect(() => {
-    if (publisher && videoRef.current) {
-      publisher.replaceTrack(videoRef.current.srcObject.getVideoTracks()[0]);
+    if (publisher && videoRef.current && videoRef.current.srcObject) {
+      const videoTracks = videoRef.current.srcObject.getVideoTracks();
+      if (videoTracks.length > 0) {
+        publisher.replaceTrack(videoTracks[0]);
+      }
     }
-  }, [publisher, videoRef]);
+  }, [publisher, videoRef.current?.srcObject]);
+  
+  
 
   useEffect(() => {
     if (videoRef.current && publisher) {
       publisher.addVideoElement(videoRef.current);
     }
   }, [publisher]);
+  
 
   const getMicIcon = (isAudioActive) => {
     return isAudioActive
