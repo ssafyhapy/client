@@ -58,7 +58,7 @@ const NavBar = () => {
           <div className="flex gap-8">
             {isLogin ? (
               <>
-                <li className="text-#9400d3b0">
+                <li className="text-[#9400d3b0]">
                   <Link to="/mypage">Mypage</Link>
                   {/* 마이페이지 동적라우팅 */}
                   {/* <Link to={`/mypage/${memberName}`}>Mypage</Link> */}
