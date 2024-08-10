@@ -109,7 +109,6 @@ const useOpenViduSession = () => {
   }, []);
 
   // pub의 오디오 상태 감지를 위해 이벤트 리스너 추가
-  const [forceRender, setForceRender] = useState(0); // 리렌더링을 강제하기 위한 상태
 
   useEffect(() => {
     if (
@@ -124,14 +123,14 @@ const useOpenViduSession = () => {
             `Your microphone is now ${isAudioEnabled ? "enabled" : "disabled"}`
           );
           // publisher 상태 업데이트
-          setPublisher((prevPublisher) => ({
+          setPublisher((prevPublisher) => { console.log("pub은 바뀜?");
+           return ({
             ...prevPublisher, // 기존의 publisher 객체를 복사
             stream: {
               ...prevPublisher.stream, // 기존의 stream 객체를 복사
               audioActive: isAudioEnabled, // 새로운 audioActive 값을 설정
             },
-          }));
-          setForceRender((prev) => prev + 1);
+          })});
         }
       });
     }
@@ -151,21 +150,20 @@ const useOpenViduSession = () => {
               }`
             );
             // subscribers 상태 업데이트
-            setSubscribers((prevSubscribers) =>
-              prevSubscribers.map(
-                (sub, i) =>
-                  i === index
-                    ? {
-                        ...sub, // 기존 sub 객체 복사
-                        stream: {
-                          ...sub.stream, // 기존의 stream 객체 복사
-                          audioActive: isAudioState, // 새로운 audioActive 값을 설정
-                        },
-                      }
-                    : sub // 인덱스가 일치하지 않는 구독자는 기존 상태 유지
-              )
-            );
-            setForceRender((prev) => prev + 1); // 리렌더링 유도
+            setSubscribers((prevSubscribers) => {
+              console.log("바뀌고 있어?", prevSubscribers);
+              return prevSubscribers.map((sub, i) =>
+                i === index
+                  ? {
+                      ...sub, // 기존 sub 객체 복사
+                      stream: {
+                        ...sub.stream, // 기존의 stream 객체 복사
+                        audioActive: isAudioState, // 새로운 audioActive 값을 설정
+                      },
+                    }
+                  : sub // 인덱스가 일치하지 않는 구독자는 기존 상태 유지
+              );
+            });
           }
         });
       } else {
@@ -176,6 +174,7 @@ const useOpenViduSession = () => {
       }
     });
   }, [subscribers, setSubscribers]);
+  
 
   useEffect(() => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
@@ -185,7 +184,7 @@ const useOpenViduSession = () => {
     console.log("[*] newSubscriber", subscriber);
 
     console.log("[*] subscribers", subscribers);
-    console.log("[*] 배포됨 2");
+    console.log("[*] 배포됨 1");
   }, [subscribers, connectionInfo, publisher, mainStreamManager, subscriber]);
 
   return { session };
