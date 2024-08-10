@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import Photograph_intro from "./Photograph_intro"
+import Photograph_intro from "./Photograph_intro";
 import GameTurns from "./../Common/GameTurns";
 import TakePhotoModal from "./../Photo/TakePhotoModal";
 import html2canvas from "html2canvas";
-import useGameStore from "./../../store/useGameStore"
+import useGameStore from "./../../store/useGameStore";
 
 import { useNavigate } from "react-router-dom";
 
 const PhotographFirst = () => {
-  const {publisher, subscribers} = useGameStore()
+  const { publisher, subscribers } = useGameStore();
 
   const pics = Array(6).fill("pic");
   const [showModal, setShowModal] = useState(false);
@@ -16,7 +16,7 @@ const PhotographFirst = () => {
 
   const navigate = useNavigate();
 
-  const gameStep = useGameStore((state) => state.gameStep)
+  const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const PhotographFirst = () => {
 
         // 사진찍고 2초뒤 자동으로 나를 맞춰봐 겟레디 페이지로 이동
         setTimeout(() => {
-          setGameStep("guess-me")
+          setGameStep("guess-me");
           // navigate("/guessme-getready");
         }, 2000);
       });
@@ -51,6 +51,14 @@ const PhotographFirst = () => {
     return `grid-cols-${Math.min(count, 3)}`;
   };
 
+  // 비디오 크기를 동적으로 조정하는 함수
+  const getVideoContainerClass = () => {
+    const count = 1 + subscribers.length;
+    // const count = 6;
+    if (count === 1) return "w-[80%] max-w-[500px] min-w-[250px]";
+    if (count === 2) return "w-[60%] max-w-[400px] min-w-[250px]";
+    if (count >= 3) return "w-[40%] max-w-[400px] min-w-[250px]";
+  };
 
   return (
     <div className="w-full h-screen bg-custom-gradient-game flex items-center justify-center">
@@ -60,7 +68,7 @@ const PhotographFirst = () => {
         className="w-1/2 bg-[rgba(255,255,255,0.6)] flex flex-col justify-between"
       >
         <div className="h-4/5 bg-[rgba(255,255,255,0.7)] mr-[44px] ml-[44px] mt-[35px] mb-[39px] p-4 grid grid-cols-2 gap-4">
-        <div
+          <div
             className={`w-full h-[90%] grid place-items-center ${getGridColsClass()}`}
           >
             {/* mainStreamManager 비디오 */}
