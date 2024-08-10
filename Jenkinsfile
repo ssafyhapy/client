@@ -90,6 +90,12 @@ pipeline {
                         git clone https://${GITLAB_USERNAME}:${GITLAB_PASSWORD}@lab.ssafy.com/s11-webmobile1-sub2/S11P12C209.git
                         cd S11P12C209
 
+                        # Install and initialize Git LFS
+                        git lfs install
+
+                        # Fetch all LFS files
+                        git lfs fetch --all
+                        
                         # Add backend subtree (to ensure it remains updated)
                         git subtree pull --prefix=backend https://${GITHUB_TOKEN}@${GITHUB_BACKEND_REPO_URL} main
 
