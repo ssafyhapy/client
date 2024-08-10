@@ -26,7 +26,7 @@ const RotateDescription = ({ sentences, fontsize="64px", time=3000 }) => {
           exit={{ y: -20, opacity: 0 }}
           transition={{ duration: 0.5 }}
           style={{fontSize: fontsize}}
-          className={`font-bold text-center text-[rgba(0,0,0,0.5)]`}
+          className="font-bold text-center text-[rgba(0,0,0,0.5)]"
         >
           {sentences[index]}
         </motion.div>
