@@ -23,7 +23,7 @@ const Profile = ({ isEditMode }) => {
   };
 
   return (
-    <div className="w-[400px] h-[200px] bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)] flex p-5 gap-5 relative">
+    <div className="w-full h-full bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)] flex p-5 gap-5 relative">
       {isEditMode ? (
         <div className="relative w-[160px] h-[160px]">
           {/* 이미지 업로드 input */}
@@ -49,8 +49,8 @@ const Profile = ({ isEditMode }) => {
 
       {/* 이름, 이메일 출력 */}
       <div className="flex flex-col">
-        <p>이름 : {memberName}</p>
-        <p>E-mail : {memberProviderEmail}</p>
+        <p className="whitespace-nowrap">이름 : {memberName}</p>
+        <p className="whitespace-nowrap">E-mail : {memberProviderEmail}</p>
       </div>
     </div>
   );
