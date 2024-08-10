@@ -56,8 +56,8 @@ const PhotographFirst = () => {
   const getVideoContainerClass = () => {
     const count = 1 + subscribers.length;
     // const count = 6;
-    if (count === 1) return "w-[250px]";
-    if (count === 2) return "w-[200px]";
+    if (count === 1) return "w-[300px]";
+    if (count === 2) return "w-[250px]";
     if (count >= 3) return "w-[150px]";
   };
 
@@ -78,7 +78,7 @@ const PhotographFirst = () => {
           {publisher ? (
             <div
               id={publisher.stream.connection.connectionId}
-              className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
+              className={`flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
             >
               <div className="w-full relative rounded-[15px]">
                 {publisher ? (
@@ -135,7 +135,7 @@ const PhotographFirst = () => {
                   <div
                     key={connectionId}
                     id={connectionId}
-                    className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
+                    className={`flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
                   >
                     <div className="w-full relative rounded-[15px]">
                       <div id="subscriber">
