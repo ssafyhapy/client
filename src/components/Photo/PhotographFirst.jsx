@@ -57,7 +57,7 @@ const PhotographFirst = () => {
     const count = 1 + subscribers.length;
     // const count = 6;
     if (count === 1) return "w-[300px]";
-    if (count === 2) return "w-[250px]";
+    if (count === 2) return "w-[230px]";
     if (count >= 3) return "w-[150px]";
   };
 
