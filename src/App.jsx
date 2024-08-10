@@ -32,7 +32,7 @@ import GuessMe from "./components/Guess_me/GuessMe";
 // import Balance from "./pages/Games/Balance_game/BalanceGame";
 
 // 기념사진 촬영 페이지
-// import PhotographFirst from "./pages/Games/Photo/PhotographFirst";
+import PhotographFirst from "./components/Photo/PhotographFirst";
 // import PhotographLast from "./pages/Games/Photo/PhotographLast";
 // import TakePhotoModal from "./components/Photo/TakePhotoModal";
 
@@ -99,7 +99,7 @@ function App() {
         {/* <Route path="/balance-modal" element={<BalanceGameModal />} /> */}
 
         {/* 기념사진촬영과 관련된 Route */}
-        {/* <Route path="/photo-first" element={<PhotographFirst />} /> */}
+        <Route path="/photo-first" element={<PhotographFirst />} />
         {/* <Route path="/photo-last" element={<PhotographLast />} /> */}
         {/* <Route path="/photomodal" element={<TakePhotoModal />} /> */}
 

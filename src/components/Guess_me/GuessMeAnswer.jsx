@@ -93,7 +93,7 @@ const GuessMeAnswer = ({ guessMeStep, setGuessMeStep }) => {
           return 0;
         }
       });
-    }, 1000);
+    }, 500);
     setTimer(newTimer);
   };
 

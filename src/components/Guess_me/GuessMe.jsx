@@ -500,7 +500,7 @@ const GuessMe = () => {
           return 0;
         }
       });
-    }, 1000);
+    }, 500);
     setTimer(newTimer);
   };
 

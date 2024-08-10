@@ -21,7 +21,7 @@ const TakePhotoModal = ({ onCapture }) => {
       const timer = setTimeout(() => {
         setSeconds(prev => prev - 1);
         setCurrentImage(images[5 - seconds]);
-      }, 1000);
+      }, 500);
       return () => clearTimeout(timer);
     } else {
       onCapture();

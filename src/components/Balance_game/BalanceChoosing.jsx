@@ -44,7 +44,7 @@ const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond,
             return 0;
           }
         });
-      }, 1000);
+      }, 500);
 
       return () => clearInterval(timer);
     } // 컴포넌트 언마운트 시 타이머 클리어
