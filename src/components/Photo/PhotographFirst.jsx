@@ -38,7 +38,8 @@ const PhotographFirst = () => {
 
         // 사진찍고 2초뒤 자동으로 나를 맞춰봐 겟레디 페이지로 이동
         setTimeout(() => {
-          setGameStep("guess-me");
+          // 테스트를 위해 넘어가지 못하게 막기
+          // setGameStep("guess-me");
           // navigate("/guessme-getready");
         }, 2000);
       });
