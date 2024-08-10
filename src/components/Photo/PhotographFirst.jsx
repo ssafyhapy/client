@@ -74,9 +74,9 @@ const PhotographFirst = () => {
         className="w-1/2 bg-[rgba(255,255,255,0.6)] flex flex-col justify-between"
       >
         <div className="h-4/5 bg-[rgba(255,255,255,0.7)] mr-[44px] ml-[44px] mt-[35px] mb-[39px] p-4 grid grid-cols-2 gap-4">
-          <div
+          {/* <div
             className={`w-full h-[90%] grid place-items-center ${getGridColsClass()}`}
-          >
+          > */}
             {publisher ? (
               <div
                 id={publisher.stream.connection.connectionId}
@@ -183,7 +183,7 @@ const PhotographFirst = () => {
                 })}
               </>
             ) : null}
-          </div>
+          {/* </div> */}
           {/* {pics.map((pic, index) => (
             <div key={index} className="flex items-center justify-center">
               <p className="m-5">{pic}</p>
