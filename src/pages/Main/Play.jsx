@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import NavBar from "../../components/NavBar";
 import bgImage from "../../assets/bg/bgImage.jpg";
-import MainHomeFrame from "../../components/Main_page/MainHomeFrame";
+import MainFrame from "../../components/MainFrame";
 import MakeRoom from "./MakeRoom";
 import RoomEnter from "../../components/Play_page/RoomEnter";
 import MakeRoomBtn from "../../components/Play_page/MakeRoomBtn";
@@ -23,7 +23,7 @@ const Play = () => {
       className="h-screen overflow-y-scroll flex justify-center items-center bg-fixed bg-cover bg-center scrollbar-hide"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
-      <MainHomeFrame>
+      <MainFrame>
         <div className="flex flex-col items-center w-[80%] h-[80%]">
           {/* 네이게이션 바 */}
           <NavBar />
@@ -34,7 +34,7 @@ const Play = () => {
         </div>
         {/* 방 만들기 모달 */}
         {makeRoom && <MakeRoom closeMakeRoom={closeMakeRoom} />}
-      </MainHomeFrame>
+      </MainFrame>
     </div>
   );
 };
