@@ -8,6 +8,8 @@ import useGameStore from "./../../store/useGameStore"
 import { useNavigate } from "react-router-dom";
 
 const PhotographFirst = () => {
+  const {publisher, subscribers} = useGameStore()
+
   const pics = Array(6).fill("pic");
   const [showModal, setShowModal] = useState(false);
   const photoRef = useRef(null);
