@@ -4,6 +4,7 @@ import { axiosInstance } from "../../api/apiClient";
 
 export const PublicIcon = () => {
   const { isVisibility, setVisibility } = useVisibilityStore();
+  
   const handlePublic = async () => {
     try {
       const response = await axiosInstance.put("/member/mypage/visibility", {
@@ -13,7 +14,6 @@ export const PublicIcon = () => {
       setVisibility()
     } catch (error) {
       console.error("공개 설정 실패", error);
-      setVisibility()
     }
   };
   const handlePrivate = async () => {
@@ -22,6 +22,7 @@ export const PublicIcon = () => {
         visibility: "PRIVATE",
       });
       console.log("비공개 설정 성공", response);
+      setVisibility()
     } catch (error) {
       console.error("비공개 설정 실패", error);
     }
@@ -35,7 +36,7 @@ export const PublicIcon = () => {
           xmlns="http://www.w3.org/2000/svg"
           width="37"
           height="37"
-          viewBox="0 0 24 24"
+          viewBox="0 0 37 37"
           fill="none"
         >
           <path
