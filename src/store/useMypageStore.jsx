@@ -67,7 +67,7 @@ const useUpdateStore = create(
 const useVisibilityStore = create(
   persist(
     (set) => ({
-      isVisibility: false,
+      isVisibility: true,
       setVisibility: () =>
         set((state) => ({ isVisibility: !state.isVisibility })),
     }),
