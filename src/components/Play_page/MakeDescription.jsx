@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 const EnterDescription = () => {
   return (
     <motion.div
+      className="mt-5"
       animate={{ opacity: [1, 0, 1] }} // opacity를 변경하여 깜빡이는 효과
       transition={{
         duration: 3, // 깜빡이는 속도

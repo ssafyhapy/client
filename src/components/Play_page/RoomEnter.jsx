@@ -36,28 +36,30 @@ const RoomEnter = () => {
   return (
     // {/* 접속코드로 방 입장하기 */}
     <PlayFrame>
-      <form className="flex flex-col justify-between items-center p-3 gap-5">
-        <input
-          type="text"
-          className="w-[90%] mt-2 p-2 border rounded"
-          placeholder="접속코드를 입력해주세요"
-          // 접속코드 입력 폼, 유효성 검사
-          {...register("roomCode", { required: true })}
-        />
-        {/* 접속코드 입력시 에러 메시지 */}
-        {/* {errors.roomCode && (
+      <form className="flex flex-col justify-between items-center w-full h-full p-3 gap-5">
+        <EnterDescription />
+        <iframe src="https://lottie.host/embed/e7783617-e411-4e42-804f-c24ee22bb971/0WOoAyWq50.json"></iframe>
+        <div className="flex flex-col w-full items-center">
+          <input
+            type="text"
+            className="w-[90%] mb-3 p-2 border rounded-[30px]"
+            placeholder="접속코드를 입력해주세요"
+            // 접속코드 입력 폼, 유효성 검사
+            {...register("roomCode", { required: true })}
+          />
+          {/* 접속코드 입력시 에러 메시지 */}
+          {/* {errors.roomCode && (
           <p className="text-red-500 text-sm">{errors.roomCode.message}</p>
         )} */}
-        <iframe src="https://lottie.host/embed/e7783617-e411-4e42-804f-c24ee22bb971/0WOoAyWq50.json"></iframe>
 
-        {/* 방 입장하기 버튼, 클릭시 axios 요청 */}
-        <button
-          onClick={handleSubmit(onSubmit)}
-          className="w-[90%] bg-blue-500 text-white py-2 px-4 rounded h-14 text-2xl"
-        >
-          입장하기
-        </button>
-        <EnterDescription />
+          {/* 방 입장하기 버튼, 클릭시 axios 요청 */}
+          <button
+            onClick={handleSubmit(onSubmit)}
+            className="w-[90%] bg-blue-500 text-white py-2 px-4 rounded-[30px] h-14 text-2xl"
+          >
+            입장하기
+          </button>
+        </div>
       </form>
     </PlayFrame>
   );
