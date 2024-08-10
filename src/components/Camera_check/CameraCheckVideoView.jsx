@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
-import useGameStore from "./../../store/useGameStore"
+import useGameStore from "./../../store/useGameStore";
 import profileSample from "../../assets/profile_sample.png";
 import useAuthStore from "../../store/useAuthStore";
 // import mute from "../../assets/Camera_check/mute.png";
 // import mic_on from "../../assets/Camera_check/mic_on.png";
 
 const CameraCheckVideoView = ({ data }) => {
-  const mute = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mute.png"
-  const mic_on = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic_on.png"
+  const mute = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mute.png";
+  const mic_on =
+    "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic_on.png";
   const {
     mainStreamManager,
     setMainStreamManager,
@@ -17,7 +18,7 @@ const CameraCheckVideoView = ({ data }) => {
     setSubscribers,
   } = useGameStore();
 
-  const {memberName} = useAuthStore()
+  const { memberName } = useAuthStore();
 
   useEffect(
     () =>
@@ -29,6 +30,13 @@ const CameraCheckVideoView = ({ data }) => {
       ),
     [subscribers]
   );
+
+  // 오디오 상태 변경
+  const getMicIcon = (isAudioActive) => {
+    return isAudioActive
+      ? "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic_on.png"
+      : "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mute.png";
+  };
 
   return (
     <>
@@ -48,22 +56,12 @@ const CameraCheckVideoView = ({ data }) => {
                   </span>
                   <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
                     <img
-                      src={mic_on}
-                      alt="mic on"
-                      className={`w-[12px] h-[18px] ${
-                        publisher.stream.audioActive? null : "hidden"
-                      }`}
-                    />
-                    <img
-                      src={mute}
-                      alt="mute"
-                      className={`w-[12px] h-[18px] ${
-                        publisher.stream.audioActive ? "hidden" : null
-                      }`}
+                      src={getMicIcon(publisher.stream.audioActive)}
+                      alt="mic icon"
+                      className="w-[12px] h-[18px]"
                     />
                   </span>
                 </span>
-
               </div>
             </div>
           </div>

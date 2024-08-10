@@ -31,7 +31,14 @@ const MiddleDiv = () => {
     setIsModalOpen(false);
   };
 
-  const data = { ready: true, mic: true };
+  const data = { ready: true };
+
+  // 마이크 상태에 따라 아이콘을 선택하는 함수
+  const getMicIcon = (isAudioActive) => {
+    return isAudioActive
+      ? "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic_on.png"
+      : "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mute.png";
+  };
 
   // 동적으로 grid-cols 클래스를 생성
   const getGridColsClass = () => {
@@ -97,7 +104,7 @@ const MiddleDiv = () => {
             className={`w-full h-[90%] grid place-items-center ${getGridColsClass()}`}
           >
             {/* mainStreamManager 비디오 */}
-            {mainStreamManager ? (
+            {/* {mainStreamManager ? (
               <div
                 id={mainStreamManager.stream.connection.connectionId}
                 className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
@@ -137,6 +144,50 @@ const MiddleDiv = () => {
                           className={`w-[12px] h-[18px] ${
                             data.mic ? "hidden" : null
                           }`}
+                        />
+                      </span>
+                    </span>
+                    <span
+                      className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
+                        data.ready ? null : "hidden"
+                      }`}
+                    >
+                      준비완료
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ) : null} */}
+
+            {publisher ? (
+              <div
+                id={publisher.stream.connection.connectionId}
+                className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
+              >
+                <div className="w-full relative rounded-[15px]">
+                  {publisher ? (
+                    <video
+                      autoPlay={true}
+                      ref={(video) => video && publisher.addVideoElement(video)}
+                      className="object-cover rounded-[15px]"
+                    />
+                  ) : (
+                    "비디오가 준비 중입니다."
+                  )}
+                  <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
+                    <span className="flex ">
+                      <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
+                        {
+                          connectionInfo[
+                            publisher.stream.connection.connectionId
+                          ].memberName
+                        }
+                      </span>
+                      <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
+                        <img
+                          src={getMicIcon(publisher.stream.audioActive)}
+                          alt="mic icon"
+                          className="w-[12px] h-[18px]"
                         />
                       </span>
                     </span>
@@ -193,18 +244,9 @@ const MiddleDiv = () => {
                             <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
                               {/* 마이크 상태 */}
                               <img
-                                src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic_on.png"
-                                alt="mic on"
-                                className={`w-[12px] h-[18px] ${
-                                  data.mic ? null : "hidden"
-                                }`}
-                              />
-                              <img
-                                src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mute.png"
-                                alt="mute"
-                                className={`w-[12px] h-[18px] ${
-                                  data.mic ? "hidden" : null
-                                }`}
+                                src={getMicIcon(sub.stream.audioActive)}
+                                alt="mic icon"
+                                className="w-[12px] h-[18px]"
                               />
                             </span>
                           </span>

@@ -41,8 +41,8 @@ const useOpenViduSession = () => {
         // session에 연결하여 현재 사용자를 session에 구독시키고 비디오를 생성한다.
         const newSubscriber = session.subscribe(event.stream, undefined);
         console.log("[*] Subscriber created", newSubscriber);
-        setSubscriber(newSubscriber)
-        
+        setSubscriber(newSubscriber);
+
         newSubscriber.on("videoElementCreated", (event) => {
           console.log("[*]Video Element Created", event.element);
         });
@@ -108,20 +108,67 @@ const useOpenViduSession = () => {
     };
   }, []);
 
+  // pub의 오디오 상태 감지를 위해 이벤트 리스너 추가
   useEffect(() => {
-    if (publisher && publisher.stream && typeof publisher.stream.on === 'function') {
-        // 'streamPropertyChanged' 이벤트 리스너 추가
-        publisher.stream.on('streamPropertyChanged', (event) => {
-            if (event.changedProperty === 'audioActive') {
-                const isAudioEnabled = event.newValue;
-                console.log(`Microphone is now ${isAudioEnabled ? 'enabled' : 'disabled'}`);
-                // 필요한 작업 수행
-                setPublisher({...publisher});
-            }
-        });
+    if (
+      publisher &&
+      publisher.stream &&
+      typeof publisher.stream.on === "function"
+    ) {
+      publisher.stream.on("streamPropertyChanged", (event) => {
+        if (event.changedProperty === "audioActive") {
+          const isAudioEnabled = event.newValue;
+          console.log(
+            `Your microphone is now ${isAudioEnabled ? "enabled" : "disabled"}`
+          );
+          // publisher 상태 업데이트
+          setPublisher({
+            ...publisher,
+            stream: {
+              ...publisher.stream,
+              audioActive: isAudioEnabled,
+            },
+          });
+        }
+      });
     }
-}, [publisher]);
+  }, [publisher, setPublisher]);
 
+  // 구독자들의 오디오 상태 감지를 위해 이벤트 리스너 추가
+  useEffect(() => {
+    subscribers.forEach((subscriber, index) => {
+      if (subscriber.stream && typeof subscriber.stream.on === "function") {
+        subscriber.stream.on("streamPropertyChanged", (event) => {
+          if (event.changedProperty === "audioActive") {
+            const isAudioState = event.newValue;
+            console.log(
+              `Subscriber's microphone is now ${
+                isAudioState ? "enabled" : "disabled"
+              }`
+            );
+            // subscribers 상태 업데이트
+            setSubscribers(
+              subscribers.map((sub, i) =>
+                i === index
+                  ? {
+                    // 기존 sub 객체 복사
+                      ...sub,
+                      stream: {
+                        // 기존의 스트림을 복사
+                        ...sub.stream,
+                        // audioActive 속성을 업데이트
+                        audioActive: isAudioState,
+                      },
+                    }
+                    // 인덱스가 일치하지 않는 구독자는 기존 상태 유지
+                  : sub
+              )
+            );
+          }
+        });
+      }
+    });
+  }, [subscribers, setSubscribers]);
 
   useEffect(() => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
@@ -129,9 +176,9 @@ const useOpenViduSession = () => {
 
     console.log("[*] mainStream", mainStreamManager);
     console.log("[*] newSubscriber", subscriber);
-    
+
     console.log("[*] subscribers", subscribers);
-    console.log("[*] 배포됨 2");
+    console.log("[*] 배포됨 1");
   }, [subscribers, connectionInfo, publisher, mainStreamManager, subscriber]);
 
   return { session };
