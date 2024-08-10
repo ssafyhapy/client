@@ -29,18 +29,18 @@ const Report = () => {
             <Profile />
           </div>
 
-          <div className="flex gap-5 mt-5">
+          <div className="w-full flex gap-5 mt-5">
             {/* // 스텝 1, 2 */}
             <Step1 />
             <Step2 />
           </div>
 
-          <div>
+          <div className="w-full">
             {/* // 스텝 3 */}
             <Step3 />
           </div>
 
-          <div>
+          <div className="w-full">
             {/* // 활동 전후 사진 */}
             <Picture />
           </div>

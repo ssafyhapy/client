@@ -117,15 +117,15 @@ const MyPage = () => {
               // 폼 제출시 onSubmit 함수 호출
               onSubmit={methods.handleSubmit(onSubmit)}
             />
-            <form className="flex flex-col items-center gap-5">
-              <div className="flex gap-5">
+            <form className="w-full flex flex-col items-center gap-5">
+              <div className="w-full flex gap-5">
                 <Profile isEditMode={isEditMode} />
                 <History isEditMode={isEditMode} />
               </div>
-              <div className="flex gap-5">
+              <div className="w-full flex gap-5">
                 <Introduction isEditMode={isEditMode} />
               </div>
-              <div className="flex">
+              <div className="w-full flex">
                 <MemoryBox />
               </div>
             </form>
