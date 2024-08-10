@@ -69,7 +69,7 @@ const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond,
       <div className="flex-grow flex items-center justify-center relative gap-5">
         <button
           onClick={() => handlePickedChoice("FIRST")}
-          className={`text-[rgba(85,181,236)] px-2 py-3 rounded-[15px] ${
+          className={`text-[rgba(85,181,236)] px-2 py-3 rounded-[10px] ${
             pickedChoice ==="FIRST"
               ? "border-solid border-4 border-[#64B8FF]"
               : "border-transparent"
@@ -84,7 +84,7 @@ const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond,
         <span className="text-[#FF607F]">VS</span>
         <button
           onClick={() => handlePickedChoice("SECOND")}
-          className={`text-[#FF6A89] px-2 py-3 rounded-[15px] ${
+          className={`text-[#FF6A89] px-2 py-3 rounded-[10px] ${
             pickedChoice === "SECOND"
               ? "border-solid border-4 border-[rgba(254,176,207)]"
               : "border-transparent"
