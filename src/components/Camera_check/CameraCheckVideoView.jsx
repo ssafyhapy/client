@@ -28,7 +28,13 @@ const CameraCheckVideoView = ({ data }) => {
         "구독자 타입",
         typeof subscribers
       ),
-    [subscribers]
+      console.log(
+        "[*]퍼블리셔 변경",
+        publisher,
+        "구독자 타입",
+        typeof publisher
+      ),
+    [subscribers, publisher]
   );
 
   // 오디오 상태 변경
