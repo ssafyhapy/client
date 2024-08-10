@@ -93,9 +93,12 @@ pipeline {
                         # Install and initialize Git LFS
                         git lfs install
 
+                        # Pull all LFS objects
+                        git lfs pull
+
                         # Fetch all LFS files
                         git lfs fetch --all
-                        
+
                         # Add backend subtree (to ensure it remains updated)
                         git subtree pull --prefix=backend https://${GITHUB_TOKEN}@${GITHUB_BACKEND_REPO_URL} main
 
