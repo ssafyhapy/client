@@ -79,7 +79,7 @@ const useOpenViduSession = () => {
         console.log("Session connected successfully");
 
         // 로컬 스트림 생성
-        const newpublisher = await OV.initPublisher(undefined, {
+        const newPublisher = await OV.initPublisher(undefined, {
           audioSource: undefined,
           videoSource: undefined,
           publishAudio: true,
@@ -91,7 +91,7 @@ const useOpenViduSession = () => {
         });
 
         // 로컬 스트림 공개
-        await session.publish(newpublisher);
+        await session.publish(newPublisher);
         console.log("Publisher created and published successfully");
 
         // Publisher의 마이크 상태가 변경되었을 때
@@ -115,8 +115,8 @@ const useOpenViduSession = () => {
 
         // Session, MainStreamManager, Publisher, Subscriber를 업데이트함
         setSession(session);
-        setMainStreamManager(newpublisher);
-        setPublisher(newpublisher);
+        setMainStreamManager(newPublisher);
+        setPublisher(newPublisher);
       } catch (error) {
         console.error("There was an error connecting to the session:", error);
       }
@@ -180,7 +180,7 @@ const useOpenViduSession = () => {
     console.log("[*] newSubscriber", subscriber);
 
     console.log("[*] subscribers", subscribers);
-    console.log("[*] 배포됨 3");
+    console.log("[*] 배포됨 4");
   }, [subscribers, connectionInfo, publisher, mainStreamManager, subscriber]);
 
   return { session };
