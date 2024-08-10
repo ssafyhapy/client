@@ -1,2 +1,0 @@
-src/assets/Mask/party_mask/party_mask.glb filter=lfs diff=lfs merge=lfs -text
-src/assets/Mask/party_mask/party_mask_1.glb filter=lfs diff=lfs merge=lfs -text
