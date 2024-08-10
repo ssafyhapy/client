@@ -82,6 +82,7 @@ const Balance = () => {
       console.log("Topic is Chosen: ", message)
 
       settopicId(message.id)
+      console.log(topicId)
     })
 
     // 받아오는 데이터

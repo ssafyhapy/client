@@ -83,7 +83,7 @@ const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond,
         </button>
         <span className="text-[#FF607F]">VS</span>
         <button
-          onClick={() => handlePickedChoice("FIRST")}
+          onClick={() => handlePickedChoice("SECOND")}
           className={`text-[#FF6A89] px-2 py-3 rounded-[15px] ${
             pickedChoice === "SECOND"
               ? "border-solid border-4 border-[rgba(254,176,207)]"
