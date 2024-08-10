@@ -122,13 +122,13 @@ const useOpenViduSession = () => {
             `Your microphone is now ${isAudioEnabled ? "enabled" : "disabled"}`
           );
           // publisher 상태 업데이트
-          setPublisher({
-            ...publisher,
+          setPublisher((prevPublisher) => ({
+            ...prevPublisher, // 기존의 publisher 객체를 복사
             stream: {
-              ...publisher.stream,
-              audioActive: isAudioEnabled,
+              ...prevPublisher.stream, // 기존의 stream 객체를 복사
+              audioActive: isAudioEnabled, // 새로운 audioActive 값을 설정
             },
-          });
+          }));
         }
       });
     }
@@ -138,6 +138,7 @@ const useOpenViduSession = () => {
   useEffect(() => {
     subscribers.forEach((subscriber, index) => {
       if (subscriber.stream && typeof subscriber.stream.on === "function") {
+        // 구독자의 스트림 상태 변경을 감지하여 업데이트
         subscriber.stream.on("streamPropertyChanged", (event) => {
           if (event.changedProperty === "audioActive") {
             const isAudioState = event.newValue;
@@ -147,25 +148,27 @@ const useOpenViduSession = () => {
               }`
             );
             // subscribers 상태 업데이트
-            setSubscribers(
-              subscribers.map((sub, i) =>
-                i === index
-                  ? {
-                    // 기존 sub 객체 복사
-                      ...sub,
-                      stream: {
-                        // 기존의 스트림을 복사
-                        ...sub.stream,
-                        // audioActive 속성을 업데이트
-                        audioActive: isAudioState,
-                      },
-                    }
-                    // 인덱스가 일치하지 않는 구독자는 기존 상태 유지
-                  : sub
+            setSubscribers((prevSubscribers) =>
+              prevSubscribers.map(
+                (sub, i) =>
+                  i === index
+                    ? {
+                        ...sub, // 기존 sub 객체 복사
+                        stream: {
+                          ...sub.stream, // 기존의 stream 객체 복사
+                          audioActive: isAudioState, // 새로운 audioActive 값을 설정
+                        },
+                      }
+                    : sub // 인덱스가 일치하지 않는 구독자는 기존 상태 유지
               )
             );
           }
         });
+      } else {
+        console.error(
+          `Subscriber at index ${index} has an invalid stream object:`,
+          subscriber
+        );
       }
     });
   }, [subscribers, setSubscribers]);

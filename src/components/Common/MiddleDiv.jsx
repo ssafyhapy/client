@@ -48,8 +48,9 @@ const MiddleDiv = () => {
   };
 
   useEffect(() => {
-    console.log("[*] 정보 확인", mainStreamManager);
-  }, [mainStreamManager]);
+    console.log("[*] 정보 확인", publisher);
+    console.log("[*] 정보 확인", subscribers);
+  }, [publisher, subscribers]);
 
   // 비디오 크기를 동적으로 조정하는 함수
   const getVideoContainerClass = () => {
