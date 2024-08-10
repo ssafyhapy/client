@@ -23,9 +23,10 @@ const FirstService = () => {
           ]}
           fontsize="64px"
         />
-        <div className="flex flex-col w-full">
+        <div className="flex justify-between w-full">
+          <div className="w-[33%]"></div>
           <ScrollDownBtn text="사르르 서비스 확인하기" color="#000000" />
-          <div className="self-end">
+          <div className="w-[33%] flex justify-end">
             <PlayBtn />
           </div>
         </div>
