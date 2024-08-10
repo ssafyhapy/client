@@ -4,7 +4,7 @@ import { PublicIcon } from "./PublicIcon";
 
 const Header = ({ isEditMode, handleEditMode, onSubmit }) => {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between w-full">
       <div className="w-[33%]"></div>
       <div className="w-[33%">
         <h1 className="text-4xl">My Page</h1>

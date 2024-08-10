@@ -1,11 +1,11 @@
 import React from "react";
 import NavBar from "../../NavBar";
 import PlayBtn from "../../Buttons/PlayBtn";
-import MainHomeFrame from "../MainHomeFrame";
+import MainFrame from "../../MainFrame";
 
 const SecondService = () => {
   return (
-    <MainHomeFrame>
+    <MainFrame>
       <div className="flex flex-col w-[80%] h-[80%] justify-between items-center">
         <NavBar />
         <div className="flex gap-5">
@@ -27,7 +27,7 @@ const SecondService = () => {
           <PlayBtn />
         </div>
       </div>
-    </MainHomeFrame>
+    </MainFrame>
   );
 };
 

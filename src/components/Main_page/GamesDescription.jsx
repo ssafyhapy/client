@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import SelfIntroduction from "./games/SelfIntroduction";
 import GuessMe from "./games/GuessMe";
 import BalanceGame from "./games/BalanceGame";
-import MainHomeFrame from "./MainHomeFrame";
+import MainFrame from "../MainFrame";
 import NavBar from "../NavBar";
 import PlayBtn from "../Buttons/PlayBtn";
 
@@ -17,7 +17,7 @@ const GamesDescription = () => {
   ];
 
   return (
-    <MainHomeFrame>
+    <MainFrame>
       <div className="flex flex-col w-[80%] h-[80%] justify-between items-center">
         <NavBar />
         <div className="flex flex-wrap items-center justify-center gap-6 p-6">
@@ -82,7 +82,7 @@ const GamesDescription = () => {
           <PlayBtn />
         </div>
       </div>
-    </MainHomeFrame>
+    </MainFrame>
   );
 };
 

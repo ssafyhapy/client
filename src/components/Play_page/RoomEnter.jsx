@@ -39,7 +39,7 @@ const RoomEnter = () => {
       <form className="flex flex-col justify-between items-center w-full h-full p-3 gap-5">
         <EnterDescription />
         <iframe src="https://lottie.host/embed/e7783617-e411-4e42-804f-c24ee22bb971/0WOoAyWq50.json"></iframe>
-        <div className="flex flex-col w-full items-center">
+        <div className="flex flex-col w-full items-center ">
           <input
             type="text"
             className="w-[90%] mb-3 p-2 border rounded-[30px] text-center"
@@ -55,7 +55,7 @@ const RoomEnter = () => {
           {/* 방 입장하기 버튼, 클릭시 axios 요청 */}
           <button
             onClick={handleSubmit(onSubmit)}
-            className="w-[90%] bg-blue-500 text-white py-2 px-4 rounded-[30px] h-14 text-2xl"
+            className="w-[90%] bg-blue-500 text-white py-2 px-4 rounded-[30px] h-14 text-2xl "
           >
             입장하기
           </button>

@@ -1,11 +1,11 @@
 import React from "react";
 import ScrollDownBtn from "./ScrollDownBtn";
 import RotateDescription from "./RotateDescription";
-import MainHomeFrame from "./MainHomeFrame";
+import MainFrame from "../MainFrame";
 
 const MainDescription = () => {
   return (
-    <MainHomeFrame>
+    <MainFrame>
       <div className="w-[90%] h-[90%] flex flex-col justify-between items-center relative">
         <h1 className="opacity-45 text-3xl self-start">
           새로운 관계를 위한 첫 걸음
@@ -40,7 +40,7 @@ const MainDescription = () => {
           <ScrollDownBtn text="더 보기" />
         </div>
       </div>
-    </MainHomeFrame>
+    </MainFrame>
   );
 };
 

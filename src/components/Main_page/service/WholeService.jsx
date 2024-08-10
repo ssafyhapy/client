@@ -1,13 +1,13 @@
 import React from "react";
 import NavBar from "../../NavBar";
 import PlayBtn from "../../Buttons/PlayBtn";
-import MainHomeFrame from "../MainHomeFrame";
+import MainFrame from "../../MainFrame";
 import ScrollDownBtn from "../ScrollDownBtn";
 import RotateDescription from "../RotateDescription";
 
 const FirstService = () => {
   return (
-    <MainHomeFrame>
+    <MainFrame>
       <div className="flex flex-col w-[80%] h-[80%] justify-between items-center">
         <NavBar />
         <RotateDescription
@@ -32,7 +32,7 @@ const FirstService = () => {
           </div>
         </div>
       </div>
-    </MainHomeFrame>
+    </MainFrame>
   );
 };
 

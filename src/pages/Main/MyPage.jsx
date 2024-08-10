@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar";
-import MyPageFrame from "../../components/My_page/MyPageFrame";
+import SubFrame from "../../components/SubFrame";
 import { useMypageStore, useUpdateStore } from "../../store/useMypageStore";
 import Header from "../../components/My_page/Header";
 import Profile from "../../components/My_page/Profile";
@@ -106,19 +106,17 @@ const MyPage = () => {
         className="h-screen overflow-y-scroll flex justify-center items-center bg-fixed bg-cover bg-center scrollbar-hide"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
-        <MyPageFrame>
-          <div className="flex flex-col items-center gap-6">
-            <div className="w-[800px] flex flex-col">
-              <NavBar />
-              <Header
-                // 수정 모드 상태 전달
-                isEditMode={isEditMode}
-                // 수정 모드 변경 함수 호출
-                handleEditMode={handleEditMode}
-                // 폼 제출시 onSubmit 함수 호출
-                onSubmit={methods.handleSubmit(onSubmit)}
-              />
-            </div>
+        <SubFrame>
+          <div className="flex flex-col items-center w-[80%] py-10 gap-5">
+            <NavBar />
+            <Header
+              // 수정 모드 상태 전달
+              isEditMode={isEditMode}
+              // 수정 모드 변경 함수 호출
+              handleEditMode={handleEditMode}
+              // 폼 제출시 onSubmit 함수 호출
+              onSubmit={methods.handleSubmit(onSubmit)}
+            />
             <form className="flex flex-col items-center gap-5">
               <div className="flex gap-5">
                 <Profile isEditMode={isEditMode} />
@@ -132,7 +130,7 @@ const MyPage = () => {
               </div>
             </form>
           </div>
-        </MyPageFrame>
+        </SubFrame>
       </div>
     </FormProvider>
   );

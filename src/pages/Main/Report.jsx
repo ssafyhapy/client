@@ -1,5 +1,5 @@
 import React from "react";
-import MyPageFrame from "../../components/My_page/MyPageFrame";
+import SubFrame from "../../components/SubFrame";
 import NavBar from "../../components/NavBar";
 import Profile from "../../components/Report/Profile";
 import Step1 from "../../components/Report/Step1";
@@ -14,14 +14,12 @@ const Report = () => {
       className="h-screen overflow-y-scroll flex justify-center items-center bg-fixed bg-cover bg-center scrollbar-hide"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
-      <MyPageFrame>
-        <div className="flex flex-col items-center gap-5">
-          <div className="w-[800px]">
-            {/* // 네비게이션 바 */}
-            <NavBar />
-          </div>
+      <SubFrame>
+        <div className="w-[80%] flex flex-col items-center py-10 gap-5 ">
+          {/* // 네비게이션 바 */}
+          <NavBar />
 
-          <div className="w-[800px]">
+          <div className="">
             {/* // 제목 */}
             <h1 className="text-4xl font-bold text-center">Report</h1>
           </div>
@@ -47,7 +45,7 @@ const Report = () => {
             <Picture />
           </div>
         </div>
-      </MyPageFrame>
+      </SubFrame>
     </div>
   );
 };
