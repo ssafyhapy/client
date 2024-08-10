@@ -56,7 +56,7 @@ const PhotographFirst = () => {
   const getVideoContainerClass = () => {
     const count = 1 + subscribers.length;
     // const count = 6;
-    if (count === 1) return "w-[80%] max-w-[200px] min-w-[100px]";
+    if (count === 1) return "w-[80%] max-w-[250px] min-w-[100px]";
     if (count === 2) return "w-[60%] max-w-[200px] min-w-[100px]";
     if (count >= 3) return "w-[40%] max-w-[150px] min-w-[100px]";
   };
@@ -74,116 +74,111 @@ const PhotographFirst = () => {
         style={{ height: "calc(100vh - 50px)" }}
         className="w-1/2 bg-[rgba(255,255,255,0.6)] flex flex-col justify-between"
       >
-        <div className="h-4/5 bg-[rgba(255,255,255,0.7)] mr-[44px] ml-[44px] mt-[35px] mb-[39px] p-1 grid grid-cols-2 gap-4">
-          {/* <div */}
-            {/* className={`w-full h-[90%] grid place-items-center ${getGridColsClass()}`}
-          > */}
-            {publisher ? (
-              <div
-                id={publisher.stream.connection.connectionId}
-                className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
-              >
-                <div className="w-full relative rounded-[15px]">
-                  {publisher ? (
-                    <video
-                      autoPlay={true}
-                      ref={(video) => video && publisher.addVideoElement(video)}
-                      className="object-cover rounded-[15px]"
-                    />
-                  ) : (
-                    "비디오가 준비 중입니다."
-                  )}
-                  <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
-                    <span className="flex ">
-                      <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                        {
-                          connectionInfo[
-                            publisher.stream.connection.connectionId
-                          ].memberName
-                        }
-                      </span>
-                      <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                        <img
-                          src={getMicIcon(publisher.stream.audioActive)}
-                          alt="mic icon"
-                          className="w-[12px] h-[18px]"
-                        />
-                      </span>
+        <div className="h-4/5 bg-[rgba(255,255,255,0.7)] mr-[44px] ml-[44px] mt-[35px] mb-[39px] p-1 grid grid-cols-2 place-items-center gap-1">
+          {publisher ? (
+            <div
+              id={publisher.stream.connection.connectionId}
+              className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
+            >
+              <div className="w-full relative rounded-[15px]">
+                {publisher ? (
+                  <video
+                    autoPlay={true}
+                    ref={(video) => video && publisher.addVideoElement(video)}
+                    className="object-cover rounded-[15px]"
+                  />
+                ) : (
+                  "비디오가 준비 중입니다."
+                )}
+                <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
+                  <span className="flex ">
+                    <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
+                      {
+                        connectionInfo[publisher.stream.connection.connectionId]
+                          .memberName
+                      }
                     </span>
-                    <span
-                      className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
-                        false ? null : "hidden"
-                      }`}
-                    >
-                      준비완료
+                    <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
+                      <img
+                        src={getMicIcon(publisher.stream.audioActive)}
+                        alt="mic icon"
+                        className="w-[12px] h-[18px]"
+                      />
                     </span>
-                  </div>
+                  </span>
+                  <span
+                    className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
+                      false ? null : "hidden"
+                    }`}
+                  >
+                    준비완료
+                  </span>
                 </div>
               </div>
-            ) : null}
+            </div>
+          ) : null}
 
-            {/* 여러명 있을 때 */}
-            {subscribers.length > 0 ? (
-              // 구독자 비디오 표현
-              <>
-                {/* 구독자 비디오 배경 */}
-                {/* 구독자 비디오 돌리기 */}
-                {subscribers.map((sub) => {
-                  const connectionId = sub.stream?.connection?.connectionId;
-                  if (!connectionId) {
-                    console.warn(`No connectionId found for subscriber:`, sub);
-                    return null;
-                  }
+          {/* 여러명 있을 때 */}
+          {subscribers.length > 0 ? (
+            // 구독자 비디오 표현
+            <>
+              {/* 구독자 비디오 배경 */}
+              {/* 구독자 비디오 돌리기 */}
+              {subscribers.map((sub) => {
+                const connectionId = sub.stream?.connection?.connectionId;
+                if (!connectionId) {
+                  console.warn(`No connectionId found for subscriber:`, sub);
+                  return null;
+                }
 
-                  return (
-                    <div
-                      key={connectionId}
-                      id={connectionId}
-                      className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
-                    >
-                      <div className="w-full relative rounded-[15px]">
-                        <div id="subscriber">
-                          <video
-                            autoPlay={true}
-                            ref={(video) => video && sub.addVideoElement(video)}
-                            className="object-cover rounded-[15px]"
-                          />
-                        </div>
+                return (
+                  <div
+                    key={connectionId}
+                    id={connectionId}
+                    className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
+                  >
+                    <div className="w-full relative rounded-[15px]">
+                      <div id="subscriber">
+                        <video
+                          autoPlay={true}
+                          ref={(video) => video && sub.addVideoElement(video)}
+                          className="object-cover rounded-[15px]"
+                        />
+                      </div>
 
-                        <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
-                          <span className="flex ">
-                            <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                              {/* 이름 */}
-                              {
-                                connectionInfo[
-                                  sub.stream.connection.connectionId
-                                ].memberName
-                              }
-                            </span>
-                            <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                              {/* 마이크 상태 */}
-                              <img
-                                src={getMicIcon(sub.stream.audioActive)}
-                                alt="mic icon"
-                                className="w-[12px] h-[18px]"
-                              />
-                            </span>
+                      <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
+                        <span className="flex ">
+                          <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
+                            {/* 이름 */}
+                            {
+                              connectionInfo[sub.stream.connection.connectionId]
+                                .memberName
+                            }
                           </span>
-                          <span
-                            className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
-                              false ? null : "hidden"
-                            }`}
-                          >
-                            {/* 준비완료 */}
-                            준비완료
+                          <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
+                            {/* 마이크 상태 */}
+                            <img
+                              src={getMicIcon(sub.stream.audioActive)}
+                              alt="mic icon"
+                              className="w-[12px] h-[18px]"
+                            />
                           </span>
-                        </div>
+                        </span>
+                        <span
+                          className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
+                            false ? null : "hidden"
+                          }`}
+                        >
+                          {/* 준비완료 */}
+                          준비완료
+                        </span>
                       </div>
                     </div>
-                  );
-                })}
-              </>
-            ) : null}
+                  </div>
+                );
+              })}
+            </>
+          ) : null}
           {/* </div> */}
           {/* {pics.map((pic, index) => (
             <div key={index} className="flex items-center justify-center">
