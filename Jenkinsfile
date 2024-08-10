@@ -93,33 +93,41 @@ pipeline {
                         # Install and initialize Git LFS
                         git lfs install
 
-                        # Pull all LFS objects
-                        git lfs pull
-
                         # Fetch all LFS files
-                        git lfs fetch --all
-
-                        # LFS 캐시 정리 및 재동기화
-                        git lfs prune
                         git lfs fetch --all
                         git lfs checkout
 
                         # Add backend subtree (to ensure it remains updated)
                         git subtree pull --prefix=backend https://${GITHUB_TOKEN}@${GITHUB_BACKEND_REPO_URL} main
-                        git lfs fetch --include="backend/**"
 
                         # Add frontend subtree
                         git subtree pull --prefix=frontend https://${GITHUB_TOKEN}@${GITHUB_FRONTEND_REPO_URL} main
-                        git lfs fetch --include="frontend/**"
-                        
-                        # Set remote URL for GitLab
-                        git remote set-url origin https://${GITLAB_USERNAME}:${GITLAB_PASSWORD}@lab.ssafy.com/s11-webmobile1-sub2/S11P12C209.git
-                        
+
+                        # 서브 리포지토리들의 .gitattributes 병합
+                        if [ -f backend/.gitattributes ]; then
+                            cat backend/.gitattributes >> .gitattributes
+                        fi
+
+                        if [ -f frontend/.gitattributes ]; then
+                            cat frontend/.gitattributes >> .gitattributes
+                        fi
+
+                        git add .gitattributes
+
+                        # 모든 LFS 객체 가져오기 및 체크아웃
+                        git lfs fetch --all
+                        git lfs checkout
+
                         # Ensure there are changes to commit and force push
                         git add .
                         git commit -m "Update subtrees" || true
 
+                        # Set remote URL for GitLab
+                        git remote set-url origin https://${GITLAB_USERNAME}:${GITLAB_PASSWORD}@lab.ssafy.com/s11-webmobile1-sub2/S11P12C209.git
+                        
+                        # LFS 객체 푸시
                         git lfs push --all origin main
+                        
                         git push --force origin main
                     '''
                 }
