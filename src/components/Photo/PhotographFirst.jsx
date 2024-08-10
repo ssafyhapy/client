@@ -43,6 +43,13 @@ const PhotographFirst = () => {
     }
   };
 
+  const getGridColsClass = () => {
+    const count = 1 + subscribers.length;
+    // const count = 6;
+    return `grid-cols-${Math.min(count, 3)}`;
+  };
+
+
   return (
     <div className="w-full h-screen bg-custom-gradient-game flex items-center justify-center">
       <div
