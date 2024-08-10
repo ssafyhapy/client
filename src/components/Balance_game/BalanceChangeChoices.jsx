@@ -29,6 +29,7 @@ const BalanceChangeChoices = ({
   const [Second, setOptionSecond] = useState("");
 
   useEffect(() => {
+    // 주제1, 2 받아온 데이터로 바꾸자
     setOptionFirst(optionFirst);
     setOptionSecond(optionSecond);
   });
@@ -49,7 +50,9 @@ const BalanceChangeChoices = ({
   };
 
   const handleNextStep = () => {
-    setGameStep("wrap-up");
+    const memberState = "wrapup"
+    webSocketService.sendMemberState(roomId, memberState)
+    // setGameStep("wrap-up");
   };
 
   return (

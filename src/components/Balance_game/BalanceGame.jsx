@@ -54,6 +54,15 @@ const Balance = () => {
   // 내가 이제부터 쭉~~ 구독해야하는 애들
   useEffect(() => {
 
+    // 다음 단계로 넘어갈때 되면 알려줌
+    webSocketService.subscribeToMemberState(roomId, (message) => {
+      console.log("Received message:", message)
+
+      if (message.content === "wrapup") {
+        setGameStep("wrap-up")
+      }
+    })
+
     // 밸런스 게임 주제추천해준거 받아온다!!
     webSocketService.subscribeToBalanceTopic(roomId, (message) => {
       console.log("Received Topic : ", message)
@@ -98,7 +107,7 @@ const Balance = () => {
       {currentStep === "changeChoices" && (
         <BalanceChangeChoices memberId={memberId} hostId={hostId} topicId={topicId} roomId={roomId} purpose={purpose} onConfirm={handleSubjectConfirm} optionFirst={optionFirst} optionSecond={optionSecond} />
       )}
-      {currentStep === "choosing" && <BalanceChoosing hostId={hostId} roomId={roomId} memberId={memberId} topicId={topicId} purpose={purpose} onTimerEnd={handleTimerEnd} currentStep={`${currentStep==="choosing"?true:false}`}/>}
+      {currentStep === "choosing" && <BalanceChoosing optionFirst={optionFirst} optionSecond={optionSecond} hostId={hostId} roomId={roomId} memberId={memberId} topicId={topicId} purpose={purpose} onTimerEnd={handleTimerEnd} currentStep={`${currentStep==="choosing"?true:false}`}/>}
     </>
   );
 };
