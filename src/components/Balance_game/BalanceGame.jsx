@@ -9,8 +9,8 @@ import useRoomStore from "../../store/useRoomStore";
 import webSocketService from "../../WebSocketService";
 
 const Balance = () => {
-  const {memberId} = useAuthStore()
-  const {roomId, hostId} = useRoomStore()
+  const { memberId } = useAuthStore()
+  const { roomId, hostId } = useRoomStore()
 
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
@@ -58,7 +58,7 @@ const Balance = () => {
     webSocketService.subscribeToMemberState(roomId, (message) => {
       console.log("Received message:", message)
 
-      if (message.content === "wrapup") {
+      if (message.memberState === "wrapup") {
         setGameStep("wrap-up")
       }
     })
@@ -96,11 +96,13 @@ const Balance = () => {
     // { "memberId":1, "balanceResultSelectedOption":"First" 아니면 "Second"}
 
     return () => {
+      webSocketService.unsubscribe(`/api/sub/${roomId}/state`)
       webSocketService.unsubscribe(`/api/sub/balance/${roomId}/get-question`)
       webSocketService.unsubscribe(`/api/sub/balance/${roomId}/save-question`)
       webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`)
     }
-  })
+    // dependency array 추가 (아마도 constant subscribing 의 원인...)
+  }, [roomId, setGameStep])
 
   return (
     <>

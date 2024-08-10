@@ -46,7 +46,7 @@ const BalanceChangeChoices = ({
     webSocketService.sendBalanceChosenTopic(roomId, optionFirst, optionSecond);
     setDiscussedNum((prevNum) => prevNum + 1);
     setPickedChoice(null);
-    onConfirm(); // 주제 확정 후 다음 단계로 이동
+    onConfirm(); // 주제 확정 후 다음 단계로 이동 (이러면 호스트만 이동함.. 호스트만 이 버튼을 누를수있으니까)
   };
 
   const handleNextStep = () => {

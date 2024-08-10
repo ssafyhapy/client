@@ -150,7 +150,7 @@ class WebSocketService {
     this.subscribe(`/api/sub/balance/${roomId}/get-question`, onMessageCallback)
   }
 
-  // 밸런스게임 확전된 주제 백에 보내줌 pub
+  // 밸런스게임 확정된 주제 백에 보내줌 pub
   sendBalanceChosenTopic(roomId, optionFirst, optionSecond) {
     this.sendMessage(`/api/pub/balance/${roomId}/save-question`, {optionFirst, optionSecond})
   }
