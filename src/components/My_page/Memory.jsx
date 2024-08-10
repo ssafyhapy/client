@@ -1,10 +1,18 @@
 import React from "react";
+import defaultImage from "../../assets/My_page/defaultImage.svg";
 
 const Memory = ({ memorybox }) => {
   return (
-    <div className="flex flex-col">
-      <img src={memorybox.memberMemoryImageUrl} alt={memorybox.memberMemoryBoxName || "추억 상자 이미지"} />
-      <p>{memorybox.memberMemoryBoxName}</p>
+    <div className="w-[240px] h-[350px] bg-white flex flex-col justify-between items-center">
+      <img
+        className="w-[200px] h-[300px]"
+        src={memorybox.memberMemoryImageUrl || { defaultImage }}
+        alt={memorybox.memberMemoryBoxName || "방 제목 "}
+      />
+      <div>
+        <p className="text-left">{memorybox.memberMemoryBoxDate}</p>
+        <p className="text-right">{memorybox.memberMemoryBoxName}</p>
+      </div>
     </div>
   );
 };
