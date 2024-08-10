@@ -41,8 +41,8 @@ const useOpenViduSession = () => {
         // session에 연결하여 현재 사용자를 session에 구독시키고 비디오를 생성한다.
         const newSubscriber = session.subscribe(event.stream, undefined);
         console.log("[*] Subscriber created", newSubscriber);
-        setSubscriber(newSubscriber);
-
+        setSubscriber(newSubscriber)
+        
         newSubscriber.on("videoElementCreated", (event) => {
           console.log("[*]Video Element Created", event.element);
         });
@@ -71,8 +71,6 @@ const useOpenViduSession = () => {
         );
       });
 
-      //
-
       try {
         // 세션 연결 시도
         await session.connect(webrtc.openviduToken);
@@ -94,25 +92,6 @@ const useOpenViduSession = () => {
         await session.publish(newPublisher);
         console.log("Publisher created and published successfully");
 
-        // Publisher의 마이크 상태가 변경되었을 때
-        newPublisher.stream.on("streamPropertyChanged", (event) => {
-          if (event.changedProperty === "audioActive") {
-            const isAudioEnabled = event.newValue;
-            console.log(
-              `Your microphone is now ${
-                isAudioEnabled ? "enabled" : "disabled"
-              }`
-            );
-            setPublisher((prevPublisher) => ({
-              ...prevPublisher,
-              stream: {
-                ...prevPublisher.stream,
-                audioActive: isAudioEnabled,
-              },
-            }));
-          }
-        });
-
         // Session, MainStreamManager, Publisher, Subscriber를 업데이트함
         setSession(session);
         setMainStreamManager(newPublisher);
@@ -130,57 +109,14 @@ const useOpenViduSession = () => {
   }, []);
 
   useEffect(() => {
-    // 모든 구독자에 대해 이벤트 리스너 등록
-    subscribers.forEach((subscriber) => {
-      if (subscriber.stream && typeof subscriber.stream.on === "function") {
-        const handleStreamPropertyChanged = (event) => {
-          if (event.changedProperty === "audioActive") {
-            const isAudioEnabled = event.newValue;
-            console.log(
-              `Subscriber's microphone is now ${
-                isAudioEnabled ? "enabled" : "disabled"
-              }`
-            );
-            setSubscribers((prevSubscribers) =>
-              prevSubscribers.map((sub) =>
-                sub === subscriber
-                  ? {
-                      ...sub,
-                      stream: {
-                        ...sub.stream,
-                        audioActive: isAudioEnabled,
-                      },
-                    }
-                  : sub
-              )
-            );
-          }
-        };
-
-        subscriber.stream.on(
-          "streamPropertyChanged",
-          handleStreamPropertyChanged
-        );
-
-        return () => {
-          subscriber.stream.off(
-            "streamPropertyChanged",
-            handleStreamPropertyChanged
-          );
-        };
-      }
-    });
-  }, [subscribers, setSubscribers]);
-
-  useEffect(() => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
     console.log("[*] publisher", publisher);
 
     console.log("[*] mainStream", mainStreamManager);
     console.log("[*] newSubscriber", subscriber);
-
+    
     console.log("[*] subscribers", subscribers);
-    console.log("[*] 배포됨 4");
+    console.log("[*] 확인");
   }, [subscribers, connectionInfo, publisher, mainStreamManager, subscriber]);
 
   return { session };
