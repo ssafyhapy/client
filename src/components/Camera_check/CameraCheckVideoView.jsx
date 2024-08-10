@@ -153,10 +153,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
-import { useAR } from "./useAR"; // 방금 만든 useAR 훅을 import
+import { useAR } from "./../../hooks/useAR"
 import useGameStore from "./../../store/useGameStore";
 import useAuthStore from "../../store/useAuthStore";
-import SelectMask from "./SelectMask"; // SelectMask 컴포넌트 import
+import SelectMask from "../Waiting_room/SelectMask"; // SelectMask 컴포넌트 import
 
 const Model = ({ url, rotation, position, faceWidth }) => {
   const { scene } = useGLTF(url);
