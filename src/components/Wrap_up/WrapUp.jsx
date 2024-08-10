@@ -7,6 +7,8 @@ import WrapUpModal from "../../components/Wrap_up/WrapUpModal";
 import { useNavigate } from "react-router-dom";
 
 import useGameStore from "../../store/useGameStore";
+import webSocketService from "../../WebSocketService";
+import useRoomStore from "../../store/useRoomStore";
 
 const WrapUp = () => {
   const gameStep = useGameStore((state) => state.gameStep);
@@ -14,6 +16,8 @@ const WrapUp = () => {
   const btnText = "종료";
   const userText =
     "섹션 별 소감이나 궁금했던 점 등을 자유롭게 이야기 나눠주세요.";
+
+  const {roomId} = useRoomStore()
 
   const [showModal, setShowModal] = useState(false);
 
@@ -32,8 +36,24 @@ const WrapUp = () => {
 
   const navigate = useNavigate();
   const handleNextStep = () => {
-    setGameStep("photo-last");
+    const memberState = "photolast"
+    webSocketService.sendMemberState(roomId, memberState)
+    // setGameStep("photo-last");
   };
+
+  useEffect(() => {
+    webSocketService.subscribeToMemberState(roomId, (message) => {
+      console.log("Message received: ", message)
+
+      if (message.memberState === "photolast") {
+        setGameStep("photo-last")
+      }
+    })
+
+    return () => {
+      webSocketService.unsubscribe(`/api/sub/${roomId}/state`)
+    }
+  }, [roomId, setGameStep])
 
   return (
     <>

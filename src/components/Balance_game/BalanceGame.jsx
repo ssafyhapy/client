@@ -43,9 +43,9 @@ const Balance = () => {
     // setCurrentStep("changeChoices");
   };
 
-  const handleSubjectConfirm = () => {
-    setCurrentStep("choosing");
-  };
+  // const handleSubjectConfirm = () => {
+  //   setCurrentStep("choosing");
+  // };
 
   const handleTimerEnd = () => {
     setCurrentStep("changeChoices");
