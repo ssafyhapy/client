@@ -30,12 +30,12 @@ const Balance = () => {
   // 주제확정되면 주제 id 들고다녀
   const [topicId, settopicId] = useState("")
 
-  // purpose 값이 빈 값이 아닐때만!! pub을 보내도록 바꿈
-  useEffect(() => {
-    if (purpose !== "") {
-      webSocketService.sendBalancePurpose(roomId, purpose);
-    }
-  }, [purpose]);
+  // purpose 값이 빈 값이 아닐때만!! pub을 보내도록 바꿈 (중복이라 주석처리)
+  // useEffect(() => {
+  //   if (purpose !== "") {
+  //     webSocketService.sendBalancePurpose(roomId, purpose);
+  //   }
+  // }, [purpose]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -48,6 +48,8 @@ const Balance = () => {
   const handleSubjectSaveModal = () => {
     // 모달 닫을때 purpose pub 해줘야함
     setShowModal(false);
+
+    // purpose가 빈값이 아닐때만!!
     if (purpose !== "") {
       webSocketService.sendBalancePurpose(roomId, purpose)
     }
@@ -59,6 +61,10 @@ const Balance = () => {
   const handleSubjectConfirm = () => {
     webSocketService.sendBalanceChosenTopic(roomId, optionFirst, optionSecond)
     // setCurrentStep("choosing");
+
+
+    // 주제 확정되고 나면 discussedNum 도 + 1
+    setDiscussedNum((prevNum) => prevNum + 1);
   };
 
   const handleTimerEnd = () => {
@@ -101,8 +107,8 @@ const Balance = () => {
       // 주제 확정된거 메시지로 다시 받으면 호스트 아닌사람들도 choosing으로 넘어가
       setCurrentStep("choosing")
 
-      // 주제 확정되고 나면 discussedNum 도 + 1
-      setDiscussedNum((prevNum) => prevNum + 1);
+      // // 주제 확정되고 나면 discussedNum 도 + 1
+      // setDiscussedNum((prevNum) => prevNum + 1);
     })
 
     // 받아오는 데이터
@@ -123,7 +129,7 @@ const Balance = () => {
       webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`)
     }
     // dependency array 추가 (아마도 constant subscribing 의 원인...)
-  }, [roomId, topicId, setGameStep, currentStep, setDiscussedNum])
+  }, [roomId, topicId, setGameStep, currentStep, setDiscussedNum, purpose])
 
   useEffect(() => {
     console.log("Topic Id: ", topicId)
