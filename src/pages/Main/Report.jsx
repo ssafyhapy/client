@@ -7,19 +7,9 @@ import Step2 from "../../components/Report/Step2";
 import Step3 from "../../components/Report/Step3";
 import Picture from "../../components/Report/Picture";
 import bgImage from "../../assets/bg/bgImage.jpg";
-import { axiosInstance } from "../../api/apiClient";
 import axios from "axios";
 
 const Report = () => {
-  // const fetchData = async () => {
-  //   try {
-  //     // const response = await axiosInstance.get(`/room/${roomId}/report`);
-  //     const response = await axiosInstance.get("/room/86/report");
-  //     console.log("fetchData", response);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   const [reportData, setReportData] = useState(null);
 
@@ -31,7 +21,7 @@ const Report = () => {
           {
             headers: {
               authorization:
-                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjQ0OTYzMjM4Iiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjo3LCJpYXQiOjE3MjMzNTgyMjQsImV4cCI6MTcyNTk1MDIyNH0.J9_nmImreR9eiiDwpuQpIq-c8290UgkCq45lCn9ePVcTWFIMmvYQ9QMcuBtmArzTrLrZBUhkmM3vAeE2AUa3Ug",
+                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDkwMDQ0MjM3MDk5MTkxOTQxMDQiLCJyb2xlIjoiUk9MRV9VU0VSIiwibWVtYmVySWQiOjgsImlhdCI6MTcyMzM3Mjk0MSwiZXhwIjoxNzI1OTY0OTQxfQ.7SPnaQ2ARdN4qhBg7HBBwnvZZ8cD-xLM1rkM3cs0Mv8RtUTHHCfS37N4JNkvrwUXY_PsVE7lkeNY9K2DQZVj7Q",
             },
           }
         );
@@ -41,6 +31,7 @@ const Report = () => {
         console.error(error);
       }
     };
+
     fetchData();
   }, []);
 
