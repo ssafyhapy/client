@@ -3,7 +3,7 @@ import defaultImage from "../../assets/My_page/defaultImg.jpg";
 
 const Memory = ({ memorybox }) => {
   return (
-    <div className="w-[240px] h-[350px] bg-white flex flex-col justify-between items-center p-4">
+    <div className="w-[240px] h-[350px] bg-white flex flex-col justify-between items-center p-4 gap-2">
       <img
         className="w-[200px] h-[300px]"
         src={memorybox.memberMemoryImageUrl || defaultImage}

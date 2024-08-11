@@ -25,15 +25,15 @@ const Profile = ({ isEditMode }) => {
   return (
     <div className="w-full h-full bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)] flex p-5 gap-5">
       {isEditMode ? (
-        <div className="flex-shrink-0 w-[160px] h-[160px]">
+        <div className="w-[160px] h-[160px]">
           {/* 이미지 업로드 input */}
           <input
             type="file"
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            className="w-[160px] h-[160px] absolute opacity-0 cursor-pointer"
             accept="image/*"
             onChange = {handleImageChange}
           />
-          <div className="w-full h-full bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden">
+          <div className="w-[160px] h-[160px] bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden">
             {/* 업로드 이미지 미리보기 */}
             {previewImage ? (
               <img src={previewImage} alt="미리보기" className="object-cover w-full h-full" />
@@ -48,7 +48,7 @@ const Profile = ({ isEditMode }) => {
       )}
 
       {/* 이름, 이메일 출력 */}
-      <div className="flex flex-col flex-shrink-0">
+      <div className="w-full h-auto">
         <p className="whitespace-nowrap">이름 : {memberName}</p>
         <p className="whitespace-nowrap">E-mail : {memberProviderEmail}</p>
       </div>

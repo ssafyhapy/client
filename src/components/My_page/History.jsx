@@ -35,9 +35,9 @@ const History = ({ isEditMode }) => {
   }, [isEditMode, memberHistoryList, setValue]);
 
   return (
-    <div className="w-full h-full bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)] flex items-start p-5 gap-5 relative">
-      <div className="flex flex-col justify-center gap-2">
-        <h1 className="text-2xl">History</h1>
+    <div className="w-full h-full bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)] flex items-start p-5 gap-5">
+      <div className="w-full flex flex-col justify-center items-center gap-4">
+        <h1 className="text-2xl self-start">History</h1>
         {isEditMode ? (
           <>
             {/* 필드 배열을 순회하며 이력 입력 폼 생성 */}
@@ -74,7 +74,7 @@ const History = ({ isEditMode }) => {
               </div>
             ))}
             {/* // 이력 추가 버튼 */}
-            {fields.length < 4 && (
+            {fields.length < 3 && (
               <button
                 type="button"
                 onClick={() =>
