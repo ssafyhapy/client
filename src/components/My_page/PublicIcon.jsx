@@ -31,6 +31,7 @@ export const PublicIcon = () => {
   return (
     <div>
       {isVisibility ? (
+        <div className="flex">
         <div
           onClick={handlePrivate} // 공개 상태일 때 비공개로 전환
           className="cursor-pointer"
@@ -49,7 +50,6 @@ export const PublicIcon = () => {
             />
           </svg>
         </div>
-      ) : (
         <div
           onClick={handlePublic} // 비공개 상태일 때 공개로 전환
           className="cursor-pointer"
@@ -58,7 +58,7 @@ export const PublicIcon = () => {
             xmlns="http://www.w3.org/2000/svg"
             width="37"
             height="37"
-            viewBox="0 0 37 37"
+            viewBox="0 0 24 24"
             fill="none"
           >
             <path
@@ -68,6 +68,9 @@ export const PublicIcon = () => {
             />
           </svg>
         </div>
+        </div>
+      ) : (
+        <></>
       )}
     </div>
   );
