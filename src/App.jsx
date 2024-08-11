@@ -7,6 +7,7 @@ import Login from "./pages/Main/Login";
 import MyPage from "./pages/Main/MyPage";
 import Auth from "./pages/Main/Auth";
 import Report from "./pages/Main/Report";
+import MemberProfile from "./pages/Main/MemberProfile";
 
 // 게임 공통 페이지(기반)
 // import CamCheck from "./pages/Games/CamCheck";
@@ -68,6 +69,9 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         {/* 마이페이지 동적 라우팅 */}
         {/* <Route path="/mypage/:memberName" element={<MyPage />} /> */}
+        <Route path="/member" element={<MemberProfile />} />
+        {/* 멤버 프로필 동적 라우팅 */}
+        {/* <Route path="/member/:memberId" element={<MemberProfile />} /> */}
         <Route path="/login/oauth2/code/*" element={<Auth />} />
         <Route path="/report" element={<Report />} />
 
