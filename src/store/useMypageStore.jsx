@@ -11,6 +11,7 @@ const useMypageStore = create(
       memberIntroduction: null,
       memberHistoryList: null,
       memberMemoryboxList: null,
+      memberVisibility: null,
       fetchData: async (endpoint) => {
         try {
           const response = await axiosInstance.get(endpoint);
@@ -19,6 +20,9 @@ const useMypageStore = create(
         } catch (error) {
           console.error(error);
         }
+      },
+      setMemberVisibility: (data) => {
+        set({ memberVisibility: data });
       },
       updateData: async (endpoint, data) => {
         try {
@@ -64,17 +68,4 @@ const useUpdateStore = create(
   )
 );
 
-const useVisibilityStore = create(
-  persist(
-    (set) => ({
-      isVisibility: true,
-      setVisibility: () =>
-        set((state) => ({ isVisibility: !state.isVisibility })),
-    }),
-    {
-      name: "Visibility-storage",
-      storage: createJSONStorage(() => sessionStorage),
-    }
-  )
-);
-export { useMypageStore, useUpdateStore, useVisibilityStore };
+export { useMypageStore, useUpdateStore};

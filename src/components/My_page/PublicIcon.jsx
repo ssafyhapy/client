@@ -1,9 +1,9 @@
 import React from "react";
-import { useVisibilityStore } from "../../store/useMypageStore";
+import { useMypageStore } from "../../store/useMypageStore";
 import { axiosInstance } from "../../api/apiClient";
 
 export const PublicIcon = () => {
-  const { isVisibility, setVisibility } = useVisibilityStore();
+  const { memberVisibility, setMemberVisibility } = useMypageStore();
 
   const handlePublic = async () => {
     try {
@@ -11,7 +11,7 @@ export const PublicIcon = () => {
         visibility: "PUBLIC",
       });
       console.log("공개 설정 성공", response);
-      setVisibility();
+      setMemberVisibility("PUBLIC");
     } catch (error) {
       console.error("공개 설정 실패", error);
     }
@@ -22,7 +22,7 @@ export const PublicIcon = () => {
         visibility: "PRIVATE",
       });
       console.log("비공개 설정 성공", response);
-      setVisibility();
+      setMemberVisibility("PRIVATE");
     } catch (error) {
       console.error("비공개 설정 실패", error);
     }
@@ -30,7 +30,7 @@ export const PublicIcon = () => {
 
   return (
     <div>
-      {isVisibility ? (
+      {memberVisibility === "PUBLIC" ? (
         <div className="flex">
           <div
             onClick={handlePrivate} // 공개 상태일 때 비공개로 전환
