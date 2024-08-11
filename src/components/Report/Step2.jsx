@@ -1,8 +1,7 @@
 import React from "react";
-import Carousel from "../Carousel";
+import Carousel from "./Carousel";
 
-const Step2 = ({Ox}) => {
-
+const Step2 = ({ Ox }) => {
   console.log("Ox", Ox);
 
   return (

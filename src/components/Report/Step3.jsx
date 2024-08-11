@@ -1,8 +1,7 @@
 import React from "react";
-import Carousel from "../Carousel";
+import Carousel from "./Carousel";
 
-const Step3 = ({Balance}) => {
-
+const Step3 = ({ Balance }) => {
   console.log("Balance", Balance);
 
   return (

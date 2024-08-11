@@ -1,6 +1,6 @@
 import React from "react";
-import LeftBtn from "./Report/LeftBtn";
-import RightBtn from "./Report/RightBtn";
+import LeftBtn from "./LeftBtn";
+import RightBtn from "./RightBtn";
 
 const Carousel = ({ slides, type }) => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -12,7 +12,6 @@ const Carousel = ({ slides, type }) => {
   const prevSlide = () => {
     setCurrentIndex((currentIndex - 1 + slides.length) % slides.length);
   };
-  
 
   // 슬라이드 없을 때 처리
   if (!slides || slides.length === 0) {

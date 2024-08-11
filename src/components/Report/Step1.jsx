@@ -1,8 +1,7 @@
 import React from "react";
-import Carousel from "../Carousel";
+import Carousel from "./Carousel";
 
-const Step1 = ({Intro}) => {
-
+const Step1 = ({ Intro }) => {
   console.log("Intro", Intro);
 
   return (
@@ -10,8 +9,7 @@ const Step1 = ({Intro}) => {
       <div className="absolute top-[-10px] left-[-10px] rounded-[20px] bg-white w-[20%] h-[20%] flex justify-center items-center">
         <h1>step 1</h1>
       </div>
-      <Carousel slides={Intro} type="intro" >
-      </Carousel>
+      <Carousel slides={Intro} type="intro"></Carousel>
     </div>
   );
 };
