@@ -1,15 +1,16 @@
 import React from "react";
 import ProfileCard from "./ProfileCard";
 
-const Profile = () => {
+const Profile = ({ members }) => {
   return (
     <>
-      <ProfileCard />
-      <ProfileCard />
-      <ProfileCard />
-      <ProfileCard />
-      <ProfileCard />
-      <ProfileCard />
+      {members?.map((member) => (
+        <ProfileCard
+          key={member.memberName}
+          memberName={member.memberName}
+          memberProfileImageUrl={member.memberProfileImageUrl}
+        />
+      ))}
     </>
   );
 };
