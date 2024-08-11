@@ -8,13 +8,15 @@ import UserMemoryBox from "../../components/MemberProfile/UserMemoryBox";
 import Spinner from "../../components/Spinner";
 import bgImage from "../../assets/bg/bgImage.jpg";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const MemberProfile = () => {
   // 로딩 상태
   const [isLoading, setIsLoading] = useState(true);
   const [memberData, setMemberData] = useState({});
+  const navigate = useNavigate();
 
-  // 마이페이지 데이터 불러오기
+  // 유저 프로필 데이터 불러오기
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -32,7 +34,19 @@ const MemberProfile = () => {
         setIsLoading(false);
       } catch (error) {
         console.error(error);
-        setIsLoading(false);
+        if (
+          error.response &&
+          error.response.data.errorMsg === "프로필 비공개 멤버입니다."
+        ) {
+          alert("프로필 비공개 멤버입니다.");
+          navigate("/report");
+          // report 페이지 연결 후 뒤로 가기 주석 해제하기
+          // window.history.back();
+        } else {
+          alert("프로필을 불러오는데 실패했습니다.");
+          window.history.back();
+          setIsLoading(false);
+        }
       }
     };
     loadData();
