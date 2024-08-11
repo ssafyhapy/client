@@ -31,11 +31,11 @@ const Balance = () => {
   const [topicId, settopicId] = useState("")
 
   // purpose 값이 빈 값이 아닐때만!! pub을 보내도록 바꿈 (중복이라 주석처리)
-  // useEffect(() => {
-  //   if (purpose !== "") {
-  //     webSocketService.sendBalancePurpose(roomId, purpose);
-  //   }
-  // }, [purpose]);
+  useEffect(() => {
+    if (purpose !== "") {
+      webSocketService.sendBalancePurpose(roomId, purpose);
+    }
+  }, [purpose]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -50,9 +50,9 @@ const Balance = () => {
     setShowModal(false);
 
     // purpose가 빈값이 아닐때만!!
-    if (purpose !== "") {
-      webSocketService.sendBalancePurpose(roomId, purpose)
-    }
+    // if (purpose !== "") {
+    //   webSocketService.sendBalancePurpose(roomId, purpose)
+    // }
     // setCurrentStep("changeChoices");
   };
 
