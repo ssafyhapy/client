@@ -50,9 +50,9 @@ const Balance = () => {
     setShowModal(false);
 
     // purpose가 빈값이 아닐때만!!
-    // if (purpose !== "") {
-    //   webSocketService.sendBalancePurpose(roomId, purpose)
-    // }
+    if (purpose !== "") {
+      webSocketService.sendBalancePurpose(roomId, purpose)
+    }
     // setCurrentStep("changeChoices");
   };
 
