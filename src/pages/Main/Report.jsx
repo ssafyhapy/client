@@ -8,9 +8,10 @@ import Step3 from "../../components/Report/Step3";
 import Picture from "../../components/Report/Picture";
 import bgImage from "../../assets/bg/bgImage.jpg";
 import axios from "axios";
+import Spinner from "../../components/Spinner";
 
 const Report = () => {
-
+  const [loading, setLoading] = useState(true);
   const [reportData, setReportData] = useState(null);
 
   useEffect(() => {
@@ -27,8 +28,10 @@ const Report = () => {
         );
         console.log("fetchData", response);
         setReportData(response.data.data);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     };
 
@@ -41,36 +44,43 @@ const Report = () => {
       style={{ backgroundImage: `url(${bgImage})` }}
     >
       <SubFrame>
-        <div className="w-[80%] flex flex-col items-center py-10 gap-5 ">
-          {/* // 네비게이션 바 */}
-          <NavBar />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <div className="w-[80%] flex flex-col items-center py-10 gap-5 ">
+            {/* // 네비게이션 바 */}
+            <NavBar />
 
-          <div className="">
-            {/* // 제목 */}
-            <h1 className="text-4xl font-bold text-center">Report</h1>
-          </div>
+            <div className="">
+              {/* // 제목 */}
+              <h1 className="text-4xl font-bold text-center">Report</h1>
+            </div>
 
-          <div className="flex gap-5">
-            {/* // 프로필 */}
-            <Profile members={reportData?.memberReportResponseDtos}/>
-          </div>
+            <div className="flex gap-5">
+              {/* // 프로필 */}
+              <Profile members={reportData?.memberReportResponseDtos} />
+            </div>
 
-          <div className="w-full flex gap-5 mt-5">
-            {/* // 스텝 1, 2 */}
-            <Step1 Intro={reportData?.introReportResponseDtos}/>
-            <Step2 Ox={reportData?.oxReportResponseDtos}/>
-          </div>
+            <div className="w-full flex gap-5 mt-5">
+              {/* // 스텝 1, 2 */}
+              <Step1 Intro={reportData?.introReportResponseDtos} />
+              <Step2 Ox={reportData?.oxReportResponseDtos} />
+            </div>
 
-          <div className="w-full">
-            {/* // 스텝 3 */}
-            <Step3 Balance={reportData?.balanceReportResponseDtos}/>
-          </div>
+            <div className="w-full">
+              {/* // 스텝 3 */}
+              <Step3 Balance={reportData?.balanceReportResponseDtos} />
+            </div>
 
-          <div className="w-full">
-            {/* // 활동 전후 사진 */}
-            <Picture before={reportData?.roomBeforeImageUrl} after={reportData?.roomAfterImageUrl}/>
+            <div className="w-full">
+              {/* // 활동 전후 사진 */}
+              <Picture
+                before={reportData?.roomBeforeImageUrl}
+                after={reportData?.roomAfterImageUrl}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </SubFrame>
     </div>
   );
