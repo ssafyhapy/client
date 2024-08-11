@@ -65,7 +65,7 @@ const Balance = () => {
 
 
     // 주제 확정되고 나면 discussedNum 도 + 1
-    setDiscussedNum((prevNum) => prevNum + 1);
+    // setDiscussedNum((prevNum) => prevNum + 1);
   };
 
   const handleTimerEnd = () => {
@@ -108,8 +108,8 @@ const Balance = () => {
       // 주제 확정된거 메시지로 다시 받으면 호스트 아닌사람들도 choosing으로 넘어가
       setCurrentStep("choosing")
 
-      // // 주제 확정되고 나면 discussedNum 도 + 1
-      // setDiscussedNum((prevNum) => prevNum + 1);
+      // 주제 확정되고 나면 discussedNum 도 + 1
+      setDiscussedNum((prevNum) => prevNum + 1);
     })
 
     // 받아오는 데이터
@@ -130,7 +130,7 @@ const Balance = () => {
       webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`)
     }
     // dependency array 추가 (아마도 constant subscribing 의 원인...)
-  }, [roomId, topicId, setGameStep, currentStep, setDiscussedNum, purpose])
+  }, [roomId, topicId, setGameStep, discussedNum, currentStep, setDiscussedNum, purpose])
 
   useEffect(() => {
     console.log("Topic Id: ", topicId)
