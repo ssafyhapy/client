@@ -55,9 +55,9 @@ const PhotographFirst = () => {
   const getVideoContainerClass = () => {
     const count = 1 + subscribers.length;
     // const count = 6;
-    if (count === 1) return "w-[30%] max-w-[300px] min-w-[230px]";
-    if (count === 2) return "w-[30%] max-w-[250px] min-w-[200px]";
-    if (count >= 3) return "w-[30%] max-w-[150px] min-w-[200px]";
+    if (count === 1) return "max-w-[300px] min-w-[230px]";
+    if (count === 2) return "max-w-[250px] min-w-[200px]";
+    if (count >= 3) return "max-w-[150px] min-w-[200px]";
   };
 
   const getMicIcon = (isAudioActive) => {
