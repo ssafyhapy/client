@@ -1,6 +1,9 @@
 import React from "react";
 import LeftBtn from "./LeftBtn";
 import RightBtn from "./RightBtn";
+import IntroSlide from "./IntroSlider";
+import OxSlide from "./OxSlide";
+import BalanceSlide from "./BalanceSlide";
 
 const Carousel = ({ slides, type }) => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -24,46 +27,27 @@ const Carousel = ({ slides, type }) => {
 
   const currentSlide = slides[currentIndex];
 
+  const renderSlideContent = () => {
+    switch (type) {
+      case "intro":
+        return <IntroSlide slide={currentSlide} />;
+      case "ox":
+        return <OxSlide slide={currentSlide} />;
+      case "balance":
+        return <BalanceSlide slide={currentSlide} />;
+      default:
+        return <p>No content available</p>;
+    }
+  };
+
   return (
     <div className="flex justify-between w-full h-full items-center">
       {/* Left Button */}
       <LeftBtn onClick={prevSlide} />
 
       {/* Slide Content */}
-      <div className="flex-grow mx-4">
-        <div className="flex flex-col justify-center items-center">
-          {type === "intro" && (
-            <div>
-              <p>Member Name: {currentSlide.memberName}</p>
-              <p>Content: {currentSlide.content}</p>
-            </div>
-          )}
-
-          {type === "ox" && (
-            <div>
-              <p>Member Name: {currentSlide.memberName}</p>
-              {currentSlide.oxResponseDtos.map((response, index) => (
-                <div key={index}>
-                  <p>{response.content}</p>
-                  <p>Answer: {response.answer ? "True" : "False"}</p>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {type === "balance" && (
-            <div>
-              <p>Option 1: {currentSlide.balanceQuestionOptionFirst}</p>
-              <p>Option 2: {currentSlide.balanceQuestionOptionSecond}</p>
-              {currentSlide.balanceResultResponseDtos.map((response, index) => (
-                <p key={index}>
-                  {response.memberName} chose{" "}
-                  {response.balanceResultSelectedOption}
-                </p>
-              ))}
-            </div>
-          )}
-        </div>
+      <div className="flex-grow mx-4 flex flex-col justify-center items-center">
+        {renderSlideContent()}
       </div>
 
       {/* Right Button */}
