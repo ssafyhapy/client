@@ -47,8 +47,10 @@ const Balance = () => {
 
   const handleSubjectSaveModal = () => {
     // 모달 닫을때 purpose pub 해줘야함
-    // webSocketService.sendBalancePurpose(roomId, purpose)
     setShowModal(false);
+    if (purpose !== "") {
+      webSocketService.sendBalancePurpose(roomId, purpose)
+    }
     // setCurrentStep("changeChoices");
   };
 
