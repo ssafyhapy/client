@@ -59,7 +59,8 @@ const Balance = () => {
   // 주제확정버튼과 연결되어있음
   // 주제확정될때 pub
   const handleSubjectConfirm = () => {
-    webSocketService.sendBalanceChosenTopic(roomId, optionFirst, optionSecond)
+    // BalanceChangeChoices handleConfirmChoices 에 pub 이미 해주는거 있어서 밑의 건 주석처리
+    // webSocketService.sendBalanceChosenTopic(roomId, optionFirst, optionSecond)
     // setCurrentStep("choosing");
 
 
