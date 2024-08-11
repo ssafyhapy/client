@@ -13,7 +13,6 @@ const Carousel = ({ slides, type }) => {
     setCurrentIndex((currentIndex - 1 + slides.length) % slides.length);
   };
   
-  const currentSlide = slides[currentIndex];
 
   // 슬라이드 없을 때 처리
   if (!slides || slides.length === 0) {
@@ -24,6 +23,7 @@ const Carousel = ({ slides, type }) => {
     );
   }
 
+  const currentSlide = slides[currentIndex];
 
   return (
     <div className="flex justify-between w-full h-full items-center">
