@@ -8,7 +8,7 @@ export const PublicIcon = () => {
   const handlePublic = async () => {
     try {
       const response = await axiosInstance.put("/member/mypage/visibility", {
-        visibility: "PUBLIC",
+        visibility: "PRIVATE",
       });
       console.log("공개 설정 성공", response);
       setMemberVisibility("PUBLIC");
@@ -19,7 +19,7 @@ export const PublicIcon = () => {
   const handlePrivate = async () => {
     try {
       const response = await axiosInstance.put("/member/mypage/visibility", {
-        visibility: "PRIVATE",
+        visibility: "PUBLIC",
       });
       console.log("비공개 설정 성공", response);
       setMemberVisibility("PRIVATE");
