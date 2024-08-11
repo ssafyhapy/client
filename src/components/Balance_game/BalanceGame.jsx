@@ -30,6 +30,12 @@ const Balance = () => {
   // 주제확정되면 주제 id 들고다녀
   const [topicId, settopicId] = useState("")
 
+  // purpose 값이 빈 값이 아닐때만!! pub을 보내도록 바꿈
+  useEffect(() => {
+    if (purpose !== "") {
+      webSocketService.sendBalancePurpose(roomId, purpose);
+    }
+  }, [purpose]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -41,13 +47,16 @@ const Balance = () => {
 
   const handleSubjectSaveModal = () => {
     // 모달 닫을때 purpose pub 해줘야함
-    webSocketService.sendBalancePurpose(roomId, purpose)
+    // webSocketService.sendBalancePurpose(roomId, purpose)
     setShowModal(false);
     // setCurrentStep("changeChoices");
   };
 
+  // 주제확정버튼과 연결되어있음
+  // 주제확정될때 pub
   const handleSubjectConfirm = () => {
-    setCurrentStep("choosing");
+    webSocketService.sendBalanceChosenTopic(roomId, optionFirst, optionSecond)
+    // setCurrentStep("choosing");
   };
 
   const handleTimerEnd = () => {
@@ -126,7 +135,7 @@ const Balance = () => {
       {currentStep === "changeChoices" && (
         <BalanceChangeChoices discussedNum={discussedNum} memberId={memberId} hostId={hostId} topicId={topicId} roomId={roomId} purpose={purpose} onConfirm={handleSubjectConfirm} optionFirst={optionFirst} optionSecond={optionSecond} />
       )}
-      {currentStep === "choosing" && <BalanceChoosing discussedNum={discussedNum} optionFirst={optionFirst} optionSecond={optionSecond} hostId={hostId} roomId={roomId} memberId={memberId} topicId={topicId} purpose={purpose} onTimerEnd={handleTimerEnd} currentStep={`${currentStep==="choosing"?true:false}`}/>}
+      {currentStep === "choosing" && <BalanceChoosing discussedNum={discussedNum} optionFirst={optionFirst} optionSecond={optionSecond} hostId={hostId} roomId={roomId} memberId={memberId} topicId={topicId} purpose={purpose} onTimerEnd={handleTimerEnd} currentStep={`${currentStep === "choosing" ? true : false}`} />}
     </>
   );
 };

@@ -38,8 +38,11 @@ const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond,
               topicId,
               memberId,
               pickedChoice
-
             )
+
+            // 그 사람이 뭘 골랐는지는 다시 null로 만들자
+            setPickedChoice(null)
+
             onTimerEnd(); // 타이머가 0이 되었을 때 호출
             return 0;
           }
