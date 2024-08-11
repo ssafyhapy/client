@@ -1,5 +1,5 @@
 // src/store/chatStore.js
-import create from "zustand";
+import {create} from "zustand";
 
 const useChatStore = create((set) => ({
   messages: [],
