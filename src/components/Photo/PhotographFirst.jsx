@@ -48,7 +48,6 @@ const PhotographFirst = () => {
 
   const getGridColsClass = () => {
     const count = 1 + subscribers.length;
-    // const count = 6;
     return `grid-cols-${Math.min(count, 3)}`;
   };
 
@@ -56,9 +55,9 @@ const PhotographFirst = () => {
   const getVideoContainerClass = () => {
     const count = 1 + subscribers.length;
     // const count = 6;
-    if (count === 1) return "w-[300px]";
-    if (count === 2) return "w-[230px]";
-    if (count >= 3) return "w-[150px]";
+    if (count === 1) return "w-[30%] max-w-[300px] min-w-[230px]";
+    if (count === 2) return "w-[30%] max-w-[230px] min-w-[200px]";
+    if (count >= 3) return "w-[20%] max-w-[150px] min-w-[100px]";
   };
 
   const getMicIcon = (isAudioActive) => {
