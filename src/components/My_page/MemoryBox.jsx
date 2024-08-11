@@ -27,10 +27,12 @@ const MemoryBox = () => {
       <div className="flex items-center gap-2">
         <h1 className="text-2xl">추억 상자</h1>
       </div>
+      <div className="flex gap-3">
       {/* 현재 페이지에 해당하는 Memory 컴포넌트를 출력 */}
       {currentItems.map((memorybox) => (
         <Memory key={memorybox.roomId} memorybox={memorybox} />
       ))}
+      </div>
       {/* 페이지네이션 버튼 */}
       <div className="flex justify-center gap-2 mt-4">
         {Array.from({ length: totalPages }, (_, index) => (
