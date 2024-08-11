@@ -49,6 +49,12 @@ const PhotographLast = () => {
     if (count >= 3) return "w-[20%] max-w-[150px] min-w-[100px]";
   };
 
+  const getMicIcon = (isAudioActive) => {
+    return isAudioActive
+      ? "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic_on.png"
+      : "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mute.png";
+  };
+
   return (
     <>
       <div
