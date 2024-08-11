@@ -47,7 +47,7 @@ const Play = () => {
         {},
         {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjQ5OTM3OTE1Iiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjozNTIsImlhdCI6MTcyMjgyNDA4NCwiZXhwIjoxNzI1NDE2MDg0fQ.1Zpsq6_5AT3bp-yizrkzvRiH_Ck0GqIEtSYnBrZ9QOfjbCxx9FjM8NZbf9IQIMzCdxCj_CNNOF49iq1oePdQ7w`,
+            Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjU3NzYyNjE0Iiwicm9sZSI6IlJPTEVfVVNFUiIsIm1lbWJlcklkIjoxLCJpYXQiOjE3MjMzNTc5MDYsImV4cCI6MTcyNTk0OTkwNn0.doA4UVKZ-PbTE4HzVNS6Qs004MPn8F4X6UQ17k-BLynV0vshP2sX1Ge3UksqNieCDXH3YwuFIfE40WaG3CVy5A`,
           },
         }
       );

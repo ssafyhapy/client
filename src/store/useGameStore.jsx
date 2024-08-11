@@ -9,13 +9,15 @@ const useGameStore = create((set) => ({
     set((state) => ({ roomId: updateFunc(state.roomId) })),
   gameStep: "camera-check",
   setGameStep: (step) => set({ gameStep: step }),
+  session:null,
+  setSession : (se)=>set({session:se}),
   mainStreamManager: null,
   setMainStreamManager: (manager) => set({ mainStreamManager: manager }),
   publisher: null,
   setPublisher: (pub) => set({ publisher: pub }),
   subscribers: [],
   setSubscribers: (subs) => set({ subscribers: subs }),
-  connectionInfo:[],
+  connectionInfo: [],
   setConnectionInfo: (newConnectionInfo) =>
     set((prev) => ({
       connectionInfo: {
@@ -23,6 +25,12 @@ const useGameStore = create((set) => ({
         [newConnectionInfo.connectionId]: newConnectionInfo,
       },
     })),
+
+  // 마스크 관련 상태 추가
+  gltfUrl: "",
+  setGltfUrl: (url) => set({ gltfUrl: url }),
+  isGltfUrl: false,
+  setIsGltfUrl: (isGltfUrl) => set({ isGltfUrl }),
 }));
 
 export default useGameStore;

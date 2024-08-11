@@ -1,31 +1,83 @@
+//
+// import React from "react";
+
+// const SelectMask = ({ setGltfUrl, setIsGltfUrl }) => {
+//   const handleMaskChange = (url) => {
+//     setIsGltfUrl(!!url);
+//     setGltfUrl(url);
+//   };
+
+//   return (
+//     <div className="mask-selector">
+//       <button onClick={() => handleMaskChange("/mask/fox/fox.glb")}>
+//         여우 가면
+//       </button>
+//       <button onClick={() => handleMaskChange("/mask/catwoman_mask/scene.glb")}>
+//         고양이 가면
+//       </button>
+//       <button onClick={() => handleMaskChange("/mask/party_mask/party_mask_1.glb")}>
+//         파티 가면
+//       </button>
+//       <button onClick={() => handleMaskChange("")}>
+//         가면 벗기기
+//       </button>
+//     </div>
+//   );
+// };
+
+// export default SelectMask;
+
 import React from "react";
+import useGameStore from "../../store/useGameStore";
 
 const SelectMask = ({ handleCloseModal }) => {
+  const setGltfUrl = useGameStore((state) => state.setGltfUrl);
+  const setIsGltfUrl = useGameStore((state) => state.setIsGltfUrl);
+
+  const handleMaskChange = (url) => {
+    setIsGltfUrl(!!url);
+    setGltfUrl(url);
+    if (publisher) {
+      const canvasElement = document.getElementById("publisher");
+      if (canvasElement) {
+          const newVideoTrack = canvasElement.captureStream(30).getVideoTracks()[0];
+
+          // 퍼블리셔의 비디오 트랙을 캔버스 스트림으로 교체
+          publisher.replaceTrack(newVideoTrack).then(() => {
+              console.log("Video track replaced successfully");
+          }).catch(error => {
+              console.error("Error replacing video track:", error);
+          });
+      }
+  }
+    handleCloseModal(); // 선택 후 모달 닫기
+  };
+
   return (
-    <>
-      <div className="bg-[rgba(255,255,255,0.8)] shadow-[0_0_30px_rgba(66,72,81,0.2)] flex justify-center items-center flex-col w-[20rem] h-[20rem] z-10 rounded-[20px] relative">
-        <button
-          onClick={handleCloseModal}
-          className="absolute top-2 right-2 bg-[rgba(255,86,117,0.8)] rounded-[6px] p-1 w-[1.5rem] h-[1.5rem] flex justify-center items-center"
-        >
-          X
+    <div className="mask-selector flex flex-col justify-center items-center">
+      <div>
+        <button onClick={() => handleMaskChange("/mask/fox/fox.glb")}>
+          여우 가면
         </button>
-        <p className="text-center"> 원하는 가면을 고르세요</p>
-        <div className="bg-custom-gradient-game bg-opacity-10 w-[80%] h-[80%] rounded-[20px]">
-          <div className="grid grid-cols-3 gap-4 bg-[rgba(255,255,255,0.4)] w-[100%] h-[100%] p-2 rounded-[20px]">
-            <div><button>가면1</button></div>
-            <div><button>가면2</button></div>
-            <div><button>가면3</button></div>
-            <div><button>가면4</button></div>
-            <div><button>가면5</button></div>
-            <div><button>가면6</button></div>
-            <div><button>가면7</button></div>
-            <div><button>가면8</button></div>
-            <div><button>가면9</button></div>
-          </div>
-        </div>
       </div>
-    </>
+      <div>
+        <button
+          onClick={() => handleMaskChange("/mask/catwoman_mask/scene.glb")}
+        >
+          고양이 가면
+        </button>
+      </div>
+      <div>
+        <button
+          onClick={() => handleMaskChange("/mask/party_mask/party_mask_1.glb")}
+        >
+          파티 가면
+        </button>
+      </div>
+      <div>
+        <button onClick={() => handleMaskChange("")}>가면 벗기기</button>
+      </div>
+    </div>
   );
 };
 
