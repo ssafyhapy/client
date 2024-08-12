@@ -90,6 +90,15 @@ const MiddleDiv = () => {
 
   // 발표자 배경색 노란색으로 바꾸는거
   useEffect(() => {
+
+    if (currentPresenterId === null) {
+      if (highlightedElementId) {
+        changeBackgroundColor(highlightedElementId, "");
+        setHighlightedElementId(null); // Reset highlightedElementId
+      }
+      return; // Exit the effect early
+    }
+
     // 현재 currentPresenterId & connectionInfo 가 잘 업데이트 된 상태인지 확인
     if (!currentPresenterId || Object.keys(connectionInfo).length === 0) {
       console.log(

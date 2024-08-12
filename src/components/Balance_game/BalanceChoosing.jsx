@@ -49,48 +49,96 @@ const BalanceChoosing = ({
 
   const [secondsLeft, setSecondsLeft] = useState(10);
 
+  // useEffect(() => {
+  //   if (currentStep) {
+  //     const timer = setInterval(() => {
+  //       setSecondsLeft((prev) => {
+  //         if (prev > 1) {
+  //           return prev - 1;
+  //         } else {
+  //           clearInterval(timer);
+
+  //           webSocketService.sendBalancePersonChoice(
+  //             roomId,
+  //             topicId,
+  //             memberId,
+  //             pickedChoice
+  //           );
+
+  //           console.log("[*] 타이머 끝");
+            
+  //           if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
+  //             console.log("[*] 파랑 확인함");
+
+  //             addBlueMember(memberId);
+  //           } else if (
+  //             pickedChoice === "SECOND" &&
+  //             !redMembers.includes(memberId)
+  //           ) {
+  //             console.log("[*] 빨강 확인함");
+
+  //             addRedMember(memberId);
+  //           }        
+
+  //           // 그 사람이 뭘 골랐는지는 다시 null로 만들자
+  //           setPickedChoice(null);
+
+  //           onTimerEnd(); // 타이머가 0이 되었을 때 호출
+
+  //           return 0;
+  //         }
+  //       });
+  //     }, 500);
+
+  //     return () => clearInterval(timer);
+  //   } // 컴포넌트 언마운트 시 타이머 클리어
+  // }, [currentStep, pickedChoice, blueMembers, redMembers, onTimerEnd]); // onTimerEnd를 의존성 배열에 포함
+
   useEffect(() => {
     if (currentStep) {
-      const timer = setInterval(() => {
-        setSecondsLeft((prev) => {
-          if (prev > 1) {
-            return prev - 1;
-          } else {
-            clearInterval(timer);
+      // Clear any existing timer to prevent overlapping timers
+      let timer;
+  
+      const startTimer = () => {
+        timer = setInterval(() => {
+          setSecondsLeft((prev) => {
+            if (prev > 1) {
+              return prev - 1;
+            } else {
+              clearInterval(timer);
+  
+              webSocketService.sendBalancePersonChoice(
+                roomId,
+                topicId,
+                memberId,
+                pickedChoice
+              );
 
-            webSocketService.sendBalancePersonChoice(
-              roomId,
-              topicId,
-              memberId,
-              pickedChoice
-            );
-
-            if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
-              console.log("[*] 파랑 확인함");
-
-              addBlueMember(memberId);
-            } else if (
-              pickedChoice === "SECOND" &&
-              !redMembers.includes(memberId)
-            ) {
-              console.log("[*] 빨강 확인함");
-
-              addRedMember(memberId);
+              console.log("타이머 끝! 그리고 멤버가 보낸 선택지도 pub 해줌!!!")
+  
+              if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
+                console.log("[*] Blue team confirmed");
+                addBlueMember(memberId);
+              } else if (pickedChoice === "SECOND" && !redMembers.includes(memberId)) {
+                console.log("[*] Red team confirmed");
+                addRedMember(memberId);
+              }
+  
+              setPickedChoice(null);
+              onTimerEnd();
+              return 0;
             }
-
-            // 그 사람이 뭘 골랐는지는 다시 null로 만들자
-            setPickedChoice(null);
-
-            onTimerEnd(); // 타이머가 0이 되었을 때 호출
-
-            return 0;
-          }
-        });
-      }, 500);
-
-      return () => clearInterval(timer);
-    } // 컴포넌트 언마운트 시 타이머 클리어
-  }, [currentStep, pickedChoice, onTimerEnd]); // onTimerEnd를 의존성 배열에 포함
+          });
+        }, 500); // Timer interval set to 1000ms (1 second)
+      };
+  
+      startTimer();
+  
+      return () => {
+        clearInterval(timer);
+      };
+    }
+  }, [currentStep, pickedChoice, blueMembers, redMembers, onTimerEnd]);
 
   // 선택지 1 2 바꾸자
   useEffect(() => {
