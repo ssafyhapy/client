@@ -10,11 +10,13 @@ import bgImage from "../../assets/bg/bgImage.jpg";
 // import axios from "axios";
 import Spinner from "../../components/Spinner";
 import { axiosInstance } from "../../api/apiClient";
+import { useParams } from "react-router-dom";
 
-const Report = ({roomId}) => {
+const Report = () => {
   const [loading, setLoading] = useState(true);
   const [reportData, setReportData] = useState(null);
-
+  const { roomId } = useParams();
+  
   useEffect(() => {
     const fetchData = async () => {
       try {

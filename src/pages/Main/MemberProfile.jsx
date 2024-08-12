@@ -8,14 +8,15 @@ import UserMemoryBox from "../../components/MemberProfile/UserMemoryBox";
 import Spinner from "../../components/Spinner";
 import bgImage from "../../assets/bg/bgImage.jpg";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { axiosInstance } from "../../api/apiClient";
 
-const MemberProfile = ({memberId}) => {
+const MemberProfile = () => {
   // 로딩 상태
   const [isLoading, setIsLoading] = useState(true);
   const [memberData, setMemberData] = useState({});
   const navigate = useNavigate();
+  const { memberId } = useParams();
 
     // 유저 프로필 데이터 불러오기
     useEffect(() => {
