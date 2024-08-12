@@ -11,8 +11,26 @@ import { FormProvider, useForm } from "react-hook-form";
 import Spinner from "../../components/Spinner";
 import useAuthStore from "../../store/useAuthStore";
 import bgImage from "../../assets/bg/bgImage.jpg";
+import { useLocation } from "react-router-dom";
 
 const MyPage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const page = parseInt(query.get("page"), 10) || 1;
+    setCurrentPage(page);
+  }, [location.search]);
+
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber !== currentPage) {
+      navigate(`?page=${pageNumber}`, { replace: true });
+    }
+  };
+
   const { setProfileImageUrl } = useAuthStore();
   // 로딩 상태
   const [isLoading, setIsLoading] = useState(true);
@@ -126,7 +144,10 @@ const MyPage = () => {
                 <Introduction isEditMode={isEditMode} />
               </div>
               <div className="w-full flex">
-                <MemoryBox />
+                <MemoryBox
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
               </div>
             </form>
           </div>
