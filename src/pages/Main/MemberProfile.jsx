@@ -17,6 +17,16 @@ const MemberProfile = () => {
   const navigate = useNavigate();
   const { memberId } = useParams();
 
+  // 알람 관련
+  const location = useLocation();
+  // location.state에서 에러 메시지 확인
+  if (location.state?.errorMessage) {
+    alert(location.state.errorMessage);
+    // state 초기화
+    navigate(location.pathname, { replace: true, state: {} });
+  }
+  useEffect(() => {}, [location, navigate]);
+
   // 유저 프로필 데이터 불러오기
   useEffect(() => {
     const loadData = async () => {
@@ -31,20 +41,15 @@ const MemberProfile = () => {
           error.response &&
           error.response.data.errorMsg === "프로필 비공개 멤버입니다."
         ) {
-          // 직전 페이지로 이동
-          navigate(-1);
-          // 페이지 이동 후 alert 표시를 위해 setTiemout 사용
-          setTimeout(() => {
-            alert("프로필 비공개 멤버입니다.");
-          }, 100);
+          // state를 통해 에러 메시지 전달
+          navigate(-1, {
+            state: { errorMessage: "프로필 비공개 멤버입니다." },
+          });
         } else {
-          navigate(-1);
-          setTimeout(() => {
-            alert("프로필을 불러오는데 실패했습니다.");
-          }, 100);
-          window.history.back();
+          navigate(-1, {
+            state: { errorMessage: "프로필을 불러오는데 실패했습니다." },
+          });
         }
-        setIsLoading(false);
       }
     };
     loadData();
