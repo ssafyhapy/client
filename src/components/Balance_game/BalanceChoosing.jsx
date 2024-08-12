@@ -25,11 +25,11 @@ const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond,
   const handlePickedChoice = (choice) => {
     setPickedChoice(choice);
 
-    if (pickedChoice === "FIRST") {
-      addBlueMember(memberId)
-    } else if (pickedChoice === "SECOND") {
-      addRedMember(memberId)
-    }
+    // if (pickedChoice === "FIRST") {
+    //   addBlueMember(memberId)
+    // } else if (pickedChoice === "SECOND") {
+    //   addRedMember(memberId)
+    // }
   };
 
   const [secondsLeft, setSecondsLeft] = useState(10);
@@ -67,7 +67,7 @@ const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond,
 
       return () => clearInterval(timer);
     } // 컴포넌트 언마운트 시 타이머 클리어
-  }, [currentStep, pickedChoice]); // onTimerEnd를 의존성 배열에 포함
+  }, [currentStep, pickedChoice, blueMembers, redMembers, onTimerEnd]); // onTimerEnd를 의존성 배열에 포함
 
   // 선택지 1 2 바꾸자
   useEffect(() => {
