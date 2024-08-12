@@ -24,7 +24,7 @@ const UserMemoryBox = ({ memberMemoryboxList }) => {
       <div className="flex items-center gap-2">
         <h1 className="text-2xl">추억 상자</h1>
       </div>
-      <div className="flex gap-3">
+      <div className="flex justify-evenly">
       {/* 현재 페이지에 해당하는 UserMemory 컴포넌트를 출력 */}
       {currentItems.map((memorybox) => (
         <UserMemory key={memorybox.roomId} memorybox={memorybox} />
