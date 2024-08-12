@@ -125,6 +125,7 @@ const MiddleDiv = () => {
 
   // 밸런스 게임! FIRST 고른 사람들에게 파란 배경색 부여
   useEffect(() => {
+    console.log(blueMembers)
     blueMembers.forEach((memberId) => {
       const connectionId = Object.keys(connectionInfo).find(
         (key) => parseInt(connectionInfo[key].memberId, 10) === memberId
@@ -137,6 +138,7 @@ const MiddleDiv = () => {
 
   // 밸런스 게임! SECOND 고른 사람들에게 빨간 배경색 부여
   useEffect(() => {
+    console.log(redMembers)
     redMembers.forEach((memberId) => {
       const connectionId = Object.keys(connectionInfo).find(
         (key) => parseInt(connectionInfo[key].memberId, 10) === memberId

@@ -20,7 +20,7 @@ const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond,
   const [first, setOptionFirst] = useState("")
   const [second, setOptionSecond] = useState("")
 
-  const {addBlueMember, addRedMember, blueMembers, redMembers, resetMemberStatuses} = usePresenterStore()
+  const {addBlueMember, addRedMember} = usePresenterStore()
 
   const handlePickedChoice = (choice) => {
     setPickedChoice(choice);
