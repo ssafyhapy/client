@@ -22,12 +22,17 @@ const BalanceChoosing = ({ roomId, topicId, optionFirst, optionSecond, onTimerEn
 
   const {blueMembers, redMembers, addBlueMember, addRedMember} = usePresenterStore()
 
+  useEffect(() => {
+    console.log('blue members: ', blueMembers)
+    console.log('red members: ', redMembers)
+  }, [blueMembers, redMembers])
+
   const handlePickedChoice = (choice) => {
     setPickedChoice(choice);
 
-    if (choice === "FIRST") {
+    if (choice === "FIRST" && !blueMembers.includes(memberId)) {
       addBlueMember(memberId)
-    } else if (choice === "SECOND") {
+    } else if (choice === "SECOND" && !redMembers.includes(memberId)) {
       addRedMember(memberId)
     }
   };
@@ -50,11 +55,11 @@ const BalanceChoosing = ({ roomId, topicId, optionFirst, optionSecond, onTimerEn
               pickedChoice
             )
 
-            if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
-              addBlueMember(memberId)
-            } else if (pickedChoice === "SECOND" && !redMembers.includes(memberId)) {
-              addRedMember(memberId)
-            }
+            // if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
+            //   addBlueMember(memberId)
+            // } else if (pickedChoice === "SECOND" && !redMembers.includes(memberId)) {
+            //   addRedMember(memberId)
+            // }
 
             // 그 사람이 뭘 골랐는지는 다시 null로 만들자
             setPickedChoice(null)
@@ -67,7 +72,7 @@ const BalanceChoosing = ({ roomId, topicId, optionFirst, optionSecond, onTimerEn
 
       return () => clearInterval(timer);
     } // 컴포넌트 언마운트 시 타이머 클리어
-  }, [currentStep, pickedChoice, blueMembers, redMembers, onTimerEnd]); // onTimerEnd를 의존성 배열에 포함
+  }, [currentStep, pickedChoice, onTimerEnd]); // onTimerEnd를 의존성 배열에 포함
 
   // 선택지 1 2 바꾸자
   useEffect(() => {
