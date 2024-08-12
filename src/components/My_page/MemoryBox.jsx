@@ -28,9 +28,16 @@ const MemoryBox = () => {
     navigate(`?page=${pageNumber}`);
   };
 
+  const handleClick = (roomId) => {
+    navigate(`/room/${roomId}/report`);
+  };
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = memberMemoryboxList.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = memberMemoryboxList.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
   const totalPages = Math.ceil(memberMemoryboxList.length / itemsPerPage);
 
@@ -40,10 +47,16 @@ const MemoryBox = () => {
         <h1 className="text-2xl">추억 상자</h1>
       </div>
       <div className="flex justify-evenly">
-      {/* 현재 페이지에 해당하는 Memory 컴포넌트를 출력 */}
-      {currentItems.map((memorybox) => (
-        <Memory key={memorybox.roomId} memorybox={memorybox} roomId={memorybox.roomId}/>
-      ))}
+        {/* 현재 페이지에 해당하는 Memory 컴포넌트를 출력 */}
+        {currentItems.map((memorybox) => (
+          <>
+            <div key={memorybox.roomId} onClick={handleClick(memorybox.roomId)}>
+              <Memory
+                memorybox={memorybox}
+              />
+            </div>
+          </>
+        ))}
       </div>
       {/* 페이지네이션 버튼 */}
       <div className="flex justify-center gap-2 mt-4">
@@ -51,7 +64,11 @@ const MemoryBox = () => {
           <button
             key={index + 1}
             onClick={() => handlePageChange(index + 1)}
-            className={`px-3 py-1 rounded-md ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            className={`px-3 py-1 rounded-md ${
+              currentPage === index + 1
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200"
+            }`}
           >
             {index + 1}
           </button>
@@ -63,10 +80,14 @@ const MemoryBox = () => {
 
 export default MemoryBox;
 
-  {/* {memberMemoryboxList?.map((memorybox) => (
+{
+  /* {memberMemoryboxList?.map((memorybox) => (
     <Memory key={memorybox.roomId} memorybox={memorybox} />
-  ))} */}
-  {/* {memberMemoryboxList && 
+  ))} */
+}
+{
+  /* {memberMemoryboxList && 
     memberMemoryboxList.map((memorybox) => (
       <Memory key={memorybox.roomId} memorybox={memorybox} />
-  ))} */}
+  ))} */
+}
