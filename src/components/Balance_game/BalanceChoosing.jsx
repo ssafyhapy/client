@@ -29,7 +29,7 @@ const BalanceChoosing = ({
   const [first, setOptionFirst] = useState("");
   const [second, setOptionSecond] = useState("");
 
-  const { blueMembers, redMembers, addBlueMember, addRedMember } =
+  const { blueMembers, redMembers, addBlueMember, addRedMember, balanceGamePeopleChoiceInfo, addbalanceGamePeopleChoiceInfo } =
     usePresenterStore();
 
   // useEffect(() => {
@@ -114,15 +114,15 @@ const BalanceChoosing = ({
                 pickedChoice
               );
 
-              console.log("타이머 끝! 그리고 멤버가 보낸 선택지도 pub 해줌!!!")
+              // console.log("타이머 끝! 그리고 멤버가 보낸 선택지도 pub 해줌!!!")
   
-              if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
-                console.log("[*] Blue team confirmed");
-                addBlueMember(memberId);
-              } else if (pickedChoice === "SECOND" && !redMembers.includes(memberId)) {
-                console.log("[*] Red team confirmed");
-                addRedMember(memberId);
-              }
+              // if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
+              //   console.log("[*] Blue team confirmed");
+              //   addBlueMember(memberId);
+              // } else if (pickedChoice === "SECOND" && !redMembers.includes(memberId)) {
+              //   console.log("[*] Red team confirmed");
+              //   addRedMember(memberId);
+              // }
   
               setPickedChoice(null);
               onTimerEnd();

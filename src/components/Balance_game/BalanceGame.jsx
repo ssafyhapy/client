@@ -22,7 +22,16 @@ const Balance = () => {
 
   const { discussedNum, setDiscussedNum } = useBalanceStore();
 
-  const { blueMembers, redMembers, addBlueMember, addRedMember, resetMemberStatuses } = usePresenterStore();
+  const {
+    blueMembers,
+    redMembers,
+    addBlueMember,
+    addRedMember,
+    resetMemberStatuses,
+    setBalanceGamePeopleChoiceInfo,
+    balanceGamePeopleChoiceInfo,
+    addbalanceGamePeopleChoiceInfo,
+  } = usePresenterStore();
 
   // 방장이 적은 text
   const [purpose, setPurpose] = useState("");
@@ -121,6 +130,28 @@ const Balance = () => {
     webSocketService.subscribeToBalancePersonChoice(roomId, (message) => {
       console.log("What the member chose: ", message);
 
+      // Extract the relevant information
+      const personInfo = {
+        memberId: message.memberId,
+        choice: message.balanceResultSelectedOption,
+      };
+
+      // Update the store with the new choice information
+      setBalanceGamePeopleChoiceInfo((prev) => {
+        const existing = prev.find(
+          (info) => info.memberId === personInfo.memberId
+        );
+        if (existing) {
+          return prev.map((info) =>
+            info.memberId === personInfo.memberId
+              ? { ...info, choice: personInfo.choice }
+              : info
+          );
+        } else {
+          return [...prev, personInfo];
+        }
+      });
+
       // 사람들이 고른 선택지에 따라 blueMember나 redMember에 집어넣기
       // if (message.balanceResultSelectedOption === "FIRST") {
       //   addBlueMember(message.memberId);
@@ -150,9 +181,9 @@ const Balance = () => {
   ]);
 
   useEffect(() => {
-    console.log('blue members: ', blueMembers)
-    console.log('red members: ', redMembers)
-  }, [blueMembers, redMembers])
+    console.log("blue members: ", blueMembers);
+    console.log("red members: ", redMembers);
+  }, [blueMembers, redMembers]);
 
   useEffect(() => {
     console.log("Topic Id: ", topicId);

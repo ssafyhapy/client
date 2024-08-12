@@ -133,30 +133,44 @@ const MiddleDiv = () => {
   // ================================================================================================
 
   // 밸런스 게임! FIRST 고른 사람들에게 파란 배경색 부여
-  useEffect(() => {
-    // console.log("blueMembers : ",blueMembers)
-    blueMembers.forEach((memberId) => {
-      const connectionId = Object.keys(connectionInfo).find(
-        (key) => parseInt(connectionInfo[key].memberId, 10) === memberId
-      )
-      if (connectionId) {
-        changeBackgroundColor(connectionId, "cornflowerblue")
-      }
-    })
-  }, [blueMembers, connectionInfo])
+  const { balanceGamePeopleChoiceInfo } = usePresenterStore();
 
-  // 밸런스 게임! SECOND 고른 사람들에게 빨간 배경색 부여
   useEffect(() => {
-    // console.log("redMembers : ", redMembers)
-    redMembers.forEach((memberId) => {
+    balanceGamePeopleChoiceInfo.forEach((info) => {
       const connectionId = Object.keys(connectionInfo).find(
-        (key) => parseInt(connectionInfo[key].memberId, 10) === memberId
-      )
+        (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+      );
       if (connectionId) {
-        changeBackgroundColor(connectionId, "salmon")
+        const color = info.choice === "FIRST" ? "cornflowerblue" : "salmon";
+        changeBackgroundColor(connectionId, color);
       }
-    })
-  }, [redMembers, connectionInfo])
+    });
+  }, [balanceGamePeopleChoiceInfo, connectionInfo]);
+  
+  // useEffect(() => {
+  //   // console.log("blueMembers : ",blueMembers)
+  //   blueMembers.forEach((memberId) => {
+  //     const connectionId = Object.keys(connectionInfo).find(
+  //       (key) => parseInt(connectionInfo[key].memberId, 10) === memberId
+  //     )
+  //     if (connectionId) {
+  //       changeBackgroundColor(connectionId, "cornflowerblue")
+  //     }
+  //   })
+  // }, [blueMembers, connectionInfo])
+
+  // // 밸런스 게임! SECOND 고른 사람들에게 빨간 배경색 부여
+  // useEffect(() => {
+  //   // console.log("redMembers : ", redMembers)
+  //   redMembers.forEach((memberId) => {
+  //     const connectionId = Object.keys(connectionInfo).find(
+  //       (key) => parseInt(connectionInfo[key].memberId, 10) === memberId
+  //     )
+  //     if (connectionId) {
+  //       changeBackgroundColor(connectionId, "salmon")
+  //     }
+  //   })
+  // }, [redMembers, connectionInfo])
 
 // =====================================================================================================
 
