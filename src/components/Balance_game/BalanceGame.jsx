@@ -22,7 +22,7 @@ const Balance = () => {
 
   const { discussedNum, setDiscussedNum } = useBalanceStore();
 
-  const {addBlueMember, addRedMember, blueMembers, redMembers, resetMemberStatuses} = usePresenterStore()
+  const {resetMemberStatuses} = usePresenterStore()
 
   // 방장이 적은 text
   const [purpose, setPurpose] = useState("")
