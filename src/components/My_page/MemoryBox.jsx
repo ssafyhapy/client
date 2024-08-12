@@ -17,10 +17,15 @@ const MemoryBox = () => {
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     const page = parseInt(query.get("page"), 10);
-    if (page) {
+
+    // 쿼리 파라미터에 페이지 번호가 있을 경우에만 setCurrentPage 호출
+    if (page && page !== currentPage) {
       setCurrentPage(page);
+    } else if (!page && currentPage !== 1) {
+      // 페이지 번호가 없으면 첫 페이지로 이동
+      navigate(`?page=1`);
     }
-  }, [location.search]);
+  }, [location.search, currentPage, navigate]);
 
   // 페이지 이동 핸들러
   const handlePageChange = (pageNumber) => {
@@ -28,16 +33,9 @@ const MemoryBox = () => {
     navigate(`?page=${pageNumber}`);
   };
 
-  const handleClick = (roomId) => {
-    navigate(`/room/${roomId}/report`);
-  };
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = memberMemoryboxList.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  const currentItems = memberMemoryboxList.slice(indexOfFirstItem, indexOfLastItem);
 
   const totalPages = Math.ceil(memberMemoryboxList.length / itemsPerPage);
 
@@ -49,13 +47,7 @@ const MemoryBox = () => {
       <div className="flex justify-evenly">
         {/* 현재 페이지에 해당하는 Memory 컴포넌트를 출력 */}
         {currentItems.map((memorybox) => (
-          <>
-            <div key={memorybox.roomId} onClick={handleClick(memorybox.roomId)}>
-              <Memory
-                memorybox={memorybox}
-              />
-            </div>
-          </>
+          <Memory key={memorybox.roomId} memorybox={memorybox} roomId={memorybox.roomId} />
         ))}
       </div>
       {/* 페이지네이션 버튼 */}
@@ -64,11 +56,7 @@ const MemoryBox = () => {
           <button
             key={index + 1}
             onClick={() => handlePageChange(index + 1)}
-            className={`px-3 py-1 rounded-md ${
-              currentPage === index + 1
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200"
-            }`}
+            className={`px-3 py-1 rounded-md ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
           >
             {index + 1}
           </button>
@@ -79,15 +67,3 @@ const MemoryBox = () => {
 };
 
 export default MemoryBox;
-
-{
-  /* {memberMemoryboxList?.map((memorybox) => (
-    <Memory key={memorybox.roomId} memorybox={memorybox} />
-  ))} */
-}
-{
-  /* {memberMemoryboxList && 
-    memberMemoryboxList.map((memorybox) => (
-      <Memory key={memorybox.roomId} memorybox={memorybox} />
-  ))} */
-}
