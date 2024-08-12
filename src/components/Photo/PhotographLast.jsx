@@ -6,6 +6,7 @@ import html2canvas from "html2canvas";
 
 import { useNavigate } from "react-router-dom";
 import useGameStore from "../../store/useGameStore";
+import { axiosInstance } from "../../api/apiClient";
 
 import useRoomStore from "../../store/useRoomStore";
 
