@@ -79,6 +79,12 @@ const MiddleDiv = () => {
     }
   };
 
+  // currentPresenterId 제대로 오는지 확인
+  useEffect(() => {
+    console.log("currentPresenterId updated to:", currentPresenterId);
+    console.log("connectionInfo:", connectionInfo);
+  }, [currentPresenterId, connectionInfo]);
+
   // 발표자 배경색 바꾸는거
   useEffect(() => {
     // 현재 currentPresenterId & connectionInfo 가 잘 업데이트 된 상태인지 확인
@@ -99,24 +105,18 @@ const MiddleDiv = () => {
       (key) => connectionInfo[key].memberId === currentPresenterId
     );
 
+    if (newHighlightedElementId !== undefined) {
+      // Set the new highlighted element ID and change its background color
+      setHighlightedElementId(newHighlightedElementId);
+      changeBackgroundColor(newHighlightedElementId, "yellow");
+    }
+
     // Log the new connectionId
     console.log(
       "New Highlighted Element ID (Connection ID):",
       newHighlightedElementId
     );
-
-    if (newHighlightedElementId) {
-      // Set the new highlighted element ID and change its background color
-      setHighlightedElementId(newHighlightedElementId);
-      changeBackgroundColor(newHighlightedElementId, "yellow");
-    }
   }, [currentPresenterId, connectionInfo, highlightedElementId]);
-
-  // currentPresenterId 제대로 오는지 확인
-  useEffect(() => {
-    console.log("currentPresenterId updated to:", currentPresenterId);
-    console.log("connectionInfo:", connectionInfo);
-  }, [currentPresenterId, connectionInfo]);
 
   useEffect(() => {
     redIds.forEach((id) => changeBackgroundColor(id, "salmon"));
