@@ -50,12 +50,11 @@ const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond,
               pickedChoice
             )
 
-            if (pickedChoice === "FIRST" && !(memberId in blueMembers) ) {
+            if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
               addBlueMember(memberId)
-            } else if (pickedChoice === "SECOND" && !(memberId in redMembers)) {
+            } else if (pickedChoice === "SECOND" && !redMembers.includes(memberId)) {
               addRedMember(memberId)
             }
-          };
 
             // 그 사람이 뭘 골랐는지는 다시 null로 만들자
             setPickedChoice(null)
