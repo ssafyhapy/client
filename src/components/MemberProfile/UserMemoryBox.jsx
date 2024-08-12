@@ -4,7 +4,7 @@ import UserMemory from "./UserMemory";
 const UserMemoryBox = ({ memberMemoryboxList }) => {
   // 페이지네이션 상태 관리
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4; // 한 페이지에 보여줄 항목 수
+  const itemsPerPage = 3; // 한 페이지에 보여줄 항목 수
 
   // 현재 페이지에 따라 보여줄 데이터 계산
   const indexOfLastItem = currentPage * itemsPerPage;
