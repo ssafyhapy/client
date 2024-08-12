@@ -9,9 +9,7 @@ const Step3 = ({ Balance }) => {
       <div className="absolute top-[-10px] left-[-10px] rounded-[20px] bg-white w-[10%] h-[20%] min-h-7 flex justify-center items-center">
         <h1>step 3</h1>
       </div>
-      <Carousel slides={Balance} type="balance">
-        <div></div>
-      </Carousel>
+      <Carousel slides={Balance} type="balance" />
     </div>
   );
 };
