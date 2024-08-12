@@ -38,7 +38,7 @@ const PhotographFirst = () => {
           try {
             // 서버에 이미지 업로드
             const response = await axiosInstance.post(
-              `/api/${roomId}/memoryBox/before`,
+              `/room/${roomId}/memoryBox/before`,
               formData
             );
             console.log("Success:", response.data);
