@@ -9,10 +9,10 @@ import webSocketService from "../../WebSocketService";
 
 import usePresenterStore from "../../store/usePresenterStore";
 
-const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond, onTimerEnd, currentStep, discussedNum }) => {
+const BalanceChoosing = ({ roomId, topicId, optionFirst, optionSecond, onTimerEnd, currentStep, discussedNum }) => {
   const timerImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/timer.png"
 
-  // const {memberId} = useAuthStore()
+  const {memberId} = useAuthStore()
 
   const { pickedChoice, setPickedChoice } = useBalanceStore();
   // const { discussedNum } = useBalanceStore();
@@ -25,11 +25,11 @@ const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond,
   const handlePickedChoice = (choice) => {
     setPickedChoice(choice);
 
-    // if (pickedChoice === "FIRST") {
-    //   addBlueMember(memberId)
-    // } else if (pickedChoice === "SECOND") {
-    //   addRedMember(memberId)
-    // }
+    if (choice === "FIRST") {
+      addBlueMember(memberId)
+    } else if (choice === "SECOND") {
+      addRedMember(memberId)
+    }
   };
 
   const [secondsLeft, setSecondsLeft] = useState(10);
