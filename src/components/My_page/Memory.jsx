@@ -1,17 +1,10 @@
 import React from "react";
 import defaultImage from "../../assets/My_page/defaultImg.jpg";
-import { useNavigate } from "react-router-dom";
 
-const Memory = ({ memorybox, roomId }) => {
-  const navigate = useNavigate();
-  const handleClick = (e) => {
-    e.stopPropagation();
-    navigate(`/room/${roomId}/report`);
-  };
+const Memory = ({ memorybox }) => {
   return (
     <div className="w-[240px] h-[350px] bg-white flex flex-col justify-between items-center p-4 gap-2">
       <img
-        onClick={handleClick}
         className="w-[200px] h-[300px]"
         src={memorybox.memberMemoryImageUrl || defaultImage}
         alt={memorybox.memberMemoryBoxName || "방 제목"}
