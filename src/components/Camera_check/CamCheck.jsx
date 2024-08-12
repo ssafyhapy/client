@@ -405,7 +405,7 @@ import MicBtn from "../Buttons/MicBtn";
 import MaskBtn from "../Buttons/MaskBtn";
 import SelectMask from "../Waiting_room/SelectMask";
 
-const CamCheck = ({ onMaskChange }) => { // onMaskChange를 Props로 받습니다.
+const CamCheck = ({ handleReplaceVideo }) => { // onMaskChange를 Props로 받습니다.
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -424,17 +424,17 @@ const CamCheck = ({ onMaskChange }) => { // onMaskChange를 Props로 받습니�
     setGameStep("waiting-room");
   };
 
-  const handleChangeMask = (newUrl) => { // 마스크가 변경되었을 때
-    const setGltfUrl = useGameStore((state) => state.setGltfUrl);
-    const setIsGltfUrl = useGameStore((state) => state.setIsGltfUrl);
+  // const handleChangeMask = (newUrl) => { // 마스크가 변경되었을 때
+  //   const setGltfUrl = useGameStore((state) => state.setGltfUrl);
+  //   const setIsGltfUrl = useGameStore((state) => state.setIsGltfUrl);
 
-    setGltfUrl(newUrl);
-    setIsGltfUrl(true);
+  //   setGltfUrl(newUrl);
+  //   setIsGltfUrl(true);
 
-    if (onMaskChange) {
-      onMaskChange(); // onMaskChange를 호출합니다.
-    }
-  };
+  //   if (onMaskChange) {
+  //     onMaskChange(); // onMaskChange를 호출합니다.
+  //   }
+  // };
 
   return (
     <GameBackground>
@@ -452,7 +452,7 @@ const CamCheck = ({ onMaskChange }) => { // onMaskChange를 Props로 받습니�
                 <MaskBtn onClick={handleOpenModal} />
                 {isModalOpen && (
                   <div className="absolute top-0 left-full ml-4">
-                    <SelectMask handleCloseModal={handleCloseModal} handleChangeMask={handleChangeMask} />
+                    <SelectMask handleCloseModal={handleCloseModal} handleReplaceVideo={handleReplaceVideo} />
                   </div>
                 )}
               </span>

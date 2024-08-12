@@ -485,30 +485,45 @@ const Games = () => {
     };
   }, []);
 
-  const handleMaskChange = () => {
-    if (publisher) {
-      const canvasElement = document.getElementById("publisher");
-      if (canvasElement) {
-        const newVideoTrack = canvasElement
-          .captureStream(30)
-          .getVideoTracks()[0];
 
-        publisher
-          .replaceTrack(newVideoTrack)
-          .then(() => {
-            console.log("Video track replaced successfully");
-          })
-          .catch((error) => {
-            console.error("Error replacing video track:", error);
-          });
-      }
+  const handleReplaceVideo = async () => {
+    if (publisher) {
+        const canvasElement = document.getElementById("publisher");
+        console.log("canvasElement", canvasElement);
+
+        if (canvasElement) {
+            console.log("canvasElement", canvasElement);
+
+            // 새 비디오 트랙 생성
+            const newVideoTrack = canvasElement
+                .captureStream(30)
+                .getVideoTracks()[0];
+
+            try {
+                // 현재 퍼블리셔 언퍼블리시
+                session.unpublish(publisher);
+
+                // 새 비디오 트랙을 퍼블리셔에 교체
+                await publisher.replaceTrack(newVideoTrack);
+                console.log("Video track replaced successfully");
+
+                // 언퍼블리시한 퍼블리셔를 다시 퍼블리시
+                session.publish(publisher);
+
+                console.log("[*] 비디오 교체 확인", publisher);
+            } catch (error) {
+                console.error("Error replacing video track:", error);
+            }
+        }
     }
-  };
+};
+
 
   useEffect(() => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
     console.log("[*] 전체 mainStream", mainStreamManager);
-  }, [connectionInfo]);
+    console.log("[*] 전체 publisher", publisher);
+  }, [connectionInfo, publisher]);
 
   return (
     <GameBackground>
@@ -528,7 +543,7 @@ const Games = () => {
 
       {/* 자체 UI */}
       {gameStep === "camera-check" && (
-        <CamCheck onMaskChange={handleMaskChange} /> // 마스크 변경 핸들러 전달
+        <CamCheck handleReplaceVideo={handleReplaceVideo} /> // 마스크 변경 핸들러 전달
       )}
       {gameStep === "photo-first" && <PhotographFirst />}
       {gameStep === "photo-last" && <PhotographLast />}
