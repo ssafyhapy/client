@@ -17,6 +17,7 @@ const MemberProfile = () => {
   const [memberData, setMemberData] = useState({});
   const { memberId } = useParams();
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
 
@@ -45,14 +46,11 @@ const MemberProfile = () => {
           error.response &&
           error.response.data.errorMsg === "프로필 비공개 멤버입니다."
         ) {
-          // state를 통해 에러 메시지 전달
-          navigate(-1, {
-            state: { errorMessage: "프로필 비공개 멤버입니다." },
-          });
+          setErrorMessage("프로필 비공개 멤버입니다.");
+          setIsModalOpen(true);
         } else {
-          navigate(-1, {
-            state: { errorMessage: "프로필을 불러오는데 실패했습니다." },
-          });
+          setErrorMessage("프로필을 불러오는데 실패했습니다.");
+          setIsModalOpen(true);
         }
       }
     };
@@ -100,7 +98,7 @@ const MemberProfile = () => {
       </SubFrame>
 
       <Modal isOpen={isModalOpen} onClose={closeModal} title="Error">
-        <p>{location.state?.errorMessage}</p>
+        <p>{errorMessage}</p>
       </Modal>
     </div>
   );
