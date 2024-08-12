@@ -437,8 +437,8 @@ const GuessMe = () => {
     webSocketService.subscribeToMemberState(roomId, (message) => {
       console.log("Received game state: ", message);
       if (message.memberState === "balance") {
-        setGameStep("balance-game");
         setCurrentPresenterId(null)
+        setGameStep("balance-game");
       }
     });
 

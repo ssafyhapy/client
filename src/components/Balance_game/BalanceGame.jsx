@@ -122,11 +122,11 @@ const Balance = () => {
       console.log("What the member chose: ", message);
 
       // 사람들이 고른 선택지에 따라 blueMember나 redMember에 집어넣기
-      if (message.balanceResultSelectedOption === "FIRST") {
-        addBlueMember(message.memberId);
-      } else if (message.balanceResultSelectedOption === "SECOND") {
-        addRedMember(message.memberId);
-      }
+      // if (message.balanceResultSelectedOption === "FIRST") {
+      //   addBlueMember(message.memberId);
+      // } else if (message.balanceResultSelectedOption === "SECOND") {
+      //   addRedMember(message.memberId);
+      // }
     });
 
     // 받아오는 데이터

@@ -9,18 +9,28 @@ import webSocketService from "../../WebSocketService";
 
 import usePresenterStore from "../../store/usePresenterStore";
 
-const BalanceChoosing = ({ roomId, topicId, optionFirst, optionSecond, onTimerEnd, currentStep, discussedNum }) => {
-  const timerImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/timer.png"
+const BalanceChoosing = ({
+  roomId,
+  topicId,
+  optionFirst,
+  optionSecond,
+  onTimerEnd,
+  currentStep,
+  discussedNum,
+}) => {
+  const timerImg =
+    "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/timer.png";
 
-  const {memberId} = useAuthStore()
+  const { memberId } = useAuthStore();
 
   const { pickedChoice, setPickedChoice } = useBalanceStore();
   // const { discussedNum } = useBalanceStore();
 
-  const [first, setOptionFirst] = useState("")
-  const [second, setOptionSecond] = useState("")
+  const [first, setOptionFirst] = useState("");
+  const [second, setOptionSecond] = useState("");
 
-  // const {blueMembers, redMembers, addBlueMember, addRedMember} = usePresenterStore()
+  const { blueMembers, redMembers, addBlueMember, addRedMember } =
+    usePresenterStore();
 
   // useEffect(() => {
   //   console.log('blue members: ', blueMembers)
@@ -53,16 +63,23 @@ const BalanceChoosing = ({ roomId, topicId, optionFirst, optionSecond, onTimerEn
               topicId,
               memberId,
               pickedChoice
-            )
+            );
 
-            // if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
-            //   addBlueMember(memberId)
-            // } else if (pickedChoice === "SECOND" && !redMembers.includes(memberId)) {
-            //   addRedMember(memberId)
-            // }
+            if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
+              console.log("[*] 파랑 확인함");
+
+              addBlueMember(memberId);
+            } else if (
+              pickedChoice === "SECOND" &&
+              !redMembers.includes(memberId)
+            ) {
+              console.log("[*] 빨강 확인함");
+
+              addRedMember(memberId);
+            }
 
             // 그 사람이 뭘 골랐는지는 다시 null로 만들자
-            setPickedChoice(null)
+            setPickedChoice(null);
 
             onTimerEnd(); // 타이머가 0이 되었을 때 호출
 
@@ -77,9 +94,9 @@ const BalanceChoosing = ({ roomId, topicId, optionFirst, optionSecond, onTimerEn
 
   // 선택지 1 2 바꾸자
   useEffect(() => {
-    setOptionFirst(optionFirst)
-    setOptionSecond(optionSecond)
-  })
+    setOptionFirst(optionFirst);
+    setOptionSecond(optionSecond);
+  });
 
   return (
     <>
@@ -95,7 +112,7 @@ const BalanceChoosing = ({ roomId, topicId, optionFirst, optionSecond, onTimerEn
         <button
           onClick={() => handlePickedChoice("FIRST")}
           className={`text-[rgba(85,181,236)] px-2 py-3 rounded-[15px] ${
-            pickedChoice ==="FIRST"
+            pickedChoice === "FIRST"
               ? "border-solid border-4 border-[#64B8FF]"
               : "border-transparent"
           } text-[14px]`}
