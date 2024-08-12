@@ -5,32 +5,22 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const MemoryBox = () => {
   const { memberMemoryboxList } = useMypageStore();
-
   const location = useLocation();
   const navigate = useNavigate();
 
-  // 페이지네이션 상태 관리
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3; // 한 페이지에 보여줄 항목 수
+  const itemsPerPage = 3;
 
-  // 페이지 번호가 URL 쿼리 파라미터로부터 가져와짐
   useEffect(() => {
     const query = new URLSearchParams(location.search);
-    const page = parseInt(query.get("page"), 10);
+    const page = parseInt(query.get("page"), 10) || 1;
+    setCurrentPage(page);
+  }, [location.search]);
 
-    // 쿼리 파라미터에 페이지 번호가 있을 경우에만 setCurrentPage 호출
-    if (page && page !== currentPage) {
-      setCurrentPage(page);
-    } else if (!page && currentPage !== 1) {
-      // 페이지 번호가 없으면 첫 페이지로 이동
-      navigate(`?page=1`);
-    }
-  }, [location.search, currentPage, navigate]);
-
-  // 페이지 이동 핸들러
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    navigate(`?page=${pageNumber}`);
+    if (pageNumber !== currentPage) {
+      navigate(`?page=${pageNumber}`, { replace: true });
+    }
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -45,12 +35,10 @@ const MemoryBox = () => {
         <h1 className="text-2xl">추억 상자</h1>
       </div>
       <div className="flex justify-evenly">
-        {/* 현재 페이지에 해당하는 Memory 컴포넌트를 출력 */}
         {currentItems.map((memorybox) => (
           <Memory key={memorybox.roomId} memorybox={memorybox} roomId={memorybox.roomId} />
         ))}
       </div>
-      {/* 페이지네이션 버튼 */}
       <div className="flex justify-center gap-2 mt-4">
         {Array.from({ length: totalPages }, (_, index) => (
           <button
