@@ -11,7 +11,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import Spinner from "../../components/Spinner";
 import useAuthStore from "../../store/useAuthStore";
 import bgImage from "../../assets/bg/bgImage.jpg";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const MyPage = () => {
   const location = useLocation();
