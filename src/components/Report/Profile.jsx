@@ -6,7 +6,8 @@ const Profile = ({ members }) => {
     <>
       {members?.map((member) => (
         <ProfileCard
-          key={member.memberName}
+          key={member.memberId}
+          memberId={member.memberId}
           memberName={member.memberName}
           memberProfileImageUrl={member.memberProfileImageUrl}
         />
