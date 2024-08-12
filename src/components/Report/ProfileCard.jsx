@@ -1,15 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const ProfileCard = ({ memberProfileImageUrl, memberName }) => {
+const ProfileCard = ({ memberId, memberName, memberProfileImageUrl }) => {
   return (
     <div className="flex flex-col items-center">
-      <div className="bg-white rounded-full h-[125px] w-[125px] flex justify-center items-center overflow-hidden">
-        <img
-          src={memberProfileImageUrl}
-          alt="profile"
-          className="w-full h-full object-cover"
-        />
-      </div>
+      <Link to={`/member/${memberId}`}>
+        <div className="bg-white rounded-full h-[125px] w-[125px] flex justify-center items-center overflow-hidden">
+          <img
+            src={memberProfileImageUrl}
+            alt="profile"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </Link>
       <h1>{memberName}</h1>
     </div>
   );
