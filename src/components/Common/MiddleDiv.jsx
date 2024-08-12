@@ -86,6 +86,8 @@ const MiddleDiv = () => {
       changeBackgroundColor(highlightedElementId, "");
     }
   
+    console.log("connectionInfo: ", connectionInfo)
+
     // memberId === currentPresenterId 인 connectionId를 찾아서 변수에 할당
     const newHighlightedElementId = Object.keys(connectionInfo).find(
       (key) => connectionInfo[key].memberId === currentPresenterId
