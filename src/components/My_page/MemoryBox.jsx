@@ -30,7 +30,7 @@ const MemoryBox = () => {
       <div className="flex gap-3">
       {/* 현재 페이지에 해당하는 Memory 컴포넌트를 출력 */}
       {currentItems.map((memorybox) => (
-        <Memory key={memorybox.roomId} memorybox={memorybox} />
+        <Memory key={memorybox.roomId} memorybox={memorybox} roomId={memorybox.rooId}/>
       ))}
       </div>
       {/* 페이지네이션 버튼 */}
