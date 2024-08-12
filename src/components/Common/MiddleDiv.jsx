@@ -25,7 +25,9 @@ const MiddleDiv = () => {
   const { memberName } = useAuthStore();
 
   // 발표자 백그라운드 노란색으로 하이라이트
-  const currentPresenterId = usePresenterStore((state) => state.currentPresenterId)
+  const currentPresenterId = usePresenterStore(
+    (state) => state.currentPresenterId
+  );
   const [highlightedElementId, setHighlightedElementId] = useState(null);
 
   const handleOpenModal = () => {
@@ -79,21 +81,27 @@ const MiddleDiv = () => {
 
   // 발표자 배경색 바꾸는거
   useEffect(() => {
+    // 배경색 설정된거 있으면 리셋해줘
     if (highlightedElementId) {
-      // Reset the background color of the previously highlighted element
       changeBackgroundColor(highlightedElementId, "");
     }
-
-    // Find the new element to highlight
+  
+    // memberId === currentPresenterId 인 connectionId를 찾아서 변수에 할당
     const newHighlightedElementId = Object.keys(connectionInfo).find(
       (key) => connectionInfo[key].memberId === currentPresenterId
     );
-
+  
+    // 잘맞나 찍어봐
+    console.log("New Highlighted Element ID (Connection ID):", newHighlightedElementId);
+  
     if (newHighlightedElementId) {
+      // Set the new highlighted element ID
       setHighlightedElementId(newHighlightedElementId);
+      // 아까 찾아둔 그 커넥션아이디의 배경색 바꿔
       changeBackgroundColor(newHighlightedElementId, "yellow");
     }
   }, [currentPresenterId, connectionInfo, highlightedElementId]);
+  
 
   useEffect(() => {
     redIds.forEach((id) => changeBackgroundColor(id, "salmon"));
@@ -113,13 +121,13 @@ const MiddleDiv = () => {
     setRedIds((prevRedIds) => prevRedIds.filter((id) => !ids.includes(id)));
   };
 
-  useEffect(() => {
-    if (mainStreamManager) {
-      setTimeout(() => {
-        setRedIds(["con_RLqj1dwCk1"]);
-      }, 3000);
-    }
-  }, [mainStreamManager]);
+  // useEffect(() => {
+  //   if (mainStreamManager) {
+  //     setTimeout(() => {
+  //       setRedIds(["con_RLqj1dwCk1"]);
+  //     }, 3000);
+  //   }
+  // }, [mainStreamManager]);
 
   return (
     <div id="middleDiv" className="flex justify-center h-[68vh] w-[95%] m-3">
