@@ -88,6 +88,7 @@ const SelfIntroduction = () => {
       console.log("Received game state: ", message);
       if (message.memberState === "photofirst") {
         setGameStep("photo-first");
+        setCurrentPresenterId(null)
       }
     });
     // });
