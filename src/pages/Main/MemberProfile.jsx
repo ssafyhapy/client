@@ -9,6 +9,7 @@ import Spinner from "../../components/Spinner";
 import bgImage from "../../assets/bg/bgImage.jpg";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { axiosInstance } from "../../api/apiClient";
+import Modal from "../../components/Modal";
 
 const MemberProfile = () => {
   // 로딩 상태
