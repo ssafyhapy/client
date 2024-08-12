@@ -28,19 +28,34 @@ const PhotographLast = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleCapture = () => {
+  const handleCapture = async () => {
     if (photoRef.current) {
       html2canvas(photoRef.current).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        // Save the image or send it to the server
-        console.log(imgData); // This is the base64 encoded image
-        setShowModal(false);
-      });
+        canvas.toBlob(async (blob) => {
+          // Blob을 FormData에 추가
+          const formData = new FormData();
+          formData.append("image", blob, "capture.png");
 
-      // 사진찍고 2초뒤 자동으로 레포트 페이지로 이동
-      setTimeout(() => {
-        navigate(`/room/${roomId}/report`);
-      }, 2000);
+          try {
+            // 서버에 이미지 업로드
+            const response = await axiosInstance.post(
+              `/api/${roomId}/memoryBox/after`,
+              formData
+            );
+            console.log("Success:", response.data);
+            // 업로드 후 모달 닫기
+            setShowModal(false);
+
+            // 2초 뒤에 페이지 이동
+            setTimeout(() => {
+              setGameStep("guess-me");
+              // navigate("/guessme-getready");
+            }, 2000);
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        }, "image/png"); // 이미지 포맷 설정
+      });
     }
   };
 

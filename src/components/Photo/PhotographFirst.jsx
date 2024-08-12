@@ -4,8 +4,9 @@ import GameTurns from "./../Common/GameTurns";
 import TakePhotoModal from "./../Photo/TakePhotoModal";
 import html2canvas from "html2canvas";
 import useGameStore from "./../../store/useGameStore";
-
+import useRoomStore from "../../store/useRoomStore";
 import { useNavigate } from "react-router-dom";
+import { axiosInstance } from "../../api/apiClient";
 
 const PhotographFirst = () => {
   const { publisher, subscribers, connectionInfo } = useGameStore();
@@ -13,7 +14,7 @@ const PhotographFirst = () => {
   const pics = Array(6).fill("pic");
   const [showModal, setShowModal] = useState(false);
   const photoRef = useRef(null);
-
+  const { roomId } = useRoomStore();
   const navigate = useNavigate();
 
   const gameStep = useGameStore((state) => state.gameStep);
@@ -26,26 +27,36 @@ const PhotographFirst = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleCapture = () => {
+  const handleCapture = async () => {
     if (photoRef.current) {
       html2canvas(photoRef.current).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        // Save the image or send it to the server
-        console.log(imgData); // This is the base64 encoded image
-        // Example: Saving the image to a server
-        // fetch('/upload', { method: 'POST', body: JSON.stringify({ image: imgData }) })
-        setShowModal(false);
+        canvas.toBlob(async (blob) => {
+          // Blob을 FormData에 추가
+          const formData = new FormData();
+          formData.append("image", blob, "capture.png");
 
-        // 사진찍고 2초뒤 자동으로 나를 맞춰봐 겟레디 페이지로 이동
-        setTimeout(() => {
-          // 테스트를 위해 넘어가지 못하게 막기
-          setGameStep("guess-me");
-          // navigate("/guessme-getready");
-        }, 2000);
+          try {
+            // 서버에 이미지 업로드
+            const response = await axiosInstance.post(
+              `/api/${roomId}/memoryBox/before`,
+              formData
+            );
+            console.log("Success:", response.data);
+            // 업로드 후 모달 닫기
+            setShowModal(false);
+
+            // 2초 뒤에 페이지 이동
+            setTimeout(() => {
+              setGameStep("guess-me");
+              // navigate("/guessme-getready");
+            }, 2000);
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        }, "image/png"); // 이미지 포맷 설정
       });
     }
   };
-
   const getGridColsClass = () => {
     const count = 1 + subscribers.length;
     return `grid-cols-${Math.min(count, 3)}`;
