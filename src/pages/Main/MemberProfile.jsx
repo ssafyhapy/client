@@ -78,20 +78,20 @@ const MemberProfile = () => {
           <div className="w-full flex flex-col items-center gap-5">
             <div className="w-full flex gap-5">
               <UserProfile
-                memberName={memberData.memberName}
-                memberProviderEmail={memberData.memberProviderEmail}
-                memberProfileImageUrl={memberData.memberProfileImageUrl}
+                memberName={memberData?.memberName}
+                memberProviderEmail={memberData?.memberProviderEmail}
+                memberProfileImageUrl={memberData?.memberProfileImageUrl}
               />
-              <UserHistory memberHistoryList={memberData.memberHistoryList} />
+              <UserHistory memberHistoryList={memberData?.memberHistoryList} />
             </div>
             <div className="w-full flex gap-5">
               <UserIntroduction
-                memberIntroduction={memberData.memberIntroduction}
+                memberIntroduction={memberData?.memberIntroduction}
               />
             </div>
             <div className="w-full flex">
               <UserMemoryBox
-                memberMemoryboxList={memberData.memberMemoryboxList}
+                memberMemoryboxList={memberData?.memberMemoryboxList}
               />
             </div>
           </div>
