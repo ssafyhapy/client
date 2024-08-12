@@ -7,24 +7,19 @@ import Step2 from "../../components/Report/Step2";
 import Step3 from "../../components/Report/Step3";
 import Picture from "../../components/Report/Picture";
 import bgImage from "../../assets/bg/bgImage.jpg";
-import axios from "axios";
+// import axios from "axios";
 import Spinner from "../../components/Spinner";
+import { axiosInstance } from "../../api/apiClient";
 
-const Report = () => {
+const Report = ({roomId}) => {
   const [loading, setLoading] = useState(true);
   const [reportData, setReportData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://i11c209.p.ssafy.io/api/room/86/report",
-          {
-            headers: {
-              authorization:
-                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDkwMDQ0MjM3MDk5MTkxOTQxMDQiLCJyb2xlIjoiUk9MRV9VU0VSIiwibWVtYmVySWQiOjgsImlhdCI6MTcyMzM3Mjk0MSwiZXhwIjoxNzI1OTY0OTQxfQ.7SPnaQ2ARdN4qhBg7HBBwnvZZ8cD-xLM1rkM3cs0Mv8RtUTHHCfS37N4JNkvrwUXY_PsVE7lkeNY9K2DQZVj7Q",
-            },
-          }
+        const response = await axiosInstance.get(
+          `/room/${roomId}/report`,
         );
         console.log("fetchData", response);
         setReportData(response.data.data);
@@ -87,3 +82,28 @@ const Report = () => {
 };
 
 export default Report;
+
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         "https://i11c209.p.ssafy.io/api/room/86/report",
+  //         {
+  //           headers: {
+  //             authorization:
+  //               "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDkwMDQ0MjM3MDk5MTkxOTQxMDQiLCJyb2xlIjoiUk9MRV9VU0VSIiwibWVtYmVySWQiOjgsImlhdCI6MTcyMzM3Mjk0MSwiZXhwIjoxNzI1OTY0OTQxfQ.7SPnaQ2ARdN4qhBg7HBBwnvZZ8cD-xLM1rkM3cs0Mv8RtUTHHCfS37N4JNkvrwUXY_PsVE7lkeNY9K2DQZVj7Q",
+  //           },
+  //         }
+  //       );
+  //       console.log("fetchData", response);
+  //       setReportData(response.data.data);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error(error);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);

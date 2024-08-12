@@ -67,13 +67,13 @@ function App() {
         <Route path="/play" element={<Play />} />
         <Route path="/login" element={<Login />} />
         <Route path="/mypage" element={<MyPage />} />
-        {/* 마이페이지 동적 라우팅 */}
-        {/* <Route path="/mypage/:memberName" element={<MyPage />} /> */}
-        <Route path="/member" element={<MemberProfile />} />
+        {/* <Route path="/member" element={<MemberProfile />} /> */}
         {/* 멤버 프로필 동적 라우팅 */}
-        {/* <Route path="/member/:memberId" element={<MemberProfile />} /> */}
+        <Route path="/member/:memberId" element={<MemberProfile />} />
         <Route path="/login/oauth2/code/*" element={<Auth />} />
-        <Route path="/report" element={<Report />} />
+        {/* <Route path="/report" element={<Report />} /> */}
+        {/* 결과 레포트 동적 라우팅 */}
+        <Route path="room/:roomId/report" element={<Report />} />
 
         {/* 대기실 */}
         {/* <Route path="/waiting-room" element={<WaitingRoom />} /> */}

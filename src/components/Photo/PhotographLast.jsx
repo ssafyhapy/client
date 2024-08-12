@@ -7,6 +7,8 @@ import html2canvas from "html2canvas";
 import { useNavigate } from "react-router-dom";
 import useGameStore from "../../store/useGameStore";
 
+import useRoomStore from "../../store/useRoomStore";
+
 const PhotographLast = () => {
   const { gameStep } = useGameStore();
   const { publisher, subscribers, connectionInfo } = useGameStore();
@@ -14,6 +16,8 @@ const PhotographLast = () => {
   const pics = Array(6).fill("pic");
   const [showModal, setShowModal] = useState(false);
   const photoRef = useRef(null);
+
+  const { roomId } = useRoomStore();
 
   const navigate = useNavigate();
 
@@ -35,7 +39,7 @@ const PhotographLast = () => {
 
       // 사진찍고 2초뒤 자동으로 레포트 페이지로 이동
       setTimeout(() => {
-        navigate("/report");
+        navigate(`/room/${roomId}/report`);
       }, 2000);
     }
   };
