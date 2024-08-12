@@ -20,14 +20,14 @@ const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond,
   const [first, setOptionFirst] = useState("")
   const [second, setOptionSecond] = useState("")
 
-  const {addBlueMember, addRedMember} = usePresenterStore()
+  const {blueMembers, redMembers, addBlueMember, addRedMember} = usePresenterStore()
 
   const handlePickedChoice = (choice) => {
     setPickedChoice(choice);
 
-    if (choice === "FIRST") {
+    if (pickedChoice === "FIRST") {
       addBlueMember(memberId)
-    } else if (choice === "SECOND") {
+    } else if (pickedChoice === "SECOND") {
       addRedMember(memberId)
     }
   };
@@ -49,6 +49,13 @@ const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond,
               memberId,
               pickedChoice
             )
+
+            if (pickedChoice === "FIRST" && !(memberId in blueMembers) ) {
+              addBlueMember(memberId)
+            } else if (pickedChoice === "SECOND" && !(memberId in redMembers)) {
+              addRedMember(memberId)
+            }
+          };
 
             // 그 사람이 뭘 골랐는지는 다시 null로 만들자
             setPickedChoice(null)
