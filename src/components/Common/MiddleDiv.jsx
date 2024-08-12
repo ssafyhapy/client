@@ -6,6 +6,8 @@ import MicBtn from "../Buttons/MicBtn";
 import EmojiBtn from "../Buttons/EmojiBtn";
 import SelectEmoji from "./SelectEmoji";
 
+import usePresenterStore from "../../store/usePresenterStore";
+
 const MiddleDiv = () => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
@@ -21,6 +23,10 @@ const MiddleDiv = () => {
   } = useGameStore();
 
   const { memberName } = useAuthStore();
+
+  // 발표자 백그라운드 노란색으로 하이라이트
+  const currentPresenterId = usePresenterStore((state) => state.currentPresenterId)
+  const [highlightedElementId, setHighlightedElementId] = useState(null);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -70,6 +76,24 @@ const MiddleDiv = () => {
       element.style.backgroundColor = color;
     }
   };
+
+  // 발표자 배경색 바꾸는거
+  useEffect(() => {
+    if (highlightedElementId) {
+      // Reset the background color of the previously highlighted element
+      changeBackgroundColor(highlightedElementId, "");
+    }
+
+    // Find the new element to highlight
+    const newHighlightedElementId = Object.keys(connectionInfo).find(
+      (key) => connectionInfo[key].memberId === currentPresenterId
+    );
+
+    if (newHighlightedElementId) {
+      setHighlightedElementId(newHighlightedElementId);
+      changeBackgroundColor(newHighlightedElementId, "yellow");
+    }
+  }, [currentPresenterId, connectionInfo, highlightedElementId]);
 
   useEffect(() => {
     redIds.forEach((id) => changeBackgroundColor(id, "salmon"));

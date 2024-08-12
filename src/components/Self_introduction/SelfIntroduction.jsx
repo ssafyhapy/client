@@ -11,6 +11,8 @@ import SelfIntroductionModal from "./../Self_introduction/SelfIntroductionModal"
 import webSocketService from "./../../WebSocketService";
 import BottomDiv from "../Common/BottomDiv";
 
+import usePresenterStore from "../../store/usePresenterStore";
+
 const SelfIntroduction = () => {
   const {
     mainStreamManager,
@@ -30,11 +32,13 @@ const SelfIntroduction = () => {
   const [introductions, setIntroductions] = useState([]);
   const [userText, setUserText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentPresenterId, setCurrentPresenterId] = useState(null);
+  // const [currentPresenterId, setCurrentPresenterId] = useState(null);
   const navigate = useNavigate();
 
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
+
+  const setCurrentPresenterId = usePresenterStore((state) => state.setCurrentPresenterId)
 
   // 멤버아이디는 로그인하면 받아오게하기
   const { memberId } = useAuthStore();
