@@ -1,45 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useMypageStore } from "../../store/useMypageStore";
 import Memory from "./Memory";
-import { useLocation, useNavigate } from "react-router-dom";
 
 const MemoryBox = () => {
   const { memberMemoryboxList } = useMypageStore();
-
-  const location = useLocation();
-  const navigate = useNavigate();
 
   // 페이지네이션 상태 관리
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3; // 한 페이지에 보여줄 항목 수
 
-  // 페이지 번호가 URL 쿼리 파라미터로부터 가져와짐
-  useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const page = parseInt(query.get("page"), 10);
-    if (page) {
-      setCurrentPage(page);
-    }
-  }, [location.search]);
-
-  // 페이지 이동 핸들러
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    navigate(`?page=${pageNumber}`);
-  };
-
+  // 현재 페이지에 따라 보여줄 데이터 계산
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = memberMemoryboxList.slice(indexOfFirstItem, indexOfLastItem);
 
+  // 페이지 수 계산
   const totalPages = Math.ceil(memberMemoryboxList.length / itemsPerPage);
+
+  // 페이지 이동 핸들러
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div className="w-full h-auto bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)] flex flex-col p-5 gap-5 relative">
       <div className="flex items-center gap-2">
         <h1 className="text-2xl">추억 상자</h1>
       </div>
-      <div className="flex justify-evenly">
+      <div className="flex gap-3">
       {/* 현재 페이지에 해당하는 Memory 컴포넌트를 출력 */}
       {currentItems.map((memorybox) => (
         <Memory key={memorybox.roomId} memorybox={memorybox} roomId={memorybox.roomId}/>
