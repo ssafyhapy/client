@@ -14,7 +14,7 @@ import Modal from "../../components/Modal";
 const MemberProfile = () => {
   // 로딩 상태
   const [isLoading, setIsLoading] = useState(true);
-  const [memberData, setMemberData] = useState({});
+  const [memberData, setMemberData] = useState(null);
   const { memberId } = useParams();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
@@ -62,6 +62,10 @@ const MemberProfile = () => {
   // 로딩 중일 때 스피너 표시
   if (isLoading) {
     return <Spinner />; // 로딩 중일 때 표시할 컴포넌트
+  }
+
+  if (!memberData) {
+    return <div>데이터를 불러올 수 없습니다.</div>; // 데이터를 불러오지 못했을 때의 처리
   }
 
   return (
