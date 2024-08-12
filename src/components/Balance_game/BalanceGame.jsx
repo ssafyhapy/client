@@ -8,6 +8,7 @@ import useAuthStore from "../../store/useAuthStore";
 import useRoomStore from "../../store/useRoomStore";
 import useBalanceStore from "../../store/useBalanceStore";
 import webSocketService from "../../WebSocketService";
+import usePresenterStore from "../../store/usePresenterStore";
 
 const Balance = () => {
   const { memberId } = useAuthStore()
@@ -20,6 +21,8 @@ const Balance = () => {
   const [dots, setDots] = useState("");
 
   const { discussedNum, setDiscussedNum } = useBalanceStore();
+
+  const {addBlueMember, addRedMember, blueMembers, redMembers, resetMemberStatuses} = usePresenterStore()
 
   // 방장이 적은 text
   const [purpose, setPurpose] = useState("")
@@ -81,6 +84,8 @@ const Balance = () => {
 
       if (message.memberState === "wrapup") {
         setGameStep("wrap-up")
+        // 빨간배경 파란배경에 넣어져있는 memberId 리셋시키자!
+        resetMemberStatuses()
       }
     })
 

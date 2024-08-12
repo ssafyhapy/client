@@ -24,12 +24,6 @@ const MiddleDiv = () => {
 
   const { memberName } = useAuthStore();
 
-  // 발표자 백그라운드 노란색으로 하이라이트
-  const currentPresenterId = usePresenterStore(
-    (state) => state.currentPresenterId
-  );
-  const [highlightedElementId, setHighlightedElementId] = useState(null);
-
   const handleOpenModal = () => {
     setIsModalOpen(true);
     console.log("클릭됨");
@@ -69,8 +63,9 @@ const MiddleDiv = () => {
     if (count >= 3) return "w-[40%] max-w-[400px] min-w-[250px]";
   };
 
-  const [redIds, setRedIds] = useState([]);
-  const [blueIds, setBlueIds] = useState([]);
+  // const [redIds, setRedIds] = useState([]);
+  // const [blueIds, setBlueIds] = useState([]);
+  // blueIds, redIds usePresentStore에 저장해두었다 가져올것임
 
   const changeBackgroundColor = (id, color) => {
     const element = document.getElementById(id);
@@ -79,13 +74,21 @@ const MiddleDiv = () => {
     }
   };
 
+  // 한 줄 자기소개 + 나를 맞춰봐!! 발표자 관련 =======================================================================
+  // 발표자 백그라운드 노란색으로 하이라이트
+  const { blueMembers, redMembers } = usePresenterStore()
+  const currentPresenterId = usePresenterStore(
+    (state) => state.currentPresenterId
+  );
+  const [highlightedElementId, setHighlightedElementId] = useState(null);
+
   // currentPresenterId 제대로 오는지 확인
   useEffect(() => {
     console.log("currentPresenterId updated to:", currentPresenterId);
     console.log("connectionInfo:", connectionInfo);
   }, [currentPresenterId, connectionInfo]);
 
-  // 발표자 배경색 바꾸는거
+  // 발표자 배경색 노란색으로 바꾸는거
   useEffect(() => {
     // 현재 currentPresenterId & connectionInfo 가 잘 업데이트 된 상태인지 확인
     if (!currentPresenterId || Object.keys(connectionInfo).length === 0) {
@@ -100,7 +103,7 @@ const MiddleDiv = () => {
       changeBackgroundColor(highlightedElementId, "");
     }
 
-    // memberId === currentPresenterId 인 connectionId 찾아
+    // memberId === currentPresenterId 인 connectionId 찾아 (memberId가 string임에 주의!)
     const newHighlightedElementId = Object.keys(connectionInfo).find(
       (key) => parseInt(connectionInfo[key].memberId, 10) === currentPresenterId
     );
@@ -118,23 +121,51 @@ const MiddleDiv = () => {
     );
   }, [currentPresenterId, connectionInfo, highlightedElementId]);
 
+  // ================================================================================================
+
+  // 밸런스 게임! FIRST 고른 사람들에게 파란 배경색 부여
   useEffect(() => {
-    redIds.forEach((id) => changeBackgroundColor(id, "salmon"));
-  }, [redIds]);
+    blueMembers.forEach((memberId) => {
+      const connectionId = Object.keys(connectionInfo).find(
+        (key) => parseInt(connectionInfo[key].memberId, 10) === memberId
+      )
+      if (connectionId) {
+        changeBackgroundColor(connectionId, "cornflowerblue")
+      }
+    })
+  }, [blueMembers, connectionInfo])
 
+  // 밸런스 게임! SECOND 고른 사람들에게 빨간 배경색 부여
   useEffect(() => {
-    blueIds.forEach((id) => changeBackgroundColor(id, "cornflowerblue"));
-  }, [blueIds]);
+    redMembers.forEach((memberId) => {
+      const connectionId = Object.keys(connectionInfo).find(
+        (key) => parseInt(connectionInfo[key].memberId, 10) === memberId
+      )
+      if (connectionId) {
+        changeBackgroundColor(connectionId, "salmon")
+      }
+    })
+  }, [redMembers, connectionInfo])
 
-  const handleChangeToRed = (ids) => {
-    setRedIds(ids);
-    setBlueIds((prevBlueIds) => prevBlueIds.filter((id) => !ids.includes(id)));
-  };
+// =====================================================================================================
 
-  const handleChangeToBlue = (ids) => {
-    setBlueIds(ids);
-    setRedIds((prevRedIds) => prevRedIds.filter((id) => !ids.includes(id)));
-  };
+  // useEffect(() => {
+  //   redIds.forEach((id) => changeBackgroundColor(id, "salmon"));
+  // }, [redIds]);
+
+  // useEffect(() => {
+  //   blueIds.forEach((id) => changeBackgroundColor(id, "cornflowerblue"));
+  // }, [blueIds]);
+
+  // const handleChangeToRed = (ids) => {
+  //   setRedIds(ids);
+  //   setBlueIds((prevBlueIds) => prevBlueIds.filter((id) => !ids.includes(id)));
+  // };
+
+  // const handleChangeToBlue = (ids) => {
+  //   setBlueIds(ids);
+  //   setRedIds((prevRedIds) => prevRedIds.filter((id) => !ids.includes(id)));
+  // };
 
   // useEffect(() => {
   //   if (mainStreamManager) {

@@ -7,6 +7,8 @@ import GameTurns from "../../components/Common/GameTurns";
 import useAuthStore from "../../store/useAuthStore";
 import webSocketService from "../../WebSocketService";
 
+import usePresenterStore from "../../store/usePresenterStore";
+
 const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond, onTimerEnd, currentStep, discussedNum }) => {
   const timerImg = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/timer.png"
 
@@ -18,8 +20,16 @@ const BalanceChoosing = ({ roomId, memberId, topicId, optionFirst, optionSecond,
   const [first, setOptionFirst] = useState("")
   const [second, setOptionSecond] = useState("")
 
+  const {addBlueMember, addRedMember, blueMembers, redMembers, resetMemberStatuses} = usePresenterStore()
+
   const handlePickedChoice = (choice) => {
     setPickedChoice(choice);
+
+    if (choice === "FIRST") {
+      addBlueMember(memberId)
+    } else if (choice === "SECOND") {
+      addRedMember(memberId)
+    }
   };
 
   const [secondsLeft, setSecondsLeft] = useState(10);
