@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useMypageStore } from "../../store/useMypageStore";
 import Memory from "./Memory";
-import { useLocation, useNavigate } from "react-router-dom";
 
-const MemoryBox = () => {
+const MemoryBox = ({currentPage, onPageChange}) => {
   const { memberMemoryboxList } = useMypageStore();
 
   const itemsPerPage = 3;
