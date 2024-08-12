@@ -7,7 +7,7 @@ import UserIntroduction from "../../components/MemberProfile/UserIntroduction";
 import UserMemoryBox from "../../components/MemberProfile/UserMemoryBox";
 import Spinner from "../../components/Spinner";
 import bgImage from "../../assets/bg/bgImage.jpg";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { axiosInstance } from "../../api/apiClient";
 
 const MemberProfile = () => {
