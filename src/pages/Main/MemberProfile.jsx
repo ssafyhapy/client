@@ -12,24 +12,29 @@ import { axiosInstance } from "../../api/apiClient";
 import Modal from "../../components/Modal";
 
 const MemberProfile = () => {
-  // 로딩 상태
   const [isLoading, setIsLoading] = useState(true);
   const [memberData, setMemberData] = useState(null);
   const { memberId } = useParams();
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     if (location.state?.errorMessage) {
-      setErrorMessage(location.state.errorMessage);
+      setError(location.state.errorMessage);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    if (error) {
       setIsModalOpen(true);
     }
-  }, [location.state?.errorMessage]);
+  }, [error]);
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setError(null);
     navigate(-1);
   };
 
@@ -47,26 +52,19 @@ const MemberProfile = () => {
           error.response &&
           error.response.data.errorMsg === "프로필 비공개 멤버입니다."
         ) {
-          setErrorMessage("프로필 비공개 멤버입니다.");
-          setIsModalOpen(true);
+          setError("프로필 비공개 멤버입니다.");
         } else {
-          setErrorMessage("프로필을 불러오는데 실패했습니다.");
-          setIsModalOpen(true);
+          setError("프로필을 불러오는데 실패했습니다.");
         }
         setIsLoading(false);
       }
     };
     loadData();
-  }, [memberId, navigate]);
+  }, [memberId]);
 
-  console.log("memberData", memberData);
   // 로딩 중일 때 스피너 표시
   if (isLoading) {
-    return <Spinner />; // 로딩 중일 때 표시할 컴포넌트
-  }
-
-  if (!memberData) {
-    return <div>데이터를 불러올 수 없습니다.</div>; // 데이터를 불러오지 못했을 때의 처리
+    return <Spinner />;
   }
 
   return (
@@ -75,36 +73,40 @@ const MemberProfile = () => {
       style={{ backgroundImage: `url(${bgImage})` }}
     >
       <SubFrame>
-        <div className="flex flex-col items-center w-[80%] py-10 gap-5">
-          <NavBar />
-          <div className="w-full flex justify-center">
-            <h1 className="text-4xl">Profile</h1>
+        {memberData ? (
+          <div className="flex flex-col items-center w-[80%] py-10 gap-5">
+            <NavBar />
+            <div className="w-full flex justify-center">
+              <h1 className="text-4xl">Profile</h1>
+            </div>
+            <div className="w-full flex flex-col items-center gap-5">
+              <div className="w-full flex gap-5">
+                <UserProfile
+                  memberName={memberData.memberName}
+                  memberProviderEmail={memberData.memberProviderEmail}
+                  memberProfileImageUrl={memberData.memberProfileImageUrl}
+                />
+                <UserHistory memberHistoryList={memberData.memberHistoryList} />
+              </div>
+              <div className="w-full flex gap-5">
+                <UserIntroduction
+                  memberIntroduction={memberData.memberIntroduction}
+                />
+              </div>
+              <div className="w-full flex">
+                <UserMemoryBox
+                  memberMemoryboxList={memberData.memberMemoryboxList}
+                />
+              </div>
+            </div>
           </div>
-          <div className="w-full flex flex-col items-center gap-5">
-            <div className="w-full flex gap-5">
-              <UserProfile
-                memberName={memberData?.memberName}
-                memberProviderEmail={memberData?.memberProviderEmail}
-                memberProfileImageUrl={memberData?.memberProfileImageUrl}
-              />
-              <UserHistory memberHistoryList={memberData?.memberHistoryList} />
-            </div>
-            <div className="w-full flex gap-5">
-              <UserIntroduction
-                memberIntroduction={memberData?.memberIntroduction}
-              />
-            </div>
-            <div className="w-full flex">
-              <UserMemoryBox
-                memberMemoryboxList={memberData?.memberMemoryboxList}
-              />
-            </div>
-          </div>
-        </div>
+        ) : (
+          <div>데이터를 불러올 수 없습니다.</div>
+        )}
       </SubFrame>
 
       <Modal isOpen={isModalOpen} onClose={closeModal} title="Error">
-        <p>{errorMessage}</p>
+        <p>{error}</p>
       </Modal>
     </div>
   );
