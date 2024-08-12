@@ -47,10 +47,9 @@ const PhotographLast = () => {
             // 업로드 후 모달 닫기
             setShowModal(false);
 
-            // 2초 뒤에 페이지 이동
+            // 사진찍고 2초뒤 자동으로 레포트 페이지로 이동
             setTimeout(() => {
-              setGameStep("guess-me");
-              // navigate("/guessme-getready");
+              navigate(`/room/${roomId}/report`);
             }, 2000);
           } catch (error) {
             console.error("Error:", error);
