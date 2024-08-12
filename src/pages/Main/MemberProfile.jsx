@@ -23,9 +23,10 @@ const MemberProfile = () => {
 
   useEffect(() => {
     if (location.state?.errorMessage) {
+      setErrorMessage(location.state.errorMessage);
       setIsModalOpen(true);
     }
-  }, [location]);
+  }, [location.state?.errorMessage]);
 
   const closeModal = () => {
     setIsModalOpen(false);
