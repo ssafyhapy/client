@@ -14,18 +14,21 @@ const MemberProfile = () => {
   // 로딩 상태
   const [isLoading, setIsLoading] = useState(true);
   const [memberData, setMemberData] = useState({});
-  const navigate = useNavigate();
   const { memberId } = useParams();
-
-  // 알람 관련
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
-  // location.state에서 에러 메시지 확인
-  if (location.state?.errorMessage) {
-    alert(location.state.errorMessage);
-    // state 초기화
-    navigate(location.pathname, { replace: true, state: {} });
-  }
-  useEffect(() => {}, [location, navigate]);
+
+  useEffect(() => {
+    if (location.state?.errorMessage) {
+      setIsModalOpen(true);
+    }
+  }, [location]);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    navigate(-1);
+  };
 
   // 유저 프로필 데이터 불러오기
   useEffect(() => {
@@ -94,6 +97,10 @@ const MemberProfile = () => {
           </div>
         </div>
       </SubFrame>
+
+      <Modal isOpen={isModalOpen} onClose={closeModal} title="Error">
+        <p>{location.state?.errorMessage}</p>
+      </Modal>
     </div>
   );
 };
