@@ -39,6 +39,7 @@ const SelfIntroduction = () => {
   const setGameStep = useGameStore((state) => state.setGameStep);
 
   const setCurrentPresenterId = usePresenterStore((state) => state.setCurrentPresenterId)
+  const {currentPresenterId} = usePresenterStore()
 
   // 멤버아이디는 로그인하면 받아오게하기
   const { memberId } = useAuthStore();
