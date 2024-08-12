@@ -5,7 +5,7 @@ import Memory from "./Memory";
 const MemoryBox = () => {
   const { memberMemoryboxList } = useMypageStore();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // 한 페이지에 보여줄 아이템 수
+  const itemsPerPage = 3; // 한 페이지에 보여줄 아이템 수
 
   // 페이지 변경 핸들러
   const handlePageChange = (page) => {
