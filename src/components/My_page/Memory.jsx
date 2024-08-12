@@ -1,11 +1,16 @@
 import React from "react";
 import defaultImage from "../../assets/My_page/defaultImg.jpg";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Memory = ({ memorybox, roomId }) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/room/${roomId}/report`);
+  };
   return (
-    <Link to={`/room/${roomId}/report`} className="w-[240px] h-[350px] bg-white flex flex-col justify-between items-center p-4 gap-2">
+    <div className="w-[240px] h-[350px] bg-white flex flex-col justify-between items-center p-4 gap-2">
       <img
+        onClick={handleClick}
         className="w-[200px] h-[300px]"
         src={memorybox.memberMemoryImageUrl || defaultImage}
         alt={memorybox.memberMemoryBoxName || "방 제목"}
@@ -14,7 +19,7 @@ const Memory = ({ memorybox, roomId }) => {
         <p className="text-left">{memorybox.memberMemoryBoxDate}</p>
         <p className="text-right">{memorybox.memberMemoryBoxName}</p>
       </div>
-    </Link>
+    </div>
   );
 };
 export default Memory;
