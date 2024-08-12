@@ -52,6 +52,7 @@ const MemberProfile = () => {
           setErrorMessage("프로필을 불러오는데 실패했습니다.");
           setIsModalOpen(true);
         }
+        setIsLoading(false);
       }
     };
     loadData();
