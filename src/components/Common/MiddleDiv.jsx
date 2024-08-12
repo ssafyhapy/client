@@ -112,10 +112,11 @@ const MiddleDiv = () => {
     }
   }, [currentPresenterId, connectionInfo, highlightedElementId]);
 
-  // currentPresenterId 업데이트되는지 확인
+  // currentPresenterId 제대로 오는지 확인
   useEffect(() => {
     console.log("currentPresenterId updated to:", currentPresenterId);
-  }, [currentPresenterId]);
+    console.log("connectionInfo:", connectionInfo);
+  }, [currentPresenterId, connectionInfo]);
 
   useEffect(() => {
     redIds.forEach((id) => changeBackgroundColor(id, "salmon"));
