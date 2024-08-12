@@ -102,10 +102,10 @@ const MiddleDiv = () => {
 
     // memberId === currentPresenterId 인 connectionId 찾아
     const newHighlightedElementId = Object.keys(connectionInfo).find(
-      (key) => connectionInfo[key].memberId === currentPresenterId
+      (key) => parseInt(connectionInfo[key].memberId, 10) === currentPresenterId
     );
 
-    if (newHighlightedElementId !== undefined) {
+    if (newHighlightedElementId) {
       // Set the new highlighted element ID and change its background color
       setHighlightedElementId(newHighlightedElementId);
       changeBackgroundColor(newHighlightedElementId, "yellow");
