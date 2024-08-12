@@ -360,6 +360,8 @@ import useGameStore from "../../store/useGameStore";
 import useAuthStore from "../../store/useAuthStore";
 import useRoomStore from "../../store/useRoomStore";
 
+import usePresenterStore from "../../store/usePresenterStore";
+
 const GuessMe = () => {
   const snowingCloud =
     "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/snowing_cloud.png";
@@ -384,8 +386,12 @@ const GuessMe = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userQuestions, setUserQuestions] = useState([]);
   const [timer, setTimer] = useState(null);
-  const [currentPresenterId, setCurrentPresenterId] = useState(null);
+  // const [currentPresenterId, setCurrentPresenterId] = useState(null);
   const [showReadyMessage, setShowReadyMessage] = useState(false);
+
+
+  const setCurrentPresenterId = usePresenterStore((state) => state.setCurrentPresenterId)
+  const {currentPresenterId} = usePresenterStore()
 
   const { memberId } = useAuthStore();
   // const memberId = 4
@@ -432,6 +438,7 @@ const GuessMe = () => {
       console.log("Received game state: ", message);
       if (message.memberState === "balance") {
         setGameStep("balance-game");
+        setCurrentPresenterId(null)
       }
     });
 
