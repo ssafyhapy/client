@@ -20,21 +20,21 @@ const BalanceChoosing = ({ roomId, topicId, optionFirst, optionSecond, onTimerEn
   const [first, setOptionFirst] = useState("")
   const [second, setOptionSecond] = useState("")
 
-  const {blueMembers, redMembers, addBlueMember, addRedMember} = usePresenterStore()
+  // const {blueMembers, redMembers, addBlueMember, addRedMember} = usePresenterStore()
 
-  useEffect(() => {
-    console.log('blue members: ', blueMembers)
-    console.log('red members: ', redMembers)
-  }, [blueMembers, redMembers])
+  // useEffect(() => {
+  //   console.log('blue members: ', blueMembers)
+  //   console.log('red members: ', redMembers)
+  // }, [blueMembers, redMembers])
 
   const handlePickedChoice = (choice) => {
     setPickedChoice(choice);
 
-    if (choice === "FIRST" && !blueMembers.includes(memberId)) {
-      addBlueMember(memberId)
-    } else if (choice === "SECOND" && !redMembers.includes(memberId)) {
-      addRedMember(memberId)
-    }
+    // if (choice === "FIRST" && !blueMembers.includes(memberId)) {
+    //   addBlueMember(memberId)
+    // } else if (choice === "SECOND" && !redMembers.includes(memberId)) {
+    //   addRedMember(memberId)
+    // }
   };
 
   const [secondsLeft, setSecondsLeft] = useState(10);
@@ -65,6 +65,7 @@ const BalanceChoosing = ({ roomId, topicId, optionFirst, optionSecond, onTimerEn
             setPickedChoice(null)
 
             onTimerEnd(); // 타이머가 0이 되었을 때 호출
+
             return 0;
           }
         });

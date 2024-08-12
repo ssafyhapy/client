@@ -11,8 +11,8 @@ import webSocketService from "../../WebSocketService";
 import usePresenterStore from "../../store/usePresenterStore";
 
 const Balance = () => {
-  const { memberId } = useAuthStore()
-  const { roomId, hostId } = useRoomStore()
+  const { memberId } = useAuthStore();
+  const { roomId, hostId } = useRoomStore();
 
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
@@ -22,16 +22,16 @@ const Balance = () => {
 
   const { discussedNum, setDiscussedNum } = useBalanceStore();
 
-  const {resetMemberStatuses} = usePresenterStore()
+  const { blueMembers, redMembers, addBlueMember, addRedMember, resetMemberStatuses } = usePresenterStore();
 
   // 방장이 적은 text
-  const [purpose, setPurpose] = useState("")
+  const [purpose, setPurpose] = useState("");
   // 추천받은 주제
-  const [optionFirst, setOptionFirst] = useState("")
-  const [optionSecond, setOptionSecond] = useState("")
+  const [optionFirst, setOptionFirst] = useState("");
+  const [optionSecond, setOptionSecond] = useState("");
 
   // 주제확정되면 주제 id 들고다녀
-  const [topicId, settopicId] = useState("")
+  const [topicId, settopicId] = useState("");
 
   // purpose 값이 빈 값이 아닐때만!! pub을 보내도록 바꿈 (중복이라 주석처리)
   useEffect(() => {
@@ -54,7 +54,7 @@ const Balance = () => {
 
     // purpose가 빈값이 아닐때만!!
     if (purpose !== "") {
-      webSocketService.sendBalancePurpose(roomId, purpose)
+      webSocketService.sendBalancePurpose(roomId, purpose);
     }
     // setCurrentStep("changeChoices");
   };
@@ -65,8 +65,6 @@ const Balance = () => {
     // BalanceChangeChoices handleConfirmChoices 에 pub 이미 해주는거 있어서 밑의 건 주석처리
     // webSocketService.sendBalanceChosenTopic(roomId, optionFirst, optionSecond)
     // setCurrentStep("choosing");
-
-
     // 주제 확정되고 나면 discussedNum 도 + 1
     // setDiscussedNum((prevNum) => prevNum + 1);
   };
@@ -77,79 +75,125 @@ const Balance = () => {
 
   // 내가 이제부터 쭉~~ 구독해야하는 애들
   useEffect(() => {
-
     // 다음 단계로 넘어갈때 되면 알려줌
     webSocketService.subscribeToMemberState(roomId, (message) => {
-      console.log("Received message:", message)
+      console.log("Received message:", message);
 
       if (message.memberState === "wrapup") {
-        setGameStep("wrap-up")
+        setGameStep("wrap-up");
         // 빨간배경 파란배경에 넣어져있는 memberId 리셋시키자!
-        resetMemberStatuses()
+        resetMemberStatuses();
       }
-    })
+    });
 
     // 밸런스 게임 주제추천해준거 받아온다!!
     webSocketService.subscribeToBalanceTopic(roomId, (message) => {
-      console.log("Received Topic : ", message)
+      console.log("Received Topic : ", message);
 
-      setOptionFirst(message.optionFirst)
-      setOptionSecond(message.optionSecond)
+      setOptionFirst(message.optionFirst);
+      setOptionSecond(message.optionSecond);
 
       // 주제 받아왔으면 그때 그다음 changeChoices로 넘어가
       setCurrentStep("changeChoices");
-    })
+    });
 
     // 받아오는 데이터
     // { "optionFirst" : "산", "optionSecond" : "바다"}
 
     // 밸런스 게임 주제확정된거 id와 함께 다시 받음
     webSocketService.subscribeToBalanceChosenTopic(roomId, (message) => {
-      console.log("Topic is Chosen: ", message)
+      console.log("Topic is Chosen: ", message);
 
-      settopicId(message.id)
+      settopicId(message.id);
       // console.log(topicId)
 
       // 주제 확정된거 메시지로 다시 받으면 호스트 아닌사람들도 choosing으로 넘어가
-      setCurrentStep("choosing")
+      setCurrentStep("choosing");
 
       // 주제 확정되고 나면 discussedNum 도 + 1
       setDiscussedNum((prevNum) => prevNum + 1);
-    })
+    });
 
     // 받아오는 데이터
     // { "id" : "어쩌구", "roomId":1, "optionFirst":"산", "optionSecond":"바다"}
 
     // 밸런스 게임 사람들이 고른 선택지 받음
     webSocketService.subscribeToBalancePersonChoice(roomId, (message) => {
-      console.log("What the member chose: ", message)
-    })
+      console.log("What the member chose: ", message);
+
+      // 사람들이 고른 선택지에 따라 blueMember나 redMember에 집어넣기
+      if (message.balanceResultSelectedOption === "FIRST") {
+        addBlueMember(message.memberId);
+      } else if (message.balanceResultSelectedOption === "SECOND") {
+        addRedMember(message.memberId);
+      }
+    });
 
     // 받아오는 데이터
     // { "memberId":1, "balanceResultSelectedOption":"First" 아니면 "Second"}
 
     return () => {
-      webSocketService.unsubscribe(`/api/sub/${roomId}/state`)
-      webSocketService.unsubscribe(`/api/sub/balance/${roomId}/get-question`)
-      webSocketService.unsubscribe(`/api/sub/balance/${roomId}/save-question`)
-      webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`)
-    }
+      webSocketService.unsubscribe(`/api/sub/${roomId}/state`);
+      webSocketService.unsubscribe(`/api/sub/balance/${roomId}/get-question`);
+      webSocketService.unsubscribe(`/api/sub/balance/${roomId}/save-question`);
+      webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`);
+    };
     // dependency array 추가 (아마도 constant subscribing 의 원인...)
-  }, [roomId, topicId, setGameStep, discussedNum, currentStep, setDiscussedNum, purpose])
+  }, [
+    roomId,
+    topicId,
+    setGameStep,
+    discussedNum,
+    currentStep,
+    setDiscussedNum,
+    purpose,
+  ]);
 
   useEffect(() => {
-    console.log("Topic Id: ", topicId)
-  }, [topicId])
+    console.log('blue members: ', blueMembers)
+    console.log('red members: ', redMembers)
+  }, [blueMembers, redMembers])
+
+  useEffect(() => {
+    console.log("Topic Id: ", topicId);
+  }, [topicId]);
 
   return (
     <>
       {showModal && currentStep === "getReady" && (
-        <BalanceGetReady setPurpose={setPurpose} onClose={handleSubjectSaveModal} dots={dots} />
+        <BalanceGetReady
+          setPurpose={setPurpose}
+          onClose={handleSubjectSaveModal}
+          dots={dots}
+        />
       )}
       {currentStep === "changeChoices" && (
-        <BalanceChangeChoices discussedNum={discussedNum} memberId={memberId} hostId={hostId} topicId={topicId} roomId={roomId} purpose={purpose} onConfirm={handleSubjectConfirm} optionFirst={optionFirst} optionSecond={optionSecond} />
+        <BalanceChangeChoices
+          discussedNum={discussedNum}
+          memberId={memberId}
+          hostId={hostId}
+          topicId={topicId}
+          roomId={roomId}
+          purpose={purpose}
+          onConfirm={handleSubjectConfirm}
+          optionFirst={optionFirst}
+          optionSecond={optionSecond}
+        />
       )}
-      {currentStep === "choosing" && <BalanceChoosing discussedNum={discussedNum} optionFirst={optionFirst} optionSecond={optionSecond} hostId={hostId} roomId={roomId} memberId={memberId} topicId={topicId} purpose={purpose} onTimerEnd={handleTimerEnd} currentStep={`${currentStep === "choosing" ? true : false}`} />}
+      {currentStep === "choosing" && (
+        <BalanceChoosing
+          discussedNum={discussedNum}
+          optionFirst={optionFirst}
+          optionSecond={optionSecond}
+          hostId={hostId}
+          roomId={roomId}
+          memberId={memberId}
+          topicId={topicId}
+          purpose={purpose}
+          onTimerEnd={handleTimerEnd}
+          currentStep={`${currentStep === "choosing" ? true : false}`}
+        />
+      )}
     </>
   );
 };
