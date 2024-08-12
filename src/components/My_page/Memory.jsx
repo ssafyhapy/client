@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 const Memory = ({ memorybox, roomId }) => {
   const navigate = useNavigate();
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.stopPropagation();
     navigate(`/room/${roomId}/report`);
   };
   return (
