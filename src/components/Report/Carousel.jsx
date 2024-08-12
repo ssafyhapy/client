@@ -19,7 +19,7 @@ const Carousel = ({ slides, type }) => {
   // 슬라이드 없을 때 처리
   if (!slides || slides.length === 0) {
     return (
-      <div className="flex justify-center items-center">
+      <div className="w-full h-full flex justify-center items-center">
         <p>No contents...</p>
       </div>
     );
