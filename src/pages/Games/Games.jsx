@@ -21,7 +21,7 @@ const Games = () => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
 
-  const { session } = useOpenViduSession();
+  const { session, videoRef, outputCanvasRef } = useOpenViduSession();
 
   return (
     <WebSocketProvider>
@@ -37,11 +37,19 @@ const Games = () => {
         {gameStep !== "camera-check" &&
         gameStep !== "photo-first" &&
         gameStep !== "photo-last" ? (
-          <MiddleDiv></MiddleDiv>
+          <MiddleDiv
+            videoRef={videoRef} // videoRef 전달
+            outputCanvasRef={outputCanvasRef} // outputCanvasRef 전달
+          />
         ) : null}
 
         {/* 자체 UI */}
-        {gameStep === "camera-check" && <CamCheck />}
+        {gameStep === "camera-check" && (
+          <MiddleDiv
+            videoRef={videoRef} // videoRef 전달
+            outputCanvasRef={outputCanvasRef} // outputCanvasRef 전달
+          />
+        )}
         {gameStep === "photo-first" && <PhotographFirst />}
         {gameStep === "photo-last" && <PhotographLast />}
 

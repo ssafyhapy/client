@@ -11,11 +11,112 @@ import SelectEmoji from "./SelectEmoji";
 import usePresenterStore from "../../store/usePresenterStore";
 import webSocketService from "../../WebSocketService";
 import useRoomStore from "../../store/useRoomStore";
+import { useLocation } from "react-router-dom";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import {
+  Box3,
+  Euler,
+  Matrix4,
+  Vector3,
+  Mesh,
+  MeshStandardMaterial,
+} from "three";
+import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
+import { useGLTF } from "@react-three/drei";
+import { div } from "three/webgpu";
 
-const MiddleDiv = () => {
+let video;
+let faceLandmarker;
+let lastVideoTime = -1;
+
+// 가면 회전
+let rotation = new Euler(0, 0, 0);
+// 가면 위치
+let position = new Vector3(0, 0, 0);
+// 코 위치
+let noseY = -1;
+let noseX = -1;
+
+// 비디오 크기
+let videoWidth = 640;
+let videoHeight = 480;
+let videoX = 0;
+let videoY = 0;
+let faceWidth = 1;
+let scaleFactor;
+
+// 스파게티 유후~
+// 마스크(GLB파일) 로드
+const Model = ({ url, targetSize }) => {
+  const { scene } = useGLTF(url);
+  const sceneRef = useRef(scene);
+  const { camera } = useThree();
+
+  if (scene) {
+    scene.traverse((child) => {
+      scene.rotation.set(...rotation);
+
+      // 가면 초기 크기 설정
+      const box = new Box3().setFromObject(scene);
+      const size = new Vector3();
+      box.getSize(size);
+      console.log(child);
+
+      const maxSize = Math.max(size.x, size.y, size.z);
+      scaleFactor = targetSize / maxSize;
+
+      scene.scale.set(scaleFactor, scaleFactor, scaleFactor);
+
+      if (child instanceof Mesh) {
+        console.log("mesh instance:, ", child);
+        const material = new MeshStandardMaterial({
+          map: child.material.map,
+          roughness: 0.5,
+        });
+        child.material = material;
+        child.material.needsUpdate = true;
+      }
+    });
+  }
+
+  console.log("GLTF파일 로드 완료");
+
+  const getWorldPositionFromPixel = (pixelX, pixelY) => {
+    const ndcX = ((pixelX + videoX) / videoWidth) * 2 - 1;
+    const ndcY = -(((pixelY + videoY) / videoHeight) * 2 - 1);
+
+    const vector = new Vector3(ndcX, ndcY, 0.5);
+    vector.unproject(camera);
+
+    const dir = vector.sub(camera.position).normalize();
+    const distance = -camera.position.z / dir.z;
+    const pos = camera.position.clone().add(dir.multiplyScalar(distance));
+
+    return pos;
+  };
+
+  useFrame(() => {
+    if (scene) {
+      scene.rotation.set(rotation.x, rotation.y, rotation.z);
+      scene.position.set(position.x, position.y, position.z);
+
+      const nosePosition = getWorldPositionFromPixel(noseX, noseY);
+      scene.position.copy(nosePosition);
+      scene.scale.set(faceWidth, faceWidth, faceWidth);
+    }
+  });
+
+  return scene ? <primitive object={scene} /> : null;
+};
+
+const MiddleDiv = ({ videoRef, outputCanvasRef }) => {
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [gl, setGL] = useState(null); // WebGL renderer reference
+  const [gltfUrl, setGltfUrl] = useState("");
+  const [isgltfUrl, setIsGltfUrl] = useState(false);
+
   const {
     mainStreamManager,
     setMainStreamManager,
@@ -28,7 +129,155 @@ const MiddleDiv = () => {
 
   const { memberName, memberId } = useAuthStore();
   const { roomId } = useRoomStore();
+  const targetSize = 2.996335351172754;
+  const [size] = useState(720);
+  // =============================================
+  const handleChangeMask = (newUrl) => {
+    if (gltfUrl !== newUrl) {
+      setIsGltfUrl(false);
+      setGltfUrl(newUrl);
+      console.log(gltfUrl);
+    }
+  };
 
+  useEffect(() => {
+    // 모델이 변경될 때마다 다시 로드
+    if (gltfUrl) {
+      setIsGltfUrl(true);
+    }
+  }, [gltfUrl]);
+  useEffect(() => {
+    const initialize = async () => {
+      console.log("실행은 하냐?");
+      await setup(); // setup 함수가 완료된 후에
+      joinSession(); // joinSession 함수를 호출
+    };
+
+    initialize(); // 초기화 함수 실행
+
+    return () => {
+      if (session) session.disconnect();
+    };
+  }, []); // 빈 배열로 의존성 배열 설정, 컴포넌트 마운트 시 한 번만 실행
+  // mediapipe를 통해 faceLandmarker 예측
+  const predict = () => {
+    if (!video || video.videoWidth === 0 || video.videoHeight === 0) {
+      console.log("video", video);
+      // console.log("predict 재귀를 타는가?");
+      requestAnimationFrame(predict);
+      return;
+    }
+
+    const nowInMs = Date.now();
+    if (video.currentTime) {
+      lastVideoTime = video.currentTime;
+      const result = faceLandmarker.detectForVideo(video, nowInMs);
+
+      if (result.faceLandmarks && result.faceLandmarks.length > 0) {
+        const matrix = result.facialTransformationMatrixes[0];
+        rotation = new Euler().setFromRotationMatrix(
+          new Matrix4().fromArray(matrix.data)
+        );
+
+        const landmarks = result.faceLandmarks[0];
+        const centerX = landmarks[1].x;
+        const centerY = landmarks[1].y;
+
+        position.set((centerX - 0.5) * 2, -(centerY - 0.5) * 2, -1);
+
+        const leftEye = landmarks[2];
+        const rightEye = landmarks[5];
+        if (leftEye && rightEye) {
+          const dx = rightEye.x - leftEye.x;
+          const dy = rightEye.y - leftEye.y;
+          faceWidth = (Math.sqrt(dx * dx + dy * dy) * 100) / 4;
+        }
+
+        drawLandmarks(landmarks);
+      }
+    }
+
+    requestAnimationFrame(predict);
+  };
+  // mediapipe가 매 영상 프레임마다 얼굴에서 코 위치 추출하는 로직
+  const drawLandmarks = (landmarks) => {
+    const canvas = outputCanvasRef.current;
+    if (canvas) {
+      const context = canvas.getContext("2d");
+      if (context) {
+        const noseTipIndex = 1;
+        if (landmarks[noseTipIndex]) {
+          const noseTip = landmarks[noseTipIndex];
+          noseX = noseTip.x * canvas.width;
+          noseY = noseTip.y * canvas.height;
+        }
+      }
+    } else {
+      console.log("input canvas가 존재하지 않음");
+    }
+  };
+
+  const setup = async () => {
+    const vision = await FilesetResolver.forVisionTasks(
+      "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+    );
+    faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
+      baseOptions: {
+        modelAssetPath: `https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task`,
+        delegate: "GPU",
+      },
+      outputFaceBlendshapes: true,
+      outputFacialTransformationMatrixes: true,
+      runningMode: "VIDEO",
+    });
+    console.log("mediapipe 로드 완료");
+
+    video = videoRef.current; // useRef를 통해 비디오 요소 참조
+
+    if (!video) {
+      console.error("Video element not found.");
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { width: 640, height: 480 },
+      });
+      video.srcObject = stream;
+      video.addEventListener("loadeddata", () => {
+        predict();
+        drawComposite();
+      });
+    } catch (err) {
+      console.error("Error accessing media devices.", err);
+    }
+  };
+
+  const drawComposite = () => {
+    const video = videoRef.current;
+    const outputCanvas = outputCanvasRef.current;
+
+    if (video && outputCanvas) {
+      const ctx = outputCanvas.getContext("2d");
+
+      // 주기적으로 비디오와 캔버스의 내용을 합성하여 출력 캔버스에 그리기
+      const draw = () => {
+        ctx.clearRect(0, 0, videoWidth, videoHeight);
+        ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
+        ctx.drawImage(gl.domElement, 0, 0, videoWidth, videoHeight);
+
+        requestAnimationFrame(draw);
+      };
+      draw();
+    }
+  };
+
+  useEffect(() => {
+    if (gl) {
+      drawComposite();
+    }
+  }, [gl]);
+  // =============================================
   const handleOpenModal = () => {
     setIsModalOpen(true);
     console.log("클릭됨");
@@ -165,34 +414,7 @@ const MiddleDiv = () => {
 
   // =====================================================================================================
 
-  // useEffect(() => {
-  //   redIds.forEach((id) => changeBackgroundColor(id, "salmon"));
-  // }, [redIds]);
-
-  // useEffect(() => {
-  //   blueIds.forEach((id) => changeBackgroundColor(id, "cornflowerblue"));
-  // }, [blueIds]);
-
-  // const handleChangeToRed = (ids) => {
-  //   setRedIds(ids);
-  //   setBlueIds((prevBlueIds) => prevBlueIds.filter((id) => !ids.includes(id)));
-  // };
-
-  // const handleChangeToBlue = (ids) => {
-  //   setBlueIds(ids);
-  //   setRedIds((prevRedIds) => prevRedIds.filter((id) => !ids.includes(id)));
-  // };
-
-  // useEffect(() => {
-  //   if (mainStreamManager) {
-  //     setTimeout(() => {
-  //       setRedIds(["con_RLqj1dwCk1"]);
-  //     }, 3000);
-  //   }
-  // }, [mainStreamManager]);
-
   // 모션인식 관련 내용
-  const videoRef = useRef(null);
   useEffect(() => {
     if (publisher && videoRef.current) {
       publisher.addVideoElement(videoRef.current);
@@ -224,56 +446,6 @@ const MiddleDiv = () => {
     startPredictionFlag,
     setStartPredictionFlag,
   } = useGameStore();
-
-  // const determineResult = (predictions) => {
-  //   if (predictions.length > 0) {
-  //     const highestPrediction = predictions.reduce((prev, current) =>
-  //       prev.probability > current.probability ? prev : current
-  //     );
-  //     const highestClass = highestPrediction.className;
-  //     const highestProb = highestPrediction.probability;
-
-  //     if (highestProb >= THRESHOLD) {
-  //       if (highestClass === "O") {
-  //         return "O";
-  //       } else if (highestClass === "X") {
-  //         return "X";
-  //       }
-  //     }
-  //   }
-  //   return "Neutral"; // 임계값에 도달하지 않으면 중립 결과 반환
-  // };
-
-  // const predictionTimeoutRef = useRef(null); // Ref to store the timeout ID
-  // const startPrediction = () => {
-  //   let lastResult = "Neutral";
-
-  //   const loop = async () => {
-  //     if (model && videoRef.current) {
-  //       const predictions = await model.predict(videoRef.current);
-  //       lastResult = determineResult(predictions);
-  //       console.log("Current Result: ", lastResult);
-  //     }
-  //     predictionTimeoutRef.current = requestAnimationFrame(loop);
-  //   };
-
-  //   // Start the prediction loop
-  //   loop();
-
-  //   // Stop the prediction loop after 5 seconds
-  //   setTimeout(() => {
-  //     console.log("[*] 타이머가 시작되긴 함");
-  //     console.log("[*] 루프를 멈추라고 하긴 함");
-  //     console.log("[*] 결과를 저장하라고 하긴 함");
-  //     setFinalResult(lastResult); // Store the final result
-  //     console.log("[*] 여기서 모션인식 결과를 보내줘야 함,");
-  //     // 모션 인식 결과를 여기서 보내줘야 함
-  //     console.log("[*] 여기서 모션인식 시작 flag를 false로 바꿔줌");
-  //     setStartPredictionFlag(false); // Reset the flag
-  //     cancelAnimationFrame(predictionTimeoutRef.current); // Cancel the loop
-  //   }, 5000);
-
-  // };
 
   const determineResult = (predictions) => {
     if (predictions.length > 0) {
@@ -339,136 +511,76 @@ const MiddleDiv = () => {
   }, [startPredictionFlag]);
 
   return (
-    <div id="middleDiv" className="flex justify-center h-[68vh] w-[95%] m-3">
-      <div className="bg-[rgba(255,255,255,0.9)] w-[80%] min-w-[550px] h-full mr-5 rounded-[20px] ">
-        <div className="flex flex-col justify-center items-center h-full w-full">
-          <div
-            className={`w-full h-[90%] grid place-items-center ${getGridColsClass()}`}
-          >
-            {publisher ? (
-              <div
-                id={publisher.stream.connection.connectionId}
-                className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
-              >
-                <div className="w-full relative rounded-[15px]">
-                  {publisher ? (
-                    <video
-                      autoPlay={true}
-                      // ref={(video) => video && publisher.addVideoElement(video)}
-                      ref={videoRef}
-                      className="object-cover rounded-[15px]"
-                    />
-                  ) : (
-                    "비디오가 준비 중입니다."
-                  )}
-                  <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
-                    <span className="flex ">
-                      <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                        {
-                          connectionInfo[
-                            publisher.stream.connection.connectionId
-                          ].memberName
-                        }
-                      </span>
-                      <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                        <img
-                          src={getMicIcon(publisher.stream.audioActive)}
-                          alt="mic icon"
-                          className="w-[12px] h-[18px]"
-                        />
-                      </span>
-                    </span>
-                    <span
-                      className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
-                        data.ready ? null : "hidden"
-                      }`}
-                    >
-                      준비완료
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ) : null}
+    <div>
+      <button
+        className="text-xl bg-blue-500 text-white px-4 py-2 rounded-sm"
+        onClick={() => handleChangeMask("/Mask/fox/fox.glb")}
+      >
+        여우가면
+      </button>
+      <button
+        className="text-xl bg-blue-500 text-white px-4 py-2 rounded-sm"
+        onClick={() => handleChangeMask("")}
+      >
+        벗기기
+      </button>
+      <div className="video-wrapper" style={{ position: "relative" }}>
+        {/* 웹캠 영상을 보여주는 비디오 요소 */}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          style={{ width: "100%", zIndex: 1 }}
+          id="local-video-undefined"
+        />
 
-            {/* 여러명 있을 때 */}
-            {subscribers.length > 0 ? (
-              // 구독자 비디오 표현
-              <>
-                {/* 구독자 비디오 배경 */}
-                {/* 구독자 비디오 돌리기 */}
-                {subscribers.map((sub) => {
-                  const connectionId = sub.stream?.connection?.connectionId;
-                  if (!connectionId) {
-                    console.warn(`No connectionId found for subscriber:`, sub);
-                    return null;
-                  }
+        {/* AR 처리를 위한 캔버스 */}
+        <canvas
+          ref={outputCanvasRef}
+          width={videoWidth}
+          height={videoHeight}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
+            zIndex: 2,
+            display: "none",
+            border: "10px solid",
+          }}
+        />
 
-                  return (
-                    <div
-                      key={connectionId}
-                      id={connectionId}
-                      className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
-                    >
-                      <div className="w-full relative rounded-[15px]">
-                        <div id="subscriber">
-                          <video
-                            autoPlay={true}
-                            ref={(video) => video && sub.addVideoElement(video)}
-                            className="object-cover rounded-[15px]"
-                          />
-                        </div>
-
-                        <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
-                          <span className="flex ">
-                            <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                              {/* 이름 */}
-                              {
-                                connectionInfo[
-                                  sub.stream.connection.connectionId
-                                ].memberName
-                              }
-                            </span>
-                            <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                              {/* 마이크 상태 */}
-                              <img
-                                src={getMicIcon(sub.stream.audioActive)}
-                                alt="mic icon"
-                                className="w-[12px] h-[18px]"
-                              />
-                            </span>
-                          </span>
-                          <span
-                            className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
-                              data.ready ? null : "hidden"
-                            }`}
-                          >
-                            {/* 준비완료 */}
-                            준비완료
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </>
-            ) : null}
-          </div>
-          <div className="flex justify-between h-[10%] mb-2">
-            <span className="mr-20">
-              <MicBtn />
-            </span>
-            <span className="relative">
-              <EmojiBtn onClick={handleOpenModal} />
-              {isModalOpen && (
-                <div className="absolute top-0 left-full ml-4">
-                  <SelectEmoji handleCloseModal={handleCloseModal} />
-                </div>
-              )}
-            </span>
-          </div>
-        </div>
+        {/* Three.js를 사용한 AR 모델 렌더링 */}
+        <Canvas
+          onCreated={({ gl }) => {
+            setGL(gl); // GL 컨텍스트 설정
+          }}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
+            zIndex: 3, // Three.js 캔버스가 가장 위에 렌더링되도록 설정
+          }}
+        >
+          <ambientLight intensity={0.5} />
+          <pointLight position={[1, 1, 1]} />
+          <pointLight position={[-1, 0, 1]} />
+          {isgltfUrl && <Model url={gltfUrl} targetSize={targetSize} />}
+        </Canvas>
       </div>
-
+      {subscribers.map((sub, index) => (
+        <div key={index} className="video-wrapper">
+          <video
+            autoPlay={true}
+            ref={(video) => video && sub.addVideoElement(video)}
+          />
+        </div>
+      ))}
       {/* Chatbox */}
       <div className="h-full rounded-[20px] flex flex-col justify-center items-center overflow-hidden min-w-[230px]">
         <Chatbox />

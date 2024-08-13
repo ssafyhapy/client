@@ -1,5 +1,5 @@
 // useOpenViduSession.js
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { OpenVidu } from "openvidu-browser";
 import useRoomStore from "../store/useRoomStore";
 import useGameStore from "../store/useGameStore";
@@ -21,6 +21,9 @@ const useOpenViduSession = () => {
     setConnectionInfo,
   } = useGameStore();
 
+  const canvasRef = useRef(null);
+  const videoRef = useRef(null); // 비디오 요소에 대한 ref 추가
+  const outputCanvasRef = useRef(null); // 최종 출력 캔버스
   // 1. session을 연결하고(session.connect)
   // 2. 켜졌을 때 할 액션들을 조건을 설정할 수 있음 (session.on)
   // 3. session에 로컬 스트림을 공유하기 위해 publish할 수 있음(session.publish)
@@ -41,8 +44,8 @@ const useOpenViduSession = () => {
         // session에 연결하여 현재 사용자를 session에 구독시키고 비디오를 생성한다.
         const newSubscriber = session.subscribe(event.stream, undefined);
         console.log("[*] Subscriber created", newSubscriber);
-        setSubscriber(newSubscriber)
-        
+        setSubscriber(newSubscriber);
+
         newSubscriber.on("videoElementCreated", (event) => {
           console.log("[*]Video Element Created", event.element);
         });
@@ -75,27 +78,37 @@ const useOpenViduSession = () => {
         // 세션 연결 시도
         await session.connect(webrtc.openviduToken);
         console.log("Session connected successfully");
+        console.log(session);
+        // 비디오 캡처 후 퍼블리싱
+        if (videoRef.current) {
+          console.log(videoRef.current);
 
-        // 로컬 스트림 생성
-        const newpublisher = await OV.initPublisher(undefined, {
-          audioSource: undefined,
-          videoSource: undefined,
-          publishAudio: true,
-          publishVideo: true,
-          resolution: "640x480",
-          frameRate: 30,
-          insertMode: "APPEND",
-          mirror: false,
-        });
+          // 합성된 캔버스 스트림 캡처 후 퍼블리싱
+          const stream = outputCanvasRef.current.captureStream();
+          console.log(stream);
 
-        // 로컬 스트림 공개
-        await session.publish(newpublisher);
-        console.log("Publisher created and published successfully");
+          const videoTrack = stream.getVideoTracks()[0];
+          console.log(videoTrack);
 
-        // Session, MainStreamManager, Publisher, Subscriber를 업데이트함
-        setSession(session);
-        setMainStreamManager(newpublisher);
-        setPublisher(newpublisher);
+          const publisher = OV.initPublisher(undefined, {
+            audioSource: undefined,
+            videoSource: videoTrack,
+            publishAudio: true,
+            publishVideo: true,
+            resolution: "640x480",
+            frameRate: 30,
+            insertMode: "APPEND",
+            mirror: false,
+          });
+
+          session.publish(publisher);
+
+          setSession(session);
+          setMainStreamManager(publisher);
+          setPublisher(publisher);
+
+          console.log("OpenVidu session published.");
+        }
       } catch (error) {
         console.error("There was an error connecting to the session:", error);
       }
@@ -106,7 +119,7 @@ const useOpenViduSession = () => {
     return () => {
       if (session) session.disconnect();
     };
-  }, []);
+  }, [videoRef.current, outputCanvasRef.current]);
 
   useEffect(() => {
     console.log("[*] 전체 connectionInfo", connectionInfo);
@@ -114,12 +127,15 @@ const useOpenViduSession = () => {
 
     console.log("[*] mainStream", mainStreamManager);
     console.log("[*] newSubscriber", subscriber);
-    
+
     console.log("[*] subscribers", subscribers);
     console.log("[*] 배포됨 1");
+
+    console.log("이건 어때요");
+    console.log(videoRef.current);
   }, [subscribers, connectionInfo, publisher, mainStreamManager, subscriber]);
 
-  return { session };
+  return { session, videoRef, outputCanvasRef };
 };
 
 export default useOpenViduSession;
