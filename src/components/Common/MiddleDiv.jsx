@@ -137,42 +137,42 @@ const MiddleDiv = () => {
   // ================================================================================================
 
   // 밸런스 게임! FIRST 고른 사람들에게 파란 배경색 부여
-  useEffect(() => {
-    if (
-      Array.isArray(guessMeGamePeopleSelection) &&
-      guessMeGamePeopleSelection.length > 0 &&
-      connectionInfo // connectionInfo가 유효한지 확인
-    ) {
-      // 필요한 작업 수행
-      guessMeGamePeopleSelection.forEach((info) => {
-        const connectionId = Object.keys(connectionInfo).find(
-          (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
-        );
+  // useEffect(() => {
+  //   if (
+  //     Array.isArray(guessMeGamePeopleSelection) &&
+  //     guessMeGamePeopleSelection.length > 0 &&
+  //     connectionInfo // connectionInfo가 유효한지 확인
+  //   ) {
+  //     // 필요한 작업 수행
+  //     guessMeGamePeopleSelection.forEach((info) => {
+  //       const connectionId = Object.keys(connectionInfo).find(
+  //         (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+  //       );
   
-        if (connectionId) {
-          let color = null;
-          if (info.selection === "O") {
-            color = "cornflowerblue";
-          } else if (info.selection === "X") {
-            color = "salmon";
-          }
-          changeBackgroundColor(connectionId, color);
-        }
-      });
+  //       if (connectionId) {
+  //         let color = null;
+  //         if (info.selection === "O") {
+  //           color = "cornflowerblue";
+  //         } else if (info.selection === "X") {
+  //           color = "salmon";
+  //         }
+  //         changeBackgroundColor(connectionId, color);
+  //       }
+  //     });
   
-      // 작업이 끝난 후 상태를 리셋
-      resetGuessMePeopleSelection([]);
-    } else if (
-      Array.isArray(guessMeGamePeopleSelection) &&
-      guessMeGamePeopleSelection.length === 0 &&
-      connectionInfo // connectionInfo가 유효한지 확인
-    ) {
-      // 모든 연결 ID의 배경색을 초기화
-      Object.keys(connectionInfo).forEach((key) => {
-        changeBackgroundColor(key, ""); // 빈 문자열을 전달하여 배경색을 초기화
-      });
-    }
-  }, [guessMeGamePeopleSelection, connectionInfo]);
+  //     // 작업이 끝난 후 상태를 리셋
+  //     resetGuessMePeopleSelection([]);
+  //   } else if (
+  //     Array.isArray(guessMeGamePeopleSelection) &&
+  //     guessMeGamePeopleSelection.length === 0 &&
+  //     connectionInfo // connectionInfo가 유효한지 확인
+  //   ) {
+  //     // 모든 연결 ID의 배경색을 초기화
+  //     Object.keys(connectionInfo).forEach((key) => {
+  //       changeBackgroundColor(key, ""); // 빈 문자열을 전달하여 배경색을 초기화
+  //     });
+  //   }
+  // }, [guessMeGamePeopleSelection, connectionInfo]);
   
   // useEffect(() => {
   //   if (
