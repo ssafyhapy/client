@@ -293,10 +293,10 @@ let cnt = 0
   }, [finalResults]);
 
   useEffect(() => {
-    if (startPrediction) {
+    if (startPredictionFlag) {
       startPrediction();
     }
-  }, [startPredictionFlag, startPrediction]);
+  }, [startPredictionFlag]);
 
   return (
     <div id="middleDiv" className="flex justify-center h-[68vh] w-[95%] m-3">
