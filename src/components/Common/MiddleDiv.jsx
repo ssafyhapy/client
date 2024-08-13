@@ -225,6 +225,38 @@ const MiddleDiv = () => {
     setStartPredictionFlag,
   } = useGameStore();
 
+  // 나를 맞춰봐 게임! O 고른 사람들에게 파란 배경색 부여
+  const { guessMeGamePeopleSelection, setGuessMeGamePeopleSelection } = usePresenterStore();
+
+  useEffect(() => {
+    // 빈배열인지 아닌지부터 먼저 검사
+    if (
+      Array.isArray(guessMeGamePeopleSelection) &&
+      guessMeGamePeopleSelection.length > 0
+    ) {
+      guessMeGamePeopleSelection.forEach((info) => {
+        const connectionId = Object.keys(connectionInfo).find(
+          (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+        );
+
+        if (connectionId) {
+          let color = null
+          if (info.selection === "O") {
+            color = "cornflowerblue"
+          }
+          else if (info.selection === "X"){
+            color = "salmon"
+          }
+          changeBackgroundColor(connectionId, color);
+        }
+      });
+    }
+
+    return () => {
+      setGuessMeGamePeopleSelection([]);
+    };
+  }, [guessMeGamePeopleSelection, connectionInfo]);
+
   // const determineResult = (predictions) => {
   //   if (predictions.length > 0) {
   //     const highestPrediction = predictions.reduce((prev, current) =>
