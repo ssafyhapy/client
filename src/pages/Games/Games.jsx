@@ -26,37 +26,29 @@ const Games = () => {
   return (
     <WebSocketProvider>
       <GameBackground>
-        {/* TopDiv */}
-        {gameStep !== "camera-check" &&
-        gameStep !== "photo-first" &&
-        gameStep !== "photo-last" ? (
-          <TopDiv gameStep={gameStep} setGameStep={setGameStep}></TopDiv>
-        ) : null}
-
-        {/* MiddleDiv */}
-        {gameStep !== "camera-check" &&
-        gameStep !== "photo-first" &&
-        gameStep !== "photo-last" ? (
-          <MiddleDiv></MiddleDiv>
-        ) : null}
-
-        {/* 자체 UI */}
-        {gameStep === "camera-check" && <CamCheck />}
-        {gameStep === "photo-first" && <PhotographFirst />}
-        {gameStep === "photo-last" && <PhotographLast />}
-
-        {/* BottomDiv - 게임 로직 */}
-        {gameStep !== "camera-check" &&
-        gameStep !== "photo-first" &&
-        gameStep !== "photo-last" ? (
-          <BottomDiv>
-            {gameStep === "waiting-room" && <WaitingRoom />}
-            {gameStep === "self-introduction" && <SelfIntroduction />}
-            {gameStep === "guess-me" && <GuessMe />}
-            {gameStep === "balance-game" && <BalanceGame />}
-            {gameStep === "wrap-up" && <WrapUp />}
-          </BottomDiv>
-        ) : null}
+        <div className="flex flex-col h-[100vh] justify-between">
+          {gameStep !== "camera-check" &&
+          gameStep !== "photo-first" &&
+          gameStep !== "photo-last" ? (
+            <>
+              <TopDiv gameStep={gameStep} setGameStep={setGameStep} />
+              <MiddleDiv />
+              <BottomDiv>
+                {gameStep === "waiting-room" && <WaitingRoom />}
+                {gameStep === "self-introduction" && <SelfIntroduction />}
+                {gameStep === "guess-me" && <GuessMe />}
+                {gameStep === "balance-game" && <BalanceGame />}
+                {gameStep === "wrap-up" && <WrapUp />}
+              </BottomDiv>
+            </>
+          ) : (
+            <>
+              {gameStep === "camera-check" && <CamCheck />}
+              {gameStep === "photo-first" && <PhotographFirst />}
+              {gameStep === "photo-last" && <PhotographLast />}
+            </>
+          )}
+        </div>
       </GameBackground>
     </WebSocketProvider>
   );
