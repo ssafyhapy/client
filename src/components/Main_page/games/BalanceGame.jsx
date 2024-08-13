@@ -9,11 +9,13 @@ const BalanceGame = () => {
           참 많은 일에 결정이 갈리곤 하죠.
         </p>
         <p className="text-black">
-          <span className="opacity-50">저희 밸런스 게임은</span> <span className="text-[#4D98F7]">모임과 관련된 주제 혹은</span>
+          <span className="opacity-50">저희 밸런스 게임은</span>{" "}
+          <span className="text-[#4D98F7]">모임과 관련된 주제 혹은</span>
         </p>
-        
+
         <p className="text-black">
-          <span className="text-[#4D98F7]">재미있는 주제</span><span className="opacity-50">를 주기도 할 거예요!</span>
+          <span className="text-[#4D98F7]">재미있는 주제</span>
+          <span className="opacity-50">를 주기도 할 거예요!</span>
         </p>
         <p className="text-[#4D98F7]">
           랜덤으로 제공되는 밸런스 게임의 주제를 통해

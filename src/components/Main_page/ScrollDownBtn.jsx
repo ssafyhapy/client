@@ -1,28 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const ScrollDownBtn = ({text, color="#4D98F7"}) => {
-  const scrollDown = (e) => {
+const ScrollDownBtn = ({ text, color = "#4D98F7", onNextSection }) => {
+  const handleClick = (e) => {
     e.stopPropagation();
-    const sections = document.querySelectorAll(".snap-start");
-    const currentSection = Array.from(sections).find((section) => {
-      const rect = section.getBoundingClientRect();
-      return rect.top <= 5 && rect.bottom > 5;
-    });
-
-    if (currentSection) {
-      const nextSection = currentSection.nextElementSibling;
-      if (nextSection) {
-        nextSection.scrollIntoView({ behavior: "smooth" });
-      }
-    }
+    onNextSection();
   };
+
   return (
     <motion.div
-      onClick={scrollDown}
+      onClick={handleClick}
       className={`flex flex-col items-center cursor-pointer text-[${color}]`}
-      animate={{ y: [0, 10, 0] }}
-      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
     >
       <motion.p
         className="text-2xl"
