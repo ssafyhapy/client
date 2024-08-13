@@ -152,31 +152,6 @@ const MiddleDiv = () => {
     });
   }, [balanceGamePeopleChoiceInfo, connectionInfo]);
 
-  // useEffect(() => {
-  //   // console.log("blueMembers : ",blueMembers)
-  //   blueMembers.forEach((memberId) => {
-  //     const connectionId = Object.keys(connectionInfo).find(
-  //       (key) => parseInt(connectionInfo[key].memberId, 10) === memberId
-  //     )
-  //     if (connectionId) {
-  //       changeBackgroundColor(connectionId, "cornflowerblue")
-  //     }
-  //   })
-  // }, [blueMembers, connectionInfo])
-
-  // // 밸런스 게임! SECOND 고른 사람들에게 빨간 배경색 부여
-  // useEffect(() => {
-  //   // console.log("redMembers : ", redMembers)
-  //   redMembers.forEach((memberId) => {
-  //     const connectionId = Object.keys(connectionInfo).find(
-  //       (key) => parseInt(connectionInfo[key].memberId, 10) === memberId
-  //     )
-  //     if (connectionId) {
-  //       changeBackgroundColor(connectionId, "salmon")
-  //     }
-  //   })
-  // }, [redMembers, connectionInfo])
-
   // =====================================================================================================
 
   // useEffect(() => {
