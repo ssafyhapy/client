@@ -7,7 +7,7 @@ const Header = ({ isEditMode, handleEditMode, onSubmit }) => {
     <div className="flex justify-between w-full mb-2">
       <div className="w-[33%]"></div>
       <div className="w-[33%">
-        <h1 className="text-4xl">My Page</h1>
+        <h1 className="text-4xl text-[#9400d3b0]">My Page</h1>
       </div>
       <div className="flex justify-end items-center gap-5 w-[33%]">
         {isEditMode ? (
