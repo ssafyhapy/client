@@ -40,40 +40,6 @@ const BalanceChoosing = ({
   // date() 사용해서 10초 타이머 컨트롤하기...
   const [startTime, setStartTime] = useState(null);
 
-  useEffect(() => {
-    // 밸런스 게임 사람들이 고른 선택지 받음
-    webSocketService.subscribeToBalancePersonChoice(roomId, (message) => {
-      console.log("What the member chose: ", message);
-
-      // Extract the relevant information
-      const personInfo = {
-        memberId: message.memberId,
-        choice: message.balanceResultSelectedOption,
-      };
-
-      // Update the store with the new choice information
-      setBalanceGamePeopleChoiceInfo((prev) => {
-        const existing = prev.find(
-          (info) => info.memberId === personInfo.memberId
-        );
-        if (existing) {
-          return prev.map((info) =>
-            info.memberId === personInfo.memberId
-              ? { ...info, choice: personInfo.choice }
-              : info
-          );
-        } else {
-          return [...prev, personInfo];
-        }
-      });
-    });
-
-    return () => {
-      webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`);
-      resetBalanceGamePeopleChoiceInfo()
-    };
-  });
-
   // 이제 시간 date.now()로 실제 시간가지고 10초 카운트다운 관리함!!!
   useEffect(() => {
     if (currentStep && !startTime) {
