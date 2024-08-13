@@ -25,6 +25,7 @@ const ExitBtn = ({session}) => {
   const { roomId } = useRoomStore();
   const navigate = useNavigate();
   const exitToMain = async () => {
+    navigate("/");
     if (session) {
       session.disconnect();
       console.log("Session disconnected successfully");
@@ -33,7 +34,6 @@ const ExitBtn = ({session}) => {
       console.log("방 나가기 완료");
       console.log(response.data);
     }
-    navigate("/");
   };
 
   return (
