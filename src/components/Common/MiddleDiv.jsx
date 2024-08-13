@@ -10,6 +10,7 @@ import SelectEmoji from "./SelectEmoji";
 
 import usePresenterStore from "../../store/usePresenterStore";
 import webSocketService from "../../WebSocketService";
+import useRoomStore from "../../store/useRoomStore";
 
 const MiddleDiv = () => {
   const gameStep = useGameStore((state) => state.gameStep);
@@ -25,7 +26,8 @@ const MiddleDiv = () => {
     connectionInfo,
   } = useGameStore();
 
-  const { memberName, roomId, memberId } = useAuthStore();
+  const { memberName, memberId } = useAuthStore();
+  const { roomId } = useRoomStore();
 
   const handleOpenModal = () => {
     setIsModalOpen(true);

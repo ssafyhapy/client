@@ -427,10 +427,16 @@ const GuessMe = () => {
         setShowReadyMessage(true);
         setSecondsLeft(10);
         setShowResult(false);
-        // 이때 모션인식 시작
-        setStartPredictionFlag(true);
-        // 타이머 시작
-        startTimer();
+        // // 이때 모션인식 시작
+        // setStartPredictionFlag(true);
+        // // 타이머 시작
+        // startTimer();
+        setTimeout(() => {
+          console.log("[*] 모션 인식 시작");
+          setStartPredictionFlag(true);
+          // 타이머 시작
+          startTimer();
+        }, 1000); // 1000ms = 1초
       }
       // 받은게 memberId, nextIndex 면
       // 현재인덱스 받아온 인덱스로 설정, 10초 남은걸로 다시 설정
