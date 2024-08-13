@@ -40,6 +40,7 @@ const BalanceChoosing = ({
 
   // =================================================================================
 
+  // 타이머 시작하기 전에 0.5초 딜레이
   // useEffect(() => {
   //   if (currentStep) {
   //     // Clear any existing timer to prevent overlapping timers

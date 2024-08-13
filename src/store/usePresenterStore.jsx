@@ -8,6 +8,7 @@ const usePresenterStore = create((set) => ({
   setBalanceGamePeopleChoiceInfo: (updateFn) => set((state) => ({
     balanceGamePeopleChoiceInfo: updateFn(state.balanceGamePeopleChoiceInfo),
   })),
+  resetBalanceGamePeopleChoiceInfo: () => set({ balanceGamePeopleChoiceInfo: [] }), 
 
   blueMembers: [],
   redMembers: [],

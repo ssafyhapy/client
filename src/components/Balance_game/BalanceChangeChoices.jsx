@@ -9,6 +9,8 @@ import GameTurns from "../../components/Common/GameTurns";
 // import refresh from "./../../assets/Balance_game/refresh.png"
 import webSocketService from "../../WebSocketService";
 
+import usePresenterStore from "../../store/usePresenterStore";
+
 const BalanceChangeChoices = ({
   memberId,
   hostId,
@@ -29,6 +31,8 @@ const BalanceChangeChoices = ({
   const [First, setOptionFirst] = useState("");
   const [Second, setOptionSecond] = useState("");
 
+  const {resetBalanceGamePeopleChoiceInfo} = usePresenterStore()
+
   useEffect(() => {
     // 주제1, 2 받아온 데이터로 바꾸자
     setOptionFirst(optionFirst);
@@ -39,6 +43,7 @@ const BalanceChangeChoices = ({
     // 주제변경 버튼 누르면 다시 pub해줌
     webSocketService.sendBalancePurpose(roomId, purpose);
     setPickedChoice(null);
+    resetBalanceGamePeopleChoiceInfo()
     // setBalanceChoices({first:, second:})
   };
 
