@@ -86,7 +86,7 @@ const Balance = () => {
       console.log("Received message:", message);
 
       if (message.memberState === "wrapup") {
-        resetBalanceGamePeopleChoiceInfo();
+        resetBalanceGamePeopleChoiceInfo([]);
         setGameStep("wrap-up");
       }
     });

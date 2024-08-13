@@ -9,6 +9,7 @@ import EmojiBtn from "../Buttons/EmojiBtn";
 import SelectEmoji from "./SelectEmoji";
 
 import usePresenterStore from "../../store/usePresenterStore";
+import webSocketService from "../../WebSocketService";
 
 const MiddleDiv = () => {
   const gameStep = useGameStore((state) => state.gameStep);
@@ -24,7 +25,7 @@ const MiddleDiv = () => {
     connectionInfo,
   } = useGameStore();
 
-  const { memberName } = useAuthStore();
+  const { memberName, roomId, memberId } = useAuthStore();
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -311,6 +312,7 @@ const MiddleDiv = () => {
 
   const predictionTimeoutRef = useRef(null); // Ref to store the timeout ID
 
+
   const startPrediction = () => {
     let lastResult = "Neutral";
     let startTime = Date.now();
@@ -327,7 +329,12 @@ const MiddleDiv = () => {
         predictionTimeoutRef.current = requestAnimationFrame(loop);
       } else {
         console.log("[*] 5초 경과, 루프를 멈추고 결과를 저장");
-        setFinalResult(lastResult); // 최종 결과 저장
+        await setFinalResult(lastResult); // 최종 결과 저장
+        // 최종 결과가 정해지면 pub해서 결과를 넘겨주기
+        if (finalResult) {
+          webSocketService.sendGuessMeSelection(roomId, memberId, finalResult )
+        }
+
         setStartPredictionFlag(false); // 모션 인식 중지
         cancelAnimationFrame(predictionTimeoutRef.current); // 루프 중지
       }

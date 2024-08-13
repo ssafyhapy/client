@@ -428,7 +428,7 @@ const GuessMe = () => {
         setSecondsLeft(10);
         setShowResult(false);
         // 이때 모션인식 시작
-        setStartPredictionFlag(true)
+        setStartPredictionFlag(true);
         // 타이머 시작
         startTimer();
       }
@@ -440,7 +440,7 @@ const GuessMe = () => {
         setShowResult(false);
         // 이때 모션 인식 시작
         console.log("[*] 모션 인식 시작");
-        setStartPredictionFlag(true)
+        setStartPredictionFlag(true);
         console.log("[*] 타이머 시작");
         startTimer(); // Start the timer for the next question
       }
@@ -505,24 +505,51 @@ const GuessMe = () => {
   }, [showReadyMessage]);
 
   // 타이머 10초 시작
+  // const startTimer = () => {
+  //   // 타이머 도는거 있으면 리셋
+  //   if (timer) clearInterval(timer);
+  //   // 타이머 10초 시작
+  //   const newTimer = setInterval(() => {
+  //     setSecondsLeft((prev) => {
+  //       if (prev > 1) {
+  //         return prev - 1;
+  //       } else {
+  //         clearInterval(newTimer);
+  //         // 10초 지났으면 정답 공개!
+  //         setShowResult(true);
+  //         // 정답 공개할 때 모션 인식 시작 플래그 false로 바꿈
+  //         return 0;
+  //       }
+  //     });
+  //   }, 500);
+  //   setTimer(newTimer);
+  // };
+
   const startTimer = () => {
-    // 타이머 도는거 있으면 리셋
+    const startTime = Date.now(); // 타이머 시작 시간 기록
+    const targetTime = startTime + 5000; // 목표 시간 5초 후
+
+    // 기존 타이머가 있다면 제거
     if (timer) clearInterval(timer);
-    // 타이머 10초 시작
+
     const newTimer = setInterval(() => {
-      setSecondsLeft((prev) => {
-        if (prev > 1) {
-          return prev - 1;
-        } else {
-          clearInterval(newTimer);
-          // 10초 지났으면 정답 공개!
-          setShowResult(true);
-          // 정답 공개할 때 모션 인식 시작 플래그 false로 바꿈
-          return 0;
-        }
-      });
-    }, 500);
-    setTimer(newTimer);
+      const currentTime = Date.now(); // 현재 시간
+      const timeLeft = Math.max(
+        0,
+        Math.ceil((targetTime - currentTime) / 1000)
+      ); // 남은 시간 계산
+
+      setSecondsLeft(timeLeft); // 남은 시간 업데이트
+
+      if (currentTime >= targetTime) {
+        // 목표 시간에 도달하면 타이머 종료
+        clearInterval(newTimer);
+        setShowResult(true); // 10초 경과 시 결과를 보여줌
+        setStartPredictionFlag(false); // 모션 인식 플래그 false로 설정
+      }
+    }, 100); // 짧은 간격으로 타이머를 갱신
+
+    setTimer(newTimer); // 타이머 상태를 업데이트
   };
 
   // 다음 버튼과  연결된 함수
@@ -536,6 +563,46 @@ const GuessMe = () => {
     setShowResult(false);
     // startTimer()
   };
+
+  const { setGuessMeGamePeopleSelection, guessMeGamePeopleSelection } =
+    usePresenterStore();
+
+  // 모션인식 결과 구독하기
+  useEffect(() => {
+    webSocketService.subscribeToSelections(roomId, (message) => {
+      console.log("[*] 모션인식 결과", message);
+      // 개인별 결과 저장하기
+      // "/api/sub/ox/{roomId}/selection"
+      // 받아오는 데이터
+      // {
+      //      "memberId" : 1,
+      //      "answer" : "true"
+      // }
+      const personInfo = {
+        memberId: message.memberId,
+        selection: message.answer,
+      };
+
+      setGuessMeGamePeopleSelection((prev) => {
+        const existing = prev.find(
+          (info) => info.memberId === personInfo.memberId
+        );
+        if (existing) {
+          return prev.map((info) =>
+            info.memberId === personInfo.memberId
+              ? { ...info, selection: personInfo.selection }
+              : info
+          );
+        } else {
+          return [...prev, personInfo];
+        }
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log("[*] guessMeGamePeopleSelection", guessMeGamePeopleSelection);
+  }, [guessMeGamePeopleSelection]);
 
   // 타이머 시작하기 전에 약간의 delay
   useEffect(() => {
