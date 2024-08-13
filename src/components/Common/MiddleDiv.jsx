@@ -253,8 +253,8 @@ const MiddleDiv = () => {
     return "Neutral"; // 임계값에 도달하지 않으면 중립 결과 반환
   };
 
+  const predictionTimeoutRef = useRef(null); // Ref to store the timeout ID
   const startPrediction = () => {
-    const predictionTimeoutRef = useRef(null); // Ref to store the timeout ID
     let lastResult = "Neutral";
     
     const loop = async () => {
@@ -296,7 +296,7 @@ let cnt = 0
     if (startPrediction) {
       startPrediction();
     }
-  }, [startPredictionFlag]);
+  }, [startPredictionFlag, startPrediction]);
 
   return (
     <div id="middleDiv" className="flex justify-center h-[68vh] w-[95%] m-3">
