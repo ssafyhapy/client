@@ -5,6 +5,7 @@ import TakePhotoModal from "./../Photo/TakePhotoModal";
 import html2canvas from "html2canvas";
 import useGameStore from "./../../store/useGameStore";
 import useRoomStore from "../../store/useRoomStore";
+import useAuthStore from "../../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../api/apiClient";
 const PhotographFirst = () => {
@@ -13,9 +14,9 @@ const PhotographFirst = () => {
   const pics = Array(6).fill("pic");
   const [showModal, setShowModal] = useState(false);
   const photoRef = useRef(null);
-  const { roomId } = useRoomStore();
+  const { roomId, hostId } = useRoomStore();
   const navigate = useNavigate();
-
+  const { memberId } = useAuthStore();
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
   useEffect(() => {
@@ -29,30 +30,32 @@ const PhotographFirst = () => {
     if (photoRef.current) {
       html2canvas(photoRef.current).then((canvas) => {
         canvas.toBlob(async (blob) => {
-          // Blob을 FormData에 추가
-          const formData = new FormData();
-          formData.append("image", blob, "capture.png");
+          if (memberId === hostId) {
+            // Blob을 FormData에 추가
+            const formData = new FormData();
+            formData.append("image", blob, "capture.png");
 
-          try {
-            // 서버에 이미지 업로드
-            const response = await axiosInstance.post(
-              `/room/${roomId}/memoryBox/before`,
-              formData
-            );
-            console.log("Success:", response.data);
-            // 업로드 후 모달 닫기
-            setShowModal(false);
-
-            // 2초 뒤에 페이지 이동
-            setTimeout(() => {
-              setGameStep("guess-me");
-              // navigate("/guessme-getready");
-            }, 2000);
-          } catch (error) {
-            console.error("Error:", error);
+            try {
+              // 서버에 이미지 업로드
+              const response = await axiosInstance.post(
+                `/room/${roomId}/memoryBox/before`,
+                formData
+              );
+              console.log("Success:", response.data);
+            } catch (error) {
+              console.error("Error:", error);
+            }
           }
         }, "image/png"); // 이미지 포맷 설정
       });
+
+      // 2초 뒤에 페이지 이동
+      setTimeout(() => {
+        // 업로드 후 모달 닫기
+        setShowModal(false);
+        setGameStep("guess-me");
+        // navigate("/guessme-getready");
+      }, 2000);
     }
   };
   const getGridColsClass = () => {
