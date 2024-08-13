@@ -21,10 +21,9 @@ import { useNavigate } from "react-router-dom";
 import useOpenViduSession from "../../hooks/useOpenViduSession";
 import { axiosInstance } from "../../api/apiClient";
 import useRoomStore from "../../store/useRoomStore";
-const ExitBtn = () => {
+const ExitBtn = ({session}) => {
   const { roomId } = useRoomStore();
   const navigate = useNavigate();
-  const { session } = useOpenViduSession();
   const exitToMain = async () => {
     if (session) {
       session.disconnect();

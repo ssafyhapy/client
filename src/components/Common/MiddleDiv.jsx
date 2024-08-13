@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import * as tmImage from "@teachablemachine/image";
+const URL = "https://teachablemachine.withgoogle.com/models/C_QpeZVSr"; // Teachable Machine 모델 URL
 import useGameStore from "../../store/useGameStore";
 import Chatbox from "./Chatbox";
 import useAuthStore from "../../store/useAuthStore";
@@ -76,7 +78,7 @@ const MiddleDiv = () => {
 
   // 한 줄 자기소개 + 나를 맞춰봐!! 발표자 관련 =======================================================================
   // 발표자 백그라운드 노란색으로 하이라이트
-  const { blueMembers, redMembers } = usePresenterStore()
+  const { blueMembers, redMembers } = usePresenterStore();
   const currentPresenterId = usePresenterStore(
     (state) => state.currentPresenterId
   );
@@ -90,7 +92,6 @@ const MiddleDiv = () => {
 
   // 발표자 배경색 노란색으로 바꾸는거
   useEffect(() => {
-
     if (currentPresenterId === null) {
       if (highlightedElementId) {
         changeBackgroundColor(highlightedElementId, "");
@@ -146,7 +147,7 @@ const MiddleDiv = () => {
       }
     });
   }, [balanceGamePeopleChoiceInfo, connectionInfo]);
-  
+
   // useEffect(() => {
   //   // console.log("blueMembers : ",blueMembers)
   //   blueMembers.forEach((memberId) => {
@@ -172,7 +173,7 @@ const MiddleDiv = () => {
   //   })
   // }, [redMembers, connectionInfo])
 
-// =====================================================================================================
+  // =====================================================================================================
 
   // useEffect(() => {
   //   redIds.forEach((id) => changeBackgroundColor(id, "salmon"));
@@ -200,6 +201,96 @@ const MiddleDiv = () => {
   //   }
   // }, [mainStreamManager]);
 
+  // 모션인식 관련 내용
+  const videoRef = useRef(null);
+  useEffect(() => {
+    if (publisher && videoRef.current) {
+      publisher.addVideoElement(videoRef.current);
+    }
+  }, [publisher]);
+
+  const [model, setModel] = useState(null);
+  const [maxPredictions, setMaxPredictions] = useState(0);
+  const [predictionResults, setPredictionResults] = useState([]);
+  const [timerActive, setTimerActive] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(5);
+  const THRESHOLD = 0.75; // 임계치 값
+
+  // 모델 로드
+  useEffect(() => {
+    async function loadModel() {
+      const modelURL = `${URL}/model.json`;
+      const metadataURL = `${URL}/metadata.json`;
+      const loadedModel = await tmImage.load(modelURL, metadataURL);
+      setModel(loadedModel);
+    }
+
+    loadModel();
+  }, []);
+
+  const { finalResults, setFinalResult, startPredictionFlag } = useGameStore();
+
+  const determineResult = (predictions) => {
+    if (predictions.length > 0) {
+      const highestPrediction = predictions.reduce(
+        (prev, current) => (prev.probability > current.probability ? prev : current)
+      );
+      const highestClass = highestPrediction.className;
+      const highestProb = highestPrediction.probability;
+
+      if (highestProb >= THRESHOLD) {
+        if (highestClass === 'O') {
+          return 'O';
+        } else if (highestClass === 'X') {
+          return 'X';
+        }
+      }
+    }
+    return 'Neutral'; // 임계값에 도달하지 않으면 중립 결과 반환
+  };
+
+  const startPrediction = () => {
+    let predictionTimeout;
+    let lastResult = "Neutral";
+
+    const loop = async () => {
+      if (model && videoRef.current) {
+        const predictions = await model.predict(videoRef.current);
+        lastResult = determineResult(predictions);
+        console.log("Current Result: ", lastResult);
+      }
+      predictionTimeout = requestAnimationFrame(loop);
+    };
+
+    // 5초 동안 예측을 수행
+    loop();
+    setTimeout(() => {
+      cancelAnimationFrame(predictionTimeout);
+      console.log("Final Result: ", lastResult);
+      setFinalResult(lastResult); // 최종 결과 저장
+    }, 5000); // 5초 후 종료
+  };
+
+  useEffect(() => {
+
+    if (startPrediction) {
+      startPrediction()
+    }
+  }, [startPredictionFlag]);
+
+  // 비디오에서 예측 수행
+  // useEffect(() => {
+  //   const loop = async () => {
+  //     if (model && videoRef.current) {
+  //       const predictions = await model.predict(videoRef.current);
+  //       console.log("Predictions: ", predictions);
+  //       setPredictionResults(predictions);
+  //     }
+  //     requestAnimationFrame(loop);
+  //   };
+  //   loop();
+  // }, [model]);
+
   return (
     <div id="middleDiv" className="flex justify-center h-[68vh] w-[95%] m-3">
       <div className="bg-[rgba(255,255,255,0.9)] w-[80%] min-w-[550px] h-full mr-5 rounded-[20px] ">
@@ -207,62 +298,6 @@ const MiddleDiv = () => {
           <div
             className={`w-full h-[90%] grid place-items-center ${getGridColsClass()}`}
           >
-            {/* mainStreamManager 비디오 */}
-            {/* {mainStreamManager ? (
-              <div
-                id={mainStreamManager.stream.connection.connectionId}
-                className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
-              >
-                <div className="w-full relative rounded-[15px]">
-                  {mainStreamManager ? (
-                    <video
-                      autoPlay={true}
-                      ref={(video) =>
-                        video && mainStreamManager.addVideoElement(video)
-                      }
-                      className="object-cover rounded-[15px]"
-                    />
-                  ) : (
-                    "비디오가 준비 중입니다."
-                  )}
-                  <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
-                    <span className="flex ">
-                      <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                        {
-                          connectionInfo[
-                            mainStreamManager.stream.connection.connectionId
-                          ].memberName
-                        }
-                      </span>
-                      <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                        <img
-                          src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic_on.png"
-                          alt="mic on"
-                          className={`w-[12px] h-[18px] ${
-                            data.mic ? null : "hidden"
-                          }`}
-                        />
-                        <img
-                          src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mute.png"
-                          alt="mute"
-                          className={`w-[12px] h-[18px] ${
-                            data.mic ? "hidden" : null
-                          }`}
-                        />
-                      </span>
-                    </span>
-                    <span
-                      className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
-                        data.ready ? null : "hidden"
-                      }`}
-                    >
-                      준비완료
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ) : null} */}
-
             {publisher ? (
               <div
                 id={publisher.stream.connection.connectionId}
@@ -272,7 +307,8 @@ const MiddleDiv = () => {
                   {publisher ? (
                     <video
                       autoPlay={true}
-                      ref={(video) => video && publisher.addVideoElement(video)}
+                      // ref={(video) => video && publisher.addVideoElement(video)}
+                      ref={videoRef}
                       className="object-cover rounded-[15px]"
                     />
                   ) : (

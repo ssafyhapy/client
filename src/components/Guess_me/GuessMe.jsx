@@ -491,10 +491,14 @@ const GuessMe = () => {
     }
   }, [showReadyMessage]);
 
+  // 모션인식 함께 시작
+  const { finalResults, setFinalResult, startPredictionFlag, setStartPredictionFlag } = useGameStore();
   // 타이머 10초 시작
   const startTimer = () => {
     // 타이머 도는거 있으면 리셋
     if (timer) clearInterval(timer);
+    // 모션 인식 시작
+    setStartPredictionFlag(true)
     // 타이머 10초 시작
     const newTimer = setInterval(() => {
       setSecondsLeft((prev) => {
@@ -504,11 +508,14 @@ const GuessMe = () => {
           clearInterval(newTimer);
           // 10초 지났으면 정답 공개!
           setShowResult(true);
+          // 정답 공개할 때 모션 인식 시작 플래그 false로 바꿈
+          setStartPredictionFlag(false)
           return 0;
         }
       });
     }, 500);
     setTimer(newTimer);
+    console.log("최종 결과",finalResults);
   };
 
   // 다음 버튼과  연결된 함수
