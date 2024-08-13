@@ -10,7 +10,7 @@ const BalanceSlide = ({ slide }) => (
         {slide.balanceResultResponseDtos.map(
           (response, index) =>
             response.balanceResultSelectedOption === "FIRST" && (
-              <p key={index} className="text-xl font-extrabold text-[#aa2d6b]">
+              <p key={index} className="text-xl font-extrabold text-[#C2ACF4]">
                 {response.memberName}
               </p>
             )
@@ -18,7 +18,7 @@ const BalanceSlide = ({ slide }) => (
       </div>
     </div>
     <div className="w-[10%] h-full flex justify-center items-center">
-      <Vs />
+      <p className="text-4xl text-[#9400d3b0] font-extrabold" >VS</p>
     </div>
 
     <div className="w-full h-full flex flex-col items-center gap-5">
@@ -29,7 +29,7 @@ const BalanceSlide = ({ slide }) => (
         {slide.balanceResultResponseDtos.map(
           (response, index) =>
             response.balanceResultSelectedOption === "SECOND" && (
-              <p key={index} className="text-xl font-extrabold text-[#aa2d6b]">
+              <p key={index} className="text-xl font-extrabold text-[#C2ACF4]">
                 {response.memberName}
               </p>
             )

@@ -74,7 +74,7 @@ const Report = () => {
             <NavBar />
 
             {/* // 제목 */}
-            <h1 className="text-4xl font-bold text-center">Report</h1>
+            <h1 className="text-4xl font-bold text-center text-[#9400d3b0]">Report</h1>
 
             <Profile members={reportData?.memberReportResponseDtos} />
 

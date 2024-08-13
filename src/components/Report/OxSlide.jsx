@@ -25,7 +25,7 @@ const X = () => (
       y1="7"
       x2="37"
       y2="37"
-      stroke="#C2ACF4"
+      stroke="#aa2d6b"
       strokeWidth="6"
     />
     <line
@@ -33,7 +33,7 @@ const X = () => (
       y1="7"
       x2="7"
       y2="37"
-      stroke="#C2ACF4"
+      stroke="#aa2d6b"
       strokeWidth="6"
     />
   </svg>
@@ -42,7 +42,7 @@ const X = () => (
 
 const OxSlide = ({ slide }) => (
   <div className="w-full flex flex-col items-center gap-8">
-    <p className="text-3xl font-extrabold text-[#aa2d6b]">{slide.memberName}</p>
+    <p className="text-3xl font-extrabold text-[#C2ACF4]">{slide.memberName}</p>
     {slide.oxResponseDtos.map((response, index) => (
       <div key={index} className="w-full flex items-center justify-center gap-5 ">
         {/* 내용과 아이콘을 겹치게 하기 위한 컨테이너 */}
