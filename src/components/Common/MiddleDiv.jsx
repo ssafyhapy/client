@@ -228,69 +228,63 @@ const MiddleDiv = () => {
     loadModel();
   }, []);
 
-  const { finalResults, setFinalResult, startPredictionFlag } = useGameStore();
+  const { finalResults, setFinalResult, startPredictionFlag, setStartPredictionFlag } = useGameStore();
 
   const determineResult = (predictions) => {
     if (predictions.length > 0) {
-      const highestPrediction = predictions.reduce(
-        (prev, current) => (prev.probability > current.probability ? prev : current)
+      const highestPrediction = predictions.reduce((prev, current) =>
+        prev.probability > current.probability ? prev : current
       );
       const highestClass = highestPrediction.className;
       const highestProb = highestPrediction.probability;
 
       if (highestProb >= THRESHOLD) {
-        if (highestClass === 'O') {
-          return 'O';
-        } else if (highestClass === 'X') {
-          return 'X';
+        if (highestClass === "O") {
+          return "O";
+        } else if (highestClass === "X") {
+          return "X";
         }
       }
     }
-    return 'Neutral'; // 임계값에 도달하지 않으면 중립 결과 반환
+    return "Neutral"; // 임계값에 도달하지 않으면 중립 결과 반환
   };
 
   const startPrediction = () => {
-    let predictionTimeout;
+    const predictionTimeoutRef = useRef(null); // Ref to store the timeout ID
     let lastResult = "Neutral";
-
+    
     const loop = async () => {
       if (model && videoRef.current) {
         const predictions = await model.predict(videoRef.current);
         lastResult = determineResult(predictions);
         console.log("Current Result: ", lastResult);
       }
-      predictionTimeout = requestAnimationFrame(loop);
+      predictionTimeoutRef.current = requestAnimationFrame(loop);
     };
 
-    // 5초 동안 예측을 수행
+    // Start the prediction loop
     loop();
+
+    // Stop the prediction loop after 5 seconds
     setTimeout(() => {
-      cancelAnimationFrame(predictionTimeout);
-      console.log("Final Result: ", lastResult);
-      setFinalResult(lastResult); // 최종 결과 저장
-    }, 5000); // 5초 후 종료
-    startPredictionFlag(false)
+      cancelAnimationFrame(predictionTimeoutRef.current); // Cancel the loop
+      setFinalResult(lastResult); // Store the final result
+      // 모션 인식 결과를 여기서 보내줘야 함
+      setStartPredictionFlag(false); // Reset the flag
+    }, 5000);
   };
 
+let cnt = 0
   useEffect(() => {
+    cnt++
+    console.log(`최종 결과 ${cnt}`, finalResults);
+  }, [finalResults]);
 
+  useEffect(() => {
     if (startPrediction) {
-      startPrediction()
+      startPrediction();
     }
   }, [startPredictionFlag]);
-
-  // 비디오에서 예측 수행
-  // useEffect(() => {
-  //   const loop = async () => {
-  //     if (model && videoRef.current) {
-  //       const predictions = await model.predict(videoRef.current);
-  //       console.log("Predictions: ", predictions);
-  //       setPredictionResults(predictions);
-  //     }
-  //     requestAnimationFrame(loop);
-  //   };
-  //   loop();
-  // }, [model]);
 
   return (
     <div id="middleDiv" className="flex justify-center h-[68vh] w-[95%] m-3">

@@ -427,7 +427,9 @@ const GuessMe = () => {
         setShowReadyMessage(true);
         setSecondsLeft(10);
         setShowResult(false);
+        // 이때 모션인식 시작
         setStartPredictionFlag(true)
+        // 타이머 시작
         startTimer();
       }
       // 받은게 memberId, nextIndex 면
@@ -436,6 +438,7 @@ const GuessMe = () => {
         setCurrentQuestionIndex(message.nextIndex);
         setSecondsLeft(10);
         setShowResult(false);
+        // 이때 모션 인식 시작
         setStartPredictionFlag(true)
         startTimer(); // Start the timer for the next question
       }
@@ -518,7 +521,6 @@ const GuessMe = () => {
       });
     }, 500);
     setTimer(newTimer);
-    console.log("최종 결과", finalResults);
   };
 
   // 다음 버튼과  연결된 함수

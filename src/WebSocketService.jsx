@@ -138,6 +138,17 @@ class WebSocketService {
     this.subscribe(`/api/sub/ox/${roomId}/next`, onMessageCallback)
   }
 
+ 
+  // 나를맞춰봐 선택 결과 백에 전달
+  sendGuessMeSelection(roomId, memberId, answer){
+    this.sendMessage(`/api/pub/ox/${roomId}/selection`, {memberId, answer})
+  }
+
+  // 나를 맞춰봐 선택 결과 받아오기
+  subscribeToSelections(roomId){
+    this.subscribe(`/api/sub/ox/${roomId}/selection`)
+  }
+
 // ========================================================================================
 
   // 밸런스 게임 모달 내용 백에 보내줌 + 주제 변경 버튼 누를때마다 pub
