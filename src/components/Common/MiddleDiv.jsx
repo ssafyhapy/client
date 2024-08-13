@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import * as tmImage from "@teachablemachine/image";
-const URL = "https://teachablemachine.withgoogle.com/models/ZkpyKO7ri"
+const URL = "https://teachablemachine.withgoogle.com/models/ZkpyKO7ri";
 import useGameStore from "../../store/useGameStore";
 import Chatbox from "./Chatbox";
 import useAuthStore from "../../store/useAuthStore";
@@ -134,7 +134,8 @@ const MiddleDiv = () => {
   // ================================================================================================
 
   // 밸런스 게임! FIRST 고른 사람들에게 파란 배경색 부여
-  const { balanceGamePeopleChoiceInfo , resetBalanceGamePeopleChoiceInfo} = usePresenterStore();
+  const { balanceGamePeopleChoiceInfo, resetBalanceGamePeopleChoiceInfo } =
+    usePresenterStore();
 
   useEffect(() => {
     balanceGamePeopleChoiceInfo.forEach((info) => {
@@ -147,8 +148,8 @@ const MiddleDiv = () => {
       }
 
       return () => {
-        resetBalanceGamePeopleChoiceInfo()
-      }
+        resetBalanceGamePeopleChoiceInfo();
+      };
     });
   }, [balanceGamePeopleChoiceInfo, connectionInfo]);
 
@@ -232,7 +233,62 @@ const MiddleDiv = () => {
     loadModel();
   }, []);
 
-  const { finalResult, setFinalResult, startPredictionFlag, setStartPredictionFlag } = useGameStore();
+  const {
+    finalResult,
+    setFinalResult,
+    startPredictionFlag,
+    setStartPredictionFlag,
+  } = useGameStore();
+
+  // const determineResult = (predictions) => {
+  //   if (predictions.length > 0) {
+  //     const highestPrediction = predictions.reduce((prev, current) =>
+  //       prev.probability > current.probability ? prev : current
+  //     );
+  //     const highestClass = highestPrediction.className;
+  //     const highestProb = highestPrediction.probability;
+
+  //     if (highestProb >= THRESHOLD) {
+  //       if (highestClass === "O") {
+  //         return "O";
+  //       } else if (highestClass === "X") {
+  //         return "X";
+  //       }
+  //     }
+  //   }
+  //   return "Neutral"; // 임계값에 도달하지 않으면 중립 결과 반환
+  // };
+
+  // const predictionTimeoutRef = useRef(null); // Ref to store the timeout ID
+  // const startPrediction = () => {
+  //   let lastResult = "Neutral";
+
+  //   const loop = async () => {
+  //     if (model && videoRef.current) {
+  //       const predictions = await model.predict(videoRef.current);
+  //       lastResult = determineResult(predictions);
+  //       console.log("Current Result: ", lastResult);
+  //     }
+  //     predictionTimeoutRef.current = requestAnimationFrame(loop);
+  //   };
+
+  //   // Start the prediction loop
+  //   loop();
+
+  //   // Stop the prediction loop after 5 seconds
+  //   setTimeout(() => {
+  //     console.log("[*] 타이머가 시작되긴 함");
+  //     console.log("[*] 루프를 멈추라고 하긴 함");
+  //     console.log("[*] 결과를 저장하라고 하긴 함");
+  //     setFinalResult(lastResult); // Store the final result
+  //     console.log("[*] 여기서 모션인식 결과를 보내줘야 함,");
+  //     // 모션 인식 결과를 여기서 보내줘야 함
+  //     console.log("[*] 여기서 모션인식 시작 flag를 false로 바꿔줌");
+  //     setStartPredictionFlag(false); // Reset the flag
+  //     cancelAnimationFrame(predictionTimeoutRef.current); // Cancel the loop
+  //   }, 5000);
+
+  // };
 
   const determineResult = (predictions) => {
     if (predictions.length > 0) {
@@ -254,41 +310,36 @@ const MiddleDiv = () => {
   };
 
   const predictionTimeoutRef = useRef(null); // Ref to store the timeout ID
+
   const startPrediction = () => {
     let lastResult = "Neutral";
-    
+    let startTime = Date.now();
+
     const loop = async () => {
       if (model && videoRef.current) {
         const predictions = await model.predict(videoRef.current);
         lastResult = determineResult(predictions);
         console.log("Current Result: ", lastResult);
       }
-      predictionTimeoutRef.current = requestAnimationFrame(loop);
+
+      // 5초가 경과했는지 확인
+      if (Date.now() - startTime < 5000) {
+        predictionTimeoutRef.current = requestAnimationFrame(loop);
+      } else {
+        console.log("[*] 5초 경과, 루프를 멈추고 결과를 저장");
+        setFinalResult(lastResult); // 최종 결과 저장
+        setStartPredictionFlag(false); // 모션 인식 중지
+        cancelAnimationFrame(predictionTimeoutRef.current); // 루프 중지
+      }
     };
 
     // Start the prediction loop
     loop();
-
-    // Stop the prediction loop after 5 seconds
-    setTimeout(() => {
-      console.log("[*] 타이머가 시작되긴 함");
-      console.log("[*] 루프를 멈추라고 하긴 함");
-      cancelAnimationFrame(predictionTimeoutRef.current); // Cancel the loop
-      console.log("[*] 결과를 저장하라고 하긴 함");
-      setFinalResult(lastResult); // Store the final result
-      console.log("[*] 여기서 모션인식 결과를 보내줘야 함,");
-      // 모션 인식 결과를 여기서 보내줘야 함
-      console.log("[*] 여기서 모션인식 시작 flag를 false로 바꿔줌");
-      setStartPredictionFlag(false); // Reset the flag
-    }, 5000);
-
-    
-
   };
 
-let cnt = 0
+  let cnt = 0;
   useEffect(() => {
-    cnt++
+    cnt = cnt++;
     console.log(`최종 결과 ${cnt}`, finalResult);
   }, [finalResult]);
 
