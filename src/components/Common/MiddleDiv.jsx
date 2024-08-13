@@ -258,7 +258,6 @@ const MiddleDiv = () => {
   // }, [guessMeGamePeopleSelection]);
 
   useEffect(() => {
-    // Check if guessMeGamePeopleSelection is a valid array before processing
     if (
       Array.isArray(guessMeGamePeopleSelection) &&
       guessMeGamePeopleSelection.length > 0
@@ -280,13 +279,12 @@ const MiddleDiv = () => {
       });
     }
   
-    return () => {
-      // Ensure that the reset function is correctly implemented and called
-      if (typeof resetGuessMePeopleSelection === "function") {
-        resetGuessMePeopleSelection([]);
-      }
-    };
+    // 클린업 함수에서 상태를 초기화하지 않도록 변경
+    // return () => {
+    //   resetGuessMePeopleSelection();
+    // };
   }, [guessMeGamePeopleSelection, connectionInfo]);
+  
   
 
   // const determineResult = (predictions) => {

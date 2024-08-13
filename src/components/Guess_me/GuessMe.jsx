@@ -404,6 +404,7 @@ const GuessMe = () => {
   const { roomId } = useRoomStore();
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
+  const {resetGuessMePeopleSelection} = usePresenterStore()
   const btnText = "다음";
 
   // 준비중입니다 ... 계속 바뀌는거
@@ -433,6 +434,7 @@ const GuessMe = () => {
         // startTimer();
         setTimeout(() => {
           console.log("[*] 모션 인식 시작");
+          resetGuessMePeopleSelection()
           setStartPredictionFlag(true);
           // 타이머 시작
           startTimer();
