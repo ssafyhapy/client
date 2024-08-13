@@ -11,22 +11,11 @@ const MainDescription = () => {
           새로운 관계를 위한 첫 걸음
         </h1>
         <div className="flex justify-between gap-10">
-          {/* <iframe src="https://lottie.host/embed/7b087024-b29f-4049-9373-1ffd9735b411/MwhAEk65d8.json"></iframe>
-          <iframe src="https://lottie.host/embed/7b087024-b29f-4049-9373-1ffd9735b411/MwhAEk65d8.json"></iframe> */}
           <h1 className="text-[#B3D6FC] text-[156px] self-center z-10 jua-regular">
             사르르
           </h1>
           <iframe src="https://lottie.host/embed/7b087024-b29f-4049-9373-1ffd9735b411/MwhAEk65d8.json"></iframe>
         </div>
-        {/* <h1
-            className="text-[70px] self-center z-10 font-bold"
-            style={{
-              WebkitTextStroke: "2px #4D98F7",
-              color: "transparent",
-            }}
-          >
-            사르르
-          </h1> */}
         <RotateDescription
           sentences={[
             "오프라인에서의 어색한 첫 만남, 걱정되지는 않으신가요?",
