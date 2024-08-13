@@ -29,7 +29,7 @@ const BalanceChoosing = ({
   const [first, setOptionFirst] = useState("");
   const [second, setOptionSecond] = useState("");
 
-  const { setBalanceGamePeopleChoiceInfo } = usePresenterStore();
+  const { setBalanceGamePeopleChoiceInfo, resetBalanceGamePeopleChoiceInfo } = usePresenterStore();
 
   const handlePickedChoice = (choice) => {
     setPickedChoice(choice);
@@ -72,7 +72,7 @@ const BalanceChoosing = ({
             choice: pickedChoice,
           };
 
-          console.log("personInfo: " , personInfo)
+          console.log("personInfo: ", personInfo);
 
           // 해당 memberId의 사람이 보낸 info 저장
           setBalanceGamePeopleChoiceInfo((prev) => {
