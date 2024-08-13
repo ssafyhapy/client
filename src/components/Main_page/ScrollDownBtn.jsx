@@ -26,13 +26,13 @@ const ScrollDownBtn = ({text, color="#4D98F7"}) => {
     >
       <motion.p
         className="text-2xl"
-        animate={{ opacity: [0.5, 1, 0.5] }}
+        animate={{ opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
         {text}
       </motion.p>
       <motion.svg
-        animate={{ opacity: [0.5, 1, 0.5] }}
+        animate={{ opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         xmlns="http://www.w3.org/2000/svg"
         width="60"

@@ -13,7 +13,7 @@ const MainDescription = () => {
         <div className="flex justify-between gap-10">
           {/* <iframe src="https://lottie.host/embed/7b087024-b29f-4049-9373-1ffd9735b411/MwhAEk65d8.json"></iframe>
           <iframe src="https://lottie.host/embed/7b087024-b29f-4049-9373-1ffd9735b411/MwhAEk65d8.json"></iframe> */}
-          <h1 className="text-[#4D98F7] text-[156px] self-center z-10 jua-regular">
+          <h1 className="text-[#B3D6FC] text-[156px] self-center z-10 jua-regular">
             사르르
           </h1>
           <iframe src="https://lottie.host/embed/7b087024-b29f-4049-9373-1ffd9735b411/MwhAEk65d8.json"></iframe>
