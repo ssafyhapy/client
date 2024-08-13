@@ -599,7 +599,7 @@ const GuessMe = () => {
                 <span className="text-red-500">{secondsLeft}</span>
               </div>
               {memberId === currentPresenterId && showResult && (
-                <BasicBtn btnText={btnText} onClick={handleNextStep} />
+                <BasicBtn btnText={btnText} onClick={handleNextStep} fontSize="24"/>
               )}
             </div>
           </div>

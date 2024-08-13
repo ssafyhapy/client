@@ -163,7 +163,7 @@ const BalanceChoosing = ({
             pickedChoice === "FIRST"
               ? "border-solid border-4 border-[#64B8FF]"
               : "border-transparent"
-          } text-[14px]`}
+          } text-[24px]`}
           style={{
             background:
               "linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(30, 144, 255, 0.3))",
@@ -178,7 +178,7 @@ const BalanceChoosing = ({
             pickedChoice === "SECOND"
               ? "border-solid border-4 border-[rgba(254,176,207)]"
               : "border-transparent"
-          } text-[14px]`}
+          } text-[24px]`}
           style={{
             background:
               "linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(255,96,127,0.5))",

@@ -169,7 +169,7 @@ const SelfIntroduction = () => {
           </div>
           {memberId === currentPresenterId && (
             <div className="absolute bottom-3 right-5">
-              <BasicBtn btnText="다음" onClick={handleNextStep} />
+              <BasicBtn btnText="다음" onClick={handleNextStep} fontSize="24" />
             </div>
           )}
           <img
