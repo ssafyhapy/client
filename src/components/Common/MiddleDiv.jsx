@@ -232,7 +232,7 @@ const MiddleDiv = () => {
     loadModel();
   }, []);
 
-  const { finalResults, setFinalResult, startPredictionFlag, setStartPredictionFlag } = useGameStore();
+  const { finalResult, setFinalResult, startPredictionFlag, setStartPredictionFlag } = useGameStore();
 
   const determineResult = (predictions) => {
     if (predictions.length > 0) {
@@ -276,7 +276,7 @@ const MiddleDiv = () => {
       cancelAnimationFrame(predictionTimeoutRef.current); // Cancel the loop
       console.log("[*] 결과를 저장하라고 하긴 함");
       setFinalResult(lastResult); // Store the final result
-      console.log("[*] 여기서 모션인식 결과를 보내줘야 함");
+      console.log("[*] 여기서 모션인식 결과를 보내줘야 함,");
       // 모션 인식 결과를 여기서 보내줘야 함
       console.log("[*] 여기서 모션인식 시작 flag를 false로 바꿔줌");
       setStartPredictionFlag(false); // Reset the flag
@@ -289,8 +289,8 @@ const MiddleDiv = () => {
 let cnt = 0
   useEffect(() => {
     cnt++
-    console.log(`최종 결과 ${cnt}`, finalResults);
-  }, [finalResults]);
+    console.log(`최종 결과 ${cnt}`, finalResult);
+  }, [finalResult]);
 
   useEffect(() => {
     if (startPredictionFlag) {
