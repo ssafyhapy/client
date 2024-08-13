@@ -43,7 +43,7 @@ const WholeService = () => {
         <div className="flex gap-10 items-center">
           <button
             onClick={prevSlide}
-            className="px-2 py-1 bg-[#9400d354] rounded"
+            className="px-2 py-1 bg-[#C2ACF4] rounded text-white"
           >
             prev
           </button>
@@ -60,7 +60,7 @@ const WholeService = () => {
           </div>
           <button
             onClick={nextSlide}
-            className="px-2 py-1 bg-[#9400d354] rounded"
+            className="px-2 py-1 bg-[#C2ACF4] rounded text-white"
           >
             next
           </button>

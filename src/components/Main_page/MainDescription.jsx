@@ -13,7 +13,9 @@ const MainDescription = ({onNextSection}) => {
         <h1 className="text-[#9400d3b0] text-[156px] self-center z-10 jua-regular">
           사르르
         </h1>
-        <iframe src="https://lottie.host/embed/7b087024-b29f-4049-9373-1ffd9735b411/MwhAEk65d8.json"></iframe>
+        {/* <iframe src="https://lottie.host/embed/7b087024-b29f-4049-9373-1ffd9735b411/MwhAEk65d8.json"></iframe> */}
+        {/* <iframe src="https://lottie.host/embed/e61d9aab-2ad6-4958-9b92-59f308e61607/fzeD0O9H5M.json"></iframe> */}
+        <iframe src="https://lottie.host/embed/6a75e862-d36b-42f8-9ef4-146cd6a85b1b/6PP0EMRQsD.json"></iframe>
       </div>
       <RotateDescription
         sentences={[

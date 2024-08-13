@@ -10,7 +10,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
         <div className="text-xl text-center mb-4">{children}</div>
         <div className="flex justify-center">
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+            className="bg-[#C2ACF4] text-white px-4 py-2 rounded-lg"
             onClick={onClose}
           >
             Close

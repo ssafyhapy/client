@@ -55,7 +55,7 @@ const RoomEnter = () => {
           {/* 방 입장하기 버튼, 클릭시 axios 요청 */}
           <button
             onClick={handleSubmit(onSubmit)}
-            className="w-[90%] bg-[#9400d3b0] text-white py-2 px-4 rounded-[30px] h-14 text-2xl "
+            className="w-[90%] bg-[#9400d3b0] text-white py-2 px-4 rounded-[30px] h-14 text-2xl shadow-[0_4px_10px_rgba(66,72,81,0.5)]"
           >
             입장하기
           </button>
