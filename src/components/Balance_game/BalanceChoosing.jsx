@@ -42,37 +42,37 @@ const BalanceChoosing = ({
   const [startTime, setStartTime] = useState(null);
 
   // 사람들이 뭘 보내주는지 여기서 한번 sub을 해볼까?
-  useEffect(() => {
-    webSocketService.subscribeToBalancePersonChoice(roomId, (message) => {
-      console.log("What the member chose: ", message);
+  // useEffect(() => {
+  //   webSocketService.subscribeToBalancePersonChoice(roomId, (message) => {
+  //     console.log("What the member chose: ", message);
 
-      // Extract the relevant information
-      const personInfo = {
-        memberId: message.memberId,
-        choice: message.balanceResultSelectedOption,
-      };
+  //     // Extract the relevant information
+  //     const personInfo = {
+  //       memberId: message.memberId,
+  //       choice: message.balanceResultSelectedOption,
+  //     };
 
-      // Update the store with the new choice information
-      setBalanceGamePeopleChoiceInfo((prev) => {
-        const existing = prev.find(
-          (info) => info.memberId === personInfo.memberId
-        );
-        if (existing) {
-          return prev.map((info) =>
-            info.memberId === personInfo.memberId
-              ? { ...info, choice: personInfo.choice }
-              : info
-          );
-        } else {
-          return [...prev, personInfo];
-        }
-      });
-    });
+  //     // Update the store with the new choice information
+  //     setBalanceGamePeopleChoiceInfo((prev) => {
+  //       const existing = prev.find(
+  //         (info) => info.memberId === personInfo.memberId
+  //       );
+  //       if (existing) {
+  //         return prev.map((info) =>
+  //           info.memberId === personInfo.memberId
+  //             ? { ...info, choice: personInfo.choice }
+  //             : info
+  //         );
+  //       } else {
+  //         return [...prev, personInfo];
+  //       }
+  //     });
+  //   });
 
-    return () => {
-      webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`);
-    };
-  }, []);
+  //   return () => {
+  //     webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`);
+  //   };
+  // }, []);
 
   // 이제 시간 date.now()로 실제 시간가지고 10초 카운트다운 관리함!!!
   useEffect(() => {

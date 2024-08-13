@@ -123,31 +123,31 @@ const Balance = () => {
     // { "id" : "어쩌구", "roomId":1, "optionFirst":"산", "optionSecond":"바다"}
 
     // 밸런스 게임 사람들이 고른 선택지 받음
-    // webSocketService.subscribeToBalancePersonChoice(roomId, (message) => {
-    //   console.log("What the member chose: ", message);
+    webSocketService.subscribeToBalancePersonChoice(roomId, (message) => {
+      console.log("What the member chose: ", message);
 
-    //   // Extract the relevant information
-    //   const personInfo = {
-    //     memberId: message.memberId,
-    //     choice: message.balanceResultSelectedOption,
-    //   };
+      // Extract the relevant information
+      const personInfo = {
+        memberId: message.memberId,
+        choice: message.balanceResultSelectedOption,
+      };
 
-    //   // Update the store with the new choice information
-    //   setBalanceGamePeopleChoiceInfo((prev) => {
-    //     const existing = prev.find(
-    //       (info) => info.memberId === personInfo.memberId
-    //     );
-    //     if (existing) {
-    //       return prev.map((info) =>
-    //         info.memberId === personInfo.memberId
-    //           ? { ...info, choice: personInfo.choice }
-    //           : info
-    //       );
-    //     } else {
-    //       return [...prev, personInfo];
-    //     }
-    //   });
-    // });
+      // Update the store with the new choice information
+      setBalanceGamePeopleChoiceInfo((prev) => {
+        const existing = prev.find(
+          (info) => info.memberId === personInfo.memberId
+        );
+        if (existing) {
+          return prev.map((info) =>
+            info.memberId === personInfo.memberId
+              ? { ...info, choice: personInfo.choice }
+              : info
+          );
+        } else {
+          return [...prev, personInfo];
+        }
+      });
+    });
 
     // 받아오는 데이터
     // { "memberId":1, "balanceResultSelectedOption":"First" 아니면 "Second"}
@@ -160,11 +160,11 @@ const Balance = () => {
     };
     // dependency array 추가 (아마도 constant subscribing 의 원인...)
   }, [
-    roomId,
-    topicId,
-    setGameStep,
-    currentStep,
-    purpose,
+    // roomId,
+    // topicId,
+    // setGameStep,
+    // currentStep,
+    // purpose,
   ]);
 
   // topic id 뭔지 출력
