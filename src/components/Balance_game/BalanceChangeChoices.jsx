@@ -31,6 +31,7 @@ const BalanceChangeChoices = ({
   const [First, setOptionFirst] = useState("");
   const [Second, setOptionSecond] = useState("");
 
+  // 사람들이 고른 선택지 리셋
   const {resetBalanceGamePeopleChoiceInfo} = usePresenterStore()
 
   useEffect(() => {

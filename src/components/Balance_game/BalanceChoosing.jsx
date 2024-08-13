@@ -40,73 +40,7 @@ const BalanceChoosing = ({
   // date() 사용해서 10초 타이머 컨트롤하기...
   const [startTime, setStartTime] = useState(null);
 
-  // =================================================================================
-
-  // 타이머 시작하기 전에 0.5초 딜레이
-  // useEffect(() => {
-  //   if (currentStep) {
-  //     // Clear any existing timer to prevent overlapping timers
-  //     let timer;
-
-  //     const startTimer = () => {
-  //       timer = setInterval(() => {
-  //         setSecondsLeft((prev) => {
-  //           if (prev > 1) {
-  //             return prev - 1;
-  //           } else {
-  //             clearInterval(timer);
-
-  //             // Pub the choice to the server
-  //             webSocketService.sendBalancePersonChoice(
-  //               roomId,
-  //               topicId,
-  //               memberId,
-  //               pickedChoice
-  //             );
-
-  //             const personInfo = {
-  //               memberId,
-  //               choice: pickedChoice,
-  //             };
-
-  //             // 자기가 고른건 zustand에 안들어가는것같아서...?? 추가해줌 (이게맞나?)
-  //             setBalanceGamePeopleChoiceInfo((prev) => {
-  //               const existing = prev.find(
-  //                 (info) => info.memberId === personInfo.memberId
-  //               );
-  //               if (existing) {
-  //                 return prev.map((info) =>
-  //                   info.memberId === personInfo.memberId
-  //                     ? { ...info, choice: personInfo.choice }
-  //                     : info
-  //                 );
-  //               } else {
-  //                 return [...prev, personInfo];
-  //               }
-  //             });
-
-  //             setPickedChoice(null);
-  //             onTimerEnd();
-  //             return 0;
-  //           }
-  //         });
-  //       }, 1000); // Adjusting the timer interval to 1000ms for consistency
-  //     };
-
-  //     // Introduce a slight delay before starting the timer
-  //     const delayStart = setTimeout(() => {
-  //       startTimer();
-  //     }, 500);
-
-  //     return () => {
-  //       clearInterval(timer); // Clear the interval on cleanup
-  //       clearTimeout(delayStart); // Clear the timeout if the effect is cleaned up
-  //     };
-  //   }
-  // }, [currentStep, pickedChoice, onTimerEnd]);
-
-  // =================================================================================
-
+  // 이제 시간 date.now()로 실제 시간가지고 10초 카운트다운 관리함!!!
   useEffect(() => {
     if (currentStep && !startTime) {
       setStartTime(Date.now());
@@ -125,7 +59,7 @@ const BalanceChoosing = ({
         if (remainingSeconds <= 0) {
           clearInterval(timer);
 
-          // Handle timer end logic
+          // 그 사람이 보낸 선택지 뭔지 백에 보냄
           webSocketService.sendBalancePersonChoice(
             roomId,
             topicId,
@@ -137,6 +71,8 @@ const BalanceChoosing = ({
             memberId,
             choice: pickedChoice,
           };
+
+          console.log("personInfo: " , personInfo)
 
           // Update the store with the new choice information
           setBalanceGamePeopleChoiceInfo((prev) => {
