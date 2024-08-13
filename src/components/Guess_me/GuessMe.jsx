@@ -359,10 +359,15 @@ import GuessMeModal from "./GuessMeModal";
 import useGameStore from "../../store/useGameStore";
 import useAuthStore from "../../store/useAuthStore";
 import useRoomStore from "../../store/useRoomStore";
-
 import usePresenterStore from "../../store/usePresenterStore";
 
 const GuessMe = () => {
+  const {
+    finalResults,
+    setFinalResult,
+    startPredictionFlag,
+    setStartPredictionFlag,
+  } = useGameStore();
   const snowingCloud =
     "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/snowing_cloud.png";
   const star = "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/star.png";
@@ -389,9 +394,10 @@ const GuessMe = () => {
   // const [currentPresenterId, setCurrentPresenterId] = useState(null);
   const [showReadyMessage, setShowReadyMessage] = useState(false);
 
-
-  const setCurrentPresenterId = usePresenterStore((state) => state.setCurrentPresenterId)
-  const {currentPresenterId} = usePresenterStore()
+  const setCurrentPresenterId = usePresenterStore(
+    (state) => state.setCurrentPresenterId
+  );
+  const { currentPresenterId } = usePresenterStore();
 
   const { memberId } = useAuthStore();
   // const memberId = 4
@@ -421,6 +427,7 @@ const GuessMe = () => {
         setShowReadyMessage(true);
         setSecondsLeft(10);
         setShowResult(false);
+        setStartPredictionFlag(true)
         startTimer();
       }
       // 받은게 memberId, nextIndex 면
@@ -429,6 +436,7 @@ const GuessMe = () => {
         setCurrentQuestionIndex(message.nextIndex);
         setSecondsLeft(10);
         setShowResult(false);
+        setStartPredictionFlag(true)
         startTimer(); // Start the timer for the next question
       }
     };
@@ -437,7 +445,7 @@ const GuessMe = () => {
     webSocketService.subscribeToMemberState(roomId, (message) => {
       console.log("Received game state: ", message);
       if (message.memberState === "balance") {
-        setCurrentPresenterId(null)
+        setCurrentPresenterId(null);
         setGameStep("balance-game");
       }
     });
@@ -491,14 +499,10 @@ const GuessMe = () => {
     }
   }, [showReadyMessage]);
 
-  // 모션인식 함께 시작
-  const { finalResults, setFinalResult, startPredictionFlag, setStartPredictionFlag } = useGameStore();
   // 타이머 10초 시작
   const startTimer = () => {
     // 타이머 도는거 있으면 리셋
     if (timer) clearInterval(timer);
-    // 모션 인식 시작
-    setStartPredictionFlag(true)
     // 타이머 10초 시작
     const newTimer = setInterval(() => {
       setSecondsLeft((prev) => {
@@ -509,13 +513,12 @@ const GuessMe = () => {
           // 10초 지났으면 정답 공개!
           setShowResult(true);
           // 정답 공개할 때 모션 인식 시작 플래그 false로 바꿈
-          setStartPredictionFlag(false)
           return 0;
         }
       });
     }, 500);
     setTimer(newTimer);
-    console.log("최종 결과",finalResults);
+    console.log("최종 결과", finalResults);
   };
 
   // 다음 버튼과  연결된 함수
@@ -551,66 +554,64 @@ const GuessMe = () => {
   return (
     <>
       {/* bottom div */}
-        {!allPrepared ? (
-          showReadyMessage ? (
-            <div className="flex-grow flex items-center justify-center">
-              <img src={star} alt="star 그림" />
-              <span className="text-transparent">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              </span>
-              <span className="text-[rgba(85,181,236)]">전원 준비 완료!!</span>
-              <span className="text-transparent">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              </span>
-              <img src={star} alt="star 그림" />
-            </div>
-          ) : (
-            <div className="flex-grow flex items-center justify-center">
-              <img src={snowingCloud} alt="star 그림" />
-              <span className="text-transparent">&nbsp;&nbsp;</span>
-              <span className="text-[rgba(85,181,236)]">
-                나를 맞춰봐 문제가 만들어지고 있어요{dots}
-              </span>
-            </div>
-          )
-        ) : (
-          <div className="flex-grow flex items-center justify-center relative">
-            <span className="text-[rgba(85,181,236)]">
-              {userQuestions.length > 0
-                ? userQuestions[currentQuestionIndex].content
-                : null}
+      {!allPrepared ? (
+        showReadyMessage ? (
+          <div className="flex-grow flex items-center justify-center">
+            <img src={star} alt="star 그림" />
+            <span className="text-transparent">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </span>
-            {showResult && userQuestions.length > 0 && (
-              <img
-                src={
-                  userQuestions[currentQuestionIndex].answer
-                    ? correctImg
-                    : wrongImg
-                }
-                alt={
-                  userQuestions[currentQuestionIndex].answer
-                    ? "Correct"
-                    : "Wrong"
-                }
-                className="absolute w-[50px] h-[50px]"
-                style={{
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                }}
-              />
-            )}
-            <div className="absolute bottom-3 right-5 flex flex-col items-center">
-              <div className="flex items-center mb-2">
-                <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" />
-                <span className="text-red-500">{secondsLeft}</span>
-              </div>
-              {memberId === currentPresenterId && showResult && (
-                <BasicBtn btnText={btnText} onClick={handleNextStep} />
-              )}
-            </div>
+            <span className="text-[rgba(85,181,236)]">전원 준비 완료!!</span>
+            <span className="text-transparent">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+            <img src={star} alt="star 그림" />
           </div>
-        )}
+        ) : (
+          <div className="flex-grow flex items-center justify-center">
+            <img src={snowingCloud} alt="star 그림" />
+            <span className="text-transparent">&nbsp;&nbsp;</span>
+            <span className="text-[rgba(85,181,236)]">
+              나를 맞춰봐 문제가 만들어지고 있어요{dots}
+            </span>
+          </div>
+        )
+      ) : (
+        <div className="flex-grow flex items-center justify-center relative">
+          <span className="text-[rgba(85,181,236)]">
+            {userQuestions.length > 0
+              ? userQuestions[currentQuestionIndex].content
+              : null}
+          </span>
+          {showResult && userQuestions.length > 0 && (
+            <img
+              src={
+                userQuestions[currentQuestionIndex].answer
+                  ? correctImg
+                  : wrongImg
+              }
+              alt={
+                userQuestions[currentQuestionIndex].answer ? "Correct" : "Wrong"
+              }
+              className="absolute w-[50px] h-[50px]"
+              style={{
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+          )}
+          <div className="absolute bottom-3 right-5 flex flex-col items-center">
+            <div className="flex items-center mb-2">
+              <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" />
+              <span className="text-red-500">{secondsLeft}</span>
+            </div>
+            {memberId === currentPresenterId && showResult && (
+              <BasicBtn btnText={btnText} onClick={handleNextStep} />
+            )}
+          </div>
+        </div>
+      )}
       {showModal && (
         <GuessMeModal
           btnText="저장"

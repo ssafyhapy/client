@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import * as tmImage from "@teachablemachine/image";
-const URL = "https://teachablemachine.withgoogle.com/models/C_QpeZVSr"; // Teachable Machine 모델 URL
+const URL = "https://teachablemachine.withgoogle.com/models/ZkpyKO7ri/"; // Teachable Machine 모델 URL
 import useGameStore from "../../store/useGameStore";
 import Chatbox from "./Chatbox";
 import useAuthStore from "../../store/useAuthStore";
@@ -269,6 +269,7 @@ const MiddleDiv = () => {
       console.log("Final Result: ", lastResult);
       setFinalResult(lastResult); // 최종 결과 저장
     }, 5000); // 5초 후 종료
+    startPredictionFlag(false)
   };
 
   useEffect(() => {
