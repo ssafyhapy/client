@@ -267,11 +267,19 @@ const MiddleDiv = () => {
 
     // Stop the prediction loop after 5 seconds
     setTimeout(() => {
+      console.log("[*] 타이머가 시작되긴 함");
+      console.log("[*] 루프를 멈추라고 하긴 함");
       cancelAnimationFrame(predictionTimeoutRef.current); // Cancel the loop
+      console.log("[*] 결과를 저장하라고 하긴 함");
       setFinalResult(lastResult); // Store the final result
+      console.log("[*] 여기서 모션인식 결과를 보내줘야 함");
       // 모션 인식 결과를 여기서 보내줘야 함
+      console.log("[*] 여기서 모션인식 시작 flag를 false로 바꿔줌");
       setStartPredictionFlag(false); // Reset the flag
     }, 5000);
+
+    
+
   };
 
 let cnt = 0
