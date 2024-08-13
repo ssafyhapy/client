@@ -3,7 +3,7 @@ import ScrollDownBtn from "./ScrollDownBtn";
 import RotateDescription from "./RotateDescription";
 import MainFrame from "../MainFrame";
 
-const MainDescription = ({onNextSection}) => {
+const MainDescription = () => {
   return (
     <div className="w-[90%] h-[90%] flex flex-col justify-between items-center relative">
       <h1 className="opacity-45 text-3xl self-start">
@@ -26,6 +26,9 @@ const MainDescription = ({onNextSection}) => {
         fontsize="32px"
         time="5000"
       />
+      <div className="z-50 top">
+        <ScrollDownBtn text="Scroll Down" />
+      </div>
     </div>
   );
 };
