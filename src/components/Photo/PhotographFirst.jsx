@@ -81,20 +81,18 @@ const PhotographFirst = () => {
         <div
           ref={photoRef}
           className="h-4/5 bg-[rgba(200,200,200,0.7)] mr-[44px] ml-[44px]
-  mt-[35px] mb-[39px] p-4 border-4 border-gray-500 rounded-lg grid grid-cols-2 place-items-center gap-4"
+  mt-[35px] mb-[39px] p-4 rounded-lg grid grid-cols-2 place-items-center gap-4"
           style={{
             backgroundImage:
-              "url(https://www.google.com/url?sa=i&url=https%3A%2F%2Fdesignbase.co.kr%2Fmagazine%2F%25EA%25B7%25B8%25EB%259D%25BC%25EB%258D%25B0%25EC%259D%25B4%25EC%2585%2598-%25EC%25BB%25AC%25EB%259F%25AC-%25EC%25B6%2594%25EC%25B2%259C%25ED%2595%25B4%25EC%25A3%25BC%25EB%258A%2594-%25EC%2582%25AC%25EC%259D%25B4%25ED%258A%25B8%2F&psig=AOvVaw3BLcawxoZ7KtZMnCYqF0kY&ust=1723604009649000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMC-m7n78IcDFQAAAAAdAAAAABAJ)",
+              "url('https://sarrr.s3.ap-northeast-2.amazonaws.com/artwork-7182531_1280.jpg')",
             backgroundSize: "cover", // 이미지가 요소를 완전히 덮도록 설정
             backgroundPosition: "center", // 이미지가 중앙에 위치하도록 설정
           }}
-          // 변경된 부분: 옅은 회색 배경과 프레임(border) 추가
         >
           {publisher ? (
             <div
               id={publisher.stream.connection.connectionId}
-              className={`flex justify-center items-center rounded-[15px] ${getVideoContainerClass()} bg-white border-2 border-gray-300`}
-              // 변경된 부분: 비디오 주변에 흰색 배경과 얇은 테두리 추가
+              className={`flex justify-center items-center rounded-[15px] ${getVideoContainerClass()} bg-white`}
             >
               <div className="w-full relative rounded-[15px]">
                 {publisher ? (
@@ -109,10 +107,7 @@ const PhotographFirst = () => {
                 <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
                   <span className="flex ">
                     <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                      {
-                        connectionInfo[publisher.stream.connection.connectionId]
-                          .memberName
-                      }
+                      {connectionInfo[publisher.stream.connection.connectionId].memberName}
                     </span>
                     <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
                       <img
@@ -145,8 +140,7 @@ const PhotographFirst = () => {
                   <div
                     key={connectionId}
                     id={connectionId}
-                    className={`flex justify-center items-center rounded-[15px] ${getVideoContainerClass()} bg-white border-2 border-gray-300`}
-                    // 변경된 부분: 비디오 주변에 흰색 배경과 얇은 테두리 추가
+                    className={`flex justify-center items-center rounded-[15px] ${getVideoContainerClass()} bg-white`}
                   >
                     <div className="w-full relative rounded-[15px]">
                       <div id="subscriber">
@@ -159,10 +153,7 @@ const PhotographFirst = () => {
                       <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
                         <span className="flex ">
                           <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                            {
-                              connectionInfo[sub.stream.connection.connectionId]
-                                .memberName
-                            }
+                            {connectionInfo[sub.stream.connection.connectionId].memberName}
                           </span>
                           <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
                             <img
@@ -188,12 +179,12 @@ const PhotographFirst = () => {
           ) : null}
         </div>
       </div>
-      <div className="m-2 flex items-center justify-center">
+      {/* <div className="m-2 flex items-center justify-center">
         <GameTurns gameStep={gameStep} />
       </div>
       <div className="text-center text-sm m-5 font-bold">
         <Photograph_intro />
-      </div>
+      </div> */}
       {showModal && <TakePhotoModal onCapture={handleCapture} />}
     </div>
   );
