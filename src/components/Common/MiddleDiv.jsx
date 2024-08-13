@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import * as tmImage from "@teachablemachine/image";
-const URL = "https://teachablemachine.withgoogle.com/models/ZkpyKO7ri/"; // Teachable Machine 모델 URL
+const URL = "https://teachablemachine.withgoogle.com/models/ZkpyKO7ri"; // Teachable Machine 모델 URL
 import useGameStore from "../../store/useGameStore";
 import Chatbox from "./Chatbox";
 import useAuthStore from "../../store/useAuthStore";

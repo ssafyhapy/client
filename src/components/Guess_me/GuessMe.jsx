@@ -439,7 +439,9 @@ const GuessMe = () => {
         setSecondsLeft(10);
         setShowResult(false);
         // 이때 모션 인식 시작
+        console.log("[*] 모션 인식 시작");
         setStartPredictionFlag(true)
+        console.log("[*] 타이머 시작");
         startTimer(); // Start the timer for the next question
       }
     };
