@@ -291,13 +291,13 @@ const MiddleDiv = () => {
         }
       }
     }
-    return "Neutral"; // 임계값에 도달하지 않으면 중립 결과 반환
+    return "N"; // 임계값에 도달하지 않으면 중립 결과 반환
   };
 
   const predictionTimeoutRef = useRef(null); // Ref to store the timeout ID
 
   const startPrediction = () => {
-    let lastResult = "Neutral";
+    let lastResult = "N";
     let startTime = Date.now();
 
     const loop = async () => {
@@ -314,15 +314,10 @@ const MiddleDiv = () => {
         console.log("[*] 5초 경과, 루프를 멈추고 결과를 저장");
         await setFinalResult(lastResult); // 최종 결과 저장
         // 최종 결과가 정해지면 pub해서 결과를 넘겨주기
-        if (finalResult) {
-          webSocketService.sendGuessMeSelection(roomId, memberId, finalResult);
-        }
-
         setStartPredictionFlag(false); // 모션 인식 중지
         cancelAnimationFrame(predictionTimeoutRef.current); // 루프 중지
       }
     };
-
     // Start the prediction loop
     loop();
   };
@@ -330,6 +325,10 @@ const MiddleDiv = () => {
   let cnt = 0;
   useEffect(() => {
     cnt = cnt++;
+    // finalResult가 있고 바뀐거면 결과를 pub 한다.
+    if (finalResult) {
+      webSocketService.sendGuessMeSelection(roomId, memberId, finalResult);
+    }
     console.log(`최종 결과 ${cnt}`, finalResult);
   }, [finalResult]);
 
