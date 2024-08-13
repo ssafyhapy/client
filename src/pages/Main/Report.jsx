@@ -50,7 +50,7 @@ const Report = () => {
         {loading ? (
           <Spinner />
         ) : (
-          <div className="w-[80%] flex flex-col items-center py-10 gap-5 ">
+          <div className="w-[80%] flex flex-col items-center py-10 gap-10 ">
             {/* // 네비게이션 바 */}
             <NavBar />
 

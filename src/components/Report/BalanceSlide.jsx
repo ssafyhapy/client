@@ -2,27 +2,33 @@ import React from "react";
 import Vs from "./Vs";
 
 const BalanceSlide = ({ slide }) => (
-  <div>
-    <div className="w-full h-full flex gap-5 items-start">
+  <div className="w-full h-full">
+    <div className="w-full h-full flex gap-5 justify-center items-start">
+      <div className="w-full h-full flex flex-col items-center gap-5 ">
+        <p className="text-4xl">
+          {slide.balanceQuestionOptionFirst}
+        </p>
 
-      <div className="w-auto h-full flex flex-col gap-5 ">
-        <p className="text-4xl text-right">{slide.balanceQuestionOptionFirst}</p>
-
-        <div className="w-full flex flex-row-reverse gap-2 flex-nowrap">
+        <div className="w-full flex flex-col items-center gap-2 flex-nowrap">
           {slide.balanceResultResponseDtos.map(
             (response, index) =>
               response.balanceResultSelectedOption === "FIRST" && (
-                <p key={index}>{response.memberName}</p>
+                <p key={index}>
+                  {response.memberName}
+                </p>
               )
           )}
         </div>
       </div>
+      <div className="w-[10%] h-full flex justify-center items-center">
+        <Vs />
+      </div>
 
-      <Vs />
-
-      <div className="w-auto h-full flex flex-col gap-5">
-        <p className="text-4xl text-left">{slide.balanceQuestionOptionSecond}</p>
-        <div className="flex gap-2 flex-nowrap">
+      <div className="w-full h-full flex flex-col items-center gap-5">
+        <p className="text-4xl text-left">
+          {slide.balanceQuestionOptionSecond}
+        </p>
+        <div className="w-full flex flex-col items-center flex-nowrap">
           {slide.balanceResultResponseDtos.map(
             (response, index) =>
               response.balanceResultSelectedOption === "SECOND" && (
