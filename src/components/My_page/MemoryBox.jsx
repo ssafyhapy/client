@@ -38,7 +38,7 @@ const MemoryBox = () => {
             key={page}
             type="button"
             onClick={() => handlePageChange(page)}
-            className={`px-4 py-2 ${currentPage === page ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            className={`px-4 py-2 ${currentPage === page ? 'bg-[#9400d3b0] text-white' : 'bg-gray-200'}`}
           >
             {page}
           </button>

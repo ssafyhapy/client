@@ -37,7 +37,7 @@ const GamesDescription = () => {
                 repeat: Infinity,
                 repeatType: "reverse",
               }} // 반복 설정
-              className="text-3xl font-bold text-center text-black opacity-50"
+              className="text-3xl font-bold text-center text-[#9400d3b0] opacity-50"
             >
               {section.title}
             </motion.h2>
@@ -54,7 +54,7 @@ const GamesDescription = () => {
               exit={{ opacity: 0 }}
             >
               <motion.div className="bg-white p-10 rounded-[30px] shadow-lg max-w-[90%] max-h-[90%] overflow-auto">
-                <motion.h2 className="text-3xl font-bold text-center mb-4">
+                <motion.h2 className="text-3xl font-bold text-center text-[#9400d3b0] mb-4">
                   {sections.find((section) => section.id === selectedId).title}
                 </motion.h2>
                 {

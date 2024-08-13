@@ -17,22 +17,22 @@ const MakeRoom = ({ closeMakeRoom }) => {
 
   const { fetchRoomData } = useRoomStore();
 
- // form 제출시 방 만들기 요청
- const onSubmit = async (data) => {
-  console.log(data);
-  try {
-    const response = await axiosInstance.post("/room/create", {
-      roomName: data.roomName,
-      roomPersonCount: data.roomPersonCount,
-    });
-    fetchRoomData(response.data.data);
-    console.log("[*] 방 입장", response.data);
-    // 방 만들기 요청 완료시 대기실로 이동
-    navigate("/games");
-  } catch (error) {
-    console.log("Error", error);
-  }
-};
+  // form 제출시 방 만들기 요청
+  const onSubmit = async (data) => {
+    console.log(data);
+    try {
+      const response = await axiosInstance.post("/room/create", {
+        roomName: data.roomName,
+        roomPersonCount: data.roomPersonCount,
+      });
+      fetchRoomData(response.data.data);
+      console.log("[*] 방 입장", response.data);
+      // 방 만들기 요청 완료시 대기실로 이동
+      navigate("/games");
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
 
   // form 제출시 방 만들기 요청
   // const onSubmit = async (data) => {
@@ -107,14 +107,14 @@ const MakeRoom = ({ closeMakeRoom }) => {
             {/* 방 만들기 제출 버튼*/}
             <button
               type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded"
+              className="bg-[#9400d3b0] text-white py-2 px-4 rounded"
             >
               방 만들기
             </button>
             {/* 취소 */}
             <button
               type="button"
-              className="bg-red-500 text-white py-2 px-4 rounded ml-2"
+              className="bg-gray-400 text-white py-2 px-4 rounded ml-2"
               onClick={closeMakeRoom}
             >
               Cancel

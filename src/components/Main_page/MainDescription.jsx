@@ -10,7 +10,7 @@ const MainDescription = ({onNextSection}) => {
         새로운 관계를 위한 첫 걸음
       </h1>
       <div className="flex justify-between gap-10">
-        <h1 className="text-[#B3D6FC] text-[156px] self-center z-10 jua-regular">
+        <h1 className="text-[#9400d3b0] text-[156px] self-center z-10 jua-regular">
           사르르
         </h1>
         <iframe src="https://lottie.host/embed/7b087024-b29f-4049-9373-1ffd9735b411/MwhAEk65d8.json"></iframe>
