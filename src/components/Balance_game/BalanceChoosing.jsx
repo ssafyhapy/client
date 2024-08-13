@@ -29,70 +29,14 @@ const BalanceChoosing = ({
   const [first, setOptionFirst] = useState("");
   const [second, setOptionSecond] = useState("");
 
-  const { blueMembers, redMembers, addBlueMember, addRedMember, balanceGamePeopleChoiceInfo, addbalanceGamePeopleChoiceInfo } =
+  const { setBalanceGamePeopleChoiceInfo } =
     usePresenterStore();
-
-  // useEffect(() => {
-  //   console.log('blue members: ', blueMembers)
-  //   console.log('red members: ', redMembers)
-  // }, [blueMembers, redMembers])
 
   const handlePickedChoice = (choice) => {
     setPickedChoice(choice);
-
-    // if (choice === "FIRST" && !blueMembers.includes(memberId)) {
-    //   addBlueMember(memberId)
-    // } else if (choice === "SECOND" && !redMembers.includes(memberId)) {
-    //   addRedMember(memberId)
-    // }
-  };
+  }
 
   const [secondsLeft, setSecondsLeft] = useState(10);
-
-  // useEffect(() => {
-  //   if (currentStep) {
-  //     const timer = setInterval(() => {
-  //       setSecondsLeft((prev) => {
-  //         if (prev > 1) {
-  //           return prev - 1;
-  //         } else {
-  //           clearInterval(timer);
-
-  //           webSocketService.sendBalancePersonChoice(
-  //             roomId,
-  //             topicId,
-  //             memberId,
-  //             pickedChoice
-  //           );
-
-  //           console.log("[*] 타이머 끝");
-            
-  //           if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
-  //             console.log("[*] 파랑 확인함");
-
-  //             addBlueMember(memberId);
-  //           } else if (
-  //             pickedChoice === "SECOND" &&
-  //             !redMembers.includes(memberId)
-  //           ) {
-  //             console.log("[*] 빨강 확인함");
-
-  //             addRedMember(memberId);
-  //           }        
-
-  //           // 그 사람이 뭘 골랐는지는 다시 null로 만들자
-  //           setPickedChoice(null);
-
-  //           onTimerEnd(); // 타이머가 0이 되었을 때 호출
-
-  //           return 0;
-  //         }
-  //       });
-  //     }, 500);
-
-  //     return () => clearInterval(timer);
-  //   } // 컴포넌트 언마운트 시 타이머 클리어
-  // }, [currentStep, pickedChoice, blueMembers, redMembers, onTimerEnd]); // onTimerEnd를 의존성 배열에 포함
 
   useEffect(() => {
     if (currentStep) {
@@ -107,38 +51,127 @@ const BalanceChoosing = ({
             } else {
               clearInterval(timer);
   
+              // Pub the choice to the server
               webSocketService.sendBalancePersonChoice(
                 roomId,
                 topicId,
                 memberId,
                 pickedChoice
               );
-
-              // console.log("타이머 끝! 그리고 멤버가 보낸 선택지도 pub 해줌!!!")
   
-              // if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
-              //   console.log("[*] Blue team confirmed");
-              //   addBlueMember(memberId);
-              // } else if (pickedChoice === "SECOND" && !redMembers.includes(memberId)) {
-              //   console.log("[*] Red team confirmed");
-              //   addRedMember(memberId);
-              // }
+              const personInfo = {
+                memberId,
+                choice: pickedChoice,
+              };
+  
+              // 자기가 고른건 zustand에 안들어가는것같아서...?? 추가해줌 (이게맞나?)
+              setBalanceGamePeopleChoiceInfo((prev) => {
+                const existing = prev.find(
+                  (info) => info.memberId === personInfo.memberId
+                );
+                if (existing) {
+                  return prev.map((info) =>
+                    info.memberId === personInfo.memberId
+                      ? { ...info, choice: personInfo.choice }
+                      : info
+                  );
+                } else {
+                  return [...prev, personInfo];
+                }
+              });
   
               setPickedChoice(null);
               onTimerEnd();
               return 0;
             }
           });
-        }, 500); // Timer interval set to 1000ms (1 second)
+        }, 1000); // Adjusting the timer interval to 1000ms for consistency
       };
   
-      startTimer();
+      // Introduce a slight delay before starting the timer
+      const delayStart = setTimeout(() => {
+        startTimer();
+      }, 500);
   
       return () => {
-        clearInterval(timer);
+        clearInterval(timer); // Clear the interval on cleanup
+        clearTimeout(delayStart); // Clear the timeout if the effect is cleaned up
       };
     }
-  }, [currentStep, pickedChoice, blueMembers, redMembers, onTimerEnd]);
+  }, [currentStep, pickedChoice, onTimerEnd]);
+
+
+  // =================================================================================
+
+  // useEffect(() => {
+  //   if (currentStep) {
+  //     // Clear any existing timer to prevent overlapping timers
+  //     let timer;
+
+  //     const startTimer = () => {
+  //       timer = setInterval(() => {
+  //         setSecondsLeft((prev) => {
+  //           if (prev > 1) {
+  //             return prev - 1;
+  //           } else {
+  //             clearInterval(timer);
+
+  //             webSocketService.sendBalancePersonChoice(
+  //               roomId,
+  //               topicId,
+  //               memberId,
+  //               pickedChoice
+  //             );
+
+  //             // 자기가 고른건 안보이는 모양...? 이니까 자기가 고른것 추가해줘라...
+  //             const personInfo = {
+  //               memberId,
+  //               choice: pickedChoice,
+  //             };
+
+  //             // Update the store with the new choice information
+  //             setBalanceGamePeopleChoiceInfo((prev) => {
+  //               const existing = prev.find(
+  //                 (info) => info.memberId === personInfo.memberId
+  //               );
+  //               if (existing) {
+  //                 return prev.map((info) =>
+  //                   info.memberId === personInfo.memberId
+  //                     ? { ...info, choice: personInfo.choice }
+  //                     : info
+  //                 );
+  //               } else {
+  //                 return [...prev, personInfo];
+  //               }
+  //             });
+
+  //             // console.log("타이머 끝! 그리고 멤버가 보낸 선택지도 pub 해줌!!!")
+
+  //             // if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
+  //             //   console.log("[*] Blue team confirmed");
+  //             //   addBlueMember(memberId);
+  //             // } else if (pickedChoice === "SECOND" && !redMembers.includes(memberId)) {
+  //             //   console.log("[*] Red team confirmed");
+  //             //   addRedMember(memberId);
+  //             // }
+
+  //             setPickedChoice(null);
+  //             onTimerEnd();
+  //             return 0;
+  //           }
+  //         });
+  //       }, 500); // Timer interval set to 1000ms (1 second)
+  //     };
+
+  //     startTimer();
+
+  //     return () => {
+  //       clearInterval(timer);
+  //     };
+  //   }
+  // }, [currentStep, pickedChoice, onTimerEnd]);
+
+  // =================================================================================
 
   // 선택지 1 2 바꾸자
   useEffect(() => {
