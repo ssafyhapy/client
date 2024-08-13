@@ -120,7 +120,7 @@ const BalanceChoosing = ({
                   : info
               );
             } else {
-              return [...prev, personInfo];
+              return [...(prev || []), personInfo];
             }
           });
 
