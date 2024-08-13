@@ -22,15 +22,11 @@ const Balance = () => {
 
   const { discussedNum, setDiscussedNum } = useBalanceStore();
 
+  // 밸런스 게임 사람들이 고른 선택지 저장하는 함수
   const {
-    blueMembers,
-    redMembers,
-    addBlueMember,
-    addRedMember,
     resetMemberStatuses,
     setBalanceGamePeopleChoiceInfo,
     balanceGamePeopleChoiceInfo,
-    addbalanceGamePeopleChoiceInfo,
   } = usePresenterStore();
 
   // 방장이 적은 text
@@ -49,6 +45,7 @@ const Balance = () => {
     }
   }, [purpose]);
 
+  // 준비중 ... component
   useEffect(() => {
     const interval = setInterval(() => {
       setDots((prevDots) => (prevDots.length < 6 ? prevDots + " ·" : ""));
@@ -151,13 +148,6 @@ const Balance = () => {
           return [...prev, personInfo];
         }
       });
-
-      // 사람들이 고른 선택지에 따라 blueMember나 redMember에 집어넣기
-      // if (message.balanceResultSelectedOption === "FIRST") {
-      //   addBlueMember(message.memberId);
-      // } else if (message.balanceResultSelectedOption === "SECOND") {
-      //   addRedMember(message.memberId);
-      // }
     });
 
     // 받아오는 데이터
@@ -180,14 +170,15 @@ const Balance = () => {
     purpose,
   ]);
 
-  useEffect(() => {
-    console.log("blue members: ", blueMembers);
-    console.log("red members: ", redMembers);
-  }, [blueMembers, redMembers]);
-
+  // topic id 뭔지 출력
   useEffect(() => {
     console.log("Topic Id: ", topicId);
   }, [topicId]);
+
+  // 밸런스게임 사람들이 뭐 골랐는지 제대로 배열에 들어가는지 확인
+  useEffect(() => {
+    console.log("What people chose: ", balanceGamePeopleChoiceInfo)
+  }, [balanceGamePeopleChoiceInfo])
 
   return (
     <>

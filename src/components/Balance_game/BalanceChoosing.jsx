@@ -29,23 +29,85 @@ const BalanceChoosing = ({
   const [first, setOptionFirst] = useState("");
   const [second, setOptionSecond] = useState("");
 
-  const { setBalanceGamePeopleChoiceInfo } =
-    usePresenterStore();
+  const { setBalanceGamePeopleChoiceInfo } = usePresenterStore();
 
   const handlePickedChoice = (choice) => {
     setPickedChoice(choice);
-  }
+  };
 
   const [secondsLeft, setSecondsLeft] = useState(10);
 
+  // date() 사용해서 10초 타이머 컨트롤하기...
+  const [startTime, setStartTime] = useState(null);
+
+  // 이제 시간 date.now()로 실제 시간가지고 10초 카운트다운 관리함!!!
+  useEffect(() => {
+    if (currentStep && !startTime) {
+      setStartTime(Date.now());
+    }
+  }, [currentStep, startTime]);
+
+  useEffect(() => {
+    if (currentStep && startTime) {
+      const timer = setInterval(() => {
+        const now = Date.now();
+        const elapsedSeconds = Math.floor((now - startTime) / 1000);
+        const remainingSeconds = Math.max(10 - elapsedSeconds, 0);
+
+        setSecondsLeft(remainingSeconds);
+
+        if (remainingSeconds <= 0) {
+          clearInterval(timer);
+
+          // 그 사람이 보낸 선택지 뭔지 백에 보냄
+          webSocketService.sendBalancePersonChoice(
+            roomId,
+            topicId,
+            memberId,
+            pickedChoice
+          );
+
+          const personInfo = {
+            memberId,
+            choice: pickedChoice,
+          };
+
+          console.log("personInfo: " , personInfo)
+
+          // Update the store with the new choice information
+          setBalanceGamePeopleChoiceInfo((prev) => {
+            const existing = prev.find(
+              (info) => info.memberId === personInfo.memberId
+            );
+            if (existing) {
+              return prev.map((info) =>
+                info.memberId === personInfo.memberId
+                  ? { ...info, choice: personInfo.choice }
+                  : info
+              );
+            } else {
+              return [...prev, personInfo];
+            }
+          });
+
+          setPickedChoice(null);
+          onTimerEnd(); // Call the timer end handler
+        }
+      }, 100); // Update every 100ms for smoother transitions
+
+      return () => {
+        clearInterval(timer);
+      };
+    }
+  }, [currentStep, startTime, pickedChoice, onTimerEnd]);
+
   // =================================================================================
 
-  // 타이머 시작하기 전에 0.5초 딜레이
   // useEffect(() => {
   //   if (currentStep) {
   //     // Clear any existing timer to prevent overlapping timers
   //     let timer;
-  
+
   //     const startTimer = () => {
   //       timer = setInterval(() => {
   //         setSecondsLeft((prev) => {
@@ -53,21 +115,21 @@ const BalanceChoosing = ({
   //             return prev - 1;
   //           } else {
   //             clearInterval(timer);
-  
-  //             // Pub the choice to the server
+
   //             webSocketService.sendBalancePersonChoice(
   //               roomId,
   //               topicId,
   //               memberId,
   //               pickedChoice
   //             );
-  
+
+  //             // 자기가 고른건 안보이는 모양...? 이니까 자기가 고른것 추가해줘라...
   //             const personInfo = {
   //               memberId,
   //               choice: pickedChoice,
   //             };
-  
-  //             // 자기가 고른건 zustand에 안들어가는것같아서...?? 추가해줌 (이게맞나?)
+
+  //             // Update the store with the new choice information
   //             setBalanceGamePeopleChoiceInfo((prev) => {
   //               const existing = prev.find(
   //                 (info) => info.memberId === personInfo.memberId
@@ -82,97 +144,22 @@ const BalanceChoosing = ({
   //                 return [...prev, personInfo];
   //               }
   //             });
-  
+
   //             setPickedChoice(null);
   //             onTimerEnd();
   //             return 0;
   //           }
   //         });
-  //       }, 1000); // Adjusting the timer interval to 1000ms for consistency
+  //       }, 500); // Timer interval set to 1000ms (1 second)
   //     };
-  
-  //     // Introduce a slight delay before starting the timer
-  //     const delayStart = setTimeout(() => {
-  //       startTimer();
-  //     }, 500);
-  
+
+  //     startTimer();
+
   //     return () => {
-  //       clearInterval(timer); // Clear the interval on cleanup
-  //       clearTimeout(delayStart); // Clear the timeout if the effect is cleaned up
+  //       clearInterval(timer);
   //     };
   //   }
   // }, [currentStep, pickedChoice, onTimerEnd]);
-
-
-  // =================================================================================
-
-  useEffect(() => {
-    if (currentStep) {
-      // Clear any existing timer to prevent overlapping timers
-      let timer;
-
-      const startTimer = () => {
-        timer = setInterval(() => {
-          setSecondsLeft((prev) => {
-            if (prev > 1) {
-              return prev - 1;
-            } else {
-              clearInterval(timer);
-
-              webSocketService.sendBalancePersonChoice(
-                roomId,
-                topicId,
-                memberId,
-                pickedChoice
-              );
-
-              // 자기가 고른건 안보이는 모양...? 이니까 자기가 고른것 추가해줘라...
-              const personInfo = {
-                memberId,
-                choice: pickedChoice,
-              };
-
-              // Update the store with the new choice information
-              setBalanceGamePeopleChoiceInfo((prev) => {
-                const existing = prev.find(
-                  (info) => info.memberId === personInfo.memberId
-                );
-                if (existing) {
-                  return prev.map((info) =>
-                    info.memberId === personInfo.memberId
-                      ? { ...info, choice: personInfo.choice }
-                      : info
-                  );
-                } else {
-                  return [...prev, personInfo];
-                }
-              });
-
-              // console.log("타이머 끝! 그리고 멤버가 보낸 선택지도 pub 해줌!!!")
-
-              // if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
-              //   console.log("[*] Blue team confirmed");
-              //   addBlueMember(memberId);
-              // } else if (pickedChoice === "SECOND" && !redMembers.includes(memberId)) {
-              //   console.log("[*] Red team confirmed");
-              //   addRedMember(memberId);
-              // }
-
-              setPickedChoice(null);
-              onTimerEnd();
-              return 0;
-            }
-          });
-        }, 500); // Timer interval set to 1000ms (1 second)
-      };
-
-      startTimer();
-
-      return () => {
-        clearInterval(timer);
-      };
-    }
-  }, [currentStep, pickedChoice, onTimerEnd]);
 
   // =================================================================================
 
