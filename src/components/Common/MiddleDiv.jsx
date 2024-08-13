@@ -226,7 +226,7 @@ const MiddleDiv = () => {
   } = useGameStore();
 
   // 나를 맞춰봐 게임! O 고른 사람들에게 파란 배경색 부여
-  // const { guessMeGamePeopleSelection, resetGuessMePeopleSelection } = usePresenterStore();
+  const { guessMeGamePeopleSelection, resetGuessMePeopleSelection } = usePresenterStore();
 
   // useEffect(() => {
   //   // 빈배열인지 아닌지부터 먼저 검사
