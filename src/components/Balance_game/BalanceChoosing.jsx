@@ -38,76 +38,13 @@ const BalanceChoosing = ({
 
   const [secondsLeft, setSecondsLeft] = useState(10);
 
-  useEffect(() => {
-    if (currentStep) {
-      // Clear any existing timer to prevent overlapping timers
-      let timer;
-  
-      const startTimer = () => {
-        timer = setInterval(() => {
-          setSecondsLeft((prev) => {
-            if (prev > 1) {
-              return prev - 1;
-            } else {
-              clearInterval(timer);
-  
-              // Pub the choice to the server
-              webSocketService.sendBalancePersonChoice(
-                roomId,
-                topicId,
-                memberId,
-                pickedChoice
-              );
-  
-              const personInfo = {
-                memberId,
-                choice: pickedChoice,
-              };
-  
-              // 자기가 고른건 zustand에 안들어가는것같아서...?? 추가해줌 (이게맞나?)
-              setBalanceGamePeopleChoiceInfo((prev) => {
-                const existing = prev.find(
-                  (info) => info.memberId === personInfo.memberId
-                );
-                if (existing) {
-                  return prev.map((info) =>
-                    info.memberId === personInfo.memberId
-                      ? { ...info, choice: personInfo.choice }
-                      : info
-                  );
-                } else {
-                  return [...prev, personInfo];
-                }
-              });
-  
-              setPickedChoice(null);
-              onTimerEnd();
-              return 0;
-            }
-          });
-        }, 1000); // Adjusting the timer interval to 1000ms for consistency
-      };
-  
-      // Introduce a slight delay before starting the timer
-      const delayStart = setTimeout(() => {
-        startTimer();
-      }, 500);
-  
-      return () => {
-        clearInterval(timer); // Clear the interval on cleanup
-        clearTimeout(delayStart); // Clear the timeout if the effect is cleaned up
-      };
-    }
-  }, [currentStep, pickedChoice, onTimerEnd]);
-
-
   // =================================================================================
 
   // useEffect(() => {
   //   if (currentStep) {
   //     // Clear any existing timer to prevent overlapping timers
   //     let timer;
-
+  
   //     const startTimer = () => {
   //       timer = setInterval(() => {
   //         setSecondsLeft((prev) => {
@@ -115,21 +52,21 @@ const BalanceChoosing = ({
   //             return prev - 1;
   //           } else {
   //             clearInterval(timer);
-
+  
+  //             // Pub the choice to the server
   //             webSocketService.sendBalancePersonChoice(
   //               roomId,
   //               topicId,
   //               memberId,
   //               pickedChoice
   //             );
-
-  //             // 자기가 고른건 안보이는 모양...? 이니까 자기가 고른것 추가해줘라...
+  
   //             const personInfo = {
   //               memberId,
   //               choice: pickedChoice,
   //             };
-
-  //             // Update the store with the new choice information
+  
+  //             // 자기가 고른건 zustand에 안들어가는것같아서...?? 추가해줌 (이게맞나?)
   //             setBalanceGamePeopleChoiceInfo((prev) => {
   //               const existing = prev.find(
   //                 (info) => info.memberId === personInfo.memberId
@@ -144,32 +81,97 @@ const BalanceChoosing = ({
   //                 return [...prev, personInfo];
   //               }
   //             });
-
-  //             // console.log("타이머 끝! 그리고 멤버가 보낸 선택지도 pub 해줌!!!")
-
-  //             // if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
-  //             //   console.log("[*] Blue team confirmed");
-  //             //   addBlueMember(memberId);
-  //             // } else if (pickedChoice === "SECOND" && !redMembers.includes(memberId)) {
-  //             //   console.log("[*] Red team confirmed");
-  //             //   addRedMember(memberId);
-  //             // }
-
+  
   //             setPickedChoice(null);
   //             onTimerEnd();
   //             return 0;
   //           }
   //         });
-  //       }, 500); // Timer interval set to 1000ms (1 second)
+  //       }, 1000); // Adjusting the timer interval to 1000ms for consistency
   //     };
-
-  //     startTimer();
-
+  
+  //     // Introduce a slight delay before starting the timer
+  //     const delayStart = setTimeout(() => {
+  //       startTimer();
+  //     }, 500);
+  
   //     return () => {
-  //       clearInterval(timer);
+  //       clearInterval(timer); // Clear the interval on cleanup
+  //       clearTimeout(delayStart); // Clear the timeout if the effect is cleaned up
   //     };
   //   }
   // }, [currentStep, pickedChoice, onTimerEnd]);
+
+
+  // =================================================================================
+
+  useEffect(() => {
+    if (currentStep) {
+      // Clear any existing timer to prevent overlapping timers
+      let timer;
+
+      const startTimer = () => {
+        timer = setInterval(() => {
+          setSecondsLeft((prev) => {
+            if (prev > 1) {
+              return prev - 1;
+            } else {
+              clearInterval(timer);
+
+              webSocketService.sendBalancePersonChoice(
+                roomId,
+                topicId,
+                memberId,
+                pickedChoice
+              );
+
+              // 자기가 고른건 안보이는 모양...? 이니까 자기가 고른것 추가해줘라...
+              const personInfo = {
+                memberId,
+                choice: pickedChoice,
+              };
+
+              // Update the store with the new choice information
+              setBalanceGamePeopleChoiceInfo((prev) => {
+                const existing = prev.find(
+                  (info) => info.memberId === personInfo.memberId
+                );
+                if (existing) {
+                  return prev.map((info) =>
+                    info.memberId === personInfo.memberId
+                      ? { ...info, choice: personInfo.choice }
+                      : info
+                  );
+                } else {
+                  return [...prev, personInfo];
+                }
+              });
+
+              // console.log("타이머 끝! 그리고 멤버가 보낸 선택지도 pub 해줌!!!")
+
+              // if (pickedChoice === "FIRST" && !blueMembers.includes(memberId)) {
+              //   console.log("[*] Blue team confirmed");
+              //   addBlueMember(memberId);
+              // } else if (pickedChoice === "SECOND" && !redMembers.includes(memberId)) {
+              //   console.log("[*] Red team confirmed");
+              //   addRedMember(memberId);
+              // }
+
+              setPickedChoice(null);
+              onTimerEnd();
+              return 0;
+            }
+          });
+        }, 500); // Timer interval set to 1000ms (1 second)
+      };
+
+      startTimer();
+
+      return () => {
+        clearInterval(timer);
+      };
+    }
+  }, [currentStep, pickedChoice, onTimerEnd]);
 
   // =================================================================================
 
