@@ -29,17 +29,16 @@ const BalanceChoosing = ({
   const [first, setOptionFirst] = useState("");
   const [second, setOptionSecond] = useState("");
 
-  const { setBalanceGamePeopleChoiceInfo } =
-    usePresenterStore();
+  const { setBalanceGamePeopleChoiceInfo } = usePresenterStore();
 
   const handlePickedChoice = (choice) => {
     setPickedChoice(choice);
-  }
+  };
 
   const [secondsLeft, setSecondsLeft] = useState(10);
 
   // date() 사용해서 10초 타이머 컨트롤하기...
-  const [startTime, setStartTime] = useState(null)
+  const [startTime, setStartTime] = useState(null);
 
   // =================================================================================
 
@@ -48,7 +47,7 @@ const BalanceChoosing = ({
   //   if (currentStep) {
   //     // Clear any existing timer to prevent overlapping timers
   //     let timer;
-  
+
   //     const startTimer = () => {
   //       timer = setInterval(() => {
   //         setSecondsLeft((prev) => {
@@ -56,7 +55,7 @@ const BalanceChoosing = ({
   //             return prev - 1;
   //           } else {
   //             clearInterval(timer);
-  
+
   //             // Pub the choice to the server
   //             webSocketService.sendBalancePersonChoice(
   //               roomId,
@@ -64,12 +63,12 @@ const BalanceChoosing = ({
   //               memberId,
   //               pickedChoice
   //             );
-  
+
   //             const personInfo = {
   //               memberId,
   //               choice: pickedChoice,
   //             };
-  
+
   //             // 자기가 고른건 zustand에 안들어가는것같아서...?? 추가해줌 (이게맞나?)
   //             setBalanceGamePeopleChoiceInfo((prev) => {
   //               const existing = prev.find(
@@ -85,7 +84,7 @@ const BalanceChoosing = ({
   //                 return [...prev, personInfo];
   //               }
   //             });
-  
+
   //             setPickedChoice(null);
   //             onTimerEnd();
   //             return 0;
@@ -93,12 +92,12 @@ const BalanceChoosing = ({
   //         });
   //       }, 1000); // Adjusting the timer interval to 1000ms for consistency
   //     };
-  
+
   //     // Introduce a slight delay before starting the timer
   //     const delayStart = setTimeout(() => {
   //       startTimer();
   //     }, 500);
-  
+
   //     return () => {
   //       clearInterval(timer); // Clear the interval on cleanup
   //       clearTimeout(delayStart); // Clear the timeout if the effect is cleaned up
@@ -106,18 +105,20 @@ const BalanceChoosing = ({
   //   }
   // }, [currentStep, pickedChoice, onTimerEnd]);
 
-
   // =================================================================================
 
   useEffect(() => {
-    if (currentStep) {
-      // Set the start time when the step changes or the timer starts
+    if (currentStep && !startTime) {
       setStartTime(Date.now());
+    }
+  }, [currentStep, startTime]);
 
+  useEffect(() => {
+    if (currentStep && startTime) {
       const timer = setInterval(() => {
         const now = Date.now();
-        const elapsedSeconds = Math.floor((now - startTime) / 1000); // Calculate how many seconds have passed
-        const remainingSeconds = Math.max(10 - elapsedSeconds, 0); // Calculate how many seconds are left
+        const elapsedSeconds = Math.floor((now - startTime) / 1000);
+        const remainingSeconds = Math.max(10 - elapsedSeconds, 0);
 
         setSecondsLeft(remainingSeconds);
 
@@ -165,7 +166,6 @@ const BalanceChoosing = ({
   }, [currentStep, startTime, pickedChoice, onTimerEnd]);
 
   // =================================================================================
-
 
   // useEffect(() => {
   //   if (currentStep) {
