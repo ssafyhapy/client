@@ -10,6 +10,7 @@ import bgImage from "../../assets/bg/bgImage.jpg";
 import Spinner from "../../components/Spinner";
 import { axiosInstance } from "../../api/apiClient";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Report = () => {
   const [loading, setLoading] = useState(true);
@@ -17,22 +18,47 @@ const Report = () => {
   const { roomId } = useParams();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosInstance.get(
-          `/room/${roomId}/report`,
-        );
-        console.log("fetchData", response);
-        setReportData(response.data.data);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        // "https://i11c209.p.ssafy.io/api/room/86/report",
+        "https://i11c209.p.ssafy.io/api/room/1364/report",
+        {
+          headers: {
+            authorization:
+              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDkwMDQ0MjM3MDk5MTkxOTQxMDQiLCJyb2xlIjoiUk9MRV9VU0VSIiwibWVtYmVySWQiOjgsImlhdCI6MTcyMzM3Mjk0MSwiZXhwIjoxNzI1OTY0OTQxfQ.7SPnaQ2ARdN4qhBg7HBBwnvZZ8cD-xLM1rkM3cs0Mv8RtUTHHCfS37N4JNkvrwUXY_PsVE7lkeNY9K2DQZVj7Q",
+          },
+        }
+      );
+      console.log("fetchData", response);
+      setReportData(response.data.data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
 
-    fetchData();
-  }, []);
+  fetchData();
+}, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axiosInstance.get(
+  //         `/room/${roomId}/report`,
+  //       );
+  //       console.log("fetchData", response);
+  //       setReportData(response.data.data);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error(error);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   return (
     <div

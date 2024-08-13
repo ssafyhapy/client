@@ -2,14 +2,13 @@ import React from "react";
 import Vs from "./Vs";
 
 const BalanceSlide = ({ slide }) => (
-  <div className="w-full h-full">
     <div className="w-full h-full flex gap-5 justify-center items-start">
       <div className="w-full h-full flex flex-col items-center gap-5 ">
-        <p className="text-4xl">
+        <p className="text-3xl text-center">
           {slide.balanceQuestionOptionFirst}
         </p>
 
-        <div className="w-full flex flex-col items-center gap-2 flex-nowrap">
+        <div className="w-full flex justify-center items-center gap-2">
           {slide.balanceResultResponseDtos.map(
             (response, index) =>
               response.balanceResultSelectedOption === "FIRST" && (
@@ -25,10 +24,10 @@ const BalanceSlide = ({ slide }) => (
       </div>
 
       <div className="w-full h-full flex flex-col items-center gap-5">
-        <p className="text-4xl text-left">
+        <p className="text-3xl text-center">
           {slide.balanceQuestionOptionSecond}
         </p>
-        <div className="w-full flex flex-col items-center flex-nowrap">
+        <div className="w-full flex justify-center items-center gap-2">
           {slide.balanceResultResponseDtos.map(
             (response, index) =>
               response.balanceResultSelectedOption === "SECOND" && (
@@ -38,7 +37,6 @@ const BalanceSlide = ({ slide }) => (
         </div>
       </div>
     </div>
-  </div>
 );
 
 export default BalanceSlide;
