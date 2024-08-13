@@ -3,7 +3,7 @@ import ProfileCard from "./ProfileCard";
 
 const Profile = ({ members }) => {
   return (
-    <>
+    <div className="flex flex-wrap justify-between gap-5">
       {members?.map((member) => (
         <ProfileCard
           key={member.memberId}
@@ -12,7 +12,7 @@ const Profile = ({ members }) => {
           memberProfileImageUrl={member.memberProfileImageUrl}
         />
       ))}
-    </>
+    </div>
   );
 };
 

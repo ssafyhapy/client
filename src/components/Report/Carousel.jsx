@@ -46,7 +46,7 @@ const Carousel = ({ slides, type }) => {
       <LeftBtn onClick={prevSlide} />
 
       {/* Slide Content */}
-      <div className="flex-grow mx-4 flex flex-col justify-center items-center">
+      <div className="w-full h-full flex-grow mx-4 flex flex-col justify-center items-center">
         {renderSlideContent()}
       </div>
 

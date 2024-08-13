@@ -7,7 +7,6 @@ import useGameStore from "./../../store/useGameStore";
 import useRoomStore from "../../store/useRoomStore";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../api/apiClient";
-
 const PhotographFirst = () => {
   const { publisher, subscribers, connectionInfo } = useGameStore();
 
@@ -19,7 +18,6 @@ const PhotographFirst = () => {
 
   const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowModal(true);
@@ -70,17 +68,14 @@ const PhotographFirst = () => {
     if (count === 2) return "max-w-[250px] min-w-[200px]";
     if (count >= 3) return "max-w-[150px] min-w-[200px]";
   };
-
   const getMicIcon = (isAudioActive) => {
     return isAudioActive
       ? "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic_on.png"
       : "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mute.png";
   };
-
   return (
     <div className="w-full h-screen bg-custom-gradient-game flex items-center justify-center">
       <div
-        ref={photoRef}
         style={{ height: "calc(100vh - 50px)" }}
         className="w-1/2 bg-[rgba(255,255,255,0.6)] flex flex-col justify-between"
       >
@@ -128,67 +123,68 @@ const PhotographFirst = () => {
             </div>
           ) : null}
 
-          {/* 여러명 있을 때 */}
-          {subscribers.length > 0 ? (
-            // 구독자 비디오 표현
-            <>
-              {/* 구독자 비디오 배경 */}
-              {/* 구독자 비디오 돌리기 */}
-              {subscribers.map((sub) => {
-                const connectionId = sub.stream?.connection?.connectionId;
-                if (!connectionId) {
-                  console.warn(`No connectionId found for subscriber:`, sub);
-                  return null;
-                }
-
-                return (
-                  <div
-                    key={connectionId}
-                    id={connectionId}
-                    className={`flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
-                  >
-                    <div className="w-full relative rounded-[15px]">
-                      <div id="subscriber">
-                        <video
-                          autoPlay={true}
-                          ref={(video) => video && sub.addVideoElement(video)}
-                          className="object-cover rounded-[15px]"
-                        />
-                      </div>
-
-                      <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
-                        <span className="flex ">
-                          <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                            {/* 이름 */}
-                            {
-                              connectionInfo[sub.stream.connection.connectionId]
-                                .memberName
-                            }
+          <div ref={photoRef}>
+            {/* 여러명 있을 때 */}
+            {subscribers.length > 0 ? (
+              // 구독자 비디오 표현
+              <>
+                {/* 구독자 비디오 배경 */}
+                {/* 구독자 비디오 돌리기 */}
+                {subscribers.map((sub) => {
+                  const connectionId = sub.stream?.connection?.connectionId;
+                  if (!connectionId) {
+                    console.warn(`No connectionId found for subscriber:`, sub);
+                    return null;
+                  }
+                  return (
+                    <div
+                      key={connectionId}
+                      id={connectionId}
+                      className={`flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
+                    >
+                      <div className="w-full relative rounded-[15px]">
+                        <div id="subscriber">
+                          <video
+                            autoPlay={true}
+                            ref={(video) => video && sub.addVideoElement(video)}
+                            className="object-cover rounded-[15px]"
+                          />
+                        </div>
+                        <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
+                          <span className="flex ">
+                            <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
+                              {/* 이름 */}
+                              {
+                                connectionInfo[
+                                  sub.stream.connection.connectionId
+                                ].memberName
+                              }
+                            </span>
+                            <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
+                              {/* 마이크 상태 */}
+                              <img
+                                src={getMicIcon(sub.stream.audioActive)}
+                                alt="mic icon"
+                                className="w-[12px] h-[18px]"
+                              />
+                            </span>
                           </span>
-                          <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                            {/* 마이크 상태 */}
-                            <img
-                              src={getMicIcon(sub.stream.audioActive)}
-                              alt="mic icon"
-                              className="w-[12px] h-[18px]"
-                            />
+                          <span
+                            className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
+                              false ? null : "hidden"
+                            }`}
+                          >
+                            {/* 준비완료 */}
+                            준비완료
                           </span>
-                        </span>
-                        <span
-                          className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
-                            false ? null : "hidden"
-                          }`}
-                        >
-                          {/* 준비완료 */}
-                          준비완료
-                        </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </>
-          ) : null}
+                  );
+                })}
+              </>
+            ) : null}
+          </div>
           {/* </div> */}
           {/* {pics.map((pic, index) => (
             <div key={index} className="flex items-center justify-center">
@@ -207,5 +203,4 @@ const PhotographFirst = () => {
     </div>
   );
 };
-
 export default PhotographFirst;

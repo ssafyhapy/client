@@ -1,6 +1,7 @@
 import React from "react";
 import defaultImage from "../../assets/My_page/defaultImg.jpg";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Memory = ({ memorybox, roomId }) => {
   const navigate = useNavigate();
@@ -9,10 +10,14 @@ const Memory = ({ memorybox, roomId }) => {
     navigate(`/room/${roomId}/report`);
   };
   return (
-    <div className="w-[240px] h-[350px] bg-white flex flex-col justify-between items-center p-4 gap-2">
+    <motion.div
+      className="w-[240px] h-[350px] bg-white flex flex-col justify-between items-center p-4 gap-2"
+      whileHover={{ scale: 1.05 }}
+      transition={{ duration: 0.3 }}
+    >
       <img
         onClick={handleClick}
-        className="w-[200px] h-[300px]"
+        className="w-[200px] h-[300px] cursor-pointer"
         src={memorybox.memberMemoryImageUrl || defaultImage}
         alt={memorybox.memberMemoryBoxName || "방 제목"}
       />
@@ -20,7 +25,7 @@ const Memory = ({ memorybox, roomId }) => {
         <p className="text-left">{memorybox.memberMemoryBoxDate}</p>
         <p className="text-right">{memorybox.memberMemoryBoxName}</p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 export default Memory;
