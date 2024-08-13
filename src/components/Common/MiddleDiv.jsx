@@ -141,19 +141,26 @@ const MiddleDiv = () => {
     usePresenterStore();
 
   useEffect(() => {
-    balanceGamePeopleChoiceInfo.forEach((info) => {
-      const connectionId = Object.keys(connectionInfo).find(
-        (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
-      );
-      if (connectionId) {
-        const color = info.choice === "FIRST" ? "cornflowerblue" : "salmon";
-        changeBackgroundColor(connectionId, color);
-      }
+    // 빈배열인지 아닌지부터 먼저 검사
+    if (
+      Array.isArray(balanceGamePeopleChoiceInfo) &&
+      balanceGamePeopleChoiceInfo.length > 0
+    ) {
+      balanceGamePeopleChoiceInfo.forEach((info) => {
+        const connectionId = Object.keys(connectionInfo).find(
+          (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+        );
 
-      return () => {
-        resetBalanceGamePeopleChoiceInfo();
-      };
-    });
+        if (connectionId) {
+          const color = info.choice === "FIRST" ? "cornflowerblue" : "salmon";
+          changeBackgroundColor(connectionId, color);
+        }
+      });
+    }
+
+    return () => {
+      resetBalanceGamePeopleChoiceInfo();
+    };
   }, [balanceGamePeopleChoiceInfo, connectionInfo]);
 
   // =====================================================================================================
