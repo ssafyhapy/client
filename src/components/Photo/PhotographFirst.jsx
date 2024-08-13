@@ -80,14 +80,13 @@ const PhotographFirst = () => {
       >
         <div
           ref={photoRef}
-          className="h-4/5 bg-[rgba(200,200,200,0.7)] mr-[44px] ml-[44px]
-  mt-[35px] mb-[39px] p-4 rounded-lg grid grid-cols-2 place-items-center gap-4"
-          style={{
-            backgroundImage:
-              "url('https://sarrr.s3.ap-northeast-2.amazonaws.com/artwork-7182531_1280.jpg')",
-            backgroundSize: "cover", // 이미지가 요소를 완전히 덮도록 설정
-            backgroundPosition: "center", // 이미지가 중앙에 위치하도록 설정
-          }}
+          className="h-4/5 bg-gradient-to-r from-violet-200 to-pink-200 mr-[44px] ml-[44px] mt-[35px] mb-[39px] p-4 rounded-lg grid grid-cols-2 place-items-center gap-4"
+          // style={{
+          //   backgroundImage:
+          //     "url('https://sarrr.s3.ap-northeast-2.amazonaws.com/artwork-7182531_1280.jpg')",
+          //   backgroundSize: "cover", // 이미지가 요소를 완전히 덮도록 설정
+          //   backgroundPosition: "center", // 이미지가 중앙에 위치하도록 설정
+          // }}
         >
           {publisher ? (
             <div
