@@ -255,7 +255,7 @@ const MiddleDiv = () => {
     return () => {
       resetGuessMePeopleSelection([]);
     };
-  }, [guessMeGamePeopleSelection, connectionInfo]);
+  }, [guessMeGamePeopleSelection]);
 
   // const determineResult = (predictions) => {
   //   if (predictions.length > 0) {
