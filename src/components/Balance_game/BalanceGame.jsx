@@ -159,7 +159,7 @@ const Balance = () => {
         webSocketService.unsubscribe(
           `/api/sub/balance/${roomId}/save-question`
         );
-        // webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`);
+        webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`);
       };
       // dependency array 추가 (아마도 constant subscribing 의 원인...)
     },
