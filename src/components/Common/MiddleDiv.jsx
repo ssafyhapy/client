@@ -148,7 +148,7 @@ const MiddleDiv = () => {
   //       const connectionId = Object.keys(connectionInfo).find(
   //         (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
   //       );
-  
+
   //       if (connectionId) {
   //         let color = null;
   //         if (info.selection === "O") {
@@ -159,7 +159,7 @@ const MiddleDiv = () => {
   //         changeBackgroundColor(connectionId, color);
   //       }
   //     });
-  
+
   //     // 작업이 끝난 후 상태를 리셋
   //     resetGuessMePeopleSelection([]);
   //   } else if (
@@ -173,7 +173,7 @@ const MiddleDiv = () => {
   //     });
   //   }
   // }, [guessMeGamePeopleSelection, connectionInfo]);
-  
+
   // useEffect(() => {
   //   if (
   //     Array.isArray(guessMeGamePeopleSelection) &&
@@ -293,6 +293,34 @@ const MiddleDiv = () => {
   const { guessMeGamePeopleSelection, resetGuessMePeopleSelection } =
     usePresenterStore();
 
+  useEffect(() => {
+    if (
+      Array.isArray(guessMeGamePeopleSelection) &&
+      guessMeGamePeopleSelection.length > 0
+    ) {
+      guessMeGamePeopleSelection.forEach((info) => {
+        const connectionId = Object.keys(connectionInfo).find(
+          (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+        );
+
+        if (connectionId) {
+          let color = null;
+          if (info.selection === "O") {
+            color = "cornflowerblue";
+          } else if (info.selection === "X") {
+            color = "salmon";
+          }
+          changeBackgroundColor(connectionId, color);
+        }
+      });
+    }
+
+    // 클린업 함수에서 상태를 초기화하지 않도록 변경
+    // return () => {
+    //   resetGuessMePeopleSelection();
+    // };
+  }, [guessMeGamePeopleSelection, connectionInfo]);
+
   // useEffect(() => {
   //   // 빈배열인지 아닌지부터 먼저 검사
   //   if (
@@ -322,33 +350,33 @@ const MiddleDiv = () => {
   //   };
   // }, [guessMeGamePeopleSelection]);
 
-  useEffect(() => {
-    if (
-      Array.isArray(guessMeGamePeopleSelection) &&
-      guessMeGamePeopleSelection.length > 0
-    ) {
-      guessMeGamePeopleSelection.forEach((info) => {
-        const connectionId = Object.keys(connectionInfo).find(
-          (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
-        );
+  // useEffect(() => {
+  //   if (
+  //     Array.isArray(guessMeGamePeopleSelection) &&
+  //     guessMeGamePeopleSelection.length > 0
+  //   ) {
+  //     guessMeGamePeopleSelection.forEach((info) => {
+  //       const connectionId = Object.keys(connectionInfo).find(
+  //         (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+  //       );
 
-        if (connectionId) {
-          let color = null;
-          if (info.selection === "O") {
-            color = "cornflowerblue";
-          } else if (info.selection === "X") {
-            color = "salmon";
-          }
-          changeBackgroundColor(connectionId, color);
-        }
-      });
-    }
+  //       if (connectionId) {
+  //         let color = null;
+  //         if (info.selection === "O") {
+  //           color = "cornflowerblue";
+  //         } else if (info.selection === "X") {
+  //           color = "salmon";
+  //         }
+  //         changeBackgroundColor(connectionId, color);
+  //       }
+  //     });
+  //   }
 
-    // 클린업 함수에서 상태를 초기화하지 않도록 변경
-    return () => {
-      resetGuessMePeopleSelection();
-    };
-  }, [guessMeGamePeopleSelection, connectionInfo]);
+  //   // 클린업 함수에서 상태를 초기화하지 않도록 변경
+  //   return () => {
+  //     resetGuessMePeopleSelection();
+  //   };
+  // }, [guessMeGamePeopleSelection, connectionInfo]);
 
   // const determineResult = (predictions) => {
   //   if (predictions.length > 0) {
