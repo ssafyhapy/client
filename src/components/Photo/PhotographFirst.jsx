@@ -28,7 +28,7 @@ const PhotographFirst = () => {
 
   const handleCapture = async () => {
     if (photoRef.current) {
-      html2canvas(photoRef.current, { useCORS: true, allowTaint: true }).then((canvas) => {
+      html2canvas(photoRef.current).then((canvas) => {
         canvas.toBlob(async (blob) => {
           if (memberId === hostId) {
             const formData = new FormData();
