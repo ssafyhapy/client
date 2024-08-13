@@ -636,7 +636,6 @@ const GuessMe = () => {
 
   return (
     <>
-    {guessMeGamePeopleSelection}
       {/* bottom div */}
       {!allPrepared ? (
         showReadyMessage ? (
