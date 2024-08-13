@@ -226,10 +226,39 @@ const MiddleDiv = () => {
   } = useGameStore();
 
   // 나를 맞춰봐 게임! O 고른 사람들에게 파란 배경색 부여
-  const { guessMeGamePeopleSelection, setGuessMeGamePeopleSelection, resetGuessMePeopleSelection } = usePresenterStore();
+  // const { guessMeGamePeopleSelection, resetGuessMePeopleSelection } = usePresenterStore();
+
+  // useEffect(() => {
+  //   // 빈배열인지 아닌지부터 먼저 검사
+  //   if (
+  //     Array.isArray(guessMeGamePeopleSelection) &&
+  //     guessMeGamePeopleSelection.length > 0
+  //   ) {
+  //     guessMeGamePeopleSelection.forEach((info) => {
+  //       const connectionId = Object.keys(connectionInfo).find(
+  //         (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+  //       );
+
+  //       if (connectionId) {
+  //         let color = null
+  //         if (info.selection === "O") {
+  //           color = "cornflowerblue"
+  //         }
+  //         else if (info.selection === "X"){
+  //           color = "salmon"
+  //         }
+  //         changeBackgroundColor(connectionId, color);
+  //       }
+  //     });
+  //   }
+
+  //   return () => {
+  //     resetGuessMePeopleSelection([]);
+  //   };
+  // }, [guessMeGamePeopleSelection]);
 
   useEffect(() => {
-    // 빈배열인지 아닌지부터 먼저 검사
+    // Check if guessMeGamePeopleSelection is a valid array before processing
     if (
       Array.isArray(guessMeGamePeopleSelection) &&
       guessMeGamePeopleSelection.length > 0
@@ -238,24 +267,27 @@ const MiddleDiv = () => {
         const connectionId = Object.keys(connectionInfo).find(
           (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
         );
-
+  
         if (connectionId) {
-          let color = null
+          let color = null;
           if (info.selection === "O") {
-            color = "cornflowerblue"
-          }
-          else if (info.selection === "X"){
-            color = "salmon"
+            color = "cornflowerblue";
+          } else if (info.selection === "X") {
+            color = "salmon";
           }
           changeBackgroundColor(connectionId, color);
         }
       });
     }
-
+  
     return () => {
-      resetGuessMePeopleSelection([]);
+      // Ensure that the reset function is correctly implemented and called
+      if (typeof resetGuessMePeopleSelection === "function") {
+        resetGuessMePeopleSelection([]);
+      }
     };
-  }, [guessMeGamePeopleSelection]);
+  }, [guessMeGamePeopleSelection, connectionInfo]);
+  
 
   // const determineResult = (predictions) => {
   //   if (predictions.length > 0) {
