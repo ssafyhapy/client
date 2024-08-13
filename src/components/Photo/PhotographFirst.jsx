@@ -12,6 +12,7 @@ import { axiosInstance } from "../../api/apiClient";
 const PhotographFirst = () => {
   const { publisher, subscribers, connectionInfo } = useGameStore();
   const [showModal, setShowModal] = useState(false);
+  const [bgImageLoaded, setBgImageLoaded] = useState(false); // 배경 이미지 로딩 상태
   const photoRef = useRef(null);
   const { roomId, hostId } = useRoomStore();
   const navigate = useNavigate();
@@ -24,6 +25,14 @@ const PhotographFirst = () => {
       setShowModal(true);
     }, 300);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    // 이미지 로딩
+    const img = new Image();
+    img.src = "https://sarrr.s3.ap-northeast-2.amazonaws.com/artwork-7182531_1280.jpg";
+    img.crossOrigin = "anonymous"; // CORS 설정
+    img.onload = () => setBgImageLoaded(true); // 이미지 로드 완료 시 상태 업데이트
   }, []);
 
   const handleCapture = async () => {
@@ -81,10 +90,11 @@ const PhotographFirst = () => {
         <div
           ref={photoRef}
           className="h-4/5 bg-[rgba(200,200,200,0.7)] mr-[44px] ml-[44px]
-  mt-[35px] mb-[39px] p-4 rounded-lg grid grid-cols-2 place-items-center gap-4"
+ mt-[35px] mb-[39px] p-4 rounded-lg grid grid-cols-2 place-items-center gap-4"
           style={{
-            backgroundImage:
-              "url('https://sarrr.s3.ap-northeast-2.amazonaws.com/artwork-7182531_1280.jpg')",
+            backgroundImage: bgImageLoaded
+              ? "url('https://sarrr.s3.ap-northeast-2.amazonaws.com/artwork-7182531_1280.jpg')"
+              : "none", // 배경 이미지가 로딩된 경우에만 설정
             backgroundSize: "cover", // 이미지가 요소를 완전히 덮도록 설정
             backgroundPosition: "center", // 이미지가 중앙에 위치하도록 설정
           }}
