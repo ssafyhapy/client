@@ -59,7 +59,7 @@ const BalanceChoosing = ({
         if (remainingSeconds <= 0) {
           clearInterval(timer);
 
-          // 그 사람이 보낸 선택지 뭔지 백에 보냄
+          // 그 사람이 고른 선택지 뭔지 백에 보냄
           webSocketService.sendBalancePersonChoice(
             roomId,
             topicId,
@@ -68,13 +68,13 @@ const BalanceChoosing = ({
           );
 
           const personInfo = {
-            memberId,
+            memberId: memberId,
             choice: pickedChoice,
           };
 
           console.log("personInfo: " , personInfo)
 
-          // Update the store with the new choice information
+          // 해당 memberId의 사람이 보낸 info 저장
           setBalanceGamePeopleChoiceInfo((prev) => {
             const existing = prev.find(
               (info) => info.memberId === personInfo.memberId

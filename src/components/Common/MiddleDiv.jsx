@@ -134,7 +134,7 @@ const MiddleDiv = () => {
   // ================================================================================================
 
   // 밸런스 게임! FIRST 고른 사람들에게 파란 배경색 부여
-  const { balanceGamePeopleChoiceInfo } = usePresenterStore();
+  const { balanceGamePeopleChoiceInfo , resetBalanceGamePeopleChoiceInfo} = usePresenterStore();
 
   useEffect(() => {
     balanceGamePeopleChoiceInfo.forEach((info) => {
@@ -144,6 +144,10 @@ const MiddleDiv = () => {
       if (connectionId) {
         const color = info.choice === "FIRST" ? "cornflowerblue" : "salmon";
         changeBackgroundColor(connectionId, color);
+      }
+
+      return () => {
+        resetBalanceGamePeopleChoiceInfo()
       }
     });
   }, [balanceGamePeopleChoiceInfo, connectionInfo]);
