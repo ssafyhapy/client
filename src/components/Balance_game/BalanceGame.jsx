@@ -156,15 +156,15 @@ const Balance = () => {
       webSocketService.unsubscribe(`/api/sub/${roomId}/state`);
       webSocketService.unsubscribe(`/api/sub/balance/${roomId}/get-question`);
       webSocketService.unsubscribe(`/api/sub/balance/${roomId}/save-question`);
-      webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`);
+      // webSocketService.unsubscribe(`/api/sub/balance/${roomId}/selection`);
     };
     // dependency array 추가 (아마도 constant subscribing 의 원인...)
   }, [
-    roomId,
-    topicId,
-    setGameStep,
-    currentStep,
-    purpose,
+    // roomId,
+    // topicId,
+    // setGameStep,
+    // currentStep,
+    // purpose,
   ]);
 
   // topic id 뭔지 출력
