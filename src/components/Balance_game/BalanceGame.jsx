@@ -24,9 +24,9 @@ const Balance = () => {
 
   // 밸런스 게임 사람들이 고른 선택지 저장하는 함수
   const {
-    resetMemberStatuses,
     setBalanceGamePeopleChoiceInfo,
     balanceGamePeopleChoiceInfo,
+    resetBalanceGamePeopleChoiceInfo
   } = usePresenterStore();
 
   // 방장이 적은 text
@@ -86,9 +86,8 @@ const Balance = () => {
       console.log("Received message:", message);
 
       if (message.memberState === "wrapup") {
+        resetBalanceGamePeopleChoiceInfo();
         setGameStep("wrap-up");
-        // 빨간배경 파란배경에 넣어져있는 memberId 리셋시키자!
-        resetMemberStatuses();
       }
     });
 
@@ -164,9 +163,7 @@ const Balance = () => {
     roomId,
     topicId,
     setGameStep,
-    discussedNum,
     currentStep,
-    setDiscussedNum,
     purpose,
   ]);
 
