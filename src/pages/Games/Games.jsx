@@ -25,7 +25,7 @@ const Games = () => {
 
   return (
     <WebSocketProvider>
-      <GameBackground>
+      <GameBackground session={session}>
         {/* TopDiv */}
         {gameStep !== "camera-check" &&
         gameStep !== "photo-first" &&
