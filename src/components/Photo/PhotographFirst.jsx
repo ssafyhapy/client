@@ -81,7 +81,13 @@ const PhotographFirst = () => {
         <div
           ref={photoRef}
           className="h-4/5 bg-[rgba(200,200,200,0.7)] mr-[44px] ml-[44px]
-          mt-[35px] mb-[39px] p-4 border-4 border-gray-500 rounded-lg grid grid-cols-2 place-items-center gap-4"
+  mt-[35px] mb-[39px] p-4 border-4 border-gray-500 rounded-lg grid grid-cols-2 place-items-center gap-4"
+          style={{
+            backgroundImage:
+              "url(https://www.google.com/url?sa=i&url=https%3A%2F%2Fdesignbase.co.kr%2Fmagazine%2F%25EA%25B7%25B8%25EB%259D%25BC%25EB%258D%25B0%25EC%259D%25B4%25EC%2585%2598-%25EC%25BB%25AC%25EB%259F%25AC-%25EC%25B6%2594%25EC%25B2%259C%25ED%2595%25B4%25EC%25A3%25BC%25EB%258A%2594-%25EC%2582%25AC%25EC%259D%25B4%25ED%258A%25B8%2F&psig=AOvVaw3BLcawxoZ7KtZMnCYqF0kY&ust=1723604009649000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMC-m7n78IcDFQAAAAAdAAAAABAJ)",
+            backgroundSize: "cover", // 이미지가 요소를 완전히 덮도록 설정
+            backgroundPosition: "center", // 이미지가 중앙에 위치하도록 설정
+          }}
           // 변경된 부분: 옅은 회색 배경과 프레임(border) 추가
         >
           {publisher ? (
