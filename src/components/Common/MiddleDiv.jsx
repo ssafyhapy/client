@@ -139,29 +139,93 @@ const MiddleDiv = () => {
   // 밸런스 게임! FIRST 고른 사람들에게 파란 배경색 부여
   const { balanceGamePeopleChoiceInfo, resetBalanceGamePeopleChoiceInfo } =
     usePresenterStore();
+    useEffect(() => {
+      if (
+        Array.isArray(guessMeGamePeopleSelection) &&
+        guessMeGamePeopleSelection.length > 0
+      ) {
+        // 필요한 작업 수행
+        guessMeGamePeopleSelection.forEach((info) => {
+          const connectionId = Object.keys(connectionInfo).find(
+            (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+          );
+    
+          if (connectionId) {
+            let color = null;
+            if (info.selection === "O") {
+              color = "cornflowerblue";
+            } else if (info.selection === "X") {
+              color = "salmon";
+            }
+            changeBackgroundColor(connectionId, color);
+          }
+        });
+    
+        // 작업이 끝난 후 상태를 리셋
+        resetGuessMePeopleSelection([]);
+      } else if (
+        Array.isArray(guessMeGamePeopleSelection) &&
+        guessMeGamePeopleSelection.length === 0
+      ) {
+        // 모든 연결 ID의 배경색을 초기화
+        Object.keys(connectionInfo).forEach((key) => {
+          changeBackgroundColor(key, ""); // 빈 문자열을 전달하여 배경색을 초기화
+        });
+      }
+    }, [guessMeGamePeopleSelection, connectionInfo]);
+    
+  // useEffect(() => {
+  //   if (
+  //     Array.isArray(guessMeGamePeopleSelection) &&
+  //     guessMeGamePeopleSelection.length > 0
+  //   ) {
+  //     // 필요한 작업 수행
+  //     guessMeGamePeopleSelection.forEach((info) => {
+  //       const connectionId = Object.keys(connectionInfo).find(
+  //         (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+  //       );
 
-  useEffect(() => {
-    // 빈배열인지 아닌지부터 먼저 검사
-    if (
-      Array.isArray(balanceGamePeopleChoiceInfo) &&
-      balanceGamePeopleChoiceInfo.length > 0
-    ) {
-      balanceGamePeopleChoiceInfo.forEach((info) => {
-        const connectionId = Object.keys(connectionInfo).find(
-          (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
-        );
+  //       if (connectionId) {
+  //         let color = null;
+  //         if (info.selection === "O") {
+  //           color = "cornflowerblue";
+  //         } else if (info.selection === "X") {
+  //           color = "salmon";
+  //         }
+  //         changeBackgroundColor(connectionId, color);
+  //       }
+  //     });
 
-        if (connectionId) {
-          const color = info.choice === "FIRST" ? "cornflowerblue" : "salmon";
-          changeBackgroundColor(connectionId, color);
-        }
-      });
-    }
+  //     // 작업이 끝난 후 상태를 리셋
+  //     resetGuessMePeopleSelection([]);
+  //   }
+  //   else if (!guessMeGamePeopleSelection){
 
-    return () => {
-      resetBalanceGamePeopleChoiceInfo();
-    };
-  }, [balanceGamePeopleChoiceInfo, connectionInfo]);
+  //   }
+  // }, [guessMeGamePeopleSelection, connectionInfo]);
+
+  // useEffect(() => {
+  //   // 빈배열인지 아닌지부터 먼저 검사
+  //   if (
+  //     Array.isArray(balanceGamePeopleChoiceInfo) &&
+  //     balanceGamePeopleChoiceInfo.length > 0
+  //   ) {
+  //     balanceGamePeopleChoiceInfo.forEach((info) => {
+  //       const connectionId = Object.keys(connectionInfo).find(
+  //         (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+  //       );
+
+  //       if (connectionId) {
+  //         const color = info.choice === "FIRST" ? "cornflowerblue" : "salmon";
+  //         changeBackgroundColor(connectionId, color);
+  //       }
+  //     });
+  //   }
+
+  //   return () => {
+  //     resetBalanceGamePeopleChoiceInfo();
+  //   };
+  // }, [balanceGamePeopleChoiceInfo, connectionInfo]);
 
   // =====================================================================================================
 
@@ -226,7 +290,8 @@ const MiddleDiv = () => {
   } = useGameStore();
 
   // 나를 맞춰봐 게임! O 고른 사람들에게 파란 배경색 부여
-  const { guessMeGamePeopleSelection, resetGuessMePeopleSelection } = usePresenterStore();
+  const { guessMeGamePeopleSelection, resetGuessMePeopleSelection } =
+    usePresenterStore();
 
   // useEffect(() => {
   //   // 빈배열인지 아닌지부터 먼저 검사
@@ -266,7 +331,7 @@ const MiddleDiv = () => {
         const connectionId = Object.keys(connectionInfo).find(
           (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
         );
-  
+
         if (connectionId) {
           let color = null;
           if (info.selection === "O") {
@@ -278,14 +343,12 @@ const MiddleDiv = () => {
         }
       });
     }
-  
+
     // 클린업 함수에서 상태를 초기화하지 않도록 변경
-    // return () => {
-    //   resetGuessMePeopleSelection();
-    // };
+    return () => {
+      resetGuessMePeopleSelection();
+    };
   }, [guessMeGamePeopleSelection, connectionInfo]);
-  
-  
 
   // const determineResult = (predictions) => {
   //   if (predictions.length > 0) {
