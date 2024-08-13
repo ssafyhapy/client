@@ -589,6 +589,9 @@ const GuessMe = () => {
         selection: message.answer,
       };
 
+      console.log("[*] personInfo",personInfo);
+      
+
       setGuessMeGamePeopleSelection((prev) => {
         const existing = prev.find(
           (info) => info.memberId === personInfo.memberId
@@ -630,6 +633,7 @@ const GuessMe = () => {
 
   return (
     <>
+    {guessMeGamePeopleSelection}
       {/* bottom div */}
       {!allPrepared ? (
         showReadyMessage ? (

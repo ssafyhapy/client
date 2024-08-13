@@ -20,22 +20,22 @@ const CameraCheckVideoView = ({ data }) => {
 
   const { memberName } = useAuthStore();
 
-  // useEffect(
-  //   () =>
-  //     console.log(
-  //       "[*]구독자 변경",
-  //       subscribers,
-  //       "구독자 타입",
-  //       typeof subscribers
-  //     ),
-  //     console.log(
-  //       "[*]퍼블리셔 변경",
-  //       publisher,
-  //       "구독자 타입",
-  //       typeof publisher
-  //     ),
-  //   [subscribers, publisher]
-  // );
+  useEffect(
+    () =>
+      console.log(
+        "[*]구독자 변경",
+        subscribers,
+        "구독자 타입",
+        typeof subscribers
+      ),
+      console.log(
+        "[*]퍼블리셔 변경",
+        publisher,
+        "구독자 타입",
+        typeof publisher
+      ),
+    [subscribers, publisher]
+  );
 
   // 오디오 상태 변경
   const getMicIcon = (isAudioActive) => {
