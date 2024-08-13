@@ -145,8 +145,8 @@ class WebSocketService {
   }
 
   // 나를 맞춰봐 선택 결과 받아오기
-  subscribeToSelections(roomId){
-    this.subscribe(`/api/sub/ox/${roomId}/selection`)
+  subscribeToSelections(roomId, onMessageCallback){
+    this.subscribe(`/api/sub/ox/${roomId}/selection`, onMessageCallback)
   }
 
 // ========================================================================================

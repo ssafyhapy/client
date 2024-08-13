@@ -596,6 +596,9 @@ const GuessMe = () => {
         const existing = prev.find(
           (info) => info.memberId === personInfo.memberId
         );
+
+        console.log("기존 선택지",existing);
+        
         if (existing) {
           return prev.map((info) =>
             info.memberId === personInfo.memberId
@@ -607,7 +610,7 @@ const GuessMe = () => {
         }
       });
     });
-  }, []);
+  }, [roomId]);
 
   useEffect(() => {
     console.log("[*] guessMeGamePeopleSelection", guessMeGamePeopleSelection);
