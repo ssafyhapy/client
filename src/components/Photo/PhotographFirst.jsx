@@ -79,7 +79,11 @@ const PhotographFirst = () => {
         style={{ height: "calc(100vh - 50px)" }}
         className="w-1/2 bg-[rgba(255,255,255,0.6)] flex flex-col justify-between"
       >
-        <div className="h-4/5 bg-[rgba(255,255,255,0.7)] mr-[44px] ml-[44px] mt-[35px] mb-[39px] p-1 grid grid-cols-2 place-items-center gap-1">
+        <div
+          ref={photoRef}
+          className="h-4/5 bg-[rgba(255,255,255,0.7)] mr-[44px] ml-[44px]
+          mt-[35px] mb-[39px] p-1 grid grid-cols-2 place-items-center gap-1"
+        >
           {publisher ? (
             <div
               id={publisher.stream.connection.connectionId}
@@ -122,82 +126,78 @@ const PhotographFirst = () => {
               </div>
             </div>
           ) : null}
-
-          <div ref={photoRef}>
-            {/* 여러명 있을 때 */}
-            {subscribers.length > 0 ? (
-              // 구독자 비디오 표현
-              <>
-                {/* 구독자 비디오 배경 */}
-                {/* 구독자 비디오 돌리기 */}
-                {subscribers.map((sub) => {
-                  const connectionId = sub.stream?.connection?.connectionId;
-                  if (!connectionId) {
-                    console.warn(`No connectionId found for subscriber:`, sub);
-                    return null;
-                  }
-                  return (
-                    <div
-                      key={connectionId}
-                      id={connectionId}
-                      className={`flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
-                    >
-                      <div className="w-full relative rounded-[15px]">
-                        <div id="subscriber">
-                          <video
-                            autoPlay={true}
-                            ref={(video) => video && sub.addVideoElement(video)}
-                            className="object-cover rounded-[15px]"
-                          />
-                        </div>
-                        <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
-                          <span className="flex ">
-                            <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                              {/* 이름 */}
-                              {
-                                connectionInfo[
-                                  sub.stream.connection.connectionId
-                                ].memberName
-                              }
-                            </span>
-                            <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                              {/* 마이크 상태 */}
-                              <img
-                                src={getMicIcon(sub.stream.audioActive)}
-                                alt="mic icon"
-                                className="w-[12px] h-[18px]"
-                              />
-                            </span>
+          {/* 여러명 있을 때 */}
+          {subscribers.length > 0 ? (
+            // 구독자 비디오 표현
+            <>
+              {/* 구독자 비디오 배경 */}
+              {/* 구독자 비디오 돌리기 */}
+              {subscribers.map((sub) => {
+                const connectionId = sub.stream?.connection?.connectionId;
+                if (!connectionId) {
+                  console.warn(`No connectionId found for subscriber:`, sub);
+                  return null;
+                }
+                return (
+                  <div
+                    key={connectionId}
+                    id={connectionId}
+                    className={`flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
+                  >
+                    <div className="w-full relative rounded-[15px]">
+                      <div id="subscriber">
+                        <video
+                          autoPlay={true}
+                          ref={(video) => video && sub.addVideoElement(video)}
+                          className="object-cover rounded-[15px]"
+                        />
+                      </div>
+                      <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
+                        <span className="flex ">
+                          <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
+                            {/* 이름 */}
+                            {
+                              connectionInfo[sub.stream.connection.connectionId]
+                                .memberName
+                            }
                           </span>
-                          <span
-                            className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
-                              false ? null : "hidden"
-                            }`}
-                          >
-                            {/* 준비완료 */}
-                            준비완료
+                          <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
+                            {/* 마이크 상태 */}
+                            <img
+                              src={getMicIcon(sub.stream.audioActive)}
+                              alt="mic icon"
+                              className="w-[12px] h-[18px]"
+                            />
                           </span>
-                        </div>
+                        </span>
+                        <span
+                          className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
+                            false ? null : "hidden"
+                          }`}
+                        >
+                          {/* 준비완료 */}
+                          준비완료
+                        </span>
                       </div>
                     </div>
-                  );
-                })}
-              </>
-            ) : null}
-          </div>
-          {/* </div> */}
-          {/* {pics.map((pic, index) => (
+                  </div>
+                );
+              })}
+            </>
+          ) : null}
+        </div>
+        {/* </div> */}
+        {/* {pics.map((pic, index) => (
             <div key={index} className="flex items-center justify-center">
               <p className="m-5">{pic}</p>
             </div>
           ))} */}
-        </div>
-        <div className="m-2 flex items-center justify-center">
-          <GameTurns gameStep={gameStep} />
-        </div>
-        <div className="text-center text-sm m-5 font-bold">
-          <Photograph_intro />
-        </div>
+      </div>
+      <div className="m-2 flex items-center justify-center">
+        <GameTurns gameStep={gameStep} />
+      </div>
+      <div className="text-center text-sm m-5 font-bold">
+        <Photograph_intro />
       </div>
       {showModal && <TakePhotoModal onCapture={handleCapture} />}
     </div>
