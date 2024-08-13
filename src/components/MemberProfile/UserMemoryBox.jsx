@@ -22,7 +22,7 @@ const UserMemoryBox = ({ memberMemoryboxList }) => {
   return (
     <div className="w-full h-auto bg-[rgba(255,255,255,0.3)] shadow-[0_0_30px_rgba(66,72,81,0.3)] border-[10px] border-[rgba(255,255,255,0.2)] flex flex-col p-5 gap-5 relative">
       <div className="flex items-center gap-2">
-        <h1 className="text-2xl">추억 상자</h1>
+        <h1 className="text-3xl text-[#9400d3b0]">Memories</h1>
       </div>
       <div className="flex justify-evenly">
       {/* 현재 페이지에 해당하는 UserMemory 컴포넌트를 출력 */}
@@ -36,7 +36,7 @@ const UserMemoryBox = ({ memberMemoryboxList }) => {
           <button
             key={index + 1}
             onClick={() => handlePageChange(index + 1)}
-            className={`px-3 py-1 rounded-md ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            className={`px-3 py-1 rounded-md ${currentPage === index + 1 ? 'bg-[#9400d3b0] text-white' : 'bg-gray-200'}`}
           >
             {index + 1}
           </button>

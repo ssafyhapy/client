@@ -43,7 +43,7 @@ const NavBar = () => {
 
   return (
     <>
-      <nav className="flex flex-col items-center w-full">
+      <nav className="flex flex-col items-center w-full text-2xl">
         <ul className="flex justify-between w-[98%]">
           <div className="flex gap-8 text-[#9400d3b0]">
             <li>

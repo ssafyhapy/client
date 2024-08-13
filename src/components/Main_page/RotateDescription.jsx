@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const RotateDescription = ({ sentences, fontsize="64px", time=2000 }) => {
+const RotateDescription = ({ sentences, fontsize = "64px", time = 2000 }) => {
   const [index, setIndex] = useState(0);
   // const sentences = [
   //   "오프라인에서의 어색한 첫 만남, 걱정되지는 않으신가요?",
@@ -25,7 +25,7 @@ const RotateDescription = ({ sentences, fontsize="64px", time=2000 }) => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -20, opacity: 0 }}
           transition={{ duration: 0.5 }}
-          style={{fontSize: fontsize}}
+          style={{ fontSize: fontsize }}
           className="font-bold text-center text-[rgba(0,0,0,0.5)] whitespace-nowrap"
         >
           {sentences[index]}
