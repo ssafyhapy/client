@@ -462,7 +462,7 @@ const GuessMe = () => {
     webSocketService.subscribeToMemberState(roomId, (message) => {
       console.log("Received game state: ", message);
       if (message.memberState === "balance") {
-        resetGuessMePeopleSelection();
+        // resetGuessMePeopleSelection();
         setCurrentPresenterId(null);
         setGameStep("balance-game");
       }
@@ -616,9 +616,9 @@ const GuessMe = () => {
     });
   }, [roomId]);
 
-  useEffect(() => {
-    console.log("[*] guessMeGamePeopleSelection", guessMeGamePeopleSelection);
-  }, [guessMeGamePeopleSelection]);
+  // useEffect(() => {
+  //   console.log("[*] guessMeGamePeopleSelection", guessMeGamePeopleSelection);
+  // }, [guessMeGamePeopleSelection]);
 
   // 타이머 시작하기 전에 약간의 delay
   useEffect(() => {
