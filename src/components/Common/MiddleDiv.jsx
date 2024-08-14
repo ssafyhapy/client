@@ -564,7 +564,7 @@ useEffect(() => {
                         data.ready ? null : "hidden"
                       }`}
                     >
-                      준비완료
+                      {/* 준비완료 */}
                     </span>
                   </div>
                 </div>
@@ -624,7 +624,6 @@ useEffect(() => {
                             }`}
                           >
                             {/* 준비완료 */}
-                            준비완료
                           </span>
                         </div>
                       </div>
