@@ -114,9 +114,9 @@ const MiddleDiv = () => {
     // }
 
     // // 백그라운드 이미 설정된게 있으면 리셋
-    // if (highlightedElementId) {
-    //   changeBackgroundColor(highlightedElementId, "");
-    // }
+    if (highlightedElementId) {
+      changeBackgroundColor(highlightedElementId, "");
+    }
 
     // memberId === currentPresenterId 인 connectionId 찾아 (memberId가 string임에 주의!)
     console.log("[*] newHighlightedElementId 를 찾아줄거예요")
