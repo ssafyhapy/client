@@ -122,9 +122,8 @@ const Chatbox = () => {
   };
 
   return (
-    // Your existing UI code remains here
     <div className="flex flex-col rounded-[20px] h-full w-[230px] bg-[rgba(255,255,255,0.4)] p-3 overflow-hidden">
-      <div className="flex-1 overflow-y-auto scrollbar-none min-w-[230px]">
+      <div className="flex-1 overflow-y-auto scrollbar-none w-[230px] p-[10px]">
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -147,6 +146,13 @@ const Chatbox = () => {
               </div>
             )}
             <div className="flex items-end">
+              <span
+                className={`text-xs text-gray-500 ${
+                  msg.from === memberName ? "order-2 ml-2" : "order-1 mr-2"
+                }`}
+              >
+                {moment(msg.timestamp).format("HH:mm")}
+              </span>
               <div
                 className={`p-2 rounded-lg break-words ${
                   msg.from === memberName
@@ -157,9 +163,6 @@ const Chatbox = () => {
               >
                 {msg.message}
               </div>
-              <span className="text-xs text-gray-500 ml-2">
-                {moment(msg.timestamp).format("HH:mm")}
-              </span>
             </div>
           </div>
         ))}
@@ -187,6 +190,7 @@ const Chatbox = () => {
     </div>
   );
 };
+
 
 export default Chatbox;
 

@@ -11,16 +11,33 @@ const Memory = ({ memorybox, roomId }) => {
   };
   return (
     <motion.div
-      className="w-[240px] h-[350px] bg-white flex flex-col justify-between items-center p-4 gap-2"
+      className="w-[240px] h-[350px] bg-white flex flex-col justify-between items-center p-4 gap-2 shadow-lg"
       whileHover={{ scale: 1.05 }}
       transition={{ duration: 0.3 }}
+      style={{
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+      }}
     >
-      <img
-        onClick={handleClick}
-        className="w-[200px] h-[300px] cursor-pointer"
-        src={memorybox.memberMemoryImageUrl || defaultImage}
-        alt={memorybox.memberMemoryBoxName || "방 제목"}
-      />
+      <div
+        className="w-[200px] h-[260px] bg-white flex justify-center items-center"
+        style={{
+          padding: "10px",
+          // border: "1px solid #ccc", // 흰색 테두리
+          boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)", // 그림자 추가
+        }}
+      >
+        <img
+          onClick={handleClick}
+          className="cursor-pointer"
+          style={{
+            maxWidth: "100%",
+            maxHeight: "100%",
+            objectFit: "cover",
+          }}
+          src={memorybox.memberMemoryImageUrl || defaultImage}
+          alt={memorybox.memberMemoryBoxName || "방 제목"}
+        />
+      </div>
       <div className="w-full">
         <p className="text-left">{memorybox.memberMemoryBoxDate}</p>
         <p className="text-right">{memorybox.memberMemoryBoxName}</p>

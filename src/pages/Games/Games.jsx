@@ -26,7 +26,7 @@ const Games = () => {
   return (
     <WebSocketProvider>
       <GameBackground session={session}>
-        <div className="flex flex-col h-[100vh] justify-between">
+        <div className="flex flex-col w-full h-[100vh] justify-between items-center">
           {gameStep !== "camera-check" &&
           gameStep !== "photo-first" &&
           gameStep !== "photo-last" ? (
