@@ -31,27 +31,25 @@ const TopDiv = ({ session }) => {
   };
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center justify-between">
       {gameStep === "waiting-room" ? (
-        <div className="flex flex-col items-center justify-center ms-3 ">
+        <div className="flex flex-col items-center justify-center ">
           <div className="flex">
-            <div>
-              접속 코드 : {roomCode} ≈
-              <button onClick={handleClipBoard} className="w-[30%] h-[30%]">
-                <img
-                  className="w-[15%] h-[15%]"
-                  src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/clipboard.webp"
-                  alt=""
-                />
-              </button>
-            </div>
-            <div> 방 이름 : {roomName}</div>
+            <div>접속 코드 : {roomCode} </div>
+            <button onClick={handleClipBoard} className="w-[30%] h-[30%]">
+              <img
+                className="w-[15%] h-[15%]"
+                src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/clipboard.webp"
+                alt=""
+              />
+            </button>
           </div>
+          <div> 방 이름 : {roomName}</div>
           {/* <div> 방 설정 인원 : {roomPersonCount}</div> */}
         </div>
       ) : null}
 
-      <div className="flex justify-center items-center ms-auto">
+      <div className="flex justify-center items-center ms">
         {gameStep == "camera-check" ||
         gameStep == "waiting-room" ||
         gameStep == "photo-first" ||
