@@ -68,7 +68,6 @@ const TopDiv = ({ session }) => {
             <div className="text-left"> 방 설정 인원 : {roomPersonCount}</div>
           </div>
         ) : null}
-        ƒ
         <div>
           {gameStep == "camera-check" ||
           gameStep == "waiting-room" ||
