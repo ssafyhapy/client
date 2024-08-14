@@ -31,9 +31,9 @@ const TopDiv = ({ session }) => {
   };
 
   return (
-    <div className="flex justify-center items-center relative">
+    <div className="flex items-center">
       {gameStep === "waiting-room" ? (
-        <div className="flex flex-col items-center absolute ml-3">
+        <div className="flex flex-col items-center justify-center ms-3 ">
           <div className="flex">
             <div>접속 코드 : {roomCode} </div>
             <button onClick={handleClipBoard} className="w-[30%] h-[30%]">
@@ -49,7 +49,7 @@ const TopDiv = ({ session }) => {
         </div>
       ) : null}
 
-      <div className="flex justify-center items-center ">
+      <div className="flex justify-center items-center ms-auto">
         {gameStep == "camera-check" ||
         gameStep == "waiting-room" ||
         gameStep == "photo-first" ||
@@ -59,7 +59,7 @@ const TopDiv = ({ session }) => {
       </div>
 
       {gameStep !== "photo-first" && gameStep !== "photo-last" ? (
-        <ExitBtn session={session} />
+        <ExitBtn session={session} className="mr-3" />
       ) : null}
 
       {showModal && (
