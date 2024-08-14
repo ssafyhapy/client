@@ -180,9 +180,12 @@ const Chatbox = () => {
               </span>
               <div
                 className={`p-2 rounded-lg break-words ${
-                  msg.from === memberName
-                    ? "bg-[rgba(0,112,246,0.25)] text-white text-sm"
-                    : "bg-[rgba(14,107,255,0.5)] text-white text-sm"
+                  // system 이 보내는거면 백그라운드 핑크
+                  msg.from === "System"
+                  ? "bg-pink-400 text-white text-sm"
+                  : msg.from === memberName
+                  ? "bg-[rgba(0,112,246,0.25)] text-white text-sm"
+                  : "bg-[rgba(14,107,255,0.5)] text-white text-sm"
                 }`}
                 style={{ maxWidth: "75%" }}
               >
