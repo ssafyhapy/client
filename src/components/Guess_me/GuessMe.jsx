@@ -447,6 +447,7 @@ const GuessMe = () => {
       // 받은게 memberId, nextIndex 면
       // 현재인덱스 받아온 인덱스로 설정, 10초 남은걸로 다시 설정
       else if (message.memberId && typeof message.nextIndex === "number") {
+        setCurrentPresenterId(message.memberId);
         setCurrentQuestionIndex(message.nextIndex);
         setSecondsLeft(10);
         setShowResult(false);
