@@ -11,7 +11,7 @@ const LoginAlert = ({ message, setLoginAlert }) => {
         <h1 className="text-base mb-4">{message}</h1>
         <button
           onClick={setLoginAlert}
-          className="#C2ACF4 text-white py-2 px-4 rounded"
+          className="bg-[#C2ACF4] text-white py-2 px-4 rounded"
         >
           Close
         </button>
