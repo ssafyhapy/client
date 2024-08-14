@@ -34,9 +34,9 @@ const TopDiv = ({ session }) => {
 
   return (
     <>
-    <div className={`flex items-center w-[90%] h-[7rem] ${flexLayout}`}>
+    <div className={`flex items-center w-[90%] h-[7rem] ${flexLayout} relative`}>
       {gameStep === "waiting-room" ? (
-        <div className="flex justify-start items-center">
+        <div className="flex flex-col justify-start items-center">
           <div className="flex">
             <div>접속 코드 : {roomCode} </div>
             <button onClick={handleClipBoard} className="w-[30%] h-[30%]">
