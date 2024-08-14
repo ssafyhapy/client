@@ -138,32 +138,33 @@ const MiddleDiv = () => {
   // 밸런스 게임! FIRST 고른 사람들에게 파란 배경색 부여 (SECOND는 빨간색)
 
   const { balanceGamePeopleChoiceInfo, resetBalanceGamePeopleChoiceInfo } =
-  usePresenterStore();
+    usePresenterStore();
 
-useEffect(() => {
-  // 빈배열인지 아닌지부터 먼저 검사
-  if (
-    Array.isArray(balanceGamePeopleChoiceInfo) &&
-    balanceGamePeopleChoiceInfo.length > 0
-  ) {
-    balanceGamePeopleChoiceInfo.forEach((info) => {
-      const connectionId = Object.keys(connectionInfo).find(
-        (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
-      );
+  useEffect(() => {
+    console.log("balanceGamePeopleChoice");
+    // 빈배열인지 아닌지부터 먼저 검사
+    if (
+      Array.isArray(balanceGamePeopleChoiceInfo) &&
+      balanceGamePeopleChoiceInfo.length > 0
+    ) {
+      balanceGamePeopleChoiceInfo.forEach((info) => {
+        const connectionId = Object.keys(connectionInfo).find(
+          (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+        );
 
-      if (connectionId) {
-        const color = info.choice === "FIRST" ? "cornflowerblue" : "salmon";
-        changeBackgroundColor(connectionId, color);
-      }
-    });
-  }
+        if (connectionId) {
+          const color = info.choice === "FIRST" ? "cornflowerblue" : "salmon";
+          changeBackgroundColor(connectionId, color);
+        }
+      });
+    }
 
-  return () => {
-    resetBalanceGamePeopleChoiceInfo([]);
-  };
-}, [balanceGamePeopleChoiceInfo, connectionInfo]);
+    return () => {
+      resetBalanceGamePeopleChoiceInfo([]);
+    };
+  }, [balanceGamePeopleChoiceInfo, connectionInfo]);
 
-// ================================================================================================
+  // ================================================================================================
 
   // useEffect(() => {
   //   if (
@@ -256,24 +257,6 @@ useEffect(() => {
   // }, [balanceGamePeopleChoiceInfo, connectionInfo]);
 
   // =====================================================================================================
-
-  // useEffect(() => {
-  //   redIds.forEach((id) => changeBackgroundColor(id, "salmon"));
-  // }, [redIds]);
-
-  // useEffect(() => {
-  //   blueIds.forEach((id) => changeBackgroundColor(id, "cornflowerblue"));
-  // }, [blueIds]);
-
-  // const handleChangeToRed = (ids) => {
-  //   setRedIds(ids);
-  //   setBlueIds((prevBlueIds) => prevBlueIds.filter((id) => !ids.includes(id)));
-  // };
-
-  // const handleChangeToBlue = (ids) => {
-  //   setBlueIds(ids);
-  //   setRedIds((prevRedIds) => prevRedIds.filter((id) => !ids.includes(id)));
-  // };
 
   // useEffect(() => {
   //   if (mainStreamManager) {

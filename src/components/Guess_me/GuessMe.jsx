@@ -414,7 +414,7 @@ const GuessMe = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const {resetGuessMePeopleSelection} = usePresenterStore()
+  const { resetGuessMePeopleSelection } = usePresenterStore();
   // 처음 들어오면 sub 하고 있다가 데이터 들어오면 받아와!
   useEffect(() => {
     const handleMessageReceived = (message) => {
@@ -457,7 +457,7 @@ const GuessMe = () => {
     webSocketService.subscribeToMemberState(roomId, (message) => {
       console.log("Received game state: ", message);
       if (message.memberState === "balance") {
-        resetGuessMePeopleSelection()
+        resetGuessMePeopleSelection();
         setCurrentPresenterId(null);
         setGameStep("balance-game");
       }
@@ -591,16 +591,15 @@ const GuessMe = () => {
         selection: message.answer,
       };
 
-      console.log("[*] personInfo",personInfo);
-      
+      console.log("[*] personInfo", personInfo);
 
       setGuessMeGamePeopleSelection((prev) => {
         const existing = prev.find(
           (info) => info.memberId === personInfo.memberId
         );
 
-        console.log("기존 선택지",existing);
-        
+        console.log("기존 선택지", existing);
+
         if (existing) {
           return prev.map((info) =>
             info.memberId === personInfo.memberId
