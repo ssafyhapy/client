@@ -95,12 +95,15 @@ const MiddleDiv = () => {
   // 발표자 배경색 노란색으로 바꾸는거
   useEffect(() => {
     if (currentPresenterId === null) {
-      console.log("[*] currentPresenterId가 null이에요.")
+      console.log("[*] currentPresenterId가 null이에요.");
       if (highlightedElementId) {
-        console.log("[*] highlightedElementId 가 존재해요")
+        console.log("[*] highlightedElementId 가 존재해요");
         changeBackgroundColor(highlightedElementId, "");
         setHighlightedElementId(null); // Reset highlightedElementId
-        console.log("[*] HighlightedElementId를 null로 바꾸었어요 : ", highlightedElementId)
+        console.log(
+          "[*] HighlightedElementId를 null로 바꾸었어요 : ",
+          highlightedElementId
+        );
       }
       return; // Exit the effect early
     }
@@ -119,18 +122,23 @@ const MiddleDiv = () => {
     }
 
     // memberId === currentPresenterId 인 connectionId 찾아 (memberId가 string임에 주의!)
-    console.log("[*] newHighlightedElementId 를 찾아줄거예요")
+    console.log("[*] newHighlightedElementId 를 찾아줄거예요");
     const newHighlightedElementId = Object.keys(connectionInfo).find(
       (key) => parseInt(connectionInfo[key].memberId, 10) === currentPresenterId
     );
-    console.log("[*] newHighlightedElementId 를 설정했어요: ", newHighlightedElementId)
-    
+    console.log(
+      "[*] newHighlightedElementId 를 설정했어요: ",
+      newHighlightedElementId
+    );
+
     if (newHighlightedElementId) {
-      console.log("[*] newHighlightedElementId (새로설정된노란배경)이 존재해요")
+      console.log(
+        "[*] newHighlightedElementId (새로설정된노란배경)이 존재해요"
+      );
       // Set the new highlighted element ID and change its background color
       setHighlightedElementId(newHighlightedElementId);
       changeBackgroundColor(newHighlightedElementId, "yellow");
-      console.log("[*] 배경을 노란색으로 바꿔주었어요")
+      console.log("[*] 배경을 노란색으로 바꿔주었어요");
     }
 
     // Log the new connectionId
@@ -313,9 +321,50 @@ const MiddleDiv = () => {
   } = useGameStore();
 
   // 나를 맞춰봐 게임! O 고른 사람들에게 파란 배경색 부여
+  // const { guessMeGamePeopleSelection, resetGuessMePeopleSelection } =
+  //   usePresenterStore();
+
+  // useEffect(() => {
+  //   if (
+  //     Array.isArray(guessMeGamePeopleSelection) &&
+  //     guessMeGamePeopleSelection.length > 0
+  //   ) {
+  //     guessMeGamePeopleSelection.forEach((info) => {
+  //       const connectionId = Object.keys(connectionInfo).find(
+  //         (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+  //       );
+
+  //       if (connectionId) {
+  //         let color = null;
+  //         if (info.selection === "O") {
+  //           color = "cornflowerblue";
+  //         } else if (info.selection === "X") {
+  //           color = "salmon";
+  //         }
+  //         changeBackgroundColor(connectionId, color);
+  //       }
+  //     });
+  //   } else {
+  //     Object.keys(connectionInfo).forEach((key) => {
+  //       const connectionId = connectionInfo[key].connectionId;
+  //       if (highlightedElementId === connectionId) {
+  //         return;
+  //       } else {
+  //         changeBackgroundColor(connectionId, "");
+  //       }
+  //     });
+  //   }
+
+  //   // 클린업 함수에서 상태를 초기화하지 않도록 변경
+  //   // return () => {
+  //   //   resetGuessMePeopleSelection();
+  //   // };
+  // }, [guessMeGamePeopleSelection, connectionInfo]);
+
   const { guessMeGamePeopleSelection, resetGuessMePeopleSelection } =
     usePresenterStore();
 
+  // guess me 발표자 노란 배경을 바꾸는 것을 제대로 되기
   useEffect(() => {
     if (
       Array.isArray(guessMeGamePeopleSelection) &&
@@ -328,7 +377,9 @@ const MiddleDiv = () => {
 
         if (connectionId) {
           let color = null;
-          if (info.selection === "O") {
+          if (connectionId === highlightedElementId) {
+            color = "yellow";
+          } else if (info.selection === "O") {
             color = "cornflowerblue";
           } else if (info.selection === "X") {
             color = "salmon";
@@ -351,7 +402,7 @@ const MiddleDiv = () => {
     // return () => {
     //   resetGuessMePeopleSelection();
     // };
-  }, [guessMeGamePeopleSelection, connectionInfo]);
+  }, [guessMeGamePeopleSelection, connectionInfo, highlightedElementId]);
 
   // useEffect(() => {
   //   // 빈배열인지 아닌지부터 먼저 검사
