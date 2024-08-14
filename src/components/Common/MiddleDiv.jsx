@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import * as tmImage from "@teachablemachine/image";
+const URL = "https://teachablemachine.withgoogle.com/models/ZkpyKO7ri";
 import useGameStore from "../../store/useGameStore";
 import Chatbox from "./Chatbox";
 import useAuthStore from "../../store/useAuthStore";
@@ -7,6 +9,8 @@ import EmojiBtn from "../Buttons/EmojiBtn";
 import SelectEmoji from "./SelectEmoji";
 
 import usePresenterStore from "../../store/usePresenterStore";
+import webSocketService from "../../WebSocketService";
+import useRoomStore from "../../store/useRoomStore";
 
 const MiddleDiv = () => {
   const gameStep = useGameStore((state) => state.gameStep);
@@ -22,7 +26,8 @@ const MiddleDiv = () => {
     connectionInfo,
   } = useGameStore();
 
-  const { memberName } = useAuthStore();
+  const { memberName, memberId } = useAuthStore();
+  const { roomId } = useRoomStore();
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -76,7 +81,6 @@ const MiddleDiv = () => {
 
   // 한 줄 자기소개 + 나를 맞춰봐!! 발표자 관련 =======================================================================
   // 발표자 백그라운드 노란색으로 하이라이트
-  const { blueMembers, redMembers } = usePresenterStore()
   const currentPresenterId = usePresenterStore(
     (state) => state.currentPresenterId
   );
@@ -90,7 +94,6 @@ const MiddleDiv = () => {
 
   // 발표자 배경색 노란색으로 바꾸는거
   useEffect(() => {
-
     if (currentPresenterId === null) {
       if (highlightedElementId) {
         changeBackgroundColor(highlightedElementId, "");
@@ -132,65 +135,128 @@ const MiddleDiv = () => {
 
   // ================================================================================================
 
-  // 밸런스 게임! FIRST 고른 사람들에게 파란 배경색 부여
-  const { balanceGamePeopleChoiceInfo } = usePresenterStore();
+  // 밸런스 게임! FIRST 고른 사람들에게 파란 배경색 부여 (SECOND는 빨간색)
+
+  const { balanceGamePeopleChoiceInfo, resetBalanceGamePeopleChoiceInfo } =
+    usePresenterStore();
 
   useEffect(() => {
-    balanceGamePeopleChoiceInfo.forEach((info) => {
-      const connectionId = Object.keys(connectionInfo).find(
-        (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
-      );
-      if (connectionId) {
-        const color = info.choice === "FIRST" ? "cornflowerblue" : "salmon";
-        changeBackgroundColor(connectionId, color);
-      }
-    });
+    console.log("balanceGamePeopleChoice");
+    // 빈배열인지 아닌지부터 먼저 검사
+    if (
+      Array.isArray(balanceGamePeopleChoiceInfo) &&
+      balanceGamePeopleChoiceInfo.length > 0
+    ) {
+      balanceGamePeopleChoiceInfo.forEach((info) => {
+        const connectionId = Object.keys(connectionInfo).find(
+          (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+        );
+
+        if (connectionId) {
+          const color = info.choice === "FIRST" ? "cornflowerblue" : "salmon";
+          changeBackgroundColor(connectionId, color);
+        }
+      });
+    }
+
+    return () => {
+      resetBalanceGamePeopleChoiceInfo([]);
+    };
   }, [balanceGamePeopleChoiceInfo, connectionInfo]);
-  
-  // useEffect(() => {
-  //   // console.log("blueMembers : ",blueMembers)
-  //   blueMembers.forEach((memberId) => {
-  //     const connectionId = Object.keys(connectionInfo).find(
-  //       (key) => parseInt(connectionInfo[key].memberId, 10) === memberId
-  //     )
-  //     if (connectionId) {
-  //       changeBackgroundColor(connectionId, "cornflowerblue")
-  //     }
-  //   })
-  // }, [blueMembers, connectionInfo])
 
-  // // 밸런스 게임! SECOND 고른 사람들에게 빨간 배경색 부여
-  // useEffect(() => {
-  //   // console.log("redMembers : ", redMembers)
-  //   redMembers.forEach((memberId) => {
-  //     const connectionId = Object.keys(connectionInfo).find(
-  //       (key) => parseInt(connectionInfo[key].memberId, 10) === memberId
-  //     )
-  //     if (connectionId) {
-  //       changeBackgroundColor(connectionId, "salmon")
-  //     }
-  //   })
-  // }, [redMembers, connectionInfo])
-
-// =====================================================================================================
+  // ================================================================================================
 
   // useEffect(() => {
-  //   redIds.forEach((id) => changeBackgroundColor(id, "salmon"));
-  // }, [redIds]);
+  //   if (
+  //     Array.isArray(guessMeGamePeopleSelection) &&
+  //     guessMeGamePeopleSelection.length > 0 &&
+  //     connectionInfo // connectionInfo가 유효한지 확인
+  //   ) {
+  //     // 필요한 작업 수행
+  //     guessMeGamePeopleSelection.forEach((info) => {
+  //       const connectionId = Object.keys(connectionInfo).find(
+  //         (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+  //       );
+
+  //       if (connectionId) {
+  //         let color = null;
+  //         if (info.selection === "O") {
+  //           color = "cornflowerblue";
+  //         } else if (info.selection === "X") {
+  //           color = "salmon";
+  //         }
+  //         changeBackgroundColor(connectionId, color);
+  //       }
+  //     });
+
+  //     // 작업이 끝난 후 상태를 리셋
+  //     resetGuessMePeopleSelection([]);
+  //   } else if (
+  //     Array.isArray(guessMeGamePeopleSelection) &&
+  //     guessMeGamePeopleSelection.length === 0 &&
+  //     connectionInfo // connectionInfo가 유효한지 확인
+  //   ) {
+  //     // 모든 연결 ID의 배경색을 초기화
+  //     Object.keys(connectionInfo).forEach((key) => {
+  //       changeBackgroundColor(key, ""); // 빈 문자열을 전달하여 배경색을 초기화
+  //     });
+  //   }
+  // }, [guessMeGamePeopleSelection, connectionInfo]);
 
   // useEffect(() => {
-  //   blueIds.forEach((id) => changeBackgroundColor(id, "cornflowerblue"));
-  // }, [blueIds]);
+  //   if (
+  //     Array.isArray(guessMeGamePeopleSelection) &&
+  //     guessMeGamePeopleSelection.length > 0
+  //   ) {
+  //     // 필요한 작업 수행
+  //     guessMeGamePeopleSelection.forEach((info) => {
+  //       const connectionId = Object.keys(connectionInfo).find(
+  //         (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+  //       );
 
-  // const handleChangeToRed = (ids) => {
-  //   setRedIds(ids);
-  //   setBlueIds((prevBlueIds) => prevBlueIds.filter((id) => !ids.includes(id)));
-  // };
+  //       if (connectionId) {
+  //         let color = null;
+  //         if (info.selection === "O") {
+  //           color = "cornflowerblue";
+  //         } else if (info.selection === "X") {
+  //           color = "salmon";
+  //         }
+  //         changeBackgroundColor(connectionId, color);
+  //       }
+  //     });
 
-  // const handleChangeToBlue = (ids) => {
-  //   setBlueIds(ids);
-  //   setRedIds((prevRedIds) => prevRedIds.filter((id) => !ids.includes(id)));
-  // };
+  //     // 작업이 끝난 후 상태를 리셋
+  //     resetGuessMePeopleSelection([]);
+  //   }
+  //   else if (!guessMeGamePeopleSelection){
+
+  //   }
+  // }, [guessMeGamePeopleSelection, connectionInfo]);
+
+  // useEffect(() => {
+  //   // 빈배열인지 아닌지부터 먼저 검사
+  //   if (
+  //     Array.isArray(balanceGamePeopleChoiceInfo) &&
+  //     balanceGamePeopleChoiceInfo.length > 0
+  //   ) {
+  //     balanceGamePeopleChoiceInfo.forEach((info) => {
+  //       const connectionId = Object.keys(connectionInfo).find(
+  //         (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+  //       );
+
+  //       if (connectionId) {
+  //         const color = info.choice === "FIRST" ? "cornflowerblue" : "salmon";
+  //         changeBackgroundColor(connectionId, color);
+  //       }
+  //     });
+  //   }
+
+  //   return () => {
+  //     resetBalanceGamePeopleChoiceInfo();
+  //   };
+  // }, [balanceGamePeopleChoiceInfo, connectionInfo]);
+
+  // =====================================================================================================
 
   // useEffect(() => {
   //   if (mainStreamManager) {
@@ -200,6 +266,242 @@ const MiddleDiv = () => {
   //   }
   // }, [mainStreamManager]);
 
+  // 모션인식 관련 내용
+  const videoRef = useRef(null);
+  useEffect(() => {
+    if (publisher && videoRef.current) {
+      publisher.addVideoElement(videoRef.current);
+    }
+  }, [publisher]);
+
+  const [model, setModel] = useState(null);
+  const [maxPredictions, setMaxPredictions] = useState(0);
+  const [predictionResults, setPredictionResults] = useState([]);
+  const [timerActive, setTimerActive] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(5);
+  const THRESHOLD = 0.75; // 임계치 값
+
+  // 모델 로드
+  useEffect(() => {
+    async function loadModel() {
+      const modelURL = `${URL}/model.json`;
+      const metadataURL = `${URL}/metadata.json`;
+      const loadedModel = await tmImage.load(modelURL, metadataURL);
+      setModel(loadedModel);
+    }
+
+    loadModel();
+  }, []);
+
+  const {
+    finalResult,
+    setFinalResult,
+    startPredictionFlag,
+    setStartPredictionFlag,
+  } = useGameStore();
+
+  // 나를 맞춰봐 게임! O 고른 사람들에게 파란 배경색 부여
+  const { guessMeGamePeopleSelection, resetGuessMePeopleSelection } =
+    usePresenterStore();
+
+  useEffect(() => {
+    if (
+      Array.isArray(guessMeGamePeopleSelection) &&
+      guessMeGamePeopleSelection.length > 0
+    ) {
+      guessMeGamePeopleSelection.forEach((info) => {
+        const connectionId = Object.keys(connectionInfo).find(
+          (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+        );
+
+        if (connectionId) {
+          let color = null;
+          if (info.selection === "O") {
+            color = "cornflowerblue";
+          } else if (info.selection === "X") {
+            color = "salmon";
+          }
+          changeBackgroundColor(connectionId, color);
+        }
+      });
+    }
+
+    // 클린업 함수에서 상태를 초기화하지 않도록 변경
+    // return () => {
+    //   resetGuessMePeopleSelection();
+    // };
+  }, [guessMeGamePeopleSelection, connectionInfo]);
+
+  // useEffect(() => {
+  //   // 빈배열인지 아닌지부터 먼저 검사
+  //   if (
+  //     Array.isArray(guessMeGamePeopleSelection) &&
+  //     guessMeGamePeopleSelection.length > 0
+  //   ) {
+  //     guessMeGamePeopleSelection.forEach((info) => {
+  //       const connectionId = Object.keys(connectionInfo).find(
+  //         (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+  //       );
+
+  //       if (connectionId) {
+  //         let color = null
+  //         if (info.selection === "O") {
+  //           color = "cornflowerblue"
+  //         }
+  //         else if (info.selection === "X"){
+  //           color = "salmon"
+  //         }
+  //         changeBackgroundColor(connectionId, color);
+  //       }
+  //     });
+  //   }
+
+  //   return () => {
+  //     resetGuessMePeopleSelection([]);
+  //   };
+  // }, [guessMeGamePeopleSelection]);
+
+  // useEffect(() => {
+  //   if (
+  //     Array.isArray(guessMeGamePeopleSelection) &&
+  //     guessMeGamePeopleSelection.length > 0
+  //   ) {
+  //     guessMeGamePeopleSelection.forEach((info) => {
+  //       const connectionId = Object.keys(connectionInfo).find(
+  //         (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+  //       );
+
+  //       if (connectionId) {
+  //         let color = null;
+  //         if (info.selection === "O") {
+  //           color = "cornflowerblue";
+  //         } else if (info.selection === "X") {
+  //           color = "salmon";
+  //         }
+  //         changeBackgroundColor(connectionId, color);
+  //       }
+  //     });
+  //   }
+
+  //   // 클린업 함수에서 상태를 초기화하지 않도록 변경
+  //   return () => {
+  //     resetGuessMePeopleSelection();
+  //   };
+  // }, [guessMeGamePeopleSelection, connectionInfo]);
+
+  // const determineResult = (predictions) => {
+  //   if (predictions.length > 0) {
+  //     const highestPrediction = predictions.reduce((prev, current) =>
+  //       prev.probability > current.probability ? prev : current
+  //     );
+  //     const highestClass = highestPrediction.className;
+  //     const highestProb = highestPrediction.probability;
+
+  //     if (highestProb >= THRESHOLD) {
+  //       if (highestClass === "O") {
+  //         return "O";
+  //       } else if (highestClass === "X") {
+  //         return "X";
+  //       }
+  //     }
+  //   }
+  //   return "Neutral"; // 임계값에 도달하지 않으면 중립 결과 반환
+  // };
+
+  // const predictionTimeoutRef = useRef(null); // Ref to store the timeout ID
+  // const startPrediction = () => {
+  //   let lastResult = "Neutral";
+
+  //   const loop = async () => {
+  //     if (model && videoRef.current) {
+  //       const predictions = await model.predict(videoRef.current);
+  //       lastResult = determineResult(predictions);
+  //       console.log("Current Result: ", lastResult);
+  //     }
+  //     predictionTimeoutRef.current = requestAnimationFrame(loop);
+  //   };
+
+  //   // Start the prediction loop
+  //   loop();
+
+  //   // Stop the prediction loop after 5 seconds
+  //   setTimeout(() => {
+  //     console.log("[*] 타이머가 시작되긴 함");
+  //     console.log("[*] 루프를 멈추라고 하긴 함");
+  //     console.log("[*] 결과를 저장하라고 하긴 함");
+  //     setFinalResult(lastResult); // Store the final result
+  //     console.log("[*] 여기서 모션인식 결과를 보내줘야 함,");
+  //     // 모션 인식 결과를 여기서 보내줘야 함
+  //     console.log("[*] 여기서 모션인식 시작 flag를 false로 바꿔줌");
+  //     setStartPredictionFlag(false); // Reset the flag
+  //     cancelAnimationFrame(predictionTimeoutRef.current); // Cancel the loop
+  //   }, 5000);
+
+  // };
+
+  const determineResult = (predictions) => {
+    if (predictions.length > 0) {
+      const highestPrediction = predictions.reduce((prev, current) =>
+        prev.probability > current.probability ? prev : current
+      );
+      const highestClass = highestPrediction.className;
+      const highestProb = highestPrediction.probability;
+
+      if (highestProb >= THRESHOLD) {
+        if (highestClass === "O") {
+          return "O";
+        } else if (highestClass === "X") {
+          return "X";
+        }
+      }
+    }
+    return "N"; // 임계값에 도달하지 않으면 중립 결과 반환
+  };
+
+  const predictionTimeoutRef = useRef(null); // Ref to store the timeout ID
+
+  const startPrediction = () => {
+    let lastResult = "N";
+    let startTime = Date.now();
+
+    const loop = async () => {
+      if (model && videoRef.current) {
+        const predictions = await model.predict(videoRef.current);
+        lastResult = determineResult(predictions);
+        console.log("Current Result: ", lastResult);
+      }
+
+      // 5초가 경과했는지 확인
+      if (Date.now() - startTime < 5000) {
+        predictionTimeoutRef.current = requestAnimationFrame(loop);
+      } else {
+        console.log("[*] 5초 경과, 루프를 멈추고 결과를 저장");
+        await setFinalResult(lastResult); // 최종 결과 저장
+        // 최종 결과가 정해지면 pub해서 결과를 넘겨주기
+        setStartPredictionFlag(false); // 모션 인식 중지
+        cancelAnimationFrame(predictionTimeoutRef.current); // 루프 중지
+      }
+    };
+    // Start the prediction loop
+    loop();
+  };
+
+  let cnt = 0;
+  useEffect(() => {
+    cnt = cnt++;
+    // finalResult가 있고 바뀐거면 결과를 pub 한다.
+    if (finalResult) {
+      webSocketService.sendGuessMeSelection(roomId, memberId, finalResult);
+    }
+    console.log(`최종 결과 ${cnt}`, finalResult);
+  }, [finalResult]);
+
+  useEffect(() => {
+    if (startPredictionFlag) {
+      startPrediction();
+    }
+  }, [startPredictionFlag]);
+
   return (
     <div id="middleDiv" className="flex justify-center h-[68vh] w-[95%] m-3">
       <div className="bg-[rgba(255,255,255,0.9)] w-[80%] min-w-[550px] h-full mr-5 rounded-[20px] ">
@@ -207,62 +509,6 @@ const MiddleDiv = () => {
           <div
             className={`w-full h-[90%] grid place-items-center ${getGridColsClass()}`}
           >
-            {/* mainStreamManager 비디오 */}
-            {/* {mainStreamManager ? (
-              <div
-                id={mainStreamManager.stream.connection.connectionId}
-                className={`w-[80%] p-3 flex justify-center items-center rounded-[15px] ${getVideoContainerClass()}`}
-              >
-                <div className="w-full relative rounded-[15px]">
-                  {mainStreamManager ? (
-                    <video
-                      autoPlay={true}
-                      ref={(video) =>
-                        video && mainStreamManager.addVideoElement(video)
-                      }
-                      className="object-cover rounded-[15px]"
-                    />
-                  ) : (
-                    "비디오가 준비 중입니다."
-                  )}
-                  <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
-                    <span className="flex ">
-                      <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                        {
-                          connectionInfo[
-                            mainStreamManager.stream.connection.connectionId
-                          ].memberName
-                        }
-                      </span>
-                      <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                        <img
-                          src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mic_on.png"
-                          alt="mic on"
-                          className={`w-[12px] h-[18px] ${
-                            data.mic ? null : "hidden"
-                          }`}
-                        />
-                        <img
-                          src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/mute.png"
-                          alt="mute"
-                          className={`w-[12px] h-[18px] ${
-                            data.mic ? "hidden" : null
-                          }`}
-                        />
-                      </span>
-                    </span>
-                    <span
-                      className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
-                        data.ready ? null : "hidden"
-                      }`}
-                    >
-                      준비완료
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ) : null} */}
-
             {publisher ? (
               <div
                 id={publisher.stream.connection.connectionId}
@@ -272,7 +518,8 @@ const MiddleDiv = () => {
                   {publisher ? (
                     <video
                       autoPlay={true}
-                      ref={(video) => video && publisher.addVideoElement(video)}
+                      // ref={(video) => video && publisher.addVideoElement(video)}
+                      ref={videoRef}
                       className="object-cover rounded-[15px]"
                     />
                   ) : (
@@ -296,9 +543,7 @@ const MiddleDiv = () => {
                       </span>
                     </span>
                     <span
-                      className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
-                        data.ready ? null : "hidden"
-                      }`}
+                      className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 "hidden"`}
                     >
                       준비완료
                     </span>
@@ -355,11 +600,10 @@ const MiddleDiv = () => {
                             </span>
                           </span>
                           <span
-                            className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
-                              data.ready ? null : "hidden"
-                            }`}
+                            className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0
+                              "hidden"
+                            `}
                           >
-                            {/* 준비완료 */}
                             준비완료
                           </span>
                         </div>

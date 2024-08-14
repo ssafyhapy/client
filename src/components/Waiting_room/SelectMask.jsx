@@ -32,6 +32,7 @@
 // export default SelectMask;
 
 import React from "react";
+import { useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 

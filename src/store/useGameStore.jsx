@@ -22,6 +22,12 @@ const useGameStore = create((set) => ({
         [newConnectionInfo.connectionId]: newConnectionInfo,
       },
     })),
+
+  finalResult:null,
+  setFinalResult : (result)=>set({finalResult:result}),
+  startPredictionFlag : false,
+  setStartPredictionFlag : (flag)=>set({startPredictionFlag:flag})
+
 }));
 
 export default useGameStore;

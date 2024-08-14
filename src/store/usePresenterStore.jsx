@@ -1,26 +1,23 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 const usePresenterStore = create((set) => ({
   currentPresenterId: null,
   setCurrentPresenterId: (id) => set({ currentPresenterId: id }),
 
   balanceGamePeopleChoiceInfo: [],
-  setBalanceGamePeopleChoiceInfo: (updateFn) => set((state) => ({
-    balanceGamePeopleChoiceInfo: updateFn(state.balanceGamePeopleChoiceInfo),
-  })),
+  setBalanceGamePeopleChoiceInfo: (updateFn) =>
+    set((state) => ({
+      balanceGamePeopleChoiceInfo: updateFn(state.balanceGamePeopleChoiceInfo),
+    })),
+  resetBalanceGamePeopleChoiceInfo: (reset) =>
+    set({ balanceGamePeopleChoiceInfo: reset }),
 
-  blueMembers: [],
-  redMembers: [],
-
-  addBlueMember: (memberId) => set((state) => ({
-    blueMembers: [...state.blueMembers, memberId],
-  })),
-
-  addRedMember: (memberId) => set((state) => ({
-    RedMembers: [...state.redMembers, memberId],
-  })),
-
-  resetMemberStatuses: () => set({ blueMembers: [], redMembers: [] }),
+  guessMeGamePeopleSelection: [],
+  setGuessMeGamePeopleSelection: (updateFn) =>
+    set((state) => ({
+      guessMeGamePeopleSelection: updateFn(state.guessMeGamePeopleSelection),
+    })),
+  resetGuessMePeopleSelection: (reset) => set({ guessMeGamePeopleSelection: reset }),
 }));
 
 export default usePresenterStore;
