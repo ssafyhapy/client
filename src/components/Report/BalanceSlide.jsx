@@ -6,7 +6,7 @@ const BalanceSlide = ({ slide }) => (
     <div className="w-full h-full flex flex-col items-center gap-5 ">
       <p className="text-3xl text-center text-gray-600">{slide.balanceQuestionOptionFirst}</p>
 
-      <div className="w-full flex justify-center items-center gap-2">
+      <div className="w-full flex flex-wrap justify-center items-center gap-2">
         {slide.balanceResultResponseDtos.map(
           (response, index) =>
             response.balanceResultSelectedOption === "FIRST" && (
@@ -25,7 +25,7 @@ const BalanceSlide = ({ slide }) => (
       <p className="text-3xl text-center text-gray-600">
         {slide.balanceQuestionOptionSecond}
       </p>
-      <div className="w-full flex justify-center items-center gap-2">
+      <div className="w-full flex flex-wrap justify-center items-center gap-2">
         {slide.balanceResultResponseDtos.map(
           (response, index) =>
             response.balanceResultSelectedOption === "SECOND" && (
