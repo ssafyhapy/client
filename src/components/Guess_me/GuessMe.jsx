@@ -568,7 +568,7 @@ const GuessMe = () => {
   // 다음 버튼과  연결된 함수
   const handleNextStep = () => {
     // 다음 버튼을 누를때마다 pub 요청 보냄
-    resetGuessMePeopleSelection();
+    resetGuessMePeopleSelection([]);
     webSocketService.sendGuessMeNext(roomId, memberId, currentQuestionIndex);
 
     // 다음문제! 10초로 타이머 다시설정
