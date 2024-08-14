@@ -98,6 +98,7 @@ const Balance = () => {
 
         setOptionFirst(message.optionFirst);
         setOptionSecond(message.optionSecond);
+        resetBalanceGamePeopleChoiceInfo([]);
 
         // 주제 받아왔으면 그때 그다음 changeChoices로 넘어가
         setCurrentStep("changeChoices");
