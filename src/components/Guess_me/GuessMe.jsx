@@ -640,64 +640,66 @@ const GuessMe = () => {
   return (
     <>
       {/* bottom div */}
-      {!allPrepared ? (
-        showReadyMessage ? (
-          <div className="flex-grow flex items-center justify-center">
-            <img src={star} alt="star 그림" />
-            <span className="text-transparent">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </span>
-            <span className="text-[rgba(85,181,236)]">전원 준비 완료!!</span>
-            <span className="text-transparent">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </span>
-            <img src={star} alt="star 그림" />
-          </div>
-        ) : (
-          <div className="flex-grow flex items-center justify-center">
-            <img src={snowingCloud} alt="star 그림" />
-            <span className="text-transparent">&nbsp;&nbsp;</span>
-            <span className="text-[rgba(85,181,236)]">
-              나를 맞춰봐 문제가 만들어지고 있어요{dots}
-            </span>
-          </div>
-        )
-      ) : (
-        <div className="flex-grow flex items-center justify-center relative">
-          <span className="text-[rgba(85,181,236)]">
-            {userQuestions.length > 0
-              ? userQuestions[currentQuestionIndex].content
-              : null}
-          </span>
-          {showResult && userQuestions.length > 0 && (
-            <img
-              src={
-                userQuestions[currentQuestionIndex].answer
-                  ? correctImg
-                  : wrongImg
-              }
-              alt={
-                userQuestions[currentQuestionIndex].answer ? "Correct" : "Wrong"
-              }
-              className="absolute w-[50px] h-[50px]"
-              style={{
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-              }}
-            />
-          )}
-          <div className="absolute bottom-3 right-5 flex flex-col items-center">
-            <div className="flex items-center mb-2">
-              <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" />
-              <span className="text-red-500">{secondsLeft}</span>
+        {!allPrepared ? (
+          showReadyMessage ? (
+            <div className="flex-grow flex items-center justify-center">
+              <img src={star} alt="star 그림" />
+              <span className="text-transparent">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </span>
+              <span className="text-[rgba(85,181,236)]">전원 준비 완료!!</span>
+              <span className="text-transparent">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </span>
+              <img src={star} alt="star 그림" />
             </div>
-            {memberId === currentPresenterId && showResult && (
-              <BasicBtn btnText={btnText} onClick={handleNextStep} />
+          ) : (
+            <div className="flex-grow flex items-center justify-center">
+              <img src={snowingCloud} alt="star 그림" />
+              <span className="text-transparent">&nbsp;&nbsp;</span>
+              <span className="text-[rgba(85,181,236)]">
+                나를 맞춰봐 문제가 만들어지고 있어요{dots}
+              </span>
+            </div>
+          )
+        ) : (
+          <div className="flex-grow flex items-center justify-center relative">
+            <span className="text-[rgba(85,181,236)]">
+              {userQuestions.length > 0
+                ? userQuestions[currentQuestionIndex].content
+                : null}
+            </span>
+            {showResult && userQuestions.length > 0 && (
+              <img
+                src={
+                  userQuestions[currentQuestionIndex].answer
+                    ? correctImg
+                    : wrongImg
+                }
+                alt={
+                  userQuestions[currentQuestionIndex].answer
+                    ? "Correct"
+                    : "Wrong"
+                }
+                className="absolute w-[50px] h-[50px]"
+                style={{
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              />
             )}
+            <div className="absolute bottom-3 right-5 flex flex-col items-center">
+              <div className="flex items-center mb-2">
+                <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" />
+                <span className="text-red-500 text-2xl">{secondsLeft}</span>
+              </div>
+              {memberId === currentPresenterId && showResult && (
+                <BasicBtn btnText={btnText} onClick={handleNextStep} fontSize="24"/>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
       {showModal && (
         <GuessMeModal
           btnText="저장"

@@ -9,6 +9,8 @@ import useChatStore from "../../store/useChatStore";
 import useRoomStore from "../../store/useRoomStore";
 // import defaultProfile from "../../assets/Profile/defaultprofile.png";
 
+import { FaPaperPlane } from "react-icons/fa"; // 종이비행기 아이콘 추가
+
 const Chatbox = () => {
   const chatsendbutton =
     "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/chatsendbutton.png";
@@ -101,7 +103,7 @@ const Chatbox = () => {
     webSocketService.sendMessage(`/api/pub/message/${roomId}`, {
       content: newMessage,
       memberName,
-      memberId
+      memberId,
     });
     setNewMessage("");
   };
@@ -121,7 +123,7 @@ const Chatbox = () => {
 
   return (
     // Your existing UI code remains here
-    <div className="flex flex-col rounded-[20px] h-full bg-[rgba(255,255,255,0.4)] p-3 overflow-hidden min-w-[230px]">
+    <div className="flex flex-col rounded-[20px] h-full w-[230px] bg-[rgba(255,255,255,0.4)] p-3 overflow-hidden">
       <div className="flex-1 overflow-y-auto scrollbar-none min-w-[230px]">
         {messages.map((msg, index) => (
           <div
@@ -130,48 +132,34 @@ const Chatbox = () => {
               msg.from === memberName ? "items-end" : "items-start"
             }`}
           >
-            <div className="flex items-center mb-2">
-              {msg.from !== memberName && (
-                <div className="flex items-center flex-row">
-                  <img
-                    src={msg.profileImage || defaultProfile}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = defaultProfile;
-                    }}
-                    alt={`${msg.from}'s profile`}
-                    className="w-8 h-8 rounded-full mr-2"
-                  />
-                  <span className="text-xs mr-2 font-bold">{msg.from}</span>
-                </div>
-              )}
-              <div className="text-xs text-gray-500">
-                {moment(msg.timestamp).format("HH:mm")}
+            {msg.from !== memberName && (
+              <div className="flex items-center mb-2">
+                <img
+                  src={msg.profileImage || defaultProfile}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = defaultProfile;
+                  }}
+                  alt={`${msg.from}'s profile`}
+                  className="w-8 h-8 rounded-full mr-2"
+                />
+                <span className="text-xs mr-2 font-bold">{msg.from}</span>
               </div>
-              {msg.from === memberName && (
-                <div className="flex items-center flex-row-reverse">
-                  <img
-                    src={memberProfileImageUrl || defaultProfile}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = defaultProfile;
-                    }}
-                    alt={`Your profile`}
-                    className="w-8 h-8 rounded-full mr-2"
-                  />
-                  <span className="text-xs ml-2 font-bold">{memberName}</span>
-                </div>
-              )}
-            </div>
-            <div
-              className={`p-2 rounded-lg break-words ${
-                msg.from === memberName
-                  ? "bg-[rgba(0,112,246,0.25)] text-white text-sm"
-                  : "bg-[rgba(14,107,255,0.5)] text-white text-sm"
-              }`}
-              style={{ maxWidth: "75%" }}
-            >
-              {msg.message}
+            )}
+            <div className="flex items-end">
+              <div
+                className={`p-2 rounded-lg break-words ${
+                  msg.from === memberName
+                    ? "bg-[rgba(0,112,246,0.25)] text-white text-sm"
+                    : "bg-[rgba(14,107,255,0.5)] text-white text-sm"
+                }`}
+                style={{ maxWidth: "75%" }}
+              >
+                {msg.message}
+              </div>
+              <span className="text-xs text-gray-500 ml-2">
+                {moment(msg.timestamp).format("HH:mm")}
+              </span>
             </div>
           </div>
         ))}
@@ -183,20 +171,16 @@ const Chatbox = () => {
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 p-2 rounded-lg text-sm bg-transparent resize-none overflow-y-auto"
+            className="flex-1 p-2 rounded-lg text-sm bg-transparent resize-none overflow-y-auto border-2 border-blue-500 focus:outline-none focus:border-blue-700"
             placeholder="Type your message..."
             rows={3}
             style={{ height: "4rem" }}
           />
           <button
             onClick={handleSendMessage}
-            className="ml-2 bg-blue-500 text-white p-2 rounded-lg"
+            className="ml-2 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition duration-300"
           >
-            <img
-              className="w-5"
-              src={chatsendbutton}
-              alt="chatbox-send-button"
-            />
+            <FaPaperPlane className="w-5 h-5" />
           </button>
         </div>
       </div>

@@ -66,7 +66,7 @@ const WrapUp = () => {
       </div>
       {memberId === hostId &&
         (<div className="absolute bottom-3 right-5">
-          <BasicBtn btnText={btnText} onClick={handleNextStep} />
+          <BasicBtn btnText={btnText} onClick={handleNextStep} fontSize="24"/>
         </div>)
       }
       {showModal && <WrapUpModal btnText="닫기" onClose={handleCloseModal} />}
