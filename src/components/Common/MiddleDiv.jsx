@@ -157,6 +157,11 @@ const MiddleDiv = () => {
           changeBackgroundColor(connectionId, color);
         }
       });
+    } else {
+      Object.keys(connectionInfo).forEach((key) => {
+        const connectionId = connectionInfo[key].connectionId;
+        changeBackgroundColor(connectionId, "");
+      });
     }
 
     return () => {
