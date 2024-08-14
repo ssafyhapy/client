@@ -9,9 +9,8 @@ import ExitBtn from "../Buttons/ExitBtn";
 const TopDiv = ({ session }) => {
   // const [copyState, setCopyState] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const {gameStep} = useGameStore()
-  const {roomCode, roomName, roomPersonCount} = useRoomStore()
-
+  const { gameStep } = useGameStore();
+  const { roomCode, roomName, roomPersonCount } = useRoomStore();
 
   const handleClipBoard = () => {
     if (roomCode) {
@@ -35,14 +34,16 @@ const TopDiv = ({ session }) => {
     <div className="flex justify-center items-center">
       {gameStep === "waiting-room" ? (
         <div className="flex flex-col items-center justify-center">
-          <div>접속 코드 : {roomCode} </div>
-          <button onClick={handleClipBoard} className="w-[30%] h-[30%]">
-            <img
-              className="w-[15%] h-[15%]"
-              src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/clipboard.webp"
-              alt=""
-            />
-          </button>
+          <div className="flex">
+            <div>접속 코드 : {roomCode} </div>
+            <button onClick={handleClipBoard} className="w-[30%] h-[30%]">
+              <img
+                className="w-[15%] h-[15%]"
+                src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/clipboard.webp"
+                alt=""
+              />
+            </button>
+          </div>
           <div> 방 이름 : {roomName}</div>
           <div> 방 설정 인원 : {roomPersonCount}</div>
         </div>
@@ -57,7 +58,9 @@ const TopDiv = ({ session }) => {
         )}
       </div>
 
-      {gameStep !== "photo-first" && gameStep !== "photo-last" ? <ExitBtn session={session}/> : null}
+      {gameStep !== "photo-first" && gameStep !== "photo-last" ? (
+        <ExitBtn session={session} />
+      ) : null}
 
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
