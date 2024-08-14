@@ -10,6 +10,7 @@ import bgImage from "../../assets/bg/bgImage.jpg";
 import Spinner from "../../components/Spinner";
 import { axiosInstance } from "../../api/apiClient";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Report = () => {
   const [loading, setLoading] = useState(true);
