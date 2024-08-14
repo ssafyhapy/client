@@ -433,6 +433,7 @@ const GuessMe = () => {
         setShowReadyMessage(true);
         setSecondsLeft(10);
         setShowResult(false);
+        resetGuessMePeopleSelection([])
         // // 이때 모션인식 시작
         // setStartPredictionFlag(true);
         // // 타이머 시작
@@ -450,6 +451,7 @@ const GuessMe = () => {
         setCurrentQuestionIndex(message.nextIndex);
         setSecondsLeft(10);
         setShowResult(false);
+        resetGuessMePeopleSelection([])
         // 이때 모션 인식 시작
         console.log("[*] 모션 인식 시작");
         setStartPredictionFlag(true);

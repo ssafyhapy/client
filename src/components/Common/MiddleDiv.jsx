@@ -329,6 +329,11 @@ const MiddleDiv = () => {
           changeBackgroundColor(connectionId, color);
         }
       });
+    } else {
+      Object.keys(connectionInfo).forEach((key) => {
+        const connectionId = connectionInfo[key].connectionId;
+        changeBackgroundColor(connectionId, "");
+      });
     }
 
     // 클린업 함수에서 상태를 초기화하지 않도록 변경
