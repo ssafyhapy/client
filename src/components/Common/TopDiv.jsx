@@ -58,7 +58,7 @@ const TopDiv = ({ session }) => {
               <div>{roomName} (접속코드 : {roomCode}) 
               <button onClick={handleClipBoard} className="w-[14px] h-[14px]">
                 <img
-                  className="w-[14px] h-[14px]"
+                  className="w-[24px] h-[24px]"
                   src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/clipboard.webp"
                   alt=""
                 />
