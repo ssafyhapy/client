@@ -55,10 +55,10 @@ const TopDiv = ({ session }) => {
         {gameStep === "waiting-room" ? (
           <div className="flex flex-col justify-center items-start">
             <div className="flex">
-              <div>{roomName} (접속 코드 : {roomCode}) 
+              <div>{roomName} (접속코드 : {roomCode}) 
               <button onClick={handleClipBoard} className="w-[14px] h-[14px]">
                 <img
-                  className="w-[15%] h-[15%]"
+                  className="w-[14px] h-[14px]"
                   src="https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/clipboard.webp"
                   alt=""
                 />
