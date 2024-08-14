@@ -17,8 +17,7 @@ const usePresenterStore = create((set) => ({
     set((state) => ({
       guessMeGamePeopleSelection: updateFn(state.guessMeGamePeopleSelection),
     })),
-    resetGuessMePeopleSelection: () =>
-      set({ guessMeGamePeopleSelection: [] }),
+  resetGuessMePeopleSelection: () => set({ guessMeGamePeopleSelection: [] }),
 }));
 
 export default usePresenterStore;
