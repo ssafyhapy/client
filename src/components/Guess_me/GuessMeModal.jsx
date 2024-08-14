@@ -38,7 +38,7 @@ const GuessMeModal = ({
     if (allQuestionsFilled && allAnswersSelected) {
 
       // alert 추가
-      alert("이제 곧 게임이 시작됩니다. 문제의 답이라고 생각되는 O 또는 X를 몸으로 크게 표현해주세요!")
+      alert("나를 맞춰봐 게임은 모션인식으로 진행됩니다. 게임이 시작되면 문제의 답이라고 생각되는 O 또는 X를 몸으로 크게 표현해주세요!")
 
       onReady();
       onClose();
