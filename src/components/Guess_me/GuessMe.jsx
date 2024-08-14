@@ -414,7 +414,12 @@ const GuessMe = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const {resetGuessMePeopleSelection} = usePresenterStore()
+  const {
+    setGuessMeGamePeopleSelection,
+    guessMeGamePeopleSelection,
+    resetGuessMePeopleSelection,
+  } = usePresenterStore();
+  
   // 처음 들어오면 sub 하고 있다가 데이터 들어오면 받아와!
   useEffect(() => {
     const handleMessageReceived = (message) => {
@@ -457,7 +462,7 @@ const GuessMe = () => {
     webSocketService.subscribeToMemberState(roomId, (message) => {
       console.log("Received game state: ", message);
       if (message.memberState === "balance") {
-        resetGuessMePeopleSelection()
+        resetGuessMePeopleSelection();
         setCurrentPresenterId(null);
         setGameStep("balance-game");
       }
@@ -563,6 +568,7 @@ const GuessMe = () => {
   // 다음 버튼과  연결된 함수
   const handleNextStep = () => {
     // 다음 버튼을 누를때마다 pub 요청 보냄
+    resetGuessMePeopleSelection();
     webSocketService.sendGuessMeNext(roomId, memberId, currentQuestionIndex);
 
     // 다음문제! 10초로 타이머 다시설정
@@ -571,9 +577,6 @@ const GuessMe = () => {
     setShowResult(false);
     // startTimer()
   };
-
-  const { setGuessMeGamePeopleSelection, guessMeGamePeopleSelection } =
-    usePresenterStore();
 
   // 모션인식 결과 구독하기
   useEffect(() => {
@@ -591,16 +594,15 @@ const GuessMe = () => {
         selection: message.answer,
       };
 
-      console.log("[*] personInfo",personInfo);
-      
+      console.log("[*] personInfo", personInfo);
 
       setGuessMeGamePeopleSelection((prev) => {
         const existing = prev.find(
           (info) => info.memberId === personInfo.memberId
         );
 
-        console.log("기존 선택지",existing);
-        
+        console.log("기존 선택지", existing);
+
         if (existing) {
           return prev.map((info) =>
             info.memberId === personInfo.memberId
