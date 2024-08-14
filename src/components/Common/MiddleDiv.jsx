@@ -135,7 +135,36 @@ const MiddleDiv = () => {
 
   // ================================================================================================
 
-  // 밸런스 게임! FIRST 고른 사람들에게 파란 배경색 부여
+  // 밸런스 게임! FIRST 고른 사람들에게 파란 배경색 부여 (SECOND는 빨간색)
+
+  const { balanceGamePeopleChoiceInfo, resetBalanceGamePeopleChoiceInfo } =
+  usePresenterStore();
+
+useEffect(() => {
+  // 빈배열인지 아닌지부터 먼저 검사
+  if (
+    Array.isArray(balanceGamePeopleChoiceInfo) &&
+    balanceGamePeopleChoiceInfo.length > 0
+  ) {
+    balanceGamePeopleChoiceInfo.forEach((info) => {
+      const connectionId = Object.keys(connectionInfo).find(
+        (key) => parseInt(connectionInfo[key].memberId, 10) === info.memberId
+      );
+
+      if (connectionId) {
+        const color = info.choice === "FIRST" ? "cornflowerblue" : "salmon";
+        changeBackgroundColor(connectionId, color);
+      }
+    });
+  }
+
+  return () => {
+    resetBalanceGamePeopleChoiceInfo([]);
+  };
+}, [balanceGamePeopleChoiceInfo, connectionInfo]);
+
+// ================================================================================================
+
   // useEffect(() => {
   //   if (
   //     Array.isArray(guessMeGamePeopleSelection) &&
