@@ -165,7 +165,7 @@ const MiddleDiv = () => {
     }
 
     return () => {
-      resetBalanceGamePeopleChoiceInfo([]);
+      // resetBalanceGamePeopleChoiceInfo([]);
     };
   }, [balanceGamePeopleChoiceInfo, connectionInfo]);
 
