@@ -46,7 +46,7 @@ const BalanceChangeChoices = ({
     // 그 사람이 고른 선택지 리셋
     setPickedChoice(null);
     // 그 사람이 고른 선택지 저장해둔 배열 리셋
-    resetBalanceGamePeopleChoiceInfo()
+    resetBalanceGamePeopleChoiceInfo([])
     // setBalanceChoices({first:, second:})
   };
 

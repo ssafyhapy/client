@@ -81,7 +81,6 @@ const MiddleDiv = () => {
 
   // 한 줄 자기소개 + 나를 맞춰봐!! 발표자 관련 =======================================================================
   // 발표자 백그라운드 노란색으로 하이라이트
-  const { blueMembers, redMembers } = usePresenterStore();
   const currentPresenterId = usePresenterStore(
     (state) => state.currentPresenterId
   );
