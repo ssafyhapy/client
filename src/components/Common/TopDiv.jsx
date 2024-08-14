@@ -44,8 +44,8 @@ const TopDiv = ({ session }) => {
               />
             </button>
           </div>
-          <div> 방 이름 : {roomName}</div>
-          {/* <div> 방 설정 인원 : {roomPersonCount}</div> */}
+          <div className="text-left"> 방 이름 : {roomName}</div>
+          <div className="text-left"> 방 설정 인원 : {roomPersonCount}</div>
         </div>
       ) : null}
 
