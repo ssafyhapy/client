@@ -73,14 +73,14 @@ const PhotographFirst = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-custom-gradient-game flex items-center justify-center">
+    <div className="w-full h-screen flex items-center justify-center">
       <div
         style={{ height: "calc(100vh - 50px)" }}
         className="w-1/2 bg-[rgba(255,255,255,0.6)] flex flex-col justify-between"
       >
         <div
           ref={photoRef}
-          className="h-4/5 bg-gradient-to-r from-violet-200 to-pink-200 mr-[44px] ml-[44px] mt-[35px] mb-[39px] p-4 rounded-lg grid grid-cols-2 place-items-center gap-4"
+          className="h-4/5 bg-custom-gradient-game mr-[44px] ml-[44px] mt-[35px] mb-[39px] p-4 rounded-lg grid grid-cols-2 place-items-center gap-4"
           // style={{
           //   backgroundImage:
           //     "url('https://sarrr.s3.ap-northeast-2.amazonaws.com/artwork-7182531_1280.jpg')",

@@ -543,11 +543,9 @@ const MiddleDiv = () => {
                       </span>
                     </span>
                     <span
-                      className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
-                        data.ready ? null : "hidden"
-                      }`}
+                      className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 "hidden"`}
                     >
-                      {/* 준비완료 */}
+                      준비완료
                     </span>
                   </div>
                 </div>
@@ -602,11 +600,11 @@ const MiddleDiv = () => {
                             </span>
                           </span>
                           <span
-                            className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0 ${
-                              data.ready ? null : "hidden"
-                            }`}
+                            className={`h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)] absolute right-0
+                              "hidden"
+                            `}
                           >
-                            {/* 준비완료 */}
+                            준비완료
                           </span>
                         </div>
                       </div>
