@@ -88,16 +88,19 @@ const MiddleDiv = () => {
 
   // currentPresenterId 제대로 오는지 확인
   useEffect(() => {
-    console.log("currentPresenterId updated to:", currentPresenterId);
-    console.log("connectionInfo:", connectionInfo);
-  }, [currentPresenterId, connectionInfo]);
+    console.log("[*] currentPresenterId updated to:", currentPresenterId);
+    // console.log("connectionInfo:", connectionInfo);
+  }, [currentPresenterId]);
 
   // 발표자 배경색 노란색으로 바꾸는거
   useEffect(() => {
     if (currentPresenterId === null) {
+      console.log("[*] currentPresenterId가 null이에요.")
       if (highlightedElementId) {
+        console.log("[*] highlightedElementId 가 존재해요")
         changeBackgroundColor(highlightedElementId, "");
         setHighlightedElementId(null); // Reset highlightedElementId
+        console.log("[*] HighlightedElementId를 null로 바꾸었어요 : ", highlightedElementId)
       }
       return; // Exit the effect early
     }
@@ -111,27 +114,31 @@ const MiddleDiv = () => {
     // }
 
     // // 백그라운드 이미 설정된게 있으면 리셋
-    // if (highlightedElementId) {
-    //   changeBackgroundColor(highlightedElementId, "");
-    // }
+    if (highlightedElementId) {
+      changeBackgroundColor(highlightedElementId, "");
+    }
 
     // memberId === currentPresenterId 인 connectionId 찾아 (memberId가 string임에 주의!)
+    console.log("[*] newHighlightedElementId 를 찾아줄거예요")
     const newHighlightedElementId = Object.keys(connectionInfo).find(
       (key) => parseInt(connectionInfo[key].memberId, 10) === currentPresenterId
     );
-
+    console.log("[*] newHighlightedElementId 를 설정했어요: ", newHighlightedElementId)
+    
     if (newHighlightedElementId) {
+      console.log("[*] newHighlightedElementId (새로설정된노란배경)이 존재해요")
       // Set the new highlighted element ID and change its background color
       setHighlightedElementId(newHighlightedElementId);
       changeBackgroundColor(newHighlightedElementId, "yellow");
+      console.log("[*] 배경을 노란색으로 바꿔주었어요")
     }
 
     // Log the new connectionId
     console.log(
-      "New Highlighted Element ID (Connection ID):",
+      "[*] New Highlighted Element ID (Connection ID):",
       newHighlightedElementId
     );
-  }, [currentPresenterId]);
+  }, [currentPresenterId, connectionInfo, highlightedElementId]);
 
   // ================================================================================================
 
