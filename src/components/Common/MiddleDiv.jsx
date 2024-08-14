@@ -332,7 +332,11 @@ const MiddleDiv = () => {
     } else {
       Object.keys(connectionInfo).forEach((key) => {
         const connectionId = connectionInfo[key].connectionId;
-        changeBackgroundColor(connectionId, "");
+        if (highlightedElementId === connectionId) {
+          return;
+        } else {
+          changeBackgroundColor(connectionId, "");
+        }
       });
     }
 
