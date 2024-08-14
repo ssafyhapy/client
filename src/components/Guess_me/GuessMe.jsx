@@ -596,7 +596,7 @@ const GuessMe = () => {
             <div className="absolute bottom-3 right-5 flex flex-col items-center">
               <div className="flex items-center mb-2">
                 <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" />
-                <span className="text-red-500">{secondsLeft}</span>
+                <span className="text-red-500 text-2xl">{secondsLeft}</span>
               </div>
               {memberId === currentPresenterId && showResult && (
                 <BasicBtn btnText={btnText} onClick={handleNextStep} fontSize="24"/>
