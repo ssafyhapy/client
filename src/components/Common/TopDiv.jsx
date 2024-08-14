@@ -31,9 +31,9 @@ const TopDiv = ({ session }) => {
   };
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center relative">
       {gameStep === "waiting-room" ? (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center absolute ml-3">
           <div className="flex">
             <div>접속 코드 : {roomCode} </div>
             <button onClick={handleClipBoard} className="w-[30%] h-[30%]">
@@ -45,7 +45,7 @@ const TopDiv = ({ session }) => {
             </button>
           </div>
           <div> 방 이름 : {roomName}</div>
-          <div> 방 설정 인원 : {roomPersonCount}</div>
+          {/* <div> 방 설정 인원 : {roomPersonCount}</div> */}
         </div>
       ) : null}
 
