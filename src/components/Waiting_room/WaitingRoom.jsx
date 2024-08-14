@@ -76,7 +76,7 @@ const WaitingRoom = () => {
       {/* 멤버아이디랑 호스트아이디랑 같을때만 다음버튼이보임 */}
       {memberId === hostId && (
         <div className="absolute bottom-3 right-5">
-          <BasicBtn btnText={btnText} onClick={handleNextStep} fontSize="24"/>
+          <BasicBtn btnText={btnText} onClick={handleNextStep} fontSize="20"/>
         </div>
       )}
     </div>
