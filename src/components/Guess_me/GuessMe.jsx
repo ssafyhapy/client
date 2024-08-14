@@ -456,7 +456,7 @@ const GuessMe = () => {
         setCurrentPresenterId(message.memberId);
         console.log("[*] 이제 presenterId 바뀌었어요 : ", currentPresenterId)
         setCurrentQuestionIndex(message.nextIndex);
-        setSecondsLeft(5);
+        setSecondsLeft(10);
         setShowResult(false);
         console.log("[*] 이제 guessmepeopleselection 리셋시킬거예요.")
         resetGuessMePeopleSelection([])
@@ -551,7 +551,7 @@ const GuessMe = () => {
 
   const startTimer = () => {
     const startTime = Date.now(); // 타이머 시작 시간 기록
-    const targetTime = startTime + 5000; // 목표 시간 5초 후
+    const targetTime = startTime + 10000; // 목표 시간 5초 후
 
     // 기존 타이머가 있다면 제거
     if (timer) clearInterval(timer);

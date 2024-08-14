@@ -3,11 +3,14 @@ import { useState } from "react";
 import GameTurns from "./GameTurns";
 import BasicBtn from "../Buttons/BasicBtn";
 import useRoomStore from "../../store/useRoomStore";
+import useGameStore from "../../store/useGameStore";
+import ExitBtn from "../Buttons/ExitBtn";
 
-const TopDiv = ({ gameStep }) => {
-  const [copyState, setCopyState] = useState(false);
+const TopDiv = ({ session }) => {
+  // const [copyState, setCopyState] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const {roomCode} = useRoomStore()
+  const {gameStep} = useGameStore()
+  const {roomCode, roomName, roomPersonCount} = useRoomStore()
 
 
   const handleClipBoard = () => {
@@ -15,7 +18,7 @@ const TopDiv = ({ gameStep }) => {
       navigator.clipboard
         .writeText(roomCode)
         .then(() => {
-          setCopyState(true);
+          // setCopyState(true);
           setShowModal(true);
         })
         .catch((err) => {
@@ -31,7 +34,7 @@ const TopDiv = ({ gameStep }) => {
   return (
     <div className="flex justify-center items-center">
       {gameStep === "waiting-room" ? (
-        <div className="flex items-center absolute top-3 left-10">
+        <div className="flex flex-col items-center justify-center">
           <div>접속 코드 : {roomCode} </div>
           <button onClick={handleClipBoard} className="w-[30%] h-[30%]">
             <img
@@ -40,10 +43,12 @@ const TopDiv = ({ gameStep }) => {
               alt=""
             />
           </button>
+          <div> 방 이름 : {roomName}</div>
+          <div> 방 설정 인원 : {roomPersonCount}</div>
         </div>
       ) : null}
 
-      <div className="h-[vh] flex justify-center items-center ">
+      <div className="flex justify-center items-center ">
         {gameStep == "camera-check" ||
         gameStep == "waiting-room" ||
         gameStep == "photo-first" ||
@@ -51,6 +56,9 @@ const TopDiv = ({ gameStep }) => {
           <GameTurns gameStep={gameStep}></GameTurns>
         )}
       </div>
+
+      {gameStep !== "photo-first" && gameStep !== "photo-last" ? <ExitBtn session={session}/> : null}
+
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-[rgba(255,255,255,0.95)] p-6 rounded-[30px] shadow-lg flex flex-col justify-center items-center gap-5">
