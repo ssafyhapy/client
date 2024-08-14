@@ -680,7 +680,7 @@ const GuessMe = () => {
         ) : (
           <div className="flex-grow flex items-center justify-center relative">
             <span className="text-[rgba(85,181,236)]">
-              {currentQuestionIndex+1}
+              {currentQuestionIndex+1}. &nbsp;&nbsp;
             </span>
             <span className="text-[rgba(85,181,236)]">
               {userQuestions.length > 0
