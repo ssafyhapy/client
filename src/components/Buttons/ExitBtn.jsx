@@ -42,7 +42,7 @@ const ExitBtn = () => {
   return (
     <button
       onClick={exitToMain}
-      className="flex items-center justify-center w-[90px] h-[35px] rounded-[30px] text-[#ffffff] text-[14px] bg-[rgba(255,86,117)] shadow-[0_4px_10px_rgba(66,72,81,0.5)] absolute right-10 top-6 z-20 hover:bg-[rgba(255,66,97)] transition-colors duration-300"
+      className="flex items-center justify-center w-[90px] h-[35px] rounded-[30px] text-[#ffffff] text-[14px] bg-[rgba(255,86,117)] shadow-[0_4px_10px_rgba(66,72,81,0.5)] top-6 z-20 hover:bg-[rgba(255,66,97)] transition-colors duration-300"
     >
       <FaSignOutAlt className="mr-1" />
       나가기
