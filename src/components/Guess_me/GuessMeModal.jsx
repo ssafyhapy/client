@@ -36,10 +36,6 @@ const GuessMeModal = ({
     );
 
     if (allQuestionsFilled && allAnswersSelected) {
-
-      // alert 추가
-      alert("나를 맞춰봐 게임은 모션인식으로 진행됩니다. \n게임이 시작되면 문제의 답이라고 생각되는 O 또는 X를 몸으로 크게 표현해주세요!")
-
       onReady();
       onClose();
     } else {
