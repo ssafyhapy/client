@@ -394,10 +394,10 @@ const GuessMe = () => {
   // const [currentPresenterId, setCurrentPresenterId] = useState(null);
   const [showReadyMessage, setShowReadyMessage] = useState(false);
 
-  const setCurrentPresenterId = usePresenterStore(
-    (state) => state.setCurrentPresenterId
-  );
-  const { currentPresenterId } = usePresenterStore();
+  // const setCurrentPresenterId = usePresenterStore(
+  //   (state) => state.setCurrentPresenterId
+  // );
+  const { currentPresenterId, setCurrentPresenterId } = usePresenterStore();
 
   const { memberId } = useAuthStore();
   // const memberId = 4
@@ -431,7 +431,7 @@ const GuessMe = () => {
         setUserQuestions(message); // Load the new set of questions
         setCurrentQuestionIndex(0);
         setShowReadyMessage(true);
-        setSecondsLeft(10);
+        setSecondsLeft(5);
         setShowResult(false);
         resetGuessMePeopleSelection([])
         // // 이때 모션인식 시작
@@ -448,9 +448,10 @@ const GuessMe = () => {
       // 받은게 memberId, nextIndex 면
       // 현재인덱스 받아온 인덱스로 설정, 10초 남은걸로 다시 설정
       else if (message.memberId && typeof message.nextIndex === "number") {
+        console.log("받아온 메시지의 memberId는 이것입니다: ", message.memberId)
         setCurrentPresenterId(message.memberId);
         setCurrentQuestionIndex(message.nextIndex);
-        setSecondsLeft(10);
+        setSecondsLeft(5);
         setShowResult(false);
         resetGuessMePeopleSelection([])
         // 이때 모션 인식 시작
