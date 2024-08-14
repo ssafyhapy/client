@@ -427,13 +427,17 @@ const GuessMe = () => {
       // 받은게 문제3개세트 데이터면
       if (Array.isArray(message) && message.length > 0 && message[0].memberId) {
         // 현재 발표자 id, 현재 발표자의 발표내용 (문제3개), 현재 발표데이터의 인덱스0으로 설정 (1번문제), 준비완료!! div 보여질수있게 true로 설정
+        console.log('[*] 이제 presenterId 바꿀거예요')
+        setCurrentPresenterId(message[0].memberId);
+        console.log('[*] presenterId 바뀌었어요: ', currentPresenterId)
         setUserQuestions(message); // Load the new set of questions
         setCurrentQuestionIndex(0);
         setShowReadyMessage(true);
         setSecondsLeft(5);
         setShowResult(false);
+        console.log("[*] 이제 guessmepeopleselection 리셋시킬거예요.")
         resetGuessMePeopleSelection([])
-        setCurrentPresenterId(message[0].memberId);
+        console.log("[*] 이제 guessmepeopleselection array 리셋시켰어요")
         // // 이때 모션인식 시작
         // setStartPredictionFlag(true);
         // // 타이머 시작
@@ -448,12 +452,15 @@ const GuessMe = () => {
       // 받은게 memberId, nextIndex 면
       // 현재인덱스 받아온 인덱스로 설정, 10초 남은걸로 다시 설정
       else if (message.memberId && typeof message.nextIndex === "number") {
-        console.log("받아온 메시지의 memberId는 이것입니다: ", message.memberId)
+        console.log("[*] 이제 presenterId 바꿀거예요")
+        setCurrentPresenterId(message.memberId);
+        console.log("[*] 이제 presenterId 바뀌었어요 : ", currentPresenterId)
         setCurrentQuestionIndex(message.nextIndex);
         setSecondsLeft(5);
         setShowResult(false);
+        console.log("[*] 이제 guessmepeopleselection 리셋시킬거예요.")
         resetGuessMePeopleSelection([])
-        setCurrentPresenterId(message.memberId);
+        console.log("[*] 이제 guessmepeopleselection array 리셋시켰어요.")
         // 이때 모션 인식 시작
         console.log("[*] 모션 인식 시작");
         setStartPredictionFlag(true);
