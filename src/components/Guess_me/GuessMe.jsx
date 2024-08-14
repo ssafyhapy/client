@@ -466,7 +466,7 @@ const GuessMe = () => {
     webSocketService.subscribeToMemberState(roomId, (message) => {
       console.log("Received game state: ", message);
       if (message.memberState === "balance") {
-        // resetGuessMePeopleSelection();
+        resetGuessMePeopleSelection([]);
         setCurrentPresenterId(null);
         setGameStep("balance-game");
       }
@@ -617,6 +617,10 @@ const GuessMe = () => {
         }
       });
     });
+
+    return () => {
+      webSocketService.unsubscribe(`/api/sub/ox/${roomId}/selection`);
+    };
   }, [roomId]);
 
   // useEffect(() => {

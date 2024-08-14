@@ -48,6 +48,7 @@ import Games from "./pages/Games/Games";
 
 function App() {
   const { message, isLoginAlert, setLoginAlert } = useAuthStore();
+  console.log("[*] 배포 1");
 
   useEffect(() => {
     if (isLoginAlert) {
