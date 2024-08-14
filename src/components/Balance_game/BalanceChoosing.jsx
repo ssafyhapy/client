@@ -86,7 +86,7 @@ const BalanceChoosing = ({
       const timer = setInterval(() => {
         const now = Date.now();
         const elapsedSeconds = Math.floor((now - startTime) / 1000);
-        const remainingSeconds = Math.max(10 - elapsedSeconds, 0);
+        const remainingSeconds = Math.max(5 - elapsedSeconds, 0);
 
         setSecondsLeft(remainingSeconds);
 
