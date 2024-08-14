@@ -102,18 +102,18 @@ const MiddleDiv = () => {
       return; // Exit the effect early
     }
 
-    // 현재 currentPresenterId & connectionInfo 가 잘 업데이트 된 상태인지 확인
-    if (!currentPresenterId || Object.keys(connectionInfo).length === 0) {
-      console.log(
-        "Waiting for currentPresenterId or connectionInfo to be available..."
-      );
-      return; // Don't proceed until both are available
-    }
+    // // 현재 currentPresenterId & connectionInfo 가 잘 업데이트 된 상태인지 확인
+    // if (!currentPresenterId || Object.keys(connectionInfo).length === 0) {
+    //   console.log(
+    //     "Waiting for currentPresenterId or connectionInfo to be available..."
+    //   );
+    //   return; // Don't proceed until both are available
+    // }
 
-    // 백그라운드 이미 설정된게 있으면 리셋
-    if (highlightedElementId) {
-      changeBackgroundColor(highlightedElementId, "");
-    }
+    // // 백그라운드 이미 설정된게 있으면 리셋
+    // if (highlightedElementId) {
+    //   changeBackgroundColor(highlightedElementId, "");
+    // }
 
     // memberId === currentPresenterId 인 connectionId 찾아 (memberId가 string임에 주의!)
     const newHighlightedElementId = Object.keys(connectionInfo).find(
@@ -131,7 +131,7 @@ const MiddleDiv = () => {
       "New Highlighted Element ID (Connection ID):",
       newHighlightedElementId
     );
-  }, [currentPresenterId, connectionInfo, highlightedElementId]);
+  }, [currentPresenterId]);
 
   // ================================================================================================
 
