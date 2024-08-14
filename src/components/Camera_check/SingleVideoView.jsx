@@ -29,7 +29,7 @@ const SingleVideoView = ({data}) => {
                 </span>
               </span>
               <span className={`flex items-center px-2 h-[24px] bg-[#8CA4F8] rounded-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5) ${data.ready?null:"hidden"}`}>
-                준비완료
+                {/* 준비완료 */}
               </span>
             </div>
           </div>

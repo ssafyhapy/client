@@ -536,7 +536,7 @@ const MiddleDiv = () => {
                         data.ready ? null : "hidden"
                       }`}
                     >
-                      준비완료
+                      {/* 준비완료 */}
                     </span>
                   </div>
                 </div>
@@ -596,7 +596,6 @@ const MiddleDiv = () => {
                             }`}
                           >
                             {/* 준비완료 */}
-                            준비완료
                           </span>
                         </div>
                       </div>
