@@ -34,7 +34,7 @@ const TopDiv = ({ session }) => {
     <div className="flex items-center justify-between w-[90%]">
       {gameStep === "waiting-room" ? (
         <div className="flex flex-col items-center justify-center ">
-          <div>
+          <div className="flex">
             <div>접속 코드 : {roomCode} </div>
             <button onClick={handleClipBoard} className="w-[30%] h-[30%]">
               <img
