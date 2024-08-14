@@ -89,8 +89,9 @@ const MiddleDiv = () => {
   // currentPresenterId 제대로 오는지 확인
   useEffect(() => {
     console.log("[*] currentPresenterId updated to:", currentPresenterId);
+    console.log("[*] highlightedElementId updated to:", highlightedElementId);
     // console.log("connectionInfo:", connectionInfo);
-  }, [currentPresenterId]);
+  }, [currentPresenterId, highlightedElementId]);
 
   // 발표자 배경색 노란색으로 바꾸는거
   useEffect(() => {
