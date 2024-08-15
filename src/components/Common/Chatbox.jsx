@@ -137,6 +137,7 @@ const Chatbox = () => {
 
   // 시스템 메시지 보내기!!
   useEffect(() => {
+    console.log("현재 game step은 이것입니다. ", gameStep)
       if (gameStep === "intro") {
         sendSystemMessage("지금은 한 줄 자기소개 시간입니다. \n현재 차례는 노란색 테두리가 쳐진 사람입니다. \n충분히 자기소개를 한 후 다음 버튼을 누르시면 다음 사람에게로 차례가 넘어갑니다.")
       } else if (gameStep === "guess-me") {
