@@ -9,6 +9,8 @@ import Auth from "./pages/Main/Auth";
 import Report from "./pages/Main/Report";
 import MemberProfile from "./pages/Main/MemberProfile";
 
+import NotFound from "./pages/Error/NotFound";
+
 // 나를 맞춰봐 페이지들
 import GuessMe from "./components/Guess_me/GuessMe";
 
@@ -42,13 +44,13 @@ function App() {
         <Route path="/member/:memberId" element={<MemberProfile />} />
         <Route path="/login/oauth2/code/*" element={<Auth />} />
         <Route path="room/:roomId/report" element={<Report />} />
+        {/* 잘못된 경로로 접근 시 NotFound 페이지 */}
+        <Route path="*" element={<NotFound />} />
 
         <Route path="/guessme" element={<GuessMe />} />
 
         {/* 게임 합친 페이지 */}
         <Route path="/games" element={<Games />} />
-
-
       </Routes>
     </>
   );
