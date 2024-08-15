@@ -11,6 +11,7 @@ import Spinner from "../../components/Spinner";
 import { axiosInstance } from "../../api/apiClient";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useAuthStore from "../../store/useAuthStore";
+import { FaArrowLeft } from "react-icons/fa";
 
 const Report = () => {
   const [loading, setLoading] = useState(true);
