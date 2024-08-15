@@ -349,7 +349,7 @@
 
 // export default GuessMe;
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import webSocketService from "../../WebSocketService";
 import Chatbox from "./../Common/Chatbox";
 import ExitBtn from "./../Buttons/ExitBtn";
