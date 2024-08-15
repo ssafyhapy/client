@@ -9,37 +9,10 @@ import Auth from "./pages/Main/Auth";
 import Report from "./pages/Main/Report";
 import MemberProfile from "./pages/Main/MemberProfile";
 
-// 게임 공통 페이지(기반)
-// import CamCheck from "./pages/Games/CamCheck";
-
-// 한 줄 자기소개 페이지들
-// 다 합쳤음
-// import SelfIntroductionOld from "./pages/Games/Self_introduction/SelfIntroductionOld";
-// import SelfIntroductionAllPrepared from "./pages/Games/Self_introduction/SelfIntroductionAllPrepared";
-// import SelfIntroduction from "./pages/Games/Self_introduction/SelfIntroduction";
+import NotFound from "./pages/Error/NotFound";
 
 // 나를 맞춰봐 페이지들
-// import GuessMeGetReady from "./components/Guess_me/GuessMeGetReady";
-// import GuessMeAllPrepared from "./components/Guess_me/GuessMeAllPrepared";
-// import GuessMeAnswer from "./components/Guess_me/GuessMeAnswer";
 import GuessMe from "./components/Guess_me/GuessMe";
-
-
-// 밸런스 페이지들
-// import BalanceGetReady from "./components/Balance_game/BalanceGetReady";
-// import BalanceChangeChoices from "./components/Balance_game/BalanceChangeChoices";
-// import BalanceChoosing from "./components/Balance_game/BalanceChoosing";
-// import BalanceGameModal from "./components/BalanceGameModal";
-// import Balance from "./pages/Games/Balance_game/BalanceGame";
-
-// 기념사진 촬영 페이지
-// import PhotographFirst from "./components/Photo/PhotographFirst";
-// import PhotographLast from "./pages/Games/Photo/PhotographLast";
-// import TakePhotoModal from "./components/Photo/TakePhotoModal";
-
-// 렙업 페이지들
-// import WrapUp from "./pages/Games/WrapUp";
-// import WrapUpModal from "./components/Wrap_up/WrapUpModal";
 
 // 로그인 알람 모달
 import useAuthStore from "./store/useAuthStore";
@@ -68,54 +41,16 @@ function App() {
         <Route path="/play" element={<Play />} />
         <Route path="/login" element={<Login />} />
         <Route path="/mypage" element={<MyPage />} />
-        {/* <Route path="/member" element={<MemberProfile />} /> */}
-        {/* 멤버 프로필 동적 라우팅 */}
         <Route path="/member/:memberId" element={<MemberProfile />} />
         <Route path="/login/oauth2/code/*" element={<Auth />} />
-        {/* <Route path="/report" element={<Report />} /> */}
-        {/* 결과 레포트 동적 라우팅 */}
         <Route path="room/:roomId/report" element={<Report />} />
+        {/* 잘못된 경로로 접근 시 NotFound 페이지 */}
+        <Route path="*" element={<NotFound />} />
 
-        {/* 대기실 */}
-        {/* <Route path="/waiting-room" element={<WaitingRoom />} /> */}
-        {/* <Route path="/camera-check" element={<CamCheck />} /> */}
-
-        {/* 한줄 자기소개 페이지랑 관련된 Route */}
-        {/* <Route
-          path="/selfintro-getready"
-          element={<SelfIntroductionGetReady />}
-        />
-        <Route
-          path="/selfintro-allprepared"
-          element={<SelfIntroductionAllPrepared />}
-        /> */}
-        {/* <Route path="/self-introduction" element={<SelfIntroduction />} /> */}
-
-        {/* 나를 맞춰봐 페이지랑 관련된 Route */}
         <Route path="/guessme" element={<GuessMe />} />
-        {/* <Route path="/guessme-getready" element={<GuessMeGetReady />} />
-        <Route path="/guessme-allprepared" element={<GuessMeAllPrepared />} /> */}
-
-        {/* 밸런스 게임과 관련된 Route */}
-        {/* <Route path="/balance" element={<Balance />} /> */}
-        {/* <Route path="/balance-getready" element={<BalanceGetReady />} />
-        <Route path="/balance-choosing" element={<BalanceChoosing />} />
-        <Route path="/balance-change-choices" element={<BalanceChangeChoices />} /> */}
-        {/* <Route path="/balance-modal" element={<BalanceGameModal />} /> */}
-
-        {/* 기념사진촬영과 관련된 Route */}
-        {/* <Route path="/photo-first" element={<PhotographFirst />} /> */}
-        {/* <Route path="/photo-last" element={<PhotographLast />} /> */}
-        {/* <Route path="/photomodal" element={<TakePhotoModal />} /> */}
-
-        {/* 렙업 페이지랑 관련된 Route */}
-        {/* <Route path="/wrap-up" element={<WrapUp />} /> */}
-        {/* <Route path="/wrapup-modal" element={<WrapUpModal />} /> */}
 
         {/* 게임 합친 페이지 */}
         <Route path="/games" element={<Games />} />
-
-
       </Routes>
     </>
   );

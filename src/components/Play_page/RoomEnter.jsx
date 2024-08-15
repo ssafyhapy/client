@@ -31,7 +31,7 @@ const RoomEnter = () => {
     }
   };
 
-  console.log(watch("roomCode"));
+  // console.log(watch("roomCode"));
 
   return (
     // {/* 접속코드로 방 입장하기 */}
