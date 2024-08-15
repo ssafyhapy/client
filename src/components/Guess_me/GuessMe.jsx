@@ -433,7 +433,7 @@ const GuessMe = () => {
         setUserQuestions(message); // Load the new set of questions
         setCurrentQuestionIndex(0);
         setShowReadyMessage(true);
-        setSecondsLeft(5);
+        setSecondsLeft(10);
         setShowResult(false);
         console.log("[*] 이제 guessmepeopleselection 리셋시킬거예요.");
         resetGuessMePeopleSelection([]);
