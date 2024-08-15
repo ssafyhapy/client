@@ -18,13 +18,13 @@ import useRoomStore from "../../store/useRoomStore";
 import useOpenViduSession from "../../hooks/useOpenViduSession";
 
 const Games = () => {
-  const gameStep = useGameStore((state) => state.GuessMe );
+  const gameStep = useGameStore((state) => state.gameStep);
   const setGameStep = useGameStore((state) => state.setGameStep);
 
   const { session } = useOpenViduSession();
 
   return (
-    // <WebSocketProvider>
+    <WebSocketProvider>
       <GameBackground>
         {/* <div className="flex flex-col w-full h-[100vh] justify-between items-center"> */}
           {gameStep !== "camera-check" &&
@@ -50,7 +50,7 @@ const Games = () => {
           )}
         {/* </div> */}
       </GameBackground>
-    // </WebSocketProvider>
+    </WebSocketProvider>
   );
 };
 
