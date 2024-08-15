@@ -66,9 +66,9 @@ const BalanceChangeChoices = ({
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center relative gap-3">
+      <div className="flex flex-col items-center justify-center relative">
         <div className="mb-3 text-[20px] text-[rgba(0,0,0,0.5)]">방장과 함께 밸런스 게임 주제를 골라주세요!</div>
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-3">
           <div
             className={`text-[rgba(85,181,236)] px-2 py-3 rounded-[15px] ${
               pickedChoice === "FIRST"
