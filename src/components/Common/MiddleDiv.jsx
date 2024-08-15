@@ -65,7 +65,7 @@ const MiddleDiv = () => {
     // const count = 6;
     if (count === 1) return "w-[80%] max-w-[500px] min-w-[250px]";
     if (count === 2) return "w-[60%] max-w-[400px] min-w-[250px]";
-    if (count >= 3) return "w-[40%] max-w-[400px] min-w-[250px]";
+    if (count >= 3) return "w-[30%] max-w-[300px] min-w-[250px]";
   };
 
   // const [redIds, setRedIds] = useState([]);
