@@ -103,7 +103,7 @@ const MemberProfile = () => {
                   Profile
                 </h1>
               </div>
-              <div></div>
+              <div className="flex-1"></div>
             </div>
             <div className="w-full flex flex-col items-center gap-5">
               <div className="w-full flex gap-5">
