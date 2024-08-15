@@ -23,21 +23,21 @@ const BalanceGameModal = ({ btnText, onClose, setPurpose }) => {
               <p className="font-bold text-[32px] text-[rgba(87,136,208)] text-center mb-5">
                 어떤 활동을 하나요?
               </p>
-              <p className="text-[rgba(220,89,100)] text-[24px]">
+              <p className="text-[rgba(220,89,100)] text-[20px]">
                 *제출 이후 수정은 불가능합니다.
               </p>
             </div>
           </div>
           <div className="p-2 mb-5 flex items-center">
-            <textarea className="w-[90%] text-[24px] border rounded p-1 resize-none" 
+            <textarea className="w-[90%] text-[20px] border rounded p-1 resize-none" 
             value={purposeText}
             onChange={(e) => setPurposeText(e.target.value)}
             />
           </div>
-          <p className="text-[rgba(0,0,0,0.45)] text-[24px]">
+          <p className="text-[rgba(0,0,0,0.45)] text-[20px]">
             *밸런스 게임을 위해 받는 질문으로
           </p>
-          <p className="text-[rgba(0,0,0,0.45)] text-[24px]">
+          <p className="text-[rgba(0,0,0,0.45)] text-[20px]">
             현 대답과 연관된 밸런스 게임의 주제 혹은 기타 흥미로운 주제가
             랜덤으로 공개됩니다.
           </p>
