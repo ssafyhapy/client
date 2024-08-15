@@ -23,7 +23,7 @@ const useGameStore = create((set) => ({
       },
     })),
 
-  finalResult:null,
+  finalResult:"N",
   setFinalResult : (result)=>set({finalResult:result}),
   startPredictionFlag : false,
   setStartPredictionFlag : (flag)=>set({startPredictionFlag:flag})
