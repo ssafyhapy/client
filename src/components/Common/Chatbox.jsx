@@ -28,12 +28,13 @@ const Chatbox = () => {
   const {gameStep} = useGameStore()
 
   const sendSystemMessage = (content) => {
-    const systemMessage = {
-      content,
-      memberName: "시스템",
-      memberProfileImageUrl : defaultProfile,
-    }
-    webSocketService.sendMessage(`/api/pub/message/${roomId}`, systemMessage)
+    const systemName = "시스템"
+    // const systemMessage = {
+    //   content,
+    //   memberName: "시스템",
+    //   memberProfileImageUrl : defaultProfile,
+    // }
+    webSocketService.sendMessage(`/api/pub/message/${roomId}`, {content, memberName:systemName, memberId})
   }
 
   // const webSocketService = useWebSocket();
