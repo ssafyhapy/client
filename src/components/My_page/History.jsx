@@ -74,7 +74,7 @@ const History = ({ isEditMode }) => {
               </div>
             ))}
             {/* // 이력 추가 버튼 */}
-            {fields.length < 3 && (
+            {fields.length < 5 && (
               <button
                 type="button"
                 onClick={() =>
@@ -94,7 +94,7 @@ const History = ({ isEditMode }) => {
           <ul>
             {/* // 이력 리스트 출력 */}
             {(memberHistoryList || []).map((history) => (
-              <li key={history.memberHistoryId} className="text-2xl flex gap-5">
+              <li key={history.memberHistoryId} className="text-2xl flex flex-row gap-5 whitespace-nowrap">
                 {/* //  날짜, 내용 출력 */}
                 <p>{history.memberHistoryDate}</p>
                 <p>{history.memberHistoryContent}</p>
