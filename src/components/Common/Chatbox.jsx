@@ -20,7 +20,7 @@ const Chatbox = () => {
   const { messages, addMessage } = useChatStore(); // Use addMessage from Zustand store
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef(null);
-  const { roomId } = useRoomStore();
+  const { roomId, hostId } = useRoomStore();
   const { memberName, memberId, memberProfileImageUrl } = useAuthStore();
 
   const webSocketService = useWebSocket();
@@ -141,6 +141,7 @@ const Chatbox = () => {
   // 시스템 메시지 보내기!!
   useEffect(() => {
     console.log("현재 game step은 이것입니다. ", gameStep)
+    if (memberId === hostId) {
       if (gameStep === "self-introduction") {
         sendSystemMessage("지금은 한 줄 자기소개 시간입니다. \n현재 차례는 노란색 테두리가 쳐진 사람입니다. \n충분히 자기소개를 한 후 다음 버튼을 누르시면 다음 사람에게로 차례가 넘어갑니다.")
       } else if (gameStep === "guess-me") {
@@ -148,6 +149,7 @@ const Chatbox = () => {
       } else if (gameStep === "balance-game") {
         sendSystemMessage("주제 변경 및 확정은 방장만 가능합니다. \n방장과 상의해 원하시는 주제를 골라 플레이하세요.\n선택지는 타이머 카운트다운이 나옴과 동시에 고를 수 있게 됩니다.")
       }
+    }
     }, [gameStep])
 
   return (
