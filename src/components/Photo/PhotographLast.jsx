@@ -9,6 +9,7 @@ import useGameStore from "../../store/useGameStore";
 import { axiosInstance } from "../../api/apiClient";
 
 import useRoomStore from "../../store/useRoomStore";
+import useAuthStore from "../../store/useAuthStore";
 
 const PhotographLast = () => {
   const { gameStep } = useGameStore();
@@ -17,8 +18,8 @@ const PhotographLast = () => {
   // const pics = Array(6).fill("pic");
   const [showModal, setShowModal] = useState(false);
   const photoRef = useRef(null);
-
-  const { roomId } = useRoomStore();
+  const { memberId } = useAuthStore();
+  const { roomId, hostId } = useRoomStore();
 
   const navigate = useNavigate();
 
@@ -33,7 +34,8 @@ const PhotographLast = () => {
     if (photoRef.current) {
       html2canvas(photoRef.current).then((canvas) => {
         canvas.toBlob(async (blob) => {
-          // Blob을 FormData에 추가
+          if (memberId === hostId) {
+            // Blob을 FormData에 추가
           const formData = new FormData();
           formData.append("image", blob, "capture.png");
 
@@ -44,18 +46,19 @@ const PhotographLast = () => {
               formData
             );
             console.log("Success:", response.data);
-            // 업로드 후 모달 닫기
-            setShowModal(false);
-
-            // 사진찍고 2초뒤 자동으로 레포트 페이지로 이동
-            setTimeout(() => {
-              navigate(`/room/${roomId}/report`);
-            }, 2000);
           } catch (error) {
             console.error("Error:", error);
           }
+          }  
         }, "image/png"); // 이미지 포맷 설정
       });
+      // 업로드 후 모달 닫기
+      setShowModal(false);
+
+      // 사진찍고 2초뒤 자동으로 레포트 페이지로 이동
+      setTimeout(() => {
+        navigate(`/room/${roomId}/report`);
+      }, 2000);
     }
   };
 
