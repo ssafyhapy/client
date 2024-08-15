@@ -68,12 +68,12 @@ const GuessMeModal = ({
                 key={questionNumber}
                 className="p-2 mb-5 flex items-center w-full justify-center"
               >
-                <span className="mr-2 text-xl text-[rgba(87,136,208)]">
+                <span className="mr-2 text-[24px] text-[rgba(87,136,208)]">
                   {questionNumber}.{" "}
                 </span>
                 {/* 사용자가 작성하는 곳 */}
                 <input
-                  className="w-[70%] text-xl border rounded p-1"
+                  className="w-[70%] text-[24px] border rounded p-1"
                   type="text"
                   value={questions[questionNumber] || ""}
                   onChange={(e) =>

@@ -548,13 +548,15 @@ const GuessMe = () => {
   //   }, 500);
   //   setTimer(newTimer);
   // };
+  const timerRef = useRef(null);
 
   const startTimer = () => {
     const startTime = Date.now(); // 타이머 시작 시간 기록
     const targetTime = startTime + 10000; // 목표 시간 10초 후
 
     // 기존 타이머가 있다면 제거
-    if (timer) clearInterval(timer);
+    // if (timer) clearInterval(timer);
+    if (timerRef.current) clearInterval(timerRef.current);
 
     const newTimer = setInterval(() => {
       const currentTime = Date.now(); // 현재 시간
@@ -573,7 +575,8 @@ const GuessMe = () => {
       }
     }, 100); // 짧은 간격으로 타이머를 갱신
 
-    setTimer(newTimer); // 타이머 상태를 업데이트
+    timerRef.current = newTimer;
+    // setTimer(newTimer); // 타이머 상태를 업데이트
   };
 
   // 다음 버튼과  연결된 함수
@@ -637,7 +640,8 @@ const GuessMe = () => {
   // 타이머 시작하기 전에 약간의 delay
   useEffect(() => {
     if (userQuestions.length > 0) {
-      if (timer) clearInterval(timer);
+      // if (timer) clearInterval(timer);
+      if (timerRef.current) clearInterval(timerRef.current);
       const delayTimer = setTimeout(() => {
         startTimer();
       }, 500);
