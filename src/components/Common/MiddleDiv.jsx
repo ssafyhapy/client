@@ -300,7 +300,7 @@ const MiddleDiv = () => {
   const [predictionResults, setPredictionResults] = useState([]);
   const [timerActive, setTimerActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(5);
-  const THRESHOLD = 0.75; // 임계치 값
+  const THRESHOLD = 0.40; // 임계치 값
 
   // 모델 로드
   useEffect(() => {
