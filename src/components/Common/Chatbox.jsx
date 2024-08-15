@@ -148,6 +148,8 @@ const Chatbox = () => {
         sendSystemMessage("전원이 작성을 완료하면 나를 맞춰봐 게임이 시작될 예정입니다. \n나를 맞춰봐 게임에서는 OX를 모션으로 인식해 플레이가 가능합니다. \n몸으로 O 혹은 X를 표현해 문제의 답을 맞춰보세요!")
       } else if (gameStep === "balance-game") {
         sendSystemMessage("주제 변경 및 확정은 방장만 가능합니다. \n방장과 상의해 원하시는 주제를 골라 플레이하세요.\n선택지는 타이머 카운트다운이 나옴과 동시에 고를 수 있게 됩니다.")
+      } else if (gameStep === "wrap-up") {
+        sendSystemMessage("모든 게임이 끝났습니다. 조금 더 친밀해지셨나요? 원하는 만큼 얘기를 나누세요! 방장이 종료 버튼을 누르면 마지막 기념사진 촬영 후 결과 레포트를 보여드립니다.")
       }
     }
     }, [gameStep])
