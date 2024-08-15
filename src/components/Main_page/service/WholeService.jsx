@@ -16,8 +16,6 @@ const WholeService = () => {
   return (
     <div className="flex flex-col w-[80%] h-[80%] justify-between items-center">
       <NavBar />
-      <div className="w-full h-full flex flex-col justify-between items-center gap-10">
-        <div />
         <div className="flex">
           <div className="w-full flex flex-col items-start gap-4 opacity-50">
             {slides.map((slide, index) => (
@@ -32,15 +30,10 @@ const WholeService = () => {
           </div>
           <iframe src="https://lottie.host/embed/e61d9aab-2ad6-4958-9b92-59f308e61607/fzeD0O9H5M.json"></iframe>
         </div>
-      </div>
-      <div className="flex justify-between w-full">
-        <div className="w-[33%]"></div>
-        {/* <ScrollDownBtn text="사르르 서비스 확인하기" color="#000000" /> */}
-        <div className="w-[33%] flex justify-end">
+        <div className="self-end">
           <PlayBtn />
         </div>
       </div>
-    </div>
   );
 };
 
