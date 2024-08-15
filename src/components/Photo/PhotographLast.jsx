@@ -17,8 +17,8 @@ const PhotographLast = () => {
   // const pics = Array(6).fill("pic");
   const [showModal, setShowModal] = useState(false);
   const photoRef = useRef(null);
-
-  const { roomId } = useRoomStore();
+  const { memberId } = useAuthStore();
+  const { roomId, hostId } = useRoomStore();
 
   const navigate = useNavigate();
 
@@ -33,7 +33,8 @@ const PhotographLast = () => {
     if (photoRef.current) {
       html2canvas(photoRef.current).then((canvas) => {
         canvas.toBlob(async (blob) => {
-          // Blob을 FormData에 추가
+          if (memberId === hostId) {
+            // Blob을 FormData에 추가
           const formData = new FormData();
           formData.append("image", blob, "capture.png");
 
@@ -54,6 +55,7 @@ const PhotographLast = () => {
           } catch (error) {
             console.error("Error:", error);
           }
+          }  
         }, "image/png"); // 이미지 포맷 설정
       });
     }
