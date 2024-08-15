@@ -9,6 +9,7 @@ import useGameStore from "../../store/useGameStore";
 import { axiosInstance } from "../../api/apiClient";
 
 import useRoomStore from "../../store/useRoomStore";
+import useAuthStore from "../../store/useAuthStore";
 
 const PhotographLast = () => {
   const { gameStep } = useGameStore();
