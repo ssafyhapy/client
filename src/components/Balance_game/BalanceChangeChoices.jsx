@@ -128,7 +128,7 @@ const BalanceChangeChoices = ({
           <div className="flex justify-center items-center">
             <button
               onClick={handleConfirmChoices}
-              className={`bg-[rgba(150,165,254,0.6)] text-white w-[76px] h-[40px] text-[24px] rounded-[30px] mb-3 shadow-[0_4px_10px_rgba(66,72,81,0.5)] ${
+              className={`bg-[rgba(150,165,254,0.6)] text-white w-[76px] h-[40px] text-[16px] mr-2 rounded-[30px] shadow-[0_4px_10px_rgba(66,72,81,0.5)] ${
                 pickedChoice !== null ? "hidden" : ""
               } ${discussedNum >= 5 ? "hidden" : ""}`}
             >
@@ -136,7 +136,7 @@ const BalanceChangeChoices = ({
             </button>
             <button
               onClick={handleNextStep}
-              className="w-[76px] h-[40px] rounded-[30px] text-[#458EF7] text-[24px] bg-custom-gradient-basicBtn shadow-[0_4px_10px_rgba(66,72,81,0.5)]"
+              className="w-[76px] h-[40px] rounded-[30px] text-[#458EF7] text-[16px] bg-custom-gradient-basicBtn shadow-[0_4px_10px_rgba(66,72,81,0.5)]"
             >
               다음 단계
             </button>
