@@ -122,10 +122,10 @@ const BalanceChangeChoices = ({
       </div>
       {memberId === hostId && (
         <div className="absolute bottom-3 right-5 flex flex-col items-center">
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex justify-center items-center">
             <button
               onClick={handleConfirmChoices}
-              className={`bg-[rgba(150,165,254,0.6)] text-white w-[76px] h-[30px] text-[16px] rounded-[30px] mb-3 shadow-[0_4px_10px_rgba(66,72,81,0.5)] ${
+              className={`bg-[rgba(150,165,254,0.6)] text-white w-[76px] h-[40px] text-[24px] rounded-[30px] mb-3 shadow-[0_4px_10px_rgba(66,72,81,0.5)] ${
                 pickedChoice !== null ? "hidden" : ""
               } ${discussedNum >= 5 ? "hidden" : ""}`}
             >
