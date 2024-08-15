@@ -66,6 +66,7 @@ const History = ({ isEditMode }) => {
                   {/* // 삭제 버튼 */}
                   <button
                     type="button"
+                    className="text-[#C2ACF4]"
                     onClick={() => handleDelete(index, item.memberHistoryId)}
                   >
                     삭제
@@ -77,6 +78,7 @@ const History = ({ isEditMode }) => {
             {fields.length < 5 && (
               <button
                 type="button"
+                className="text-[#9400d3b0]"
                 onClick={() =>
                   // 필드 배열에 새로운 이력 추가
                   append({
@@ -91,7 +93,7 @@ const History = ({ isEditMode }) => {
             )}
           </>
         ) : (
-          <ul>
+          <ul className="flex flex-col gap-2">
             {/* // 이력 리스트 출력 */}
             {(memberHistoryList || []).map((history) => (
               <li key={history.memberHistoryId} className="text-2xl flex flex-row gap-5 whitespace-nowrap">
