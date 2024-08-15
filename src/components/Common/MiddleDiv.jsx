@@ -576,8 +576,8 @@ const MiddleDiv = () => {
   }, [startPredictionFlag]);
 
   return (
-    <div id="middleDiv" className="flex justify-center h-[68vh] w-[95%] m-3">
-      <div className="bg-[rgba(255,255,255,0.9)] w-[80%] min-w-[550px] h-full mr-5 rounded-[20px] ">
+    <div id="middleDiv" className="flex justify-between h-[68vh] w-[95%] m-3">
+      <div className="bg-[rgba(255,255,255,0.9)] w-[80%] min-w-[550px] h-full rounded-[20px] ">
         <div className="flex flex-col justify-center items-center h-full w-full">
           <div
             className={`w-full h-[90%] grid place-items-center ${getGridColsClass()}`}
