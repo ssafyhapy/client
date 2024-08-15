@@ -551,7 +551,7 @@ const GuessMe = () => {
 
   const startTimer = () => {
     const startTime = Date.now(); // 타이머 시작 시간 기록
-    const targetTime = startTime + 10000; // 목표 시간 5초 후
+    const targetTime = startTime + 10000; // 목표 시간 10초 후
 
     // 기존 타이머가 있다면 제거
     if (timer) clearInterval(timer);
