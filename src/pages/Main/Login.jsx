@@ -1,22 +1,37 @@
 import React from "react";
 import kakaoLogin from "../../assets/Login/kakaoLogin.png";
 import googleLogin from "../../assets/Login/googleLogin.png";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ closeLogin }) => {
   const kakao_client_id = import.meta.env.VITE_KAKAO_CLIENT_ID;
   const kakao_client_secret = import.meta.env.VITE_KAKAO_CLIENT_SECRET;
-  const KAKAO_REDIRECT_URI = "https://i11c209.p.ssafy.io/login/oauth2/code/kakao";
+  const KAKAO_REDIRECT_URI =
+    "https://i11c209.p.ssafy.io/login/oauth2/code/kakao";
   const google_client_id = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-  const GOOGLE_REDIRECT_URI = "https://i11c209.p.ssafy.io/login/oauth2/code/google";
-  
+  const GOOGLE_REDIRECT_URI =
+    "https://i11c209.p.ssafy.io/login/oauth2/code/google";
+
+  const navigate = useNavigate();
+
+  const handleCloseLogin = () => {
+    if (closeLogin) {
+      closeLogin();
+    } else {
+      navigate("/play");
+    }
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div
         className="fixed inset-0 bg-black opacity-50"
-        onClick={closeLogin}
+        onClick={handleCloseLogin}
       ></div>
       <div className="bg-white rounded-lg shadow-lg py-5 px-6 z-50">
-        <h2 className="text-base mb-4 text-center">로그인이 필요한 서비스 입니다.</h2>
+        <h2 className="text-base mb-4 text-center">
+          로그인이 필요한 서비스 입니다.
+        </h2>
 
         <form>
           <div className="flex justify-center mt-4">
@@ -43,7 +58,7 @@ const Login = ({ closeLogin }) => {
             <button
               type="button"
               className="bg-[#C2ACF4] font-bold text-white bold py-2 px-4 rounded-full drop-shadow-lg"
-              onClick={closeLogin}
+              onClick={handleCloseLogin}
             >
               Cancel
             </button>

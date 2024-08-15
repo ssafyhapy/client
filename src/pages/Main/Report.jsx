@@ -9,21 +9,38 @@ import Picture from "../../components/Report/Picture";
 import bgImage from "../../assets/bg/bgImage.jpg";
 import Spinner from "../../components/Spinner";
 import { axiosInstance } from "../../api/apiClient";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import useAuthStore from "../../store/useAuthStore";
+import { FaArrowLeft } from "react-icons/fa";
 
 const Report = () => {
   const [loading, setLoading] = useState(true);
   const [reportData, setReportData] = useState(null);
   const { roomId } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { isLogin } = useAuthStore();
+  // 뒤로가기 버튼 표시 여부
+  const isFromMypage =
+    new URLSearchParams(location.search).get("from") === "mypage";
+
+  // 로그인 여부 확인
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/login");
+      return;
+    }
+  }, [isLogin, navigate]);
 
   // 배포 확인용
   useEffect(() => {
+    if (!isLogin) {
+      navigate("/login");
+      return;
+    }
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(
-          `/room/${roomId}/report`,
-        );
+        const response = await axiosInstance.get(`/room/${roomId}/report`);
         console.log("fetchData", response);
         setReportData(response.data.data);
         setLoading(false);
@@ -50,8 +67,22 @@ const Report = () => {
             <NavBar />
 
             {/* // 제목 */}
-            <h1 className="text-4xl font-bold text-center text-[#9400d3b0]">Report</h1>
-
+            <div className="w-full flex justify-between items-center">
+              <div className="flex-1 flex justify-start">
+                {isFromMypage && (
+                  <FaArrowLeft
+                    className="h-6 w-6 text-[#9400d3b0] cursor-pointer"
+                    onClick={() => navigate(-1)}
+                  />
+                )}
+              </div>
+              <div className="flex-1 flex justify-center">
+                <h1 className="text-4xl font-bold text-center text-[#9400d3b0] flex-1">
+                  Report
+                </h1>
+              </div>
+              <div className="flex-1"></div>
+            </div>
             <Profile members={reportData?.memberReportResponseDtos} />
 
             {/* // 스텝 1, 2, 3 */}

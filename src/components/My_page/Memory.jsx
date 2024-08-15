@@ -7,7 +7,7 @@ const Memory = ({ memorybox, roomId }) => {
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.stopPropagation();
-    navigate(`/room/${roomId}/report`);
+    navigate(`/room/${roomId}/report?from=mypage`);
   };
   return (
     <motion.div

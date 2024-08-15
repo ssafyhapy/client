@@ -5,10 +5,12 @@ import useRoomStore from "../../store/useRoomStore";
 import { useNavigate } from "react-router-dom";
 import PlayFrame from "./PlayFrame";
 import EnterDescription from "./EnterDescription";
+import useAuthStore from "../../store/useAuthStore";
 
 const RoomEnter = () => {
   const navigate = useNavigate();
   const { fetchRoomData } = useRoomStore();
+  const { isLogin } = useAuthStore();
 
   const {
     register,
@@ -18,7 +20,11 @@ const RoomEnter = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    if (!isLogin) {
+      navigate("/login");
+      return;
+    }
+    
     try {
       const response = await axiosInstance.post(
         `/room/enter?roomCode=${data.roomCode}`

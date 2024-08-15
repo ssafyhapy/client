@@ -11,6 +11,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { axiosInstance } from "../../api/apiClient";
 import Modal from "../../components/Modal";
 import { FaArrowLeft } from "react-icons/fa";
+import useAuthStore from "../../store/useAuthStore";
 
 const MemberProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,6 +21,16 @@ const MemberProfile = () => {
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
+
+  const { isLogin } = useAuthStore();
+
+  // 로그인 여부 확인
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/login");
+      return;
+    }
+  }, [isLogin, navigate]);
 
   useEffect(() => {
     if (location.state?.errorMessage) {
@@ -41,6 +52,9 @@ const MemberProfile = () => {
 
   // 유저 프로필 데이터 불러오기
   useEffect(() => {
+    if (!isLogin) {
+      return;
+    }
     const loadData = async () => {
       try {
         const response = await axiosInstance.get(`member/${memberId}`);
@@ -78,16 +92,18 @@ const MemberProfile = () => {
           <div className="flex flex-col items-center w-[80%] py-10 gap-5">
             <NavBar />
             <div className="w-full flex justify-between items-center">
-              <div>
+              <div className="flex-1 flex justify-start">
                 <FaArrowLeft
-                  className="h-6 w-6 text-[#9400d3b0]"
+                  className="h-6 w-6 text-[#9400d3b0] cursor-pointer"
                   onClick={() => navigate(-1)}
                 />
               </div>
-              <h1 className="text-4xl font-bold text-center text-[#9400d3b0] flex-1">
-                Profile
-              </h1>
-              <div></div>
+              <div className="flex-1 flex justify-center">
+                <h1 className="text-4xl font-bold text-center text-[#9400d3b0]">
+                  Profile
+                </h1>
+              </div>
+              <div className="flex-1"></div>
             </div>
             <div className="w-full flex flex-col items-center gap-5">
               <div className="w-full flex gap-5">
