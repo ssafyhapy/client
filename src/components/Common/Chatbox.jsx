@@ -143,7 +143,7 @@ const Chatbox = () => {
     console.log("현재 game step은 이것입니다. ", gameStep)
     if (memberId === hostId) {
       if (gameStep === "self-introduction") {
-        sendSystemMessage("지금은 한 줄 자기소개 시간입니다. \n현재 차례는 노란색 테두리가 쳐진 사람입니다. \n충분히 자기소개를 한 후 다음 버튼을 누르시면 다음 사람에게로 차례가 넘어갑니다.")
+        sendSystemMessage("지금은 한 줄 자기소개 시간입니다. \n현재 차례는 노란색 테두리가 쳐진 사람입니다. \n충분히 자기소개를 한 후 다음 버튼을 누르시면 다음 사람에게로 차례가 넘어갑니다. 제일 마지막 턴의 사람이 다음 버튼을 누르면 기념사진 촬영 후 나를 맞춰봐 게임으로 이동합니다.")
       } else if (gameStep === "guess-me") {
         sendSystemMessage("전원이 작성을 완료하면 나를 맞춰봐 게임이 시작될 예정입니다. \n나를 맞춰봐 게임에서는 OX를 모션으로 인식해 플레이가 가능합니다. \n몸으로 O 혹은 X를 표현해 문제의 답을 맞춰보세요!")
       } else if (gameStep === "balance-game") {
