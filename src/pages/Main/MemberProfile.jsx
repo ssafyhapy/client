@@ -105,7 +105,7 @@ const MemberProfile = () => {
         )}
       </SubFrame>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal} title="Error">
+      <Modal isOpen={isModalOpen} onClose={closeModal} title="Alert">
         <p>{error}</p>
       </Modal>
     </div>
