@@ -11,6 +11,8 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { axiosInstance } from "../../api/apiClient";
 import Modal from "../../components/Modal";
 import { FaArrowLeft } from "react-icons/fa";
+import useAuthStore from "../../store/useAuthStore";
+
 
 const MemberProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,6 +22,16 @@ const MemberProfile = () => {
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
+
+  const { isLogin } = useAuthStore();
+
+  // 로그인 여부 확인
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/login");
+      return;
+    }
+  }, [isLogin, navigate]);
 
   useEffect(() => {
     if (location.state?.errorMessage) {
@@ -41,6 +53,9 @@ const MemberProfile = () => {
 
   // 유저 프로필 데이터 불러오기
   useEffect(() => {
+    if (!isLogin) {
+      return;
+    }
     const loadData = async () => {
       try {
         const response = await axiosInstance.get(`member/${memberId}`);

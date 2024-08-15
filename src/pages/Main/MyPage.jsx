@@ -11,11 +11,22 @@ import { FormProvider, useForm } from "react-hook-form";
 import Spinner from "../../components/Spinner";
 import useAuthStore from "../../store/useAuthStore";
 import bgImage from "../../assets/bg/bgImage.jpg";
+import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
-  const { setProfileImageUrl } = useAuthStore();
+  const { isLogin, setProfileImageUrl } = useAuthStore();
   // 로딩 상태
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
+
+  // 로그인 여부 확인
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/login");
+      return;
+    }
+  }, [isLogin, navigate]);
 
   // useMypageStore 훅을 사용하여 상태와 메소드 가져오기
   const {
@@ -69,6 +80,9 @@ const MyPage = () => {
 
   // 마이페이지 데이터 불러오기
   useEffect(() => {
+    if (!isLogin) {
+      return;
+    }
     const loadData = async () => {
       setIsLoading(true);
       await fetchData("/member/mypage");

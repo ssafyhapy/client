@@ -10,6 +10,7 @@ import bgImage from "../../assets/bg/bgImage.jpg";
 import Spinner from "../../components/Spinner";
 import { axiosInstance } from "../../api/apiClient";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import useAuthStore from "../../store/useAuthStore";
 
 const Report = () => {
   const [loading, setLoading] = useState(true);
@@ -17,13 +18,25 @@ const Report = () => {
   const { roomId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-
+  const { isLogin } = useAuthStore();
   // 뒤로가기 버튼 표시 여부
   const isFromMypage =
     new URLSearchParams(location.search).get("from") === "mypage";
 
+  // 로그인 여부 확인
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/login");
+      return;
+    }
+  }, [isLogin, navigate]);
+
   // 배포 확인용
   useEffect(() => {
+    if (!isLogin) {
+      navigate("/login");
+      return;
+    }
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get(`/room/${roomId}/report`);
