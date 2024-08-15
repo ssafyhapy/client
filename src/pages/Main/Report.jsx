@@ -68,18 +68,20 @@ const Report = () => {
 
             {/* // 제목 */}
             <div className="w-full flex justify-between items-center">
-              <div>
+              <div className="flex-1 flex justify-start">
                 {isFromMypage && (
                   <FaArrowLeft
-                    className="h-6 w-6 text-[#9400d3b0]"
+                    className="h-6 w-6 text-[#9400d3b0] cursor-pointer"
                     onClick={() => navigate(-1)}
                   />
                 )}
               </div>
-              <h1 className="text-4xl font-bold text-center text-[#9400d3b0] flex-1">
-                Report
-              </h1>
-              <div></div>
+              <div className="flex-1 flex justify-center">
+                <h1 className="text-4xl font-bold text-center text-[#9400d3b0] flex-1">
+                  Report
+                </h1>
+              </div>
+              <div className="flex-1"></div>
             </div>
             <Profile members={reportData?.memberReportResponseDtos} />
 

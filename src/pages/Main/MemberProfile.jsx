@@ -13,7 +13,6 @@ import Modal from "../../components/Modal";
 import { FaArrowLeft } from "react-icons/fa";
 import useAuthStore from "../../store/useAuthStore";
 
-
 const MemberProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [memberData, setMemberData] = useState(null);
@@ -93,15 +92,17 @@ const MemberProfile = () => {
           <div className="flex flex-col items-center w-[80%] py-10 gap-5">
             <NavBar />
             <div className="w-full flex justify-between items-center">
-              <div>
+              <div className="flex-1 flex justify-start">
                 <FaArrowLeft
-                  className="h-6 w-6 text-[#9400d3b0]"
+                  className="h-6 w-6 text-[#9400d3b0] cursor-pointer"
                   onClick={() => navigate(-1)}
                 />
               </div>
-              <h1 className="text-4xl font-bold text-center text-[#9400d3b0] flex-1">
-                Profile
-              </h1>
+              <div className="flex-1 flex justify-center">
+                <h1 className="text-4xl font-bold text-center text-[#9400d3b0]">
+                  Profile
+                </h1>
+              </div>
               <div></div>
             </div>
             <div className="w-full flex flex-col items-center gap-5">
