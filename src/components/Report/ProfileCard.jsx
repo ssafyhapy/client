@@ -8,9 +8,9 @@ const ProfileCard = ({ memberId, memberName, memberProfileImageUrl }) => {
   const profileLink = loginMemberId === memberId ? "/mypage" : `/member/${memberId}`;
 
   return (
-    <div className="flex flex-col items-center w-[125px]">
-      <Link to={`/member/${profileLink}`}>
-        <div className="bg-white rounded-full h-[125px] w-[125px] flex justify-center items-center overflow-hidden">
+    <div className="flex flex-col items-center w-[150px]">
+      <Link to={profileLink}>
+        <div className="bg-white rounded-full h-[150px] w-[150px] flex justify-center items-center overflow-hidden">
           <img
             src={memberProfileImageUrl}
             alt="profile"
