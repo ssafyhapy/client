@@ -545,7 +545,7 @@ const MiddleDiv = () => {
       }
 
       // 5초가 경과했는지 확인
-      if (Date.now() - startTime < 5000) {
+      if (Date.now() - startTime < 10000) {
         predictionTimeoutRef.current = requestAnimationFrame(loop);
       } else {
         console.log("[*] 5초 경과, 루프를 멈추고 결과를 저장");

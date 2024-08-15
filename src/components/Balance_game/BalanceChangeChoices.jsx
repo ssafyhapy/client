@@ -19,7 +19,7 @@ const BalanceChangeChoices = ({
   onConfirm,
   optionFirst,
   optionSecond,
-  discussedNum
+  discussedNum,
 }) => {
   const refresh =
     "https://sarrr.s3.ap-northeast-2.amazonaws.com/assets/refresh.png";
@@ -32,7 +32,7 @@ const BalanceChangeChoices = ({
   const [Second, setOptionSecond] = useState("");
 
   // 사람들이 고른 선택지 리셋하는 함수
-  const { resetBalanceGamePeopleChoiceInfo } = usePresenterStore()
+  const { resetBalanceGamePeopleChoiceInfo } = usePresenterStore();
 
   useEffect(() => {
     // 주제1, 2 받아온 데이터로 바꾸자
@@ -46,7 +46,7 @@ const BalanceChangeChoices = ({
     // 그 사람이 고른 선택지 리셋
     setPickedChoice(null);
     // 그 사람이 고른 선택지 저장해둔 배열 리셋
-    resetBalanceGamePeopleChoiceInfo([])
+    resetBalanceGamePeopleChoiceInfo([]);
     // setBalanceChoices({first:, second:})
   };
 
@@ -59,41 +59,43 @@ const BalanceChangeChoices = ({
   };
 
   const handleNextStep = () => {
-    const memberState = "wrapup"
-    webSocketService.sendMemberState(roomId, memberState)
+    const memberState = "wrapup";
+    webSocketService.sendMemberState(roomId, memberState);
     // setGameStep("wrap-up");
   };
 
   return (
     <>
-      <div className="flex-grow flex items-center justify-center relative gap-5">
+      <div className="flex flex-col items-center justify-center relative gap-5">
         <div>방장과 함께 밸런스 게임 주제를 골라주세요!</div>
-        <div
-          className={`text-[rgba(85,181,236)] px-2 py-3 rounded-[15px] ${
-            pickedChoice === "FIRST"
-              ? "border-solid border-4 border-[#64B8FF]"
-              : "border-transparent"
-          } text-[14px]`}
-          style={{
-            background:
-              "linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(30, 144, 255, 0.3))",
-          }}
-        >
-          {First}
-        </div>
-        <span className="text-[#FF607F]">VS</span>
-        <div
-          className={`text-[#FF6A89] px-2 py-3 rounded-[15px] ${
-            pickedChoice === "SECOND"
-              ? "border-solid border-4 border-[rgba(254,176,207)]"
-              : "border-transparent"
-          } text-[14px]`}
-          style={{
-            background:
-              "linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(255,96,127,0.5))",
-          }}
-        >
-          {Second}
+        <div className="flex justify-center">
+          <div
+            className={`text-[rgba(85,181,236)] px-2 py-3 rounded-[15px] ${
+              pickedChoice === "FIRST"
+                ? "border-solid border-4 border-[#64B8FF]"
+                : "border-transparent"
+            } text-[14px]`}
+            style={{
+              background:
+                "linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(30, 144, 255, 0.3))",
+            }}
+          >
+            {First}
+          </div>
+          <span className="text-[#FF607F]">VS</span>
+          <div
+            className={`text-[#FF6A89] px-2 py-3 rounded-[15px] ${
+              pickedChoice === "SECOND"
+                ? "border-solid border-4 border-[rgba(254,176,207)]"
+                : "border-transparent"
+            } text-[14px]`}
+            style={{
+              background:
+                "linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(255,96,127,0.5))",
+            }}
+          >
+            {Second}
+          </div>
         </div>
       </div>
       <div
