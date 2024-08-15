@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Login from "../pages/Main/Login";
 import useAuthStore from "../store/useAuthStore";
+import { useMypageStore } from "../store/useMypageStore";
 import { axiosInstance } from "../api/apiClient";
 import { useNavigate } from "react-router-dom";
 
@@ -19,6 +20,7 @@ const NavBar = () => {
   };
 
   const { isLogin, logout, setLoginAlert } = useAuthStore();
+  const { reset } = useMypageStore();
 
   const handleLogout = async () => {
     try {
@@ -30,10 +32,12 @@ const NavBar = () => {
       // 세션 스토리지에서 액세스 토큰 삭제
       sessionStorage.removeItem("accessToken");
 
-      // 로그아웃 상태 업데이트
+      // 로그아웃 상태 업데이트(AuthStore)
       logout();
+      // 마이페이지 스토어 초기화
+      reset();
 
-      // 메인 페이지로 이동
+      // play 페이지로 이동
       navigate("/play");
       setLoginAlert();
     } catch (error) {
