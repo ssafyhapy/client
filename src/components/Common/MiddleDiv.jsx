@@ -565,8 +565,10 @@ const MiddleDiv = () => {
     // finalResult가 있고 바뀐거면 결과를 pub 한다.
     if (finalResult) {
       webSocketService.sendGuessMeSelection(roomId, memberId, finalResult);
+      console.log(`최종 결과 ${cnt}`, finalResult);
+      setFinalResult(null)
+      console.log("finalResults 초기화");
     }
-    console.log(`최종 결과 ${cnt}`, finalResult);
   }, [finalResult]);
 
   useEffect(() => {
