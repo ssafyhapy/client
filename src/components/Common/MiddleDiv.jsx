@@ -51,7 +51,7 @@ const MiddleDiv = () => {
   const getGridColsClass = () => {
     const count = 1 + subscribers.length;
     // const count = 6;
-    return `grid-cols-${Math.min(count, 3)}`;
+    return `grid-cols-${Math.min(count, 2)}`;
   };
 
   useEffect(() => {
