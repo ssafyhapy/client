@@ -53,6 +53,17 @@ const useMypageStore = create(
           console.error(error);
         }
       },
+      // 상태를 초기화하는 reset 함수 추가
+      reset: () =>
+        set({
+          memberName: null,
+          memberProviderEmail: null,
+          memberProfileImageUrl: null,
+          memberIntroduction: null,
+          memberHistoryList: null,
+          memberMemoryboxList: null,
+          memberVisibility: null,
+        }),
     }),
     { name: "myPage-storage", storage: createJSONStorage(() => sessionStorage) }
   )
@@ -68,4 +79,4 @@ const useUpdateStore = create(
   )
 );
 
-export { useMypageStore, useUpdateStore};
+export { useMypageStore, useUpdateStore };

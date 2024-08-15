@@ -5,13 +5,20 @@ import MainFrame from "../../components/MainFrame";
 import MakeRoom from "./MakeRoom";
 import RoomEnter from "../../components/Play_page/RoomEnter";
 import MakeRoomBtn from "../../components/Play_page/MakeRoomBtn";
+import useAuthStore from "../../store/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 const Play = () => {
+  const { isLogin } = useAuthStore();
+  const navigate = useNavigate();
   // 방 만들기 모달 상태
   const [makeRoom, setOpenMakeRoom] = useState(false);
   const openMakeRoom = (event) => {
+    if (!isLogin) {
+      navigate("/login");
+      return;
+    }
     event.preventDefault();
-
     setOpenMakeRoom(true);
   };
   const closeMakeRoom = () => {
