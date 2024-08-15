@@ -95,7 +95,9 @@ const Chatbox = () => {
       addMessage({
         from: newMessage.memberName,
         message: newMessage.content,
-        profileImage: newMessage.memberProfileImageUrl || defaultProfile,
+        profileImage: newMessage.memberName === "시스템" 
+        ? defaultProfile 
+        : newMessage.memberProfileImageUrl || defaultProfile,
         timestamp: new Date(),
       });
     };
@@ -183,7 +185,7 @@ const Chatbox = () => {
               <div
                 className={`p-2 rounded-lg break-words ${
                   // system 이 보내는거면 백그라운드 핑크
-                  msg.from === "System"
+                  msg.from === "시스템"
                   ? "bg-pink-400 text-white text-sm"
                   : msg.from === memberName
                   ? "bg-[rgba(0,112,246,0.25)] text-white text-sm"
