@@ -106,7 +106,10 @@ const PhotographFirst = () => {
                 <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
                   <span className="flex ">
                     <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                      {connectionInfo[publisher.stream.connection.connectionId].memberName}
+                      {
+                        connectionInfo[publisher.stream.connection.connectionId]
+                          .memberName
+                      }
                     </span>
                     <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
                       <img
@@ -152,7 +155,10 @@ const PhotographFirst = () => {
                       <div className="w-full absolute bottom-0 text-white flex justify-between z-20">
                         <span className="flex ">
                           <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tl-[6px] rounded-bl-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
-                            {connectionInfo[sub.stream.connection.connectionId].memberName}
+                            {
+                              connectionInfo[sub.stream.connection.connectionId]
+                                .memberName
+                            }
                           </span>
                           <span className="flex items-center px-2 h-[24px] bg-[rgba(0,0,0,0.5)] rounded-tr-[6px] rounded-br-[6px] border-solid border-[1px] border-[rgba(0,0,0,0.5)]">
                             <img
