@@ -194,6 +194,9 @@ const Chatbox = () => {
                   : "bg-[rgba(14,107,255,0.5)] text-white text-sm"
                 }`}
                 style={{ maxWidth: "75%" }}
+                dangerouslySetInnerHTML={{
+                  __html: msg.message.replace(/\n/g, "<br />"),
+                }}
               >
                 {msg.message}
               </div>
