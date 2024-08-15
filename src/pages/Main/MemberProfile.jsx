@@ -10,6 +10,7 @@ import bgImage from "../../assets/bg/bgImage.jpg";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { axiosInstance } from "../../api/apiClient";
 import Modal from "../../components/Modal";
+import { FaArrowLeft } from "react-icons/fa";
 
 const MemberProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -76,8 +77,17 @@ const MemberProfile = () => {
         {memberData ? (
           <div className="flex flex-col items-center w-[80%] py-10 gap-5">
             <NavBar />
-            <div className="w-full flex justify-center">
-              <h1 className="text-4xl">Profile</h1>
+            <div className="w-full flex justify-between items-center">
+              <div>
+                <FaArrowLeft
+                  className="h-6 w-6 text-[#9400d3b0]"
+                  onClick={() => navigate(-1)}
+                />
+              </div>
+              <h1 className="text-4xl font-bold text-center text-[#9400d3b0] flex-1">
+                Profile
+              </h1>
+              <div></div>
             </div>
             <div className="w-full flex flex-col items-center gap-5">
               <div className="w-full flex gap-5">
