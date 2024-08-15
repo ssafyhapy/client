@@ -20,7 +20,7 @@ const Chatbox = () => {
   const { messages, addMessage } = useChatStore(); // Use addMessage from Zustand store
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef(null);
-  const { roomId } = useRoomStore();
+  const { roomId, hostId } = useRoomStore();
   const { memberName, memberId, memberProfileImageUrl } = useAuthStore();
 
   const webSocketService = useWebSocket();
@@ -28,12 +28,13 @@ const Chatbox = () => {
   const {gameStep} = useGameStore()
 
   const sendSystemMessage = (content) => {
-    const systemMessage = {
-      content,
-      memberName: "시스템",
-      memberProfileImageUrl : defaultProfile,
-    }
-    webSocketService.sendMessage(`/api/pub/message/${roomId}`, systemMessage)
+    const systemName = "시스템"
+    // const systemMessage = {
+    //   content,
+    //   memberName: "시스템",
+    //   memberProfileImageUrl : defaultProfile,
+    // }
+    webSocketService.sendMessage(`/api/pub/message/${roomId}`, {content, memberName:systemName, memberId})
   }
 
   // const webSocketService = useWebSocket();
@@ -94,7 +95,9 @@ const Chatbox = () => {
       addMessage({
         from: newMessage.memberName,
         message: newMessage.content,
-        profileImage: newMessage.memberProfileImageUrl || defaultProfile,
+        profileImage: newMessage.memberName === "시스템" 
+        ? defaultProfile 
+        : newMessage.memberProfileImageUrl || defaultProfile,
         timestamp: new Date(),
       });
     };
@@ -137,13 +140,16 @@ const Chatbox = () => {
 
   // 시스템 메시지 보내기!!
   useEffect(() => {
-      if (gameStep === "intro") {
+    console.log("현재 game step은 이것입니다. ", gameStep)
+    if (memberId === hostId) {
+      if (gameStep === "self-introduction") {
         sendSystemMessage("지금은 한 줄 자기소개 시간입니다. \n현재 차례는 노란색 테두리가 쳐진 사람입니다. \n충분히 자기소개를 한 후 다음 버튼을 누르시면 다음 사람에게로 차례가 넘어갑니다.")
       } else if (gameStep === "guess-me") {
         sendSystemMessage("전원이 작성을 완료하면 나를 맞춰봐 게임이 시작될 예정입니다. \n나를 맞춰봐 게임에서는 OX를 모션으로 인식해 플레이가 가능합니다. \n몸으로 O 혹은 X를 표현해 문제의 답을 맞춰보세요!")
       } else if (gameStep === "balance-game") {
         sendSystemMessage("주제 변경 및 확정은 방장만 가능합니다. \n방장과 상의해 원하시는 주제를 골라 플레이하세요.\n선택지는 타이머 카운트다운이 나옴과 동시에 고를 수 있게 됩니다.")
       }
+    }
     }, [gameStep])
 
   return (
@@ -181,7 +187,7 @@ const Chatbox = () => {
               <div
                 className={`p-2 rounded-lg break-words ${
                   // system 이 보내는거면 백그라운드 핑크
-                  msg.from === "System"
+                  msg.from === "시스템"
                   ? "bg-pink-400 text-white text-sm"
                   : msg.from === memberName
                   ? "bg-[rgba(0,112,246,0.25)] text-white text-sm"

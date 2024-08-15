@@ -60,8 +60,6 @@ const MakeRoom = ({ closeMakeRoom }) => {
   //     console.log("Error", error);
   //   }
   // };
-  console.log(watch("roomName"));
-  console.log(watch("roomPersonCount"));
 
   return (
     // 방 만들기 모달

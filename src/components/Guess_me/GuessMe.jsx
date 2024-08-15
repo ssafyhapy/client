@@ -419,7 +419,7 @@ const GuessMe = () => {
     guessMeGamePeopleSelection,
     resetGuessMePeopleSelection,
   } = usePresenterStore();
-  
+
   // 처음 들어오면 sub 하고 있다가 데이터 들어오면 받아와!
   useEffect(() => {
     const handleMessageReceived = (message) => {
@@ -427,17 +427,17 @@ const GuessMe = () => {
       // 받은게 문제3개세트 데이터면
       if (Array.isArray(message) && message.length > 0 && message[0].memberId) {
         // 현재 발표자 id, 현재 발표자의 발표내용 (문제3개), 현재 발표데이터의 인덱스0으로 설정 (1번문제), 준비완료!! div 보여질수있게 true로 설정
-        console.log('[*] 이제 presenterId 바꿀거예요')
+        console.log("[*] 이제 presenterId 바꿀거예요");
         setCurrentPresenterId(message[0].memberId);
-        console.log('[*] presenterId 바뀌었어요: ', currentPresenterId)
+        console.log("[*] presenterId 바뀌었어요: ", currentPresenterId);
         setUserQuestions(message); // Load the new set of questions
         setCurrentQuestionIndex(0);
         setShowReadyMessage(true);
         setSecondsLeft(5);
         setShowResult(false);
-        console.log("[*] 이제 guessmepeopleselection 리셋시킬거예요.")
-        resetGuessMePeopleSelection([])
-        console.log("[*] 이제 guessmepeopleselection array 리셋시켰어요")
+        console.log("[*] 이제 guessmepeopleselection 리셋시킬거예요.");
+        resetGuessMePeopleSelection([]);
+        console.log("[*] 이제 guessmepeopleselection array 리셋시켰어요");
         // // 이때 모션인식 시작
         // setStartPredictionFlag(true);
         // // 타이머 시작
@@ -452,15 +452,15 @@ const GuessMe = () => {
       // 받은게 memberId, nextIndex 면
       // 현재인덱스 받아온 인덱스로 설정, 10초 남은걸로 다시 설정
       else if (message.memberId && typeof message.nextIndex === "number") {
-        console.log("[*] 이제 presenterId 바꿀거예요")
+        console.log("[*] 이제 presenterId 바꿀거예요");
         setCurrentPresenterId(message.memberId);
-        console.log("[*] 이제 presenterId 바뀌었어요 : ", currentPresenterId)
+        console.log("[*] 이제 presenterId 바뀌었어요 : ", currentPresenterId);
         setCurrentQuestionIndex(message.nextIndex);
         setSecondsLeft(10);
         setShowResult(false);
-        console.log("[*] 이제 guessmepeopleselection 리셋시킬거예요.")
-        resetGuessMePeopleSelection([])
-        console.log("[*] 이제 guessmepeopleselection array 리셋시켰어요.")
+        console.log("[*] 이제 guessmepeopleselection 리셋시킬거예요.");
+        resetGuessMePeopleSelection([]);
+        console.log("[*] 이제 guessmepeopleselection array 리셋시켰어요.");
         // 이때 모션 인식 시작
         console.log("[*] 모션 인식 시작");
         setStartPredictionFlag(true);
@@ -655,69 +655,72 @@ const GuessMe = () => {
   return (
     <>
       {/* bottom div */}
-        {!allPrepared ? (
-          showReadyMessage ? (
-            <div className="flex-grow flex items-center justify-center">
-              <img src={star} alt="star 그림" />
-              <span className="text-transparent">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              </span>
-              <span className="text-[rgba(85,181,236)]">전원 준비 완료!!</span>
-              <span className="text-transparent">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              </span>
-              <img src={star} alt="star 그림" />
-            </div>
-          ) : (
-            <div className="flex-grow flex items-center justify-center">
-              <img src={snowingCloud} alt="star 그림" />
-              <span className="text-transparent">&nbsp;&nbsp;</span>
-              <span className="text-[rgba(85,181,236)]">
-                나를 맞춰봐 문제가 만들어지고 있어요{dots}
-              </span>
-            </div>
-          )
+      {!allPrepared ? (
+        showReadyMessage ? (
+          <div className="flex-grow flex items-center justify-center">
+            <img src={star} alt="star 그림" />
+            <span className="text-transparent">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+            <span className="text-[rgba(85,181,236)]">전원 준비 완료!!</span>
+            <span className="text-transparent">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+            <img src={star} alt="star 그림" />
+          </div>
         ) : (
-          <div className="flex-grow flex items-center justify-center relative">
+          <div className="flex-grow flex items-center justify-center">
+            <img src={snowingCloud} alt="star 그림" />
+            <span className="text-transparent">&nbsp;&nbsp;</span>
             <span className="text-[rgba(85,181,236)]">
-              {currentQuestionIndex+1}. &nbsp;&nbsp;
+              나를 맞춰봐 문제가 만들어지고 있어요{dots}
             </span>
-            <span className="text-[rgba(85,181,236)]">
-              {userQuestions.length > 0
-                ? userQuestions[currentQuestionIndex].content
-                : null}
-            </span>
-            {showResult && userQuestions.length > 0 && (
-              <img
-                src={
-                  userQuestions[currentQuestionIndex].answer
-                    ? correctImg
-                    : wrongImg
-                }
-                alt={
-                  userQuestions[currentQuestionIndex].answer
-                    ? "Correct"
-                    : "Wrong"
-                }
-                className="absolute w-[50px] h-[50px]"
-                style={{
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                }}
+          </div>
+        )
+      ) : (
+        <div className="flex-grow flex items-center justify-center relative">
+          <span className="text-[rgba(85,181,236)]">
+            {currentQuestionIndex + 1}. &nbsp;&nbsp;
+          </span>
+          <span className="text-[rgba(85,181,236)]">
+            {userQuestions.length > 0
+              ? userQuestions[currentQuestionIndex].content
+              : null}
+          </span>
+          {showResult && userQuestions.length > 0 && (
+            <img
+              src={
+                userQuestions[currentQuestionIndex].answer
+                  ? correctImg
+                  : wrongImg
+              }
+              alt={
+                userQuestions[currentQuestionIndex].answer ? "Correct" : "Wrong"
+              }
+              className="absolute w-[50px] h-[50px]"
+              style={{
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+          )}
+          <div className="absolute bottom-3 right-5 flex flex-col items-center">
+            <div className="flex items-center mb-2">
+              <img src={timerImg} alt="Timer" className="w-8 h-8 mr-2" />
+              {/* <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" /> */}
+              <span className="text-red-500 text-2xl">{secondsLeft}</span>
+            </div>
+            {memberId === currentPresenterId && showResult && (
+              <BasicBtn
+                btnText={btnText}
+                onClick={handleNextStep}
+                fontSize="24"
               />
             )}
-            <div className="absolute bottom-3 right-5 flex flex-col items-center">
-              <div className="flex items-center mb-2">
-                <img src={timerImg} alt="Timer" className="w-5 h-5 mr-2" />
-                <span className="text-red-500 text-2xl">{secondsLeft}</span>
-              </div>
-              {memberId === currentPresenterId && showResult && (
-                <BasicBtn btnText={btnText} onClick={handleNextStep} fontSize="24"/>
-              )}
-            </div>
           </div>
-        )}
+        </div>
+      )}
       {showModal && (
         <GuessMeModal
           btnText="저장"
