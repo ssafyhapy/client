@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import SelfIntroduction from "./games/SelfIntroduction";
 import GuessMe from "./games/GuessMe";
 import BalanceGame from "./games/BalanceGame";
-import MainFrame from "../MainFrame";
 import NavBar from "../NavBar";
 import PlayBtn from "../Buttons/PlayBtn";
 
@@ -26,7 +25,7 @@ const GamesDescription = () => {
             layoutId={section.id}
             onClick={() => setSelectedId(section.id)}
             className={`cursor-pointer bg-white rounded-[20px] shadow-lg p-4 flex flex-col justify-center items-center ${
-              section.id === 3 ? "w-[624px] h-[150px]" : "w-[300px] h-[150px]"
+              section.id === 3 ? "w-[1024px] h-[160px]" : "w-[500px] h-[160px]"
             }`}
             whileHover={{ scale: 1.05 }}
           >
@@ -37,7 +36,7 @@ const GamesDescription = () => {
                 repeat: Infinity,
                 repeatType: "reverse",
               }} // 반복 설정
-              className="text-3xl font-bold text-center text-[#9400d3b0] opacity-50"
+              className="text-[50px] font-bold text-center text-[#9400d3b0] opacity-50"
             >
               {section.title}
             </motion.h2>
