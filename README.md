@@ -1,13 +1,18 @@
-# React + Vite
+# 프로젝트 개요
+- 프로젝트 이름 : `사르르`
+- 프로젝트 기간 : 7주
+- 프로젝트 인원 : 프론트엔드 3명, 백엔드 3명
+  - SSAFY에서 진행한 다인원 (6인) 첫번째 프로젝트
+- 프로젝트 설명 :
+  - 해당 프로젝트는 웹기술 트랙을 기반으로 하여 진행되어 webRTC를 반드시 사용해야하는 프로젝트였다.
+  - webRTC를 반드시 사용해야하는 아이디어를 생각해내기 위해 고심한 결과 아이스브레이킹을 하게 되는 상황은 많으나 (각종 동아리 첫만남, 프로젝트 첫만남, 교회 레크레이션 등) 매번 게임을 준비해야만 한다는 어려움이 존재하고 사회자에게 많은 부담을 준다는 단점이 있다는 것을 유념하여 만들게 된 프로젝트이다.
+  - 사르르 서비스는 최대 6인까지 한 섹션에 들어와서 온라인으로 줌이나 웨벡스처럼 영상과 소리를 통해 진행된다. 사용자는 레크레이션용으로 정해진 3개의 미니 게임(한 줄 자기소개, 나를 맞춰봐, 밸런스 게임)을 진행할 수 있다.
+- 서비스 목표 : 사회자가 아닌 서비스에서 제공하는 온라인 아이스브레이킹 게임으로 통하여 사용자들이 서로의 취향이나 이력들을 손쉽게 이야기하고 친해질 수 있다. 이로 인해 서로의 마음의 장벽이 `사르르` 녹을 수 있도록 하는 것이 서비스의 목표이다.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 프로젝트 프로토타입
+[피그마 프로토타입](https://www.figma.com/design/9Wu3Xf8yS1KYarcoweQm5t/%EC%82%AC%EB%A5%B4%EB%A5%B4-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85?node-id=1-2&t=m0LXGc2HX1n00cuf-1)
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-브랜치 이름 참고
+# 브랜치 전략 (페이지 별로 고유한 branch를 가짐)
 - 메인 페이지 : Main_page
 - 플레이 페이지 : Play_page
 - 마이 페이지 : My_page
@@ -18,3 +23,61 @@ Currently, two official plugins are available:
 - Wrap up : Wrap_up
 - 기념촬영 : Photo
 - 레포트 : Report
+
+# 커밋 컨벤션 전략
+| 커밋 유형        | 의미                                                         |
+| ---------------- | ------------------------------------------------------------ |
+| feat             | 새로운 기능 추가                                             |
+| fix              | 버그 수정                                                    |
+| docs             | 문서 수정                                                    |
+| style            | 코드 formatting, 세미콜론 누락, 코드 자체의 변경이 없는 경우 |
+| refactor         | 코드 리팩토링                                                |
+| test             | 테스트 코드, 리팩토링 테스트 코드 추가                       |
+| setting          | 패키지 매니저 수정 등 설정 파일 추가, 수정                   |
+| chore            | 그 외 기타 수정 (ex: .gitignore)                             |
+| Design           | CSS 등 사용자 UI 디자인 변경                                 |
+| Comment          | 필요한 주석 추가 및 변경                                     |
+| Rename           | 파일 또는 폴더 명을 수정하거나 옮기는 작업만인 경우          |
+| Remove           | 파일을 삭제하는 작업만 수행한 경우                           |
+| !BREAKING CHANGE | 커다란 API 변경의 경우                                       |
+| !HOTFIX          | 급하게 치명적인 버그를 고쳐야 하는 경우                      |
+
+# 시연 시나리오
+[시연 시나리오](http://warp-fisherman-adf.notion.site/e684d1bce4fc4f4cb8d81ecf11854bb4?pvs=74)
+
+# 아키텍쳐 구조
+![!\[alt text\](image.png)
+](<아키텍쳐 구조.png>)
+
+# 사용 기술 스택
+- 리액트
+- OpenVidu
+- WebSocket
+- Teachable Machine
+- Jenkins
+- Nginx
+- Amazon S3
+- Redis
+- Spring
+- SpringBoot
+- JWT
+등등
+
+# 협업 툴
+- GitLab
+- Jira
+- Figma
+
+# 회고
+본격적으로 다인원(6명)과 협업을 하면서 작업했던 첫 프로젝트로 여러 트러블슈팅을 겪었다. 기존 해봤던 프로젝트는 vue로 진행했었으나 react를 쓰게 되면서 이를 적용시키고 초기 세팅을 하며 컴포넌트의 개념이나 구조를 이해하는데도 시간이 걸렸던 것 같다. 그래서 코드를 전체적으로 설계하지 못하고 짰고 그로인해 리팩토링을 해야하는 계기가 있었다. 그 이후로도 시간에 쫓겨 사실 상 렌더링되어야 하는 UI 부분과 게임 로직이 있는 컴포넌트를 custom hook으로 분리하지 못했던 것에 대한 아쉬움이 있다.  
+
+이번 프로젝트로 가장 크게 느낀 부분이 개발 역시 초기 설계가 굉장히 중요하다는 것을 느꼈다. 프론트 개발을 했던 3명의 생각이 모두 달라서 결국 하다보니 문제가 생긴 경우도 있었으며 구조적으로 설계를 제대로 하지 않고 짜다보니 결국 서로의 코드를 이해하는데 꽤나 어려움을 겪었다.
+
+또한 코드를 짜면서 길어지다보니 자꾸 서로 엮여서 어느 코드가 어느 위치에 있는지 찾기도 어려웠다. 코드를 역할별로 분리해서 컴포넌트나 custom hook으로 넣는 이유를 점차 깨달았다.
+
+그래도 이번 프로젝트를 하면서 어떻게든 하려면 할 수 있다는 것과 webRTC 기반 라이브러리인 openvidu를 다뤄보고, webSocket으로 실시간 통신을 해보고, teachable machine을 통해 모션인식을 해보는 등 다양한 도전을 해볼 수 있어서 좋은 기회였다. 
+
+특히 다인원으로 프로젝트를 처음 해보면서 git에 대해 좀 더 알 수 있는 경험이 됐다. 기존까지는 막연히 원격저장소의 기능을 한다는 정도만 알고 있었지만 이번 프로젝트를 통해서 실제로 서로 다른 branch를 생성하고 삭제하고 배포서버에 merge해보고 만약 버전이 잘못되면 revert를 해보거나 과거 commit에서 코드를 확인해보는 등 여러가지 git 활용법을 써보게 되는 기회가 됐다. 
+
+다음 프로젝트 때는 git에 대한 두려움이 확실히 덜할 것 같다. 충돌이 나더라도 잘 해결할 수 있을 것이라는 확신이 든다. 또한 여러가지 기술들을 다양하게 도전해보았지만 결국 어떻게든 성공해냈다는 점에서 큰 도움이 됐다. 과정에는 정말 많은 트러블슈팅이 있었지만 처음에는 너무 막막해도 코드를 정말 `씹고 뜯고 맛보고 즐기면` 어떻게든 되긴 된다는 경험을 했다.
+
